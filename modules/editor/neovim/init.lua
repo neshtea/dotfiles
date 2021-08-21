@@ -26,29 +26,22 @@ window.cursorline = true
 -- map keys
 local map = vim.api.nvim_set_keymap
 
+map('n', '<leader>n', ':bn', { noremap = true })
+map('n', '<leader>p', ':bp', { noremap = true })
+
 -- Space as leader key.
 vim.g.mapleader = ' '
 
 -- map cmd
 local cmd = vim.cmd
 
+cmd('colorscheme onedark')
+
 -- Neogit
 local neogit = require('neogit')
 neogit.setup()
 
 map('n', '<leader>gs', ':Neogit<cr>', { noremap = true })
-
--- Working with buffers
-require("bufferline").setup{
-    options = {
-        numbers = "both",
-        diagnostics = "nvim_lsp",
-        show_buffer_icons = true,
-        separator_style = "thin"
-    }
-}
-map('n', '<leader>bn', ':BufferLineCycleNext<cr>', { silent = true, noremap = true })
-map('n', '<leader>bp', ':BufferLineCyclePrev<cr>', { silent = true, noremap = true })
 
 -- Clojure LSP and more
 local nvim_lsp = require('lspconfig')

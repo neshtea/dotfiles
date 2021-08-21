@@ -11,7 +11,6 @@ in
     config = lib.mkIf cfg.enable {
       programs.neovim = {
         enable = true;
-        coc.enable = true;
         extraConfig = ''
           " Source the actual (lua) configuration.
           luafile ${./init.lua}
@@ -21,8 +20,9 @@ in
           fzf-vim
           telescope-nvim
           neogit
-          nvim-bufferline-lua
+          # nvim-bufferline-lua
           nvim-lspconfig
+          onedark-vim
           vim-airline
           vim-gitgutter
           vim-nix
