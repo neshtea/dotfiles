@@ -14,7 +14,7 @@
 
 ;; Don't clutter init.el with custom but instead write it to
 ;; ~/.emacs.d/custom.el.
-(setq custom-file (concat user-emacs-directory "custom.el"))
+(setq custom-file (expand-file-name "~/.config/emacs/custom.el"))
 
 ;; Remap some mac-specific keys.
 (setq ns-alternate-modifier 'none
@@ -245,11 +245,9 @@ Repeated invocations toggle between the two most recently open buffers."
   (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
 
   :hook (completion-list-mode . consult-preview-at-point-mode)
-  :custom 
-  (consult-project-root-function
-    (lambda ()
-      (when-let (project (project-current))
-        (project-root project)))))
+  :config
+  (autoload 'projectile-project-root "projectile")
+  (setq consult-project-root-function #'projectile-project-root))
 
 (def-with-leader
   "c m" #'consult-mode-command

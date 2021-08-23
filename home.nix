@@ -22,7 +22,6 @@ rec
   imports = [./modules];
 
   home.packages = with pkgs; [
-    ag  # for searching (the silver-searcher)
     cacert
     clojure  # for compiling/running clojure code
     clojure-lsp
@@ -33,12 +32,14 @@ rec
     ffmpeg
     fzf
     git
+    gnugrep
     hledger
     leiningen
     multimarkdown
     msmtp  # for sending email
     nodejs
     notmuch  # for reading email
+    ripgrep
     rlwrap
     ruby
     silver-searcher
@@ -104,10 +105,9 @@ rec
     };
   };
 
-  programs.direnv.enable = true;
-
-  programs.fish = {
+  programs.direnv = {
     enable = true;
+    enableFishIntegration = true;
   };
 
   programs.fzf = {
@@ -142,35 +142,13 @@ rec
     };
   };
 
-  programs.kitty = {
-    enable = true;
-    font = {
-      name = "Roboto Mono";
-      package = pkgs.roboto-mono;
-      size = 14;
-    };
-    keybindings = {
-      "cmd+d" = "new_window_with_cwd";
-      "cmd+t" = "new_tab_with_cwd";
-      "cmd+]" = "next_window";
-      "cmd+[" = "previous_window";
-      "cmd+1" = "goto_tab 1";
-      "cmd+2" = "goto_tab 2";
-      "cmd+3" = "goto_tab 3";
-      "cmd+4" = "goto_tab 4";
-      "cmd+5" = "goto_tab 5";
-      "cmd+6" = "goto_tab 6";
-      "cmd+7" = "goto_tab 7";
-      "cmd+8" = "goto_tab 8";
-      "cmd+9" = "goto_tab 9";
-    };
-  };
-
-  modules.editor.neovim.enable = true;
-  modules.editor.emacs.enable = true;
-
   programs.password-store.enable = true;
 
-  programs.vim.enable = true;
+  # Custom modules.
+  modules.editors.neovim.enable = true;
+  modules.editors.emacs.enable = true;
 
+  modules.programs.kitty.enable = true;
+
+  modules.shell.fish.enable = true;
 }

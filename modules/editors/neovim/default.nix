@@ -1,9 +1,9 @@
 { config, pkgs, lib, ... }:
-let cfg = config.modules.editor.neovim;
+let cfg = config.modules.editors.neovim;
 
 in 
   {
-    options.modules.editor.neovim = {
+    options.modules.editors.neovim = {
       enable = lib.mkEnableOption "neovim";
     };
 
@@ -24,6 +24,7 @@ in
           nvim-lspconfig
           onedark-vim
           vim-airline
+          vim-elixir
           vim-gitgutter
           vim-nix
         ];

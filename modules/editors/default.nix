@@ -1,0 +1,9 @@
+{ ... }:
+
+{
+  imports = [
+    ./neovim
+    ./emacs
+  ];
+}
+

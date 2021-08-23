@@ -79,6 +79,8 @@ local on_attach = function(client, bufnr)
 
 end
 
+-- {{{ LSP Configuration
+-- Clojure LSP
 require('lspconfig').clojure_lsp.setup { 
     on_attach = on_attach,
     flags = {
@@ -86,6 +88,14 @@ require('lspconfig').clojure_lsp.setup {
     }
 }
 
+-- Elixir LSP
+require('lspconfig').elixirls.setup {
+    on_attach = on_attach,
+    cmd = { "/Users/schneider/.nix-profile/bin/elixir-ls" }
+}
+
+-- end LSP Configuration }}}
+--
 -- Find stuff with fzf
 map('n', '<leader>/', ':Ag<cr>', { noremap = true })
 

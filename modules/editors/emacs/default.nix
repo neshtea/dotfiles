@@ -1,10 +1,10 @@
 { config, pkgs, lib, ... }:
 
 let
-  cfg = config.modules.editor.emacs;
+  cfg = config.modules.editors.emacs;
 in
   {
-    options.modules.editor.emacs = {
+    options.modules.editors.emacs = {
       enable = lib.mkEnableOption "emacs";
     };
 
