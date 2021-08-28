@@ -3,5 +3,6 @@
 {
   imports = [
     ./fish
+    ./tmux
   ];
 }

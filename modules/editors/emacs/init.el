@@ -126,6 +126,12 @@ disables all other enabled themes."
   :init
   (solaire-global-mode +1))
 
+;; Code folding, also used by evil.
+;; https://github.com/gregsexton/origami.el
+(use-package origami
+  :init
+  (global-origami-mode))
+
 ;;;;  evil
 ;; Make editing files a little saner (that is, make it behave like
 ;; vim).
@@ -507,7 +513,7 @@ Repeated invocations toggle between the two most recently open buffers."
   "C" #'hey/notmuch-reply-later)
 
 (def-local-with-leader
-  :keymaps 'notmuch-show-mode
+  :keymaps 'notmuch-show-mode-map
   "r r" #'notmuch-tree-reply-sender
   "r a" #'notmuch-tree-reply)
 
@@ -692,6 +698,41 @@ Repeated invocations toggle between the two most recently open buffers."
   "g i" #'magit-init
   "g s" #'magit)
 
+(use-package hledger-mode
+  :mode "\\.journal\\'"
+  :commands hledger-enable-reporting
+  :load-path "straight/repos/hledger-mode"
+  :hook (hledger-view-mode . #'hl-line-mode)
+  :config
+  (setq hledger-jfile "~/.hledger.journal")
+  (add-to-list 'company-backends 'hledger-company))
+
+(defun hledger-visit-jfile ()
+  (interactive)
+  (find-file "~/Box/Brain/Finance/ledger.journal"))
+
+(defun hledger/next-entry ()
+  "Move to next entry and pulse."
+  (interactive)
+  (hledger-next-or-new-entry)
+  (hledger-pulse-momentary-current-entry))
+
+(defun hledger/prev-entry ()
+  "Move to last entry and pulse."
+  (interactive)
+  (hledger-backward-entry)
+  (hledger-pulse-momentary-current-entry))
+
+(def-with-leader
+  "f f e" #'hledger-visit-jfile)
+
+(def-local-with-leader
+  :keymaps 'hledger-mode-map
+  "r" #'hledger-run-command
+  "e" #'hledger-jentry
+  "p" #'hledger/prev-entry
+  "n" #'hledger/next-entry)
+
 ;; Timeclock allows me to clock in and out of projects and store it
 ;; in a format that hledger understands.
 (use-package timeclock
@@ -726,6 +767,53 @@ Repeated invocations toggle between the two most recently open buffers."
   "h v" #'helpful-variable
   "h k" #'helpful-key
   "h p" #'helpful-at-point)
+
+;;; LATEX Support
+(use-package tex-mik
+  ;; :hook (org-mode . evil-org-mode)
+  :hook ((LaTeX-mode . auto-fill-mode)
+	 (LaTeX-mode . LaTeX-math-mode))
+  :config
+  ;; Automatically compile to PDF.
+  (setq TeX-PDF-mode t))
+
+
+;;;; Elixir
+(use-package elixir-mode
+  :hook (elixir-mode . (lambda () 
+			 (add-hook 'before-save-hook 'elixir-format nil t))))
+
+(use-package alchemist
+  :config
+  ;; See https://alchemist.readthedocs.io/en/latest/configuration/
+  (setq alchemist-mix-command (expand-file-name "~/.nix-profile/bin/mix")
+	alchemist-iex-program-name (expand-file-name "~/.nix-profile/bin/iex")
+	alchemist-execute-command (expand-file-name "~/.nix-profile/bin/elixir")
+	alchemist-compile-command (expand-file-name "~/.nix-profile/bin/elixirc")))
+
+(def-local-with-leader
+  :keymaps 'elixir-mode-map
+  "a x" #'alchemist-mix
+  "a c" #'alchemist-mix-compile
+  "a r" #'alchemist-mix-run
+
+  ;; hex
+  "a X i" #'alchemist-hex-info-at-point
+  "a X I" #'alchemist-hex-info
+  "a X s" #'alchemist-hex-search
+
+  ;; tests
+  "a t"     #'alchemist-mix-test
+  "a m t f" #'alchemist-mix-test-file
+  "a m t b" #'alchemist-mix-test-this-buffer
+  "a m t ." #'alchemist-mix-test-at-point
+
+  ;; documentation
+  "a h h" #'alchemist-help
+  "a h e" #'alchemist-help-search-at-point
+
+  ;; jump to definition
+  "a g d" #'alchemist-goto-definition-at-point)
 
 (provide 'init)
 ;;; init.el ends here

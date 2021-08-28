@@ -29,6 +29,7 @@ rec
     coreutils
     docker
     docker-compose
+    elixir
     ffmpeg
     fzf
     git
@@ -144,11 +145,15 @@ rec
 
   programs.password-store.enable = true;
 
-  # Custom modules.
+  ## Custom modules.
+  # Editors
   modules.editors.neovim.enable = true;
   modules.editors.emacs.enable = true;
 
+  # Programs
   modules.programs.kitty.enable = true;
 
+  # Shells and shell tools
   modules.shell.fish.enable = true;
+  modules.shell.tmux.enable = true;
 }

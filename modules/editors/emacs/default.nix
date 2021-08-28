@@ -12,6 +12,8 @@ in
       programs.emacs = {
         enable = true;
         extraPackages = epkgs: [
+          epkgs.alchemist  # for elixir
+          epkgs.auctex-latexmk
           epkgs.cider
           epkgs.clojure-mode
           epkgs.clj-refactor
@@ -23,6 +25,7 @@ in
           epkgs.dockerfile-mode
           epkgs.doom-modeline
           epkgs.doom-themes
+          epkgs.elixir-mode  # for elixir
           epkgs.evil
           epkgs.evil-collection
           epkgs.evil-nerd-commenter
@@ -39,6 +42,7 @@ in
           epkgs.modus-themes
           epkgs.nix-mode
           epkgs.notmuch
+          epkgs.origami
           epkgs.orderless
           epkgs.org
           epkgs.org-contrib
