@@ -815,5 +815,13 @@ Repeated invocations toggle between the two most recently open buffers."
   ;; jump to definition
   "a g d" #'alchemist-goto-definition-at-point)
 
+(use-package hl-todo
+  :init
+  (add-hook 'after-init-hook 'global-hl-todo-mode))
+
+;; lua-mode
+;; https://github.com/immerrr/lua-mode
+(use-package lua-mode)
+
 (provide 'init)
 ;;; init.el ends here

@@ -34,8 +34,10 @@ in
           epkgs.general
           epkgs.gnus-alias
           epkgs.helpful
+          epkgs.hl-todo
           epkgs.hledger-mode
           epkgs.hydra
+          epkgs.lua-mode
           epkgs.magit
           epkgs.marginalia
           epkgs.markdown-mode
