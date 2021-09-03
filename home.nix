@@ -22,7 +22,7 @@ rec
   imports = [./modules];
 
   home.packages = with pkgs; [
-    cacert
+#    cacert
     clojure  # for compiling/running clojure code
     clojure-lsp
     clj-kondo  # for static clojure code checking
@@ -45,7 +45,7 @@ rec
     ruby
     silver-searcher
     trash-cli
-    vagrant  # for old factorylink-vpn
+    vagrant
     wget
     youtube-dl
   ];

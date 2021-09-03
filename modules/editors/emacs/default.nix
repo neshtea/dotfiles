@@ -14,6 +14,7 @@ in
         extraPackages = epkgs: [
           epkgs.alchemist  # for elixir
           epkgs.auctex-latexmk
+          epkgs.babel
           epkgs.cider
           epkgs.clojure-mode
           epkgs.clj-refactor

@@ -9,6 +9,9 @@ in
     config = lib.mkIf cfg.enable {
       programs.kitty = {
         enable = true;
+        extraConfig = ''
+          include ./theme.conf
+        '';
         font = {
           name = "Roboto Mono";
           package = pkgs.roboto-mono;
@@ -30,5 +33,6 @@ in
           "cmd+9" = "goto_tab 9";
         };
       };
+      xdg.configFile."kitty/theme.conf".source = ./theme.conf;
     };
   }
