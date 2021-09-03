@@ -51,6 +51,7 @@ in
           epkgs.org-contrib
           epkgs.org-roam
           epkgs.projectile
+          epkgs.rainbow-delimiters
           epkgs.restart-emacs
           epkgs.selectrum
           epkgs.selectrum-prescient

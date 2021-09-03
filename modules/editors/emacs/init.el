@@ -213,11 +213,17 @@ Repeated invocations toggle between the two most recently open buffers."
   ;; TODO :hook
   (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
   (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook       #'rainbow-delimiters-mode)
   (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+  (add-hook 'ielm-mode-hook             #'rainbow-delimiters-mode)
   (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+  (add-hook 'lisp-mode-hook             #'rainbow-delimiters-mode)
   (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+  (add-hook 'lisp-interaction-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
-  (add-hook 'clojure-mode-hook          #'enable-paredit-mode))
+  (add-hook 'scheme-mode-hook           #'rainbow-delimiters-mode)
+  (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
+  (add-hook 'clojure-mode-hook          #'rainbow-delimiters-mode))
 
 ;; Syntax highlighting for markdown files. Requires multimarkdown to
 ;; be installed on the system.
@@ -822,6 +828,14 @@ Repeated invocations toggle between the two most recently open buffers."
 ;; lua-mode
 ;; https://github.com/immerrr/lua-mode
 (use-package lua-mode)
+
+(use-package windmove)
+
+(def-with-leader
+  "<left>"  #'windmove-left
+  "<right>" #'windmove-right
+  "<up>"    #'windmove-up
+  "<down>"  #'windmove-down)
 
 (provide 'init)
 ;;; init.el ends here
