@@ -42,7 +42,5 @@ in
         vimAlias = true;
         vimdiffAlias = true;
       };
-      # Also mount all the nvim lua stuff.
-      xdg.configFile."nvim/lua".source = ./lua;
     };
   }
