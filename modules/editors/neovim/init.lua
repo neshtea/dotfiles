@@ -26,8 +26,8 @@ window.cursorline = true
 -- map keys
 local map = vim.api.nvim_set_keymap
 
-map('n', '<leader>n', ':bn', { noremap = true })
-map('n', '<leader>p', ':bp', { noremap = true })
+-- map('n', '<leader>n', ':bn', { noremap = true })
+-- map('n', '<leader>p', ':bp', { noremap = true })
 
 -- Space as leader key.
 vim.g.mapleader = ' '
@@ -41,7 +41,7 @@ cmd('colorscheme onedark')
 local neogit = require('neogit')
 neogit.setup()
 
-map('n', '<leader>gs', ':Neogit<cr>', { noremap = true })
+-- map('n', '<leader>gs', ':Neogit<cr>', { noremap = true })
 
 -- Clojure LSP and more
 local nvim_lsp = require('lspconfig')
@@ -97,11 +97,54 @@ require('lspconfig').elixirls.setup {
 -- end LSP Configuration }}}
 --
 -- Find stuff with fzf
-map('n', '<leader>/', ':Ag<cr>', { noremap = true })
+-- map('n', '<leader>/', ':Ag<cr>', { noremap = true })
 
 -- telescope
 -- Find files using Telescope command-line sugar.
-map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true })
-map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { noremap = true })
-map('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { noremap = true })
-map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { noremap = true })
+-- map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true })
+-- map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { noremap = true })
+-- map('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { noremap = true })
+-- map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { noremap = true })
+
+-- nvim-which-key
+require('which-key').setup { }
+
+local wk = require('which-key')
+wk.register(
+   {
+      f = {
+	 name = "+find",
+	 f = { "<cmd>Telescope find_files<cr>", "Find File" },
+	 r = { "<cmd>Telescope oldfiles<cr>", "Open Recent Files" },
+	 g = { "<cmd>Telescope live_grep<cr>", "Live GREP" },
+	 b = { "<cmd>Telescope buffers<cr>", "Find Buffer" },
+	 h = { "<cmd>Telescope help_tags<cr>", "Find Help Tags" },
+      },
+      g = {
+	 name = "+git",
+	 s = { ":NeoGit<cr>", "NeoGit Status" }
+      },
+      b = {
+	 name = "+buffer",
+	 n = { ":bn<cr>", "Next Buffer" },
+	 p = { ":bp<cr>", "Previous Buffer" }
+      },
+   },
+   { prefix = "<leader>" }
+)
+
+-- nvim-treesitter
+require('nvim-treesitter.configs').setup {
+	ensure_installed = { "bash", 
+	"clojure", 
+        -- "elixir", 
+	"html", 
+	"javascript", 
+	"json", 
+	"latex", 
+	"ledger", 
+	"lua", 
+	"ruby", 
+	-- "vim", 
+	"yaml" }
+}

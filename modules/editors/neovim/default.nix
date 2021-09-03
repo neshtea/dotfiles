@@ -11,10 +11,18 @@ in
     config = lib.mkIf cfg.enable {
       programs.neovim = {
         enable = true;
-        extraConfig = ''
-          " Source the actual (lua) configuration.
-          luafile ${./init.lua}
-        '';
+        # As seen here https://breuer.dev/blog/nixos-home-manager-neovim
+        extraConfig = builtins.concatStringsSep "\n" [
+          # vimscript config
+          (lib.strings.fileContents ./init.vim)
+
+          # lua config
+          ''
+            lua << EOF
+              ${lib.strings.fileContents ./init.lua}
+            EOF
+          ''
+        ];
         plugins = with pkgs.vimPlugins; [
           ctrlp-vim
           fzf-vim
@@ -22,11 +30,13 @@ in
           neogit
           # nvim-bufferline-lua
           nvim-lspconfig
+          nvim-treesitter
           onedark-vim
           vim-airline
           vim-elixir
           vim-gitgutter
           vim-nix
+          which-key-nvim
         ];
         viAlias = true;
         vimAlias = true;
