@@ -19,12 +19,25 @@ rec
   # changes in each release.
   home.stateVersion = "21.11";
 
-  imports = [./modules];
+  imports = [
+    ./modules
+  ];
+
+  nixpkgs.overlays = [
+    (_: super: {
+      notmuch = super.notmuch.overrideAttrs(_old: rec {
+        version = "0.33";
+        src = builtins.fetchTarball {
+          url = "https://notmuchmail.org/releases/notmuch-0.33.tar.xz";
+          sha256 = "0wpczv0s0sbdd0p4qhhkw50f5pz5jpx41gaf4c7afc88lwgqr8lv";
+        };
+      });
+    })
+  ];
 
   home.packages = with pkgs; [
 #    cacert
     clojure  # for compiling/running clojure code
-    clojure-lsp
     clj-kondo  # for static clojure code checking
     coreutils
     docker
