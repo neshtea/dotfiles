@@ -190,31 +190,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (interactive)
   (find-file (expand-file-name "~/.emacs.d/init.el")))
 
-(defun evil-collection-vterm-escape-stay ()
-  "Go back to normal state but don't move
-cursor backwards. Moving cursor backwards is the default vim behavior but it is
-not appropriate in some cases like terminals."
-  ;; SEE https://github.com/akermu/emacs-libvterm#when-evil-mode-is-enabled-the-cursor-moves-back-in-normal-state-and-this-messes-directory-tracking
-  (setq-local evil-move-cursor-back nil))
-
-;; https://github.com/akermu/emacs-libvterm
-(use-package vterm
-  :hook (vterm-mode . #'evil-collection-vterm-escape-stay)
-  :config
-  )
-
-;; https://github.com/jixiuf/vterm-toggle
-(use-package vterm-toggle)
-
-(def-with-leader
-  "s h v" #'vterm
-  "s h o" #'vterm-other-window
-
-  "s h t" #'vterm-toggle
-  "s h c" #'vterm-toggle-cd
-  "s h n" #'vterm-toggle-forward
-  "s h p" #'vterm-toggle-backward)
-
 ;; Some global keys, not specific to any one particular mode.
 (def-with-leader
   ";"   #'evilnc-comment-or-uncomment-lines
@@ -223,6 +198,7 @@ not appropriate in some cases like terminals."
   "TAB" #'er-switch-to-previous-buffer
   "t l" #'global-display-line-numbers-mode
   "t f" #'display-fill-column-indicator-mode
+  "s h" #'eshell
   "f s" #'toggle-fullscreen
   "f f n" #'home-manager-visit-config
   "q r" #'restart-emacs
@@ -245,7 +221,9 @@ not appropriate in some cases like terminals."
   (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
   (add-hook 'lisp-interaction-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
-  (add-hook 'scheme-mode-hook           #'rainbow-delimiters-mode))
+  (add-hook 'scheme-mode-hook           #'rainbow-delimiters-mode)
+  (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
+  (add-hook 'clojure-mode-hook          #'rainbow-delimiters-mode))
 
 ;; Syntax highlighting for markdown files. Requires multimarkdown to
 ;; be installed on the system.
@@ -548,6 +526,38 @@ not appropriate in some cases like terminals."
 ;; Automatically break (and support M-q) in message mode.
 (add-hook 'message-mode-hook #'auto-fill-mode)
 
+;; Working Clojure needs almost no configuration, just some nice
+;; packages (ciderm, clj-refactor, clojure-mode).
+(use-package clj-refactor)
+(use-package clojure-mode)
+(use-package cider)
+
+(def-local-with-leader
+  :keymaps 'clojure-mode-map
+  "= =" #'clojure-align
+  "h a" #'cider-apropos
+  "h c" #'cider-cheatsheet
+  "h d" #'cider-clojuredocs
+  "h j" #'cider-javadoc
+  "h h" #'cider-doc
+  "h n" #'cider-browse-ns
+  "h s" #'cider-browser-spec
+  "e ," #'cider-eval-sexp-at-point
+  "e b" #'cider-eval-buffer
+  "e e" #'cider-eval-last-sexp
+  "e m" #'cider-macroexpand-1
+  "e n a" #'cider-ns-reload-all
+  "t a" #'cider-test-run-ns-tests
+  "t t" #'cider-test-run-test)
+
+;; https://github.com/clojure-emacs/clj-refactor.el
+(defun custom-clojure-mode-hook ()
+  "Turn on clj-refactor in clojure-mode."
+  (clj-refactor-mode 1)
+  (yas-minor-mode 1))
+
+(add-hook 'clojure-mode-hook #'custom-clojure-mode-hook)
+
 ;; Not much to say here, just a lot to configure.
 (use-package org
   :config
@@ -790,6 +800,7 @@ not appropriate in some cases like terminals."
   ;; Automatically compile to PDF.
   (setq TeX-PDF-mode t))
 
+
 ;;;; Elixir
 (use-package elixir-mode
   :hook (elixir-mode . (lambda () 
@@ -842,13 +853,6 @@ not appropriate in some cases like terminals."
   "<right>" #'windmove-right
   "<up>"    #'windmove-up
   "<down>"  #'windmove-down)
-
-(use-package crux)
-
-(def-with-leader
-  "c r o" #'crux-open-with
-  "c r j" #'crux-top-join-line
-  "c r u" #'crux-view-url)
 
 (provide 'init)
 ;;; init.el ends here
