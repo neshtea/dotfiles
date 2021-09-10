@@ -611,6 +611,23 @@ not appropriate in some cases like terminals."
   (deft-default-extension "org")
   (deft-directory org-roam-directory))
 
+(use-package org-present
+  :config
+  ;; TODO Move to :hook
+  (progn
+    (add-hook 'org-present-mode-hook
+	      (lambda ()
+		(org-present-big)
+		(org-display-inline-images)
+		(org-present-hide-cursor)
+		(org-present-read-only)))
+    (add-hook 'org-present-mode-quit-hook
+	      (lambda ()
+		(org-present-small)
+		(org-remove-inline-images)
+		(org-present-show-cursor)
+		(org-present-read-write)))))
+
 (def-with-leader
   "a o a" #'org-agenda-list
   "a o t" #'org-todo-list
@@ -623,8 +640,7 @@ not appropriate in some cases like terminals."
   "r n t" #'org-roam-buffer-toggle
   "r n g" #'org-id-get-create
   "r n a a" #'org-roam-alias-add
-  "r n a r" #'org-roam-alias-remove
-  )
+  "r n a r" #'org-roam-alias-remove)
 
 (def-local-with-leader
   :keymaps '(org-mode-map org-agenda-mode-map)
@@ -649,7 +665,8 @@ not appropriate in some cases like terminals."
   "T t" #'org-todo
 
   "x o" #'org-open-at-point
-  )
+
+  "p p" #'org-present)
 
 ;; Work with nix files (syntax highlighting and indentation). 
 (use-package nix-mode
