@@ -5,28 +5,23 @@
 ;;; Configuration for Emacs
 
 ;;;; GENERAL
-
-;; Don't show the standart Emacs startup screen.
-(setq inhibit-splash-screen t)
-
-;; Don't make backup files the first time it is saved.
-(setq make-backup-files nil)
-
-;; Don't clutter init.el with custom but instead write it to
-;; ~/.emacs.d/custom.el.
-(setq custom-file (expand-file-name "~/.config/emacs/custom.el"))
-
-;; Remap some mac-specific keys.
-(setq ns-alternate-modifier 'none
-      ns-command-modifier 'meta
-      ns-function-modifier 'super)
-
-;; Turn off all alarms completely.
-;; See https://www.emacswiki.org/emacs/AlarmBell.
-(setq ring-bell-function 'ignore)
-
-;; Always prefer the "newer" version of a file.
-(setq load-prefer-newer t)
+(setq
+ ;; Don't show the standart Emacs startup screen.
+ inhibit-splash-screen t
+ ;; Don't make backup files the first time it is saved.
+ make-backup-files nil
+ ;; Don't clutter init.el with custom but instead write it to
+ ;; ~/.emacs.d/custom.el.
+ custom-file (expand-file-name "~/.config/emacs/custom.el")
+ ;; Remap some mac-specific keys.
+ ns-alternate-modifier 'none
+ ns-command-modifier 'meta
+ ns-function-modifier 'super
+ ;; Turn off all alarms completely.
+ ;; See https://www.emacswiki.org/emacs/AlarmBell.
+ ring-bell-function 'ignore
+ ;; Always prefer the "newer" version of a file.
+ load-prefer-newer t)
 
 ;; "When you visit a file, point goes to the last place where it was
 ;; when you previously visited the same file."
@@ -37,7 +32,7 @@
 (load custom-file 'no-error)
 
 ;; Set the font.
-(set-frame-font "Roboto Mono-14" t t)
+(set-frame-font "Iosevka-14" t t)
 
 ;; Disable menubar/scrollbar/toolbar.
 (menu-bar-mode -1)
@@ -72,7 +67,8 @@
   ;; We always want to display completions.
   (add-hook 'after-init-hook #'which-key-mode))
 
-;; General is used to define keybindings (replaces evil-leader).
+;; General is used to define keybindings (replaces previously used
+;; evil-leader).
 (require 'general)
 
 ;;    We define two general definers here:
@@ -114,11 +110,6 @@ disables all other enabled themes."
   :init
   ;; Make doom-one the default.
   (my--switch-theme 'doom-one))
-
-;; Very nice thems in terms of readability and contrast, perhaps a
-;; little dull.
-(use-package modus-themes
-  :defer t)
 
 ;; Distinguish file-visiting buffers from other ones. Only works with
 ;; doom-themes (and maybe a few others).
@@ -171,24 +162,11 @@ Repeated invocations toggle between the two most recently open buffers."
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
 (defun toggle-fullscreen ()
-  "Toggle full screen"
+  "Toggle full screen."
   (interactive)
   (set-frame-parameter
      nil 'fullscreen
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
-
-;; Easily restart emacs. Sadly useful from time to time.
-(use-package restart-emacs)
-
-;; Perhaps this is a good point to make a shortcut to my home-manager
-;; config file (and some more files, too).
-(defun home-manager-visit-config ()
-  (interactive)
-  (find-file (expand-file-name "~/.config/nixpkgs/home.nix")) )
-
-(defun emacs-visit-init-el ()
-  (interactive)
-  (find-file (expand-file-name "~/.emacs.d/init.el")))
 
 ;; Some global keys, not specific to any one particular mode.
 (def-with-leader
@@ -200,7 +178,6 @@ Repeated invocations toggle between the two most recently open buffers."
   "t f" #'display-fill-column-indicator-mode
   "s h" #'eshell
   "f s" #'toggle-fullscreen
-  "f f n" #'home-manager-visit-config
   "q r" #'restart-emacs
   "SPC" '(execute-extended-command :which-key "M-x")
   "s t" '(my--switch-theme :which-key "change theme"))
@@ -239,7 +216,6 @@ Repeated invocations toggle between the two most recently open buffers."
 ;; https://github.com/raxod502/selectrum
 (use-package selectrum :init (selectrum-mode +1))
 
-;;; selectrum-prescient
 ;; selectrum-prescient helps with surfacing frequently used
 ;; completions.
 (use-package selectrum-prescient
@@ -268,16 +244,14 @@ Repeated invocations toggle between the two most recently open buffers."
   "c l" #'consult-line
   "c o" #'consult-outline
   "b b" #'consult-buffer
-  "/" #'consult-git-grep)
+  "/"   #'consult-git-grep)
 
 ;; marginalia annotates completion candidates in the completion at
 ;; point buffer. Plays nicely with consult, etc.
 (use-package marginalia :init (marginalia-mode))
 
 ;; Easily find projects and files within projects.
-(use-package projectile
-  :init
-  (projectile-mode +1))
+(use-package projectile :init (projectile-mode +1))
 
 (def-with-leader
   "p p" #'projectile-switch-project
@@ -285,246 +259,13 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;; Highlights docker files and provides some basic commands (none of
 ;; which I use).
-(use-package dockerfile-mode
-  :init (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+(use-package dockerfile-mode)
 
 ;; Highighting and indentation for yaml.
-(use-package yaml-mode
-  :init (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+(use-package yaml-mode)
 
 ;; Complete anything -- auto completion framework.
-(use-package company
-  :hook ((after-init . global-company-mode)))
-
-;; Lets us define several aliases to use in message-mode (and
-;; notmuch).
-(use-package gnus-alias
-  :config
-  ;; SEE https://notmuchmail.org/emacstips/#index13h2
-  (setq gnus-alias-identity-alist
-	'(("posteo"
-	   nil ;; Does not refer to any other identity
-	   "Marco Schneider <marco.schneider@posteo.de>" ;; Sender address
-	   nil ;; No organization header
-	   nil ;; No extra headers
-	   nil ;; No extra body text
-	   "~/.signature")
-	  ("ag"
-	   nil
-	   "Marco Schneider <marco.schneider@active-group.de>"
-	   "Active Group GmbH"
-	   nil
-	   nil
-	   "~/.signature.work")))
-  ;; Use "home" identity by default
-  (setq gnus-alias-default-identity "posteo")
-  ;; Define rules to match work identity
-  (setq gnus-alias-identity-rules
-	'(("ag" ("any" "@active-group.de" both) "ag")))
-  ;; Determine identity when message-mode loads
-  (add-hook 'message-setup-hook #'gnus-alias-determine-identity))
-
-;; notmuch
-;; The HEY-part is mostly a straight copy of
-;; https://gist.github.com/vedang/26a94c459c46e45bc3a9ec935457c80f
-
-;; Must point to your maildir root.
-(defvar notmuch-mail-dir (concat (getenv "HOME") "/Mail"))
-
-(use-package notmuch
-  :config
-  (require 'ol-notmuch)
-  (setq user-mail-address (notmuch-user-primary-email)
-	user-full-name (notmuch-user-name)
-
-	message-send-mail-function 'message-send-mail-with-sendmail
-	message-citation-line-format "On %Y-%m-%d at %R %Z, %f wrote:\n"
-	message-citation-line-function 'message-insert-formatted-citation-line
-
-	notmuch-show-logo nil
-	notmuch-show-imenu-indent nil
-	notmuch-always-prompt-for-sender 't
-
-	;; Replying
-	notmuch-mua-cite-function 'message-cite-original-without-signature
-	;; we substitute sendmail with msmtp
-	sendmail-program (expand-file-name "~/.nix-profile/bin/msmtp")
-	message-sendmail-envelope-from 'header
-	message-kill-buffer-on-exit t
-	mail-specify-envelope-from 'header
-	mail-envelope-from 'header
-	mail-user-agent 'message-user-agent
-
-	;; Move sent messages to the corrent sent folders for later sync to the
-	;; IMAP server (and set the correct tags).
-	notmuch-fcc-dirs '(("marco.schneider@posteo.de" . "posteo/Sent -unread -inbox +sent +personal")
-			   ("marco.schneider@active-group.de" . "ag/Sent -unread -inbox +sent +work"))
-
-	notmuch-hello-thousands-separator ""
-	notmuch-archive-tags '("-inbox" "-unread" "+archived")
-	notmuch-show-mark-read-tags '("-inbox" "-unread" "+archived")
-	;; appearently, this only only works when set via custom...
-	;; notmuch-search-oldest-first nil
-	notmuch-show-indent-content nil
-	notmuch-hooks-dir (expand-file-name ".notmuch/hooks" notmuch-mail-dir))
-  ;; My Notmuch start screen:
-  (progn
-    (setq notmuch-saved-searches nil)
-    (push '(:name "Unread"
-		  :query "tag:unread"
-		  :key "u"
-		  :sort-order newest-first)
-	  notmuch-saved-searches)
-    (push '(:name "Unscreened"
-		  :query "tag:inbox AND NOT tag:screened"
-		  :key "s"
-		  :sort-order newest-first)
-	  notmuch-saved-searches)
-    (push '(:name "The Papertrail"
-		  :query "tag:/ledger/"
-		  :key "p"
-		  :sort-order newest-first)
-	  notmuch-saved-searches)
-    (push '(:name "The Feed"
-		  :query "tag:thefeed"
-		  :key "f"
-		  :search-type 'tree
-		  :sort-order newest-first)
-	  notmuch-saved-searches)
-    (push '(:name "Previously Seen"
-		  :query "tag:screened AND NOT tag:unread"
-		  :key "I"
-		  :sort-order newest-first)
-	  notmuch-saved-searches)
-    (push '(:name "Inbox"
-		  :query "tag:inbox AND tag:screened"
-		  :key "i"
-		  :search-type 'tree
-		  :sort-order newest-first)
-	  notmuch-saved-searches)
-    (push '(:name "Sent"
-		  :query "tag:sent"
-		  :key "t"
-		  :sort-order newest-first)
-	  notmuch-saved-searches)))
-
-(defun hey/notmuch-add-addr-to-db (nmaddr nmdbfile)
-  "Add the email address NMADDR to the db-file NMDBFILE."
-  (append-to-file (format "%s\n" nmaddr) nil nmdbfile))
-
-(defun hey/notmuch-tree-get-from ()
-  "A helper function to find the email address for the given email.
-  Assumes `notmuch-tree-mode'."
-  (plist-get (notmuch-tree-get-prop :headers) :From))
-
-(defun hey/notmuch-search-get-from ()
-  "A helper function to find the email address for the given email."
-  (let ((notmuch-addr-sexp (car
-                             (notmuch-call-notmuch-sexp "address"
-                                                        "--format=sexp"
-                                                        "--format-version=1"
-                                                        "--output=sender"
-                                                        (notmuch-search-find-thread-id)))))
-    (plist-get notmuch-addr-sexp :name-addr)))
-
-(defun hey/notmuch-get-from ()
-  "Find the From email address for the email at point."
-  (car (notmuch-clean-address (cond
-                                ((eq major-mode 'notmuch-show-mode)
-                                 (notmuch-show-get-from))
-                                ((eq major-mode 'notmuch-tree-mode)
-                                 (hey/notmuch-tree-get-from))
-                                ((eq major-mode 'notmuch-search-mode)
-                                 (hey/notmuch-search-get-from))))))
-
-(defun hey/notmuch-search-by-from (&optional no-display)
-  "Show all emails sent from the sender of the current thread.
-  NO-DISPLAY is sent forward to `notmuch-search'."
-  (interactive)
-  (notmuch-search (concat "from:" (hey/notmuch-get-from))
-                  notmuch-search-oldest-first
-                  nil
-                  nil
-                  no-display))
-
-(defun hey/notmuch-tag-by-from (tag-changes &optional beg end refresh)
-  "Apply TAG-CHANGES to all emails from the sender of the current thread.
-  BEG and END provide the region, but are ignored. They are defined
-  since `notmuch-search-interactive-tag-changes' returns them. If
-  REFRESH is true, refresh the buffer from which we started the
-  search."
-  (interactive (notmuch-search-interactive-tag-changes))
-  (let ((this-buf (current-buffer)))
-    (hey/notmuch-search-by-from t)
-    ;; This is a dirty hack since I can't find a way to run a
-    ;; temporary hook on `notmuch-search' completion. So instead of
-    ;; waiting on the search to complete in the background and then
-    ;; making tag-changes on it, I will just sleep for a short amount
-    ;; of time. This is generally good enough and works, but is not
-    ;; guaranteed to work every time. I'm fine with this.
-    (sleep-for 0.5)
-    (notmuch-search-tag-all tag-changes)
-    (when refresh
-      (set-buffer this-buf)
-      (notmuch-refresh-this-buffer))))
-
-(defun hey/notmuch-move-sender-to-spam ()
-  (interactive)
-  (hey/notmuch-add-addr-to-db (hey/notmuch-get-from)
-                              (format "%s/spam.db" notmuch-hooks-dir))
-  (hey/notmuch-tag-by-from '("+spam" "+deleted" "+archived" "-inbox" "-unread" "-screened")))
-
-(defun hey/notmuch-move-sender-to-screened ()
-  (interactive)
-  (hey/notmuch-add-addr-to-db (hey/notmuch-get-from)
-                              (format "%s/screened.db" notmuch-hooks-dir))
-  (hey/notmuch-tag-by-from '("+screened" "-unscreened")))
-
-(defun hey/notmuch-move-sender-to-papertrail (tag-name)
-  (interactive "sTag Name: ")
-  (hey/notmuch-add-addr-to-db (format "%s %s"
-                                      tag-name
-                                      (hey/notmuch-get-from))
-                              (format "%s/ledger.db" notmuch-hooks-dir))
-  (let ((tag-string (format "+ledger/%s" tag-name)))
-    (hey/notmuch-tag-by-from (list tag-string "+archived" "-inbox" "-unread"))))
-
-(defun hey/notmuch-move-sender-to-thefeed ()
-  (interactive)
-  (hey/notmuch-add-addr-to-db (hey/notmuch-get-from)
-                              (format "%s/thefeed.db" notmuch-hooks-dir))
-  (hey/notmuch-tag-by-from '("+thefeed" "+archived" "-inbox")))
-
-(defun hey/notmuch-reply-later ()
-  "Capture this email for replying later."
-  (interactive)
-  (org-capture nil "r")
-  ;; The rest of this function is just a nice message in the modeline.
-  (let* ((email-subject (format "%s..."
-                                (substring (notmuch-show-get-subject) 0 15)))
-         (email-from (format "%s..."
-                             (substring (notmuch-show-get-from) 0 15)))
-         (email-string (format "%s (From: %s)" email-subject email-from)))
-    (message "Noted! Reply Later: %s" email-string)))
-
-(def-with-leader
-  "a e m" #'notmuch-hello)
-
-(def-local-with-leader
-  :keymaps 'notmuch-search-mode-map
-  "S" #'hey/notmuch-move-sender-to-spam
-  "I" #'hey/notmuch-move-sender-to-screened
-  "P" #'hey/notmuch-move-sender-to-papertrail
-  "F" #'hey/notmuch-move-sender-to-thefeed
-  "C" #'hey/notmuch-reply-later)
-
-(def-local-with-leader
-  :keymaps 'notmuch-show-mode-map
-  "r r" #'notmuch-tree-reply-sender
-  "r a" #'notmuch-tree-reply)
-
-;; Automatically break (and support M-q) in message mode.
-(add-hook 'message-mode-hook #'auto-fill-mode)
+(use-package company :hook ((after-init . global-company-mode)))
 
 ;; Working Clojure needs almost no configuration, just some nice
 ;; packages (ciderm, clj-refactor, clojure-mode).
@@ -558,7 +299,6 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (add-hook 'clojure-mode-hook #'custom-clojure-mode-hook)
 
-;; Not much to say here, just a lot to configure.
 (use-package org
   :config
   (add-hook 'org-mode-hook #'auto-fill-mode)
@@ -571,30 +311,20 @@ Repeated invocations toggle between the two most recently open buffers."
 	initial-major-mode 'org-mode
 	;; Start any org-file in "overview"-mode.
 	org-startup-folded t
-	org-agenda-files '("~/Box/Brain/Tasks/inbox.org"
-			   "~/Box/Brain/Tasks/gtd.org"
-			   "~/Box/Brain/Tasks/tickler.org")
+	org-agenda-files '("~/Dropbox/Brain/Tasks/gtd.org")
 	org-capture-templates '(("t" "Todo [inbox/work]" entry
-				 (file "~/Box/Brain/Tasks/inbox.org")
+				 (file+headline "~/Dropbox/Brain/Tasks/gtd.org" "INBOX")
 				 "* TODO %i%? \n  %U")
 				("c" "Capture [inbox]" entry
-				 (file "~/Box/Brain/Tasks/inbox.org")
-				 "* TODO %i%?\n  %a")
-				("r" "Respond to email" entry
-				 (file "~/Box/Brain/Tasks/inbox.org")
-				 "* TODO Respond to %:from on %:subject  :email: \nSCHEDULED: %t\n%U\n%a\n"
-				 :immediate-finish t))
-	org-refile-targets '(("~/Box/Brain/Tasks/gtd.org" :maxlevel . 3)
-			     ("~/Box/Brain/Tasks/lists.org" :maxlevel . 2)
-			     ("~/Box/Brain/Tasks/someday.org" :level . 1))
+				 (file+headline "~/Dropbox/Brain/Tasks/gtd.org" "INBOX")
+				 "* TODO %i%? \n  %a"))
+	org-refile-targets '(("~/Dropbox/Brain/Tasks/gtd.org" :maxlevel . 1)
+			     ("~/Dropbox/Brain/Tasks/lists.org" :maxlevel . 2)
+			     ("~/Dropbox/Brain/Tasks/someday.org" :level . 1))
 	;; When the state of a section headline changes, log the
 	;; transition into the headlines drawer.
 	org-log-into-drawer 'LOGBOOK
 	org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "INPROGRESS(p!)" "|" "DONE(d!)" "CANCELLED(c!)"))))
-
-(use-package org-contrib
-  :config
-  (require 'ol-notmuch))
 
 ;; Roam inspired mode for my zettelkasten using org mode.
 (use-package org-roam
@@ -602,41 +332,11 @@ Repeated invocations toggle between the two most recently open buffers."
   :init
   (setq org-roam-v2-ack t)
   :config
-  (setq org-roam-directory "~/Box/Brain/Knowledge/"
+  (setq org-roam-directory "~/Dropbox/Brain/Knowledge/"
 	org-roam-index-file "index.org")
   (add-hook 'after-init-hook 'org-roam-mode)
   (require 'org-roam-protocol)
   (org-roam-setup))
-
-;; TODO Maybe use =notdeft=? But it's harder to install and configure...
-;; TODO Perhaps consult-git-grep is enough?
-;; Deft makes it easy to do full-text search on a certain directory
-;; (and it's children).
-(use-package deft
-  :after org
-  :hook (deft-mode . evil-insert-state)
-  :custom
-  (deft-recursive t)
-  (deft-use-filter-string-for-filename t)
-  (deft-default-extension "org")
-  (deft-directory org-roam-directory))
-
-(use-package org-present
-  :config
-  ;; TODO Move to :hook
-  (progn
-    (add-hook 'org-present-mode-hook
-	      (lambda ()
-		(org-present-big)
-		(org-display-inline-images)
-		(org-present-hide-cursor)
-		(org-present-read-only)))
-    (add-hook 'org-present-mode-quit-hook
-	      (lambda ()
-		(org-present-small)
-		(org-remove-inline-images)
-		(org-present-show-cursor)
-		(org-present-read-write)))))
 
 (def-with-leader
   "a o a" #'org-agenda-list
@@ -646,9 +346,8 @@ Repeated invocations toggle between the two most recently open buffers."
 
   "r n f" #'org-roam-node-find
   "r n c" #'org-roam-capture
-  "r n i" #'org-roam-insert
+  "r n i" #'org-roam-node-insert
   "r n t" #'org-roam-buffer-toggle
-  "r n g" #'org-id-get-create
   "r n a a" #'org-roam-alias-add
   "r n a r" #'org-roam-alias-remove)
 
@@ -674,13 +373,10 @@ Repeated invocations toggle between the two most recently open buffers."
   "T i" #'org-toggle-inline-images
   "T t" #'org-todo
 
-  "x o" #'org-open-at-point
-
-  "p p" #'org-present)
+  "x o" #'org-open-at-point)
 
 ;; Work with nix files (syntax highlighting and indentation). 
-(use-package nix-mode
-  :mode "\\.nix\\'")
+(use-package nix-mode :mode "\\.nix\\'")
 
 ;; Nicer modeline with symbols, etc.
 (use-package doom-modeline
@@ -688,30 +384,18 @@ Repeated invocations toggle between the two most recently open buffers."
   :config
   (setq doom-modeline-height 25))
 
-;; Define little states that stay in the minibuffer.
-(use-package hydra
-  :config
-  (defhydra hydra-zoom (global-map "C-#")
-    "zoom"
-    ("+" text-scale-increase "increase")
-    ("-" text-scale-decrease "decrease")
-    ("0" text-scale-adjust "reset")))
-
 (def-with-leader
-  "f z" #'hydra-zoom/body)
+  "f +" #'text-scale-increase
+  "f -" #'text-scale-decrease
+  "f 0" #'text-scale-adjust)
 
-(use-package diff-hl
-  :init (global-diff-hl-mode))
+(use-package diff-hl :init (global-diff-hl-mode))
 
 ;; Magit (and Neogit for Neovim) are the very best tools for
 ;; interacting with git.
 (use-package magit
-  :hook (git-commit-mode . evil-insert-state)
+  :hook (git-commit-mode . evil-insert-state)  ; Start commit messages in insert mode.
   :after diff-hl
-  :init
-  ;; (evil-leader/set-key
-  ;;   "gi" #'magit-init
-  ;;   "gs" #'magit)
   :config
   (setq-default git-magit-status-fullscreen t)
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
@@ -720,53 +404,6 @@ Repeated invocations toggle between the two most recently open buffers."
 (def-with-leader
   "g i" #'magit-init
   "g s" #'magit)
-
-(use-package hledger-mode
-  :mode "\\.journal\\'"
-  :commands hledger-enable-reporting
-  :load-path "straight/repos/hledger-mode"
-  :hook (hledger-view-mode . #'hl-line-mode)
-  :config
-  (setq hledger-jfile "~/.hledger.journal")
-  (add-to-list 'company-backends 'hledger-company))
-
-(defun hledger-visit-jfile ()
-  (interactive)
-  (find-file "~/Box/Brain/Finance/ledger.journal"))
-
-(defun hledger/next-entry ()
-  "Move to next entry and pulse."
-  (interactive)
-  (hledger-next-or-new-entry)
-  (hledger-pulse-momentary-current-entry))
-
-(defun hledger/prev-entry ()
-  "Move to last entry and pulse."
-  (interactive)
-  (hledger-backward-entry)
-  (hledger-pulse-momentary-current-entry))
-
-(def-with-leader
-  "f f e" #'hledger-visit-jfile)
-
-(def-local-with-leader
-  :keymaps 'hledger-mode-map
-  "r" #'hledger-run-command
-  "e" #'hledger-jentry
-  "p" #'hledger/prev-entry
-  "n" #'hledger/next-entry)
-
-;; Timeclock allows me to clock in and out of projects and store it
-;; in a format that hledger understands.
-(use-package timeclock
-  :config
-  (setq timeclock-file (expand-file-name  "~/Box/Brain/Timetracking/tracking.timeclock")
-	;; 32h/Woche
-	;; 384min/Tag
-	;; 23040sec/tag
-	timeclock-workday 23040
-	timeclock-project-list '(general  ; General work for Active Group
-				             phoenix)))
 
 (def-with-leader
   "t c i" #'timeclock-in
@@ -780,8 +417,7 @@ Repeated invocations toggle between the two most recently open buffers."
   ;; https://github.com/cyrus-and/zoom#example-configurations
   (setq zoom-size '(0.618 . 0.618)))
 
-(def-with-leader
-  "z z" #'zoom-mode)
+(def-with-leader "z z" #'zoom-mode)
 
 (use-package helpful)
 
@@ -790,16 +426,6 @@ Repeated invocations toggle between the two most recently open buffers."
   "h v" #'helpful-variable
   "h k" #'helpful-key
   "h p" #'helpful-at-point)
-
-;;; LATEX Support
-(use-package tex-mik
-  ;; :hook (org-mode . evil-org-mode)
-  :hook ((LaTeX-mode . auto-fill-mode)
-	 (LaTeX-mode . LaTeX-math-mode))
-  :config
-  ;; Automatically compile to PDF.
-  (setq TeX-PDF-mode t))
-
 
 ;;;; Elixir
 (use-package elixir-mode
@@ -842,17 +468,88 @@ Repeated invocations toggle between the two most recently open buffers."
   :init
   (add-hook 'after-init-hook 'global-hl-todo-mode))
 
-;; lua-mode
-;; https://github.com/immerrr/lua-mode
-(use-package lua-mode)
+(setq user-full-name "Marco Schneider")
 
-(use-package windmove)
+(let ((mu4epath
+       (concat
+        (f-dirname
+         (file-truename
+          (executable-find "mu")))
+        "/../share/emacs/site-lisp/mu4e")))
+  (when (and
+         (string-prefix-p "/nix/store/" mu4epath)
+         (file-directory-p mu4epath))
+    (add-to-list 'load-path mu4epath)))
+
+(use-package mu4e
+  :ensure nil
+  :defer t
+  :commands (mu4e)
+  ;; Automatically break (and support M-q) in message mode.
+  :hook (message-mode . #'auto-fill-mode)
+  :config
+  (setq mail-user-agent 'mu4e-user-agent)
+  (setq mu4e-confirm-quit nil)
+  ;; I don't sync drafts, so I don't care.
+  (setq mu4e-drafts-folder "/drafts")
+  (setq mu4e-attachment-dir "~/Downloads")
+  (setq mu4e-headers-fields '((:human-date . 12)
+			      (:flags . 6)
+			      (:maildir . 15)
+			      (:mailing-list . 10)
+			      (:from . 22)
+			      (:subject)))
+  (setq mu4e-context-policy 'pick-first)
+  (setq mu4e-compose-policy 'ask)
+  (setq mu4e-get-mail-command "mbsync -a")
+  (setq message-send-mail-function #'message-send-mail-with-sendmail)
+  (setq send-mail-function #'message-send-mail-with-sendmail)
+  (setq message-sendmail-envelope-from 'header)
+  (setq mail-envelope-from 'header)
+  (setq mail-specify-envelope-from 'header)
+  (setq message-kill-buffer-on-exit t)
+  (setq mu4e-contexts
+	`(,(make-mu4e-context
+	    :name "posteo"
+	    :match-func (lambda (msg)
+			  (when msg
+			    (string-prefix-p "/posteo"
+					     (mu4e-message-field msg :posteo)
+					     t)))
+	    :vars '((user-mail-address "marco.schneider@posteo.de")
+		   (mu4e-compose-signature . nil)
+		   (mu4e-sent-folder . "/posteo/Sent")
+		   (mu4e-trash-folder . "/posteo/Trash")
+		   (mu4e-refile-folder . (lambda (msg)
+					   (let* ((date (mu4e-message-field-at-point :date))
+						  (year (decoded-time-year (decode-time date))))
+					     (concat "/posteo/Archive/"
+						     (number-to-string year)))))))
+	  ,(make-mu4e-context
+	    :name "ag"
+	    :match-func (lambda (msg)
+			  (when msg
+			    (string-prefix-p "/ag"
+					     (mu4e-message-field msg :maildir)
+					     t)))
+	    :vars `((user-mail-address . "marco.schneider@active-group.de")
+		   (mu4e-compose-signature . ,(concat "Marco Schneider\n"
+						      "marco.schneider@active-group.de\n"
+						      "+49 7071 70896 81\n"
+						      "Hechinger Str. 12/1\n"
+						      "72072 Tübingen\n"
+						      "Registergericht: Amtsgericht Stuttgart, HRB 224404\n"
+						      "Geschäftsführer: Dr. Michael Sperber"))
+		   (mu4e-sent-folder "/ag/Sent")
+		   (mu4e-trash-folder . "/ag/Trash")
+		   (mu4e-refile-folder . (lambda (msg)
+					   (let* ((date (mu4e-message-field-at-point :date))
+						  (year (decoded-time-year (decode-time date))))
+					     (concat "/ag/Archives/"
+						     (number-to-string year))))))))))
 
 (def-with-leader
-  "<left>"  #'windmove-left
-  "<right>" #'windmove-right
-  "<up>"    #'windmove-up
-  "<down>"  #'windmove-down)
+  "m m" #'mu4e)
 
 (provide 'init)
 ;;; init.el ends here

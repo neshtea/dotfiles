@@ -21,7 +21,6 @@ in
           epkgs.company
           epkgs.consult
           epkgs.cycle-themes
-          epkgs.deft
           epkgs.diff-hl
           epkgs.dockerfile-mode
           epkgs.doom-modeline
@@ -38,26 +37,21 @@ in
           epkgs.hl-todo
           epkgs.hledger-mode
           epkgs.hydra
-          epkgs.lua-mode
           epkgs.magit
+          epkgs.magit-todos
           epkgs.marginalia
           epkgs.markdown-mode
-          epkgs.modus-themes
           epkgs.nix-mode
-          epkgs.notmuch
           epkgs.origami
           epkgs.orderless
           epkgs.org
-          epkgs.org-contrib
           epkgs.org-roam
           epkgs.projectile
           epkgs.rainbow-delimiters
-          epkgs.restart-emacs
           epkgs.selectrum
           epkgs.selectrum-prescient
           epkgs.solaire-mode
           epkgs.use-package
-          epkgs.utimeclock
           epkgs.which-key
           epkgs.yaml-mode
           epkgs.zoom

@@ -13,7 +13,7 @@ in
           include ./theme.conf
         '';
         font = {
-          name = "Roboto Mono";
+          name = "Iosevka";
           package = pkgs.roboto-mono;
           size = 14;
         };

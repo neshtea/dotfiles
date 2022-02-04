@@ -17,25 +17,14 @@ rec
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "21.11";
+  home.stateVersion = "21.05";
 
   imports = [
     ./modules
   ];
 
-  nixpkgs.overlays = [
-    (_: super: {
-      notmuch = super.notmuch.overrideAttrs(_old: rec {
-        version = "0.33";
-        src = builtins.fetchTarball {
-          url = "https://notmuchmail.org/releases/notmuch-0.33.tar.xz";
-          sha256 = "0wpczv0s0sbdd0p4qhhkw50f5pz5jpx41gaf4c7afc88lwgqr8lv";
-        };
-      });
-    })
-  ];
-
   home.packages = with pkgs; [
+    bat
 #    cacert
     clojure  # for compiling/running clojure code
     clj-kondo  # for static clojure code checking
@@ -43,22 +32,26 @@ rec
     docker
     docker-compose
     elixir
+    elixir_ls
     ffmpeg
     fzf
     git
     gnugrep
+    gnupg
     hledger
+    hledger-web
+    htop
     leiningen
+    gnumake
+    mu
     multimarkdown
     msmtp  # for sending email
     nodejs
-    notmuch  # for reading email
+    pinentry  # for GnuPG
     ripgrep
     rlwrap
-    ruby
+    rustup
     silver-searcher
-    trash-cli
-    vagrant
     wget
     youtube-dl
   ];
@@ -78,13 +71,14 @@ rec
         mbsync = {
           enable = true;
           create = "maildir";
-          expunge = "both";
+          expunge = "none";
         };
         msmtp.enable = true;
+        mu.enable = true;
         notmuch.enable = true;
-        # mu.enable = true;
         primary = true;
         realName = "Marco Schneider";
+        # passwordCommand = "echo \"no passwordCommand set\"";
         passwordCommand = "pass show email/marco.schneider@posteo.de";
         smtp = {
           host = "posteo.de";
@@ -104,12 +98,14 @@ rec
         mbsync = {
           enable = true;
           create = "maildir";
-          expunge = "both";
+          expunge = "none";
         };
-        msmtp.enable = true;
-        notmuch.enable = true;
-        # mu.enable = true;
+        msmtp = {
+          enable = true;
+        };
+        mu.enable = true;
         realName = "Marco Schneider";
+        # passwordCommand = "echo \"no passwordCommand set\"";
         passwordCommand = "pass show email/marco.schneider@active-group.de";
         smtp = {
           host = "smtp.active-group.de";
@@ -146,24 +142,15 @@ rec
     userEmail = "marco.schneider@active-group.de";
   };
 
-  # https://beb.ninja/post/email/
-  programs.notmuch = {
-    enable = true;
-    hooks = {
-      # TODO Johannes fragen wie geht richtig
-      preNew = "sh ${./script/notmuch/preNew.sh}";
-      postNew = "sh ${./script/notmuch/postNew.sh}";
-    };
-  };
+  programs.mu.enable = true;
+  
+  # programs.password-store.enable = true;
 
-  programs.password-store.enable = true;
-
-  ## Custom modules.
   # Editors
   modules.editors.neovim.enable = true;
   modules.editors.emacs.enable = true;
 
-  # Programs
+    # Programs
   modules.programs.kitty.enable = true;
 
   # Shells and shell tools

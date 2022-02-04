@@ -25,10 +25,10 @@ in
         ];
         plugins = with pkgs.vimPlugins; [
           ctrlp-vim
+          conjure
           fzf-vim
           telescope-nvim
           neogit
-          # nvim-bufferline-lua
           nvim-lspconfig
           nvim-treesitter
           onedark-vim
