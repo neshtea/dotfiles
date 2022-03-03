@@ -1,7 +1,5 @@
 { ... }:
 
 {
-  imports = [
-    ./kitty
-  ];           
+  imports = [ ./emacs ./kitty ./neovim ];
 }

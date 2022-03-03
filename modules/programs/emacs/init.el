@@ -89,7 +89,7 @@
 
 ;; Taken from Johannes init.el
 ;; https://github.com/kenranunderscore/dotfiles/blob/main/modules/programs/emacs/emacs.d/init.el#L80
-(defun my--switch-theme (name)
+(defun snowcrash/switch-theme (name)
   "Switch themes interactively.  Similar to `load-theme' but also
 disables all other enabled themes."
   (interactive
@@ -109,7 +109,7 @@ disables all other enabled themes."
   :defer t
   :init
   ;; Make doom-one the default.
-  (my--switch-theme 'doom-one))
+  (snowcrash/switch-theme 'doom-opera))
 
 ;; Distinguish file-visiting buffers from other ones. Only works with
 ;; doom-themes (and maybe a few others).
@@ -180,7 +180,7 @@ Repeated invocations toggle between the two most recently open buffers."
   "f s" #'toggle-fullscreen
   "q r" #'restart-emacs
   "SPC" '(execute-extended-command :which-key "M-x")
-  "s t" '(my--switch-theme :which-key "change theme"))
+  "s t" '(snowcrash/switch-theme :which-key "change theme"))
 
 ;; Paredit allows to easily work with parens. Especially useful in
 ;; LISP-like languages.
@@ -244,7 +244,7 @@ Repeated invocations toggle between the two most recently open buffers."
   "c l" #'consult-line
   "c o" #'consult-outline
   "b b" #'consult-buffer
-  "/"   #'consult-git-grep)
+  "/"   #'consult-ripgrep)
 
 ;; marginalia annotates completion candidates in the completion at
 ;; point buffer. Plays nicely with consult, etc.
@@ -259,19 +259,77 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;; Highlights docker files and provides some basic commands (none of
 ;; which I use).
-(use-package dockerfile-mode)
+(use-package dockerfile-mode
+  :defer t)
 
 ;; Highighting and indentation for yaml.
-(use-package yaml-mode)
+(use-package yaml-mode
+  :defer t)
 
 ;; Complete anything -- auto completion framework.
-(use-package company :hook ((after-init . global-company-mode)))
+(use-package company
+  :hook
+  (after-init . global-company-mode)
+  :diminish company-mode)
+
+(use-package yasnippet
+  :init (yas-global-mode 1)
+  :diminish yas-minor-mode)
+
+;; See https://kristofferbalintona.me/posts/corfu-kind-icon-and-corfu-doc/
+;; (use-package corfu
+;;   :general
+;;   (:keymaps 'corfu-map
+;; 	    "C-n" #'corfu-next
+;; 	    "C-p" #'corfu-previous
+;; 	    "<escape>" #'corfu-quit
+;; 	    "<return>" #'corfu-insert
+;; 	    "M-d" #'corfu-show-documentation
+;; 	    "M-l" #'corfu-show-location)
+;;   (:keymaps '(corfu-map general-override-mode-map)
+;; 	    :states 'insert
+;; 	    "H-SPC" #'corfu-insert-seperator
+;; 	    "SPC" #'corfu-insert-separator)
+;;   :custom
+;;   (corfu-auto nil)
+;;   (corfu-auto-prefix 2)
+;;   (corfu-auto-delay 0.25)
+;;   (corfu-min-width 80)
+;;   (corfu-max-width corfu-min-width)  ; Always keep the same width
+;;   (corfu-count 14)
+;;   (corfu-scroll-margin 4)
+;;   (corfu-cycle nil)
+;;   (corfu-echo-documentation t)
+;;   (corfu-preselect-first t)
+  
+;;   :config
+;;   (corfu-global-mode)
+;;   ;(tab-always-indent 'complete)
+;;   ;(completion-cycle-threshold nil)
+;;   )
+
+;; (use-package no-littering)
+
+;; (use-package kind-icon
+;;   :after corfu
+;;   :custom
+;;   (kind-icon-ues-icons t)
+;;   (kind-icon-default-face 'corfu-default)
+;;   (kind-icon-blend-background nil)
+;;   (kind-icon-blend-frac 0.08)
+
+;;   (svg-lib-icons-dir (no-littering-expand-var-file-name "svg-lib/cache/")) ; Change cache dir
+;;   :config
+;;   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 ;; Working Clojure needs almost no configuration, just some nice
 ;; packages (ciderm, clj-refactor, clojure-mode).
-(use-package clj-refactor)
-(use-package clojure-mode)
-(use-package cider)
+(use-package clj-refactor
+  :defer t)
+(use-package clojure-mode
+  :defer t)
+(use-package cider
+  :defer t)
 
 (def-local-with-leader
   :keymaps 'clojure-mode-map
@@ -300,42 +358,36 @@ Repeated invocations toggle between the two most recently open buffers."
 (add-hook 'clojure-mode-hook #'custom-clojure-mode-hook)
 
 (use-package org
-  :config
-  (add-hook 'org-mode-hook #'auto-fill-mode)
-
-  ;; https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
-  (setq org-adapt-indentation t
-	org-hide-leading-stars t
-	org-return-follows-link t
-	;; Use org-mode for the initial *scratch* buffer.
-	initial-major-mode 'org-mode
-	;; Start any org-file in "overview"-mode.
-	org-startup-folded t
-	org-agenda-files '("~/Dropbox/Brain/Tasks/gtd.org")
-	org-capture-templates '(("t" "Todo [inbox/work]" entry
-				 (file+headline "~/Dropbox/Brain/Tasks/gtd.org" "INBOX")
-				 "* TODO %i%? \n  %U")
-				("c" "Capture [inbox]" entry
-				 (file+headline "~/Dropbox/Brain/Tasks/gtd.org" "INBOX")
-				 "* TODO %i%? \n  %a"))
-	org-refile-targets '(("~/Dropbox/Brain/Tasks/gtd.org" :maxlevel . 1)
-			     ("~/Dropbox/Brain/Tasks/lists.org" :maxlevel . 2)
-			     ("~/Dropbox/Brain/Tasks/someday.org" :level . 1))
+  :hook (org-mode . #'auto-fill-mode)
+  :custom
+  (org-adapt-indentation t)
+  (org-hide-leading-starts t)
+  (org-return-follows-link t)
+  (org-startup-folded 'content)
+  (org-agenda-files '("~/Dropbox/Brain/Tasks/gtd.org"))
+  (org-capture-templates '(("t" "Todo [inbox/work]" entry
+			    (file+headline "~/Dropbox/Brain/Tasks/gtd.org" "INBOX")
+			    "* TODO %i%? \n  %U")
+			   ("c" "Capture [inbox]" entry
+			    (file+headline "~/Dropbox/Brain/Tasks/gtd.org" "INBOX")
+			    "* TODO %i%? \n  %a")))
+  (org-refile-targets '(("~/Dropbox/Brain/Tasks/gtd.org" :maxlevel . 1)
+			("~/Dropbox/Brain/Tasks/lists.org" :maxlevel . 2)
+			("~/Dropbox/Brain/Tasks/someday.org" :level . 1)))
 	;; When the state of a section headline changes, log the
 	;; transition into the headlines drawer.
-	org-log-into-drawer 'LOGBOOK
-	org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "INPROGRESS(p!)" "|" "DONE(d!)" "CANCELLED(c!)"))))
+  (org-log-into-drawer 'LOGBOOK)
+  (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d!)" "CANCELLED(c!)"))))
 
 ;; Roam inspired mode for my zettelkasten using org mode.
 (use-package org-roam
   :after org
   :init
   (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/Dropbox/Brain/Knowledge/")
+  (org-roam-index-file "index.org")
   :config
-  (setq org-roam-directory "~/Dropbox/Brain/Knowledge/"
-	org-roam-index-file "index.org")
-  (add-hook 'after-init-hook 'org-roam-mode)
-  (require 'org-roam-protocol)
   (org-roam-setup))
 
 (def-with-leader
@@ -376,7 +428,9 @@ Repeated invocations toggle between the two most recently open buffers."
   "x o" #'org-open-at-point)
 
 ;; Work with nix files (syntax highlighting and indentation). 
-(use-package nix-mode :mode "\\.nix\\'")
+(use-package nix-mode
+  :mode "\\.nix\\'"
+  :hook (before-save . nix-format-before-save))
 
 ;; Nicer modeline with symbols, etc.
 (use-package doom-modeline
@@ -394,12 +448,13 @@ Repeated invocations toggle between the two most recently open buffers."
 ;; Magit (and Neogit for Neovim) are the very best tools for
 ;; interacting with git.
 (use-package magit
-  :hook (git-commit-mode . evil-insert-state)  ; Start commit messages in insert mode.
+  :hook ((git-commit-mode . evil-insert-state)  ; Start commit messages in insert mode.
+	 ;; https://github.com/dgutov/diff-hl#magit
+	 (magit-pre-refresh . diff-hl-magit-pre-refresh)
+	 (magit-post-refresh . diff-hl-magit-post-refresh))  
   :after diff-hl
   :config
-  (setq-default git-magit-status-fullscreen t)
-  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+  (setq-default git-magit-status-fullscreen t))
 
 (def-with-leader
   "g i" #'magit-init
@@ -419,7 +474,8 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (def-with-leader "z z" #'zoom-mode)
 
-(use-package helpful)
+(use-package helpful
+  :after evil)
 
 (def-with-leader
   "h f" #'helpful-callable
@@ -468,88 +524,86 @@ Repeated invocations toggle between the two most recently open buffers."
   :init
   (add-hook 'after-init-hook 'global-hl-todo-mode))
 
-(setq user-full-name "Marco Schneider")
-
-(let ((mu4epath
-       (concat
-        (f-dirname
-         (file-truename
-          (executable-find "mu")))
-        "/../share/emacs/site-lisp/mu4e")))
-  (when (and
-         (string-prefix-p "/nix/store/" mu4epath)
-         (file-directory-p mu4epath))
-    (add-to-list 'load-path mu4epath)))
-
-(use-package mu4e
-  :ensure nil
+;;;; Rust
+;; https://robert.kra.hn/posts/2021-02-07_rust-with-emacs/
+(use-package rustic
   :defer t
-  :commands (mu4e)
-  ;; Automatically break (and support M-q) in message mode.
-  :hook (message-mode . #'auto-fill-mode)
+  :hook (rustic-mode . #'snowcrash/rustic-mode-hook)
   :config
-  (setq mail-user-agent 'mu4e-user-agent)
-  (setq mu4e-confirm-quit nil)
-  ;; I don't sync drafts, so I don't care.
-  (setq mu4e-drafts-folder "/drafts")
-  (setq mu4e-attachment-dir "~/Downloads")
-  (setq mu4e-headers-fields '((:human-date . 12)
-			      (:flags . 6)
-			      (:maildir . 15)
-			      (:mailing-list . 10)
-			      (:from . 22)
-			      (:subject)))
-  (setq mu4e-context-policy 'pick-first)
-  (setq mu4e-compose-policy 'ask)
-  (setq mu4e-get-mail-command "mbsync -a")
-  (setq message-send-mail-function #'message-send-mail-with-sendmail)
-  (setq send-mail-function #'message-send-mail-with-sendmail)
-  (setq message-sendmail-envelope-from 'header)
-  (setq mail-envelope-from 'header)
-  (setq mail-specify-envelope-from 'header)
-  (setq message-kill-buffer-on-exit t)
-  (setq mu4e-contexts
-	`(,(make-mu4e-context
-	    :name "posteo"
-	    :match-func (lambda (msg)
-			  (when msg
-			    (string-prefix-p "/posteo"
-					     (mu4e-message-field msg :posteo)
-					     t)))
-	    :vars '((user-mail-address "marco.schneider@posteo.de")
-		   (mu4e-compose-signature . nil)
-		   (mu4e-sent-folder . "/posteo/Sent")
-		   (mu4e-trash-folder . "/posteo/Trash")
-		   (mu4e-refile-folder . (lambda (msg)
-					   (let* ((date (mu4e-message-field-at-point :date))
-						  (year (decoded-time-year (decode-time date))))
-					     (concat "/posteo/Archive/"
-						     (number-to-string year)))))))
-	  ,(make-mu4e-context
-	    :name "ag"
-	    :match-func (lambda (msg)
-			  (when msg
-			    (string-prefix-p "/ag"
-					     (mu4e-message-field msg :maildir)
-					     t)))
-	    :vars `((user-mail-address . "marco.schneider@active-group.de")
-		   (mu4e-compose-signature . ,(concat "Marco Schneider\n"
-						      "marco.schneider@active-group.de\n"
-						      "+49 7071 70896 81\n"
-						      "Hechinger Str. 12/1\n"
-						      "72072 Tübingen\n"
-						      "Registergericht: Amtsgericht Stuttgart, HRB 224404\n"
-						      "Geschäftsführer: Dr. Michael Sperber"))
-		   (mu4e-sent-folder "/ag/Sent")
-		   (mu4e-trash-folder . "/ag/Trash")
-		   (mu4e-refile-folder . (lambda (msg)
-					   (let* ((date (mu4e-message-field-at-point :date))
-						  (year (decoded-time-year (decode-time date))))
-					     (concat "/ag/Archives/"
-						     (number-to-string year))))))))))
+  ;; uncomment for less flashiness
+  ;; (setq lsp-eldoc-hook nil)
+  ;; (setq lsp-enable-symbol-highlighting nil)
+  ;; (setq lsp-signature-auto-activate nil)
 
-(def-with-leader
-  "m m" #'mu4e)
+  ;; comment to disable rustfmt on save
+  (setq rustic-format-on-save t))
+
+(def-local-with-leader
+  :keymaps 'clojure-mode-map
+  "u i" #'lsp-ui-imenu
+  "f r" #'lsp-find-references
+  "l a" #'lsp-execute-code-action
+  "l r" #'lsp-rename
+  "l s" #'lsp-rust-analyzer-status
+  "l w r" #'lsp-workspace-restart
+  "l w s" #'lsp-workspace-shutdown)
+
+(defun snowcrash/rustic-mode-hook ()
+  ;; so that run C-c C-c C-r works without having to confirm, but don't try to
+  ;; save rust buffers that are not file visiting. Once
+  ;; https://github.com/brotzeit/rustic/issues/253 has been resolved this should
+  ;; no longer be necessary.
+  (when buffer-file-name
+    (setq-local buffer-save-without-query t)))
+
+(use-package lsp-mode
+  :defer t
+  :commands lsp
+  :custom
+  (lsp-rust-analyzer-cargo-watch-command "check")
+  (lsp-eldoc-render-all t)
+  (lsp-idle-delay 0.6)
+  (lsp-rust-analyzer-server-display-inlay-hints t)
+  :hook ((elixir-mode . lsp)
+	 (rustic-mode . lsp)
+	 (tuareg-mode . lsp)
+	 (lsp-mode . #'lsp-ui-mode)))
+
+(use-package lsp-ui
+  :defer t
+  :commands lsp-ui-mode
+  :custom
+  (lsp-ui-peek-always-show t)
+  (lsp-ui-sideline-show-hover t)
+  (lsp-ui-doc-enable nil))
+
+(use-package envrc
+  :defer t
+  :init (envrc-global-mode))
+
+;;; Haskell
+(use-package haskell-mode
+  :custom
+  (haskell-process-type 'cabal-repl)
+  (haskell-interactive-popup-errors nil)
+  :hook (haskell-mode . interactive-haskell-mode))
+
+(def-local-with-leader
+  :keymaps 'interactive-haskell-mode-map
+  "i i" '(haskell-navigate-to-imports-go :which-key "go to imports")
+  "i r" '(haskell-navigate-imports-return :which-key "return from imports"))
+
+(use-package hledger-mode
+  :defer t
+  :mode ("\\.journal\\'" "\\.hledger\\'")
+  :hook (hledger-view-mode . #'hl-line-mode)
+  :custom
+  (hledger-jfile (expand-file-name "~/Dropbox/Brain/Finance/ledger2022.journal"))
+  :config
+  (add-to-list 'company-backends 'hledger-company))
+
+(use-package tuareg
+  :defer t)
 
 (provide 'init)
 ;;; init.el ends here

@@ -12,7 +12,7 @@ global.hlsearch = true
 global.lazyredraw = true
 global.showmatch = true
 global.backspace = [[eol,start,indent]]
-global.ruler = true
+-- global.ruler = true
 
 buffer.autoindent = true
 buffer.smartindent = true
@@ -35,7 +35,7 @@ vim.g.mapleader = ' '
 -- map cmd
 local cmd = vim.cmd
 
-cmd('colorscheme onedark')
+-- cmd('colorscheme onedark')
 
 -- Neogit
 local neogit = require('neogit')

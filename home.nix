@@ -1,6 +1,4 @@
-{ config, pkgs, ... }:
-rec
-{
+{ config, pkgs, ... }: rec {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -19,18 +17,17 @@ rec
   # changes in each release.
   home.stateVersion = "21.05";
 
-  imports = [
-    ./modules
-  ];
+  imports = [ ./modules ];
 
   home.packages = with pkgs; [
     bat
-#    cacert
-    clojure  # for compiling/running clojure code
-    clj-kondo  # for static clojure code checking
+    cargo
+    clojure # for compiling/running clojure code
+    clj-kondo # for static clojure code checking
+    clojure-lsp
     coreutils
     docker
-    docker-compose
+    # docker-compose
     elixir
     elixir_ls
     ffmpeg
@@ -41,79 +38,21 @@ rec
     hledger
     hledger-web
     htop
+    jdk
     leiningen
     gnumake
-    mu
     multimarkdown
-    msmtp  # for sending email
+    nixfmt
     nodejs
-    pinentry  # for GnuPG
+    ocamlPackages.ocaml-lsp
     ripgrep
     rlwrap
-    rustup
+    rustfmt
+    rust-analyzer
     silver-searcher
     wget
     youtube-dl
   ];
-
-  accounts.email = {
-    maildirBasePath = "${home.homeDirectory}/Mail";
-    certificatesFile = "/etc/ssl/cert.pem";
-    accounts = {
-      # https://beb.ninja/post/email/
-      posteo = {
-        address = "marco.schneider@posteo.de";
-        imap = {
-          host = "posteo.de";
-          port = 993;
-          tls.enable = true;
-        };
-        mbsync = {
-          enable = true;
-          create = "maildir";
-          expunge = "none";
-        };
-        msmtp.enable = true;
-        mu.enable = true;
-        notmuch.enable = true;
-        primary = true;
-        realName = "Marco Schneider";
-        # passwordCommand = "echo \"no passwordCommand set\"";
-        passwordCommand = "pass show email/marco.schneider@posteo.de";
-        smtp = {
-          host = "posteo.de";
-        };
-        userName = "marco.schneider@posteo.de";
-      };
-      ag = {
-        address = "marco.schneider@active-group.de";
-        imap = {
-          host = "imap.active-group.de";
-          port = null;
-          tls = {
-            enable = true;
-            useStartTls = true;
-          };
-        };
-        mbsync = {
-          enable = true;
-          create = "maildir";
-          expunge = "none";
-        };
-        msmtp = {
-          enable = true;
-        };
-        mu.enable = true;
-        realName = "Marco Schneider";
-        # passwordCommand = "echo \"no passwordCommand set\"";
-        passwordCommand = "pass show email/marco.schneider@active-group.de";
-        smtp = {
-          host = "smtp.active-group.de";
-        };
-        userName = "schneider";
-      };
-    };
-  };
 
   programs.direnv = {
     enable = true;
@@ -132,25 +71,15 @@ rec
     userEmail = "marco.schneider@active-group.de";
   };
 
-  programs.mbsync.enable = true;
-
-  programs.msmtp.enable = true;
-
   programs.mercurial = {
     enable = true;
     userName = "Marco Schneider";
     userEmail = "marco.schneider@active-group.de";
   };
 
-  programs.mu.enable = true;
-  
-  # programs.password-store.enable = true;
-
-  # Editors
-  modules.editors.neovim.enable = true;
-  modules.editors.emacs.enable = true;
-
-    # Programs
+  # Programs
+  modules.programs.neovim.enable = true;
+  modules.programs.emacs.enable = true;
   modules.programs.kitty.enable = true;
 
   # Shells and shell tools
