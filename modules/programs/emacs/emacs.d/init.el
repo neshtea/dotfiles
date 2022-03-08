@@ -52,12 +52,15 @@
 
 ;; Especially on MacOS, the exec path is always wrong.  This package
 ;; tries to fix that.
-(use-package exec-path-from-shell
-  :config
-  ;; Point to the fish shell installed via home-manager/nix.
-  (setenv "SHELL" (expand-file-name "~/.nix-profile/bin/fish"))
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-envs '("PATH")))
+;; SEE https://github.com/purcell/exec-path-from-shell#usage
+(use-package exec-path-from-shell)
+
+(dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
+  (add-to-list 'exec-path-from-shell-variables var))
+
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
 
 ;; Display possible keyboard shortcut completions.
 (use-package which-key
@@ -109,7 +112,7 @@ disables all other enabled themes."
   :defer t
   :init
   ;; Make doom-one the default.
-  (snowcrash/switch-theme 'doom-opera))
+  (snowcrash/switch-theme 'doom-laserwave))
 
 ;; Distinguish file-visiting buffers from other ones. Only works with
 ;; doom-themes (and maybe a few others).
@@ -358,10 +361,11 @@ Repeated invocations toggle between the two most recently open buffers."
 (add-hook 'clojure-mode-hook #'custom-clojure-mode-hook)
 
 (use-package org
-  :hook (org-mode . #'auto-fill-mode)
+  :hook ((org-mode . #'auto-fill-mode))
+
   :custom
   (org-adapt-indentation t)
-  (org-hide-leading-starts t)
+  (org-hide-leading-stars t)
   (org-return-follows-link t)
   (org-startup-folded 'content)
   (org-agenda-files '("~/Dropbox/Brain/Tasks/gtd.org"))
@@ -489,12 +493,16 @@ Repeated invocations toggle between the two most recently open buffers."
 			 (add-hook 'before-save-hook 'elixir-format nil t))))
 
 (use-package alchemist
-  :config
+  ;:custom
   ;; See https://alchemist.readthedocs.io/en/latest/configuration/
-  (setq alchemist-mix-command (expand-file-name "~/.nix-profile/bin/mix")
-	alchemist-iex-program-name (expand-file-name "~/.nix-profile/bin/iex")
-	alchemist-execute-command (expand-file-name "~/.nix-profile/bin/elixir")
-	alchemist-compile-command (expand-file-name "~/.nix-profile/bin/elixirc")))
+  ;; NOTE I don't want to pollute my global environment with those
+  ;; specific tools but rather have a nix-shell with these things
+  ;; installed.
+  ;(alchemist-mix-command (expand-file-name "~/.nix-profile/bin/mix"))
+  ;(alchemist-iex-program-name (expand-file-name "~/.nix-profile/bin/iex"))
+  ;(alchemist-execute-command (expand-file-name "~/.nix-profile/bin/elixir"))
+  ;(alchemist-compile-command (expand-file-name "~/.nix-profile/bin/elixirc"))
+  )
 
 (def-local-with-leader
   :keymaps 'elixir-mode-map

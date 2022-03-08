@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 
-let cfg = config.modules.editors.emacs;
+let cfg = config.modules.programs.emacs;
 in {
-  options.modules.editors.emacs = { enable = lib.mkEnableOption "emacs"; };
+  options.modules.programs.emacs = { enable = lib.mkEnableOption "emacs"; };
 
   config = lib.mkIf cfg.enable {
     programs.emacs = {
@@ -63,8 +63,10 @@ in {
         epkgs.markdown-mode
         epkgs.nix-mode
         epkgs.origami
+
         epkgs.org
         epkgs.org-roam
+
         epkgs.projectile
         epkgs.rainbow-delimiters
         epkgs.selectrum
@@ -77,6 +79,8 @@ in {
       ];
       package = pkgs.emacsMacport;
     };
-    xdg.configFile."emacs/init.el".source = ./init.el;
+
+    xdg.configFile."emacs/early-init.el".source = ./emacs.d/early-init.el;
+    xdg.configFile."emacs/init.el".source = ./emacs.d/init.el;
   };
 }

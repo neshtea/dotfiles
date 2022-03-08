@@ -21,13 +21,11 @@
 
   home.packages = with pkgs; [
     bat
-    cargo
     clojure # for compiling/running clojure code
     clj-kondo # for static clojure code checking
     clojure-lsp
     coreutils
     docker
-    # docker-compose
     elixir
     elixir_ls
     ffmpeg
@@ -38,17 +36,13 @@
     hledger
     hledger-web
     htop
-    jdk
-    leiningen
     gnumake
+    mattermost
     multimarkdown
     nixfmt
     nodejs
-    ocamlPackages.ocaml-lsp
     ripgrep
     rlwrap
-    rustfmt
-    rust-analyzer
     silver-searcher
     wget
     youtube-dl
@@ -57,6 +51,8 @@
   programs.direnv = {
     enable = true;
     enableFishIntegration = true;
+    # Makes nix-shells a LOT faster
+    nix-direnv.enable = true;
   };
 
   programs.fzf = {
@@ -69,6 +65,11 @@
     enable = true;
     userName = "Marco Schneider";
     userEmail = "marco.schneider@active-group.de";
+    delta.enable = true;
+    signing = {
+      key = "CF60CA4FCBB162A565C1D0D37CFCF3D5B2F0CF10";
+      signByDefault = true;
+    };
   };
 
   programs.mercurial = {
