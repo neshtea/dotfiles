@@ -66,10 +66,6 @@
     userName = "Marco Schneider";
     userEmail = "marco.schneider@active-group.de";
     delta.enable = true;
-    signing = {
-      key = "CF60CA4FCBB162A565C1D0D37CFCF3D5B2F0CF10";
-      signByDefault = true;
-    };
   };
 
   programs.mercurial = {
