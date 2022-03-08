@@ -1,7 +1,20 @@
 * home-manager configuration
   
-  This repository contains my personal [[https://github.com/nix-community/home-manager][[home-manager]] configuration.
+  This repository contains my personal [[https://github.com/nix-community/home-manager][home-manager]] configuration.
 
   It is somewhat modularized (see [[./modules]]).  I wouldn't recommend
   anyone trying to copy anything in here (there are better, more well
   thought out configurations like this [[https://github.com/kenranunderscore/dotfiles][this one]]).
+** Activation/Hosts
+   I use this configuration on both my work computer (MacOS) and
+   personal computer (NixOS).
+
+   Section 6.3 of the [[https://rycee.gitlab.io/home-manager/][home-manager manual]] describes how to achieve a
+   shared config for multiple hosts.
+
+   To active for the host I'm on, I just symlink the matching configuration to =home.nix=
+
+
+   #+begin_src bash
+     ln -s hosts/<hostname>.nix home.nix
+   #+end_src
