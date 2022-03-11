@@ -15,7 +15,6 @@
   imports = [ ../modules ];
 
   home.packages = with pkgs; [
-    bat
     clojure # for compiling/running clojure code
     clj-kondo # for static clojure code checking
     clojure-lsp
@@ -24,13 +23,10 @@
     elixir
     elixir_ls
     ffmpeg
-    fzf
-    git
     gnugrep
     gnupg
     hledger
     hledger-web
-    htop
     gnumake
     mattermost
     multimarkdown
@@ -43,30 +39,36 @@
     youtube-dl
   ];
 
-  programs.direnv = {
-    enable = true;
-    enableFishIntegration = true;
-    # Makes nix-shells a LOT faster
-    nix-direnv.enable = true;
-  };
+  programs = {
+    bat.enable = true;
 
-  programs.fzf = {
-    enable = true;
-    enableFishIntegration = true;
-    enableZshIntegration = true;
-  };
+    direnv = {
+      enable = true;
+      enableFishIntegration = true;
+      # Makes nix-shells a LOT faster
+      nix-direnv.enable = true;
+    };
 
-  programs.git = {
-    enable = true;
-    userName = "Marco Schneider";
-    userEmail = "marco.schneider@active-group.de";
-    delta.enable = true;
-  };
+    fzf = {
+      enable = true;
+      enableFishIntegration = true;
+      enableZshIntegration = true;
+    };
 
-  programs.mercurial = {
-    enable = true;
-    userName = "Marco Schneider";
-    userEmail = "marco.schneider@active-group.de";
+    git = {
+      enable = true;
+      userName = "Marco Schneider";
+      userEmail = "marco.schneider@active-group.de";
+      delta.enable = true;
+    };
+
+    htop.enable = true;
+
+    mercurial = {
+      enable = true;
+      userName = "Marco Schneider";
+      userEmail = "marco.schneider@active-group.de";
+    };
   };
 
   # Programs

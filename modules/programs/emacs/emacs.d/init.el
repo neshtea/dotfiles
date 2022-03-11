@@ -21,7 +21,8 @@
  ;; See https://www.emacswiki.org/emacs/AlarmBell.
  ring-bell-function 'ignore
  ;; Always prefer the "newer" version of a file.
- load-prefer-newer t)
+ load-prefer-newer t
+ max-lisp-eval-depth 10000)
 
 ;; "When you visit a file, point goes to the last place where it was
 ;; when you previously visited the same file."
