@@ -10,6 +10,9 @@ in {
         enableCompletion = true;
         enableAutosuggestions = true;
         enableSyntaxHighlighting = true;
+        initExtraBeforeCompInit = ''
+          . $HOME/.nix-profile/etc/profile.d/nix.sh
+        '';
         oh-my-zsh = {
           enable = true;
           plugins = [
