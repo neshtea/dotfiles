@@ -1,8 +1,5 @@
 { ... }:
 
 {
-  imports = [
-    ./fish
-    ./tmux
-  ];
+  imports = [ ./fish ./tmux ./zsh ];
 }
