@@ -1,20 +1,34 @@
-* home-manager configuration
-  
-  This repository contains my personal [[https://github.com/nix-community/home-manager][home-manager]] configuration.
+#+TITLE: home-manager configuration
+This repository contains my personal [[https://github.com/nix-community/home-manager][home-manager]] configuration.
 
-  It is somewhat modularized (see [[./modules]]).  I wouldn't recommend
-  anyone trying to copy anything in here (there are better, more well
-  thought out configurations like this [[https://github.com/kenranunderscore/dotfiles][this one]]).
-** Activation/Hosts
-   I use this configuration on both my work computer (MacOS) and
-   personal computer (NixOS).
+It is somewhat modularized (see [[./modules]]).  I wouldn't recommend
+anyone trying to copy anything in here (there are better, more well
+thought out configurations like this [[https://github.com/kenranunderscore/dotfiles][this one]]).
 
-   Section 6.3 of the [[https://rycee.gitlab.io/home-manager/][home-manager manual]] describes how to achieve a
-   shared config for multiple hosts.
+As of =194db9ecc5604a9063daea91388e9bf0b302f922=, my configuration is
+using flakes.
 
-   To active for the host I'm on, I just symlink the matching configuration to =home.nix=
+For general information on how to use =flakes= with =home-manager=,
+see [[https://nix-community.github.io/home-manager/index.html#ch-nix-flakes][the chapter on Nix flakes in the home-manager manual]].
+* Building
+To initially build the configuration, run
 
+#+begin_src
+nix build --no-link .#homeConfigurations.schneider.activationPackage
+"$(nix path-info .#homeConfigurations.schneider.activationPackage)"/activate
+#+end_src
 
-   #+begin_src bash
-     ln -s hosts/<hostname>.nix home.nix
-   #+end_src
+This has to be done only once.  For updates, see [[Updates][Updates]].
+
+* Updates
+** =switch= to a new generation
+To build a new system (_not_ the [[Building][initial]] build), run
+
+#+begin_src
+home-manager switch --flake .#schneider
+#+end_src 
+** update packages
+To update the packages (i.e. upgrade), run
+#+begin_src 
+nix flake update
+#+end_src
