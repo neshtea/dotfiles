@@ -32,7 +32,6 @@ in
             '';
           };
         };
-        promptInit = "${pkgs.starship}/bin/starship init fish | source";
         shellAbbrs = {
           hme = "home-manager edit";
           hms = "home-manager switch";
