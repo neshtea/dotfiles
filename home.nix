@@ -23,6 +23,8 @@
     darwin.apple_sdk.frameworks.Foundation
     darwin.apple_sdk.frameworks.Security
 
+    cacert
+
     clojure # for compiling/running clojure code
     clj-kondo # for static clojure code checking
     clojure-lsp
