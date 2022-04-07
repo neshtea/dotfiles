@@ -61,8 +61,16 @@ in {
         epkgs.magit-todos
         epkgs.marginalia
         epkgs.markdown-mode
+
+        epkgs.merlin
+        epkgs.merlin-company
+        epkgs.ocp-indent
+        epkgs.utop
+
         epkgs.nix-mode
         epkgs.origami
+
+        epkgs.tidal
 
         epkgs.org
         epkgs.org-roam

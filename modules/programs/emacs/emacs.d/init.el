@@ -1,5 +1,4 @@
 ;;; init.el --- Summary
-;;; hide certain modes in modeline
 
 ;; Commentary:
 ;;; Configuration for Emacs
@@ -46,6 +45,10 @@
 
 ;; Alwas show matching parens.
 (show-paren-mode 1)
+
+;; Add the path to emacs lisp from packages installed via nix (such as Tuareg,
+;; Merlin, ...).  See https://nixos.wiki/wiki/OCaml
+(add-to-list 'package-directory-list "~/.nix-profile/share/emacs/site-lisp/elpa")
 
 ;; We install packages via nix home-manager, but we still configure
 ;; them via use-package
@@ -113,7 +116,7 @@ disables all other enabled themes."
   :defer t
   :init
   ;; Make doom-one the default.
-  (snowcrash/switch-theme 'doom-laserwave))
+  (snowcrash/switch-theme 'doom-zenburn))
 
 ;; Distinguish file-visiting buffers from other ones. Only works with
 ;; doom-themes (and maybe a few others).
@@ -361,11 +364,14 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (add-hook 'clojure-mode-hook #'custom-clojure-mode-hook)
 
+(use-package org-indent)
+
 (use-package org
-  :hook ((org-mode . #'auto-fill-mode))
+  :hook (org-mode . #'auto-fill-mode)
 
   :custom
-  (org-adapt-indentation t)
+  (org-adapt-indentation nil)
+  (org-startup-indented t)
   (org-hide-leading-stars t)
   (org-return-follows-link t)
   (org-startup-folded 'content)
@@ -575,7 +581,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (lsp-rust-analyzer-server-display-inlay-hints t)
   :hook ((elixir-mode . lsp)
 	 (rustic-mode . lsp)
-	 (tuareg-mode . lsp)
+	 ;(tuareg-mode . lsp)
 	 (lsp-mode . #'lsp-ui-mode)))
 
 (use-package lsp-ui
@@ -585,6 +591,22 @@ Repeated invocations toggle between the two most recently open buffers."
   (lsp-ui-peek-always-show t)
   (lsp-ui-sideline-show-hover t)
   (lsp-ui-doc-enable nil))
+
+(use-package merlin
+  :hook ((tuareg-mode . merlin-mode)
+	 (caml-mode . merlin-mode))
+  :custom
+  (merlin-command "ocamlmerlin"))
+
+(use-package utop
+  :hook
+  (tuareg-mode . utop-minor-mode))
+
+(use-package merlin-company
+  :defer t)
+
+(use-package ocp-indent
+  :defer t)
 
 (use-package envrc
   :defer t
