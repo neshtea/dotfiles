@@ -10,9 +10,9 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "21.05";
+  home.stateVersion = "22.05";
 
-  imports = [ ../modules ];
+  imports = [ ./modules ];
 
   home.username = "schneider";
   home.homeDirectory = "/Users/${home.username}";
@@ -52,14 +52,13 @@
 
     direnv = {
       enable = true;
-      enableFishIntegration = true;
+      enableZshIntegration = true;
       # Makes nix-shells a LOT faster
       nix-direnv.enable = true;
     };
 
     fzf = {
       enable = true;
-      enableFishIntegration = true;
       enableZshIntegration = true;
     };
 
@@ -82,9 +81,8 @@
   # Programs
   modules.programs.neovim.enable = true;
   modules.programs.emacs.enable = true;
-  modules.programs.kitty.enable = true;
 
   # Shells and shell tools
-  modules.shell.fish.enable = true;
+  modules.shell.zsh.enable = true;
   modules.shell.tmux.enable = true;
 }
