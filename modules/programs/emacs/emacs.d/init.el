@@ -116,7 +116,7 @@ disables all other enabled themes."
   :defer t
   :init
   ;; Make doom-one the default.
-  (snowcrash/switch-theme 'doom-zenburn))
+  (snowcrash/switch-theme 'doom-gruvbox))
 
 ;; Distinguish file-visiting buffers from other ones. Only works with
 ;; doom-themes (and maybe a few others).
