@@ -22,6 +22,10 @@ in {
         epkgs.no-littering
         epkgs.yasnippet
 
+        # Purescript
+        epkgs.psc-ide
+        epkgs.purescript-mode
+
         # Visuals
         epkgs.solaire-mode
         epkgs.cycle-themes

@@ -46,10 +46,6 @@
 ;; Alwas show matching parens.
 (show-paren-mode 1)
 
-;; Add the path to emacs lisp from packages installed via nix (such as Tuareg,
-;; Merlin, ...).  See https://nixos.wiki/wiki/OCaml
-(add-to-list 'package-directory-list "~/.nix-profile/share/emacs/site-lisp/elpa")
-
 ;; We install packages via nix home-manager, but we still configure
 ;; them via use-package
 (require 'use-package)
@@ -64,7 +60,6 @@
 
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
-
 
 ;; Display possible keyboard shortcut completions.
 (use-package which-key
@@ -144,13 +139,14 @@ disables all other enabled themes."
 ;; evil-collection contains a large repository of behaviours that make
 ;; lots of buffers behave the way you would expect in evil-mode.
 (use-package evil-collection
-  :after (evil)
+  :after evil
   :config
   (evil-collection-init))
 
 ;; Same as evil-collection, but specific to org-mode.
 ;; https://github.com/Somelauw/evil-org-mode
 (use-package evil-org
+  :defer t
   :after (evil org)
   :hook (org-mode . evil-org-mode)
   :config
@@ -364,10 +360,12 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (add-hook 'clojure-mode-hook #'custom-clojure-mode-hook)
 
-(use-package org-indent)
+(use-package org-indent
+  :defer t
+  :after org)
 
 (use-package org
-  :hook (org-mode . #'auto-fill-mode)
+  :hook (org-mode . auto-fill-mode)
 
   :custom
   (org-adapt-indentation nil)
@@ -382,7 +380,7 @@ Repeated invocations toggle between the two most recently open buffers."
 			   ("c" "Capture [inbox]" entry
 			    (file+headline "~/Dropbox/Brain/Tasks/gtd.org" "INBOX")
 			    "* TODO %i%? \n  %a")))
-  (org-refile-targets '(("~/Dropbox/Brain/Tasks/gtd.org" :maxlevel . 1)
+  (org-refile-targets '(("~/Dropbox/Brain/Tasks/gtd.org" :maxlevel . 2)
 			("~/Dropbox/Brain/Tasks/lists.org" :maxlevel . 2)
 			("~/Dropbox/Brain/Tasks/someday.org" :level . 1)))
 	;; When the state of a section headline changes, log the
@@ -392,6 +390,7 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;; Roam inspired mode for my zettelkasten using org mode.
 (use-package org-roam
+  :defer t
   :after org
   :init
   (setq org-roam-v2-ack t)
@@ -440,6 +439,7 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;; Work with nix files (syntax highlighting and indentation). 
 (use-package nix-mode
+  :defer t
   :mode "\\.nix\\'"
   :hook (before-save . nix-format-before-save))
 
@@ -454,7 +454,8 @@ Repeated invocations toggle between the two most recently open buffers."
   "f -" #'text-scale-decrease
   "f 0" #'text-scale-adjust)
 
-(use-package diff-hl :init (global-diff-hl-mode))
+(use-package diff-hl
+  :init (global-diff-hl-mode))
 
 ;; Magit (and Neogit for Neovim) are the very best tools for
 ;; interacting with git.
@@ -469,7 +470,9 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (def-with-leader
   "g i" #'magit-init
-  "g s" #'magit)
+  "g s" #'magit
+  "g b" #'magit-blame
+  "g i" #'magit-gitignore)
 
 (def-with-leader
   "t c i" #'timeclock-in
@@ -617,7 +620,15 @@ Repeated invocations toggle between the two most recently open buffers."
   :custom
   (haskell-process-type 'cabal-repl)
   (haskell-interactive-popup-errors nil)
+  (haskell-compiler-type 'cabal)
+  (haskell-process-type 'cabal)
+  (haskell-stylish-on-save 't)
   :hook (haskell-mode . interactive-haskell-mode))
+
+;; (use-package lsp-haskell
+;;   :custom
+;;   (lsp-haskell-server-path "haskell-language-server")
+;;   (lsp-haskell-formatting-provider "stylish-haskell"))
 
 (def-local-with-leader
   :keymaps 'interactive-haskell-mode-map
@@ -635,6 +646,20 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (use-package tuareg
   :defer t)
+
+(use-package lsp-rescript
+  :defer t)
+
+(use-package purescript-mode
+  :defer t)
+
+(use-package psc-ide
+  :defer t
+  :hook (purescript-mode . (lambda ()
+			     (psc-ide-mode)
+			     (turn-on-purescript-indentation)))
+  :custom
+  (psc-ide-use-npm-bin t))
 
 (provide 'init)
 ;;; init.el ends here
