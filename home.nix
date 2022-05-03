@@ -29,16 +29,19 @@
     clj-kondo # for static clojure code checking
     clojure-lsp
     coreutils
+
     docker
+    docker-compose
+
     elixir
     elixir_ls
+
     ffmpeg
     gnugrep
     gnupg
+    gnumake
     hledger
     hledger-web
-    gnumake
-    mattermost
     multimarkdown
     nixfmt
     nodejs
