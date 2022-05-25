@@ -52,8 +52,9 @@ in {
 
         epkgs.dockerfile-mode
 
-        epkgs.babel
         epkgs.haskell-mode
+        epkgs.lsp-haskell
+
         epkgs.helpful
         epkgs.kind-icon
         epkgs.hl-todo

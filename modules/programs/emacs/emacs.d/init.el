@@ -451,6 +451,7 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (def-with-leader
   "f +" #'text-scale-increase
+  "f =" #'text-scale-increase
   "f -" #'text-scale-decrease
   "f 0" #'text-scale-adjust)
 
@@ -625,10 +626,10 @@ Repeated invocations toggle between the two most recently open buffers."
   (haskell-stylish-on-save 't)
   :hook (haskell-mode . interactive-haskell-mode))
 
-;; (use-package lsp-haskell
-;;   :custom
-;;   (lsp-haskell-server-path "haskell-language-server")
-;;   (lsp-haskell-formatting-provider "stylish-haskell"))
+(use-package lsp-haskell
+  :custom
+  (lsp-haskell-server-path "haskell-language-server")
+  (lsp-haskell-formatting-provider "stylish-haskell"))
 
 (def-local-with-leader
   :keymaps 'interactive-haskell-mode-map
