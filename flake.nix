@@ -9,21 +9,35 @@
     };
   };
   outputs = { nixpkgs, home-manager, ... }:
-    let
-      system = "x86_64-darwin";
-      username = "schneider";
-      pkgs = import nixpkgs {
-        config.allowUnfree = true;
-        inherit system;
-      };
+    let username = "schneider";
     in {
-      homeConfigurations.${username} =
-        home-manager.lib.homeManagerConfiguration {
-          configuration = import ./home.nix;
+      homeConfigurations = {
+        x86_64-darwin = let
+          system = "x86_64-darwin";
+          pkgs = import nixpkgs {
+            config.allowUnfree = true;
+            inherit system;
+          };
+        in home-manager.lib.homeManagerConfiguration {
+          configuration = import ./x86_64-darwin.nix;
 
           inherit system username pkgs;
-          homeDirectory = "/Users/${username}";
+          homeDirectory = "/Users/schneider";
           stateVersion = "22.05";
         };
+        x86_64-linux = let
+          system = "x86_64-linux";
+          pkgs = import nixpkgs {
+            config.allowUnfree = true;
+            inherit system;
+          };
+        in home-manager.lib.homeManagerConfiguration {
+          configuration = import ./x86_64-linux.nix;
+
+          inherit system username pkgs;
+          homeDirectory = "/home/schneider";
+          stateVersion = "22.05";
+        };
+      };
     };
 }

@@ -18,11 +18,6 @@
   home.homeDirectory = "/Users/${home.username}";
 
   home.packages = with pkgs; [
-    # macOS specific stuff
-    darwin.apple_sdk.frameworks.CoreFoundation
-    darwin.apple_sdk.frameworks.Foundation
-    darwin.apple_sdk.frameworks.Security
-
     cacert
 
     clojure # for compiling/running clojure code
@@ -36,7 +31,9 @@
     elixir
     elixir_ls
 
+    tree
     ffmpeg
+    imagemagick
     gnugrep
     gnupg
     gnumake
