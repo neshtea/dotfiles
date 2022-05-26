@@ -1,7 +1,9 @@
 { config, pkgs, ... }: rec {
   imports = [ ./home.nix ];
-  home.packages = with pkgs; [ firefox element mattermost-client ];
+
+  fonts.fontconfig.enable = true;
+
+  home.packages = with pkgs; [ firefox element mattermost-desktop iosevka ];
 
   modules.programs.kitty.enable = true;
-
 }
