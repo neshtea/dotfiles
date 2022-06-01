@@ -9,13 +9,12 @@
     package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
-    ''; };
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+    '';
+  };
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
-  nixpkgs.config.allowUnfree = true;
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -54,49 +53,49 @@
     };
     xserver = {
       enable = true;
-      videoDrivers = [ "radeon" ]; 
+      videoDrivers = [ "radeon" ];
       libinput = {
-	enable = true;
-	mouse.naturalScrolling = true;
+        enable = true;
+        mouse.naturalScrolling = true;
       };
       layout = "us";
-      displayManager = { 
+      displayManager = {
         session = [{
-	  manage = "window";
-	  name = "fake";
-	  start = "";
-	}];
-	defaultSession = "none+fake";
-	autoLogin = {
-	  enable = true;
-	  user = "schneider";
-	};
-	lightdm = {
-	  enable = true;
-	  greeters.mini.enable = true;
-	  greeters.mini.user = "schneider";
-	};
-	sessionCommands =
+          manage = "window";
+          name = "fake";
+          start = "";
+        }];
+        defaultSession = "none+fake";
+        autoLogin = {
+          enable = true;
+          user = "schneider";
+        };
+        lightdm = {
+          enable = true;
+          greeters.mini.enable = true;
+          greeters.mini.user = "schneider";
+        };
+        sessionCommands =
           # https://nixos.wiki/wiki/Keyboard_Layout_Customization
-	  let myCustomLayout = pkgs.writeText "xkb-layout" ''
-	    ! Map umlauts to RIGHT ALT + <key>
-            keycode 108 = Mode_switch
-            keysym e = e E EuroSign
-            keysym c = c C cent
-            keysym a = a A adiaeresis Adiaeresis
-            keysym o = o O odiaeresis Odiaeresis
-            keysym u = u U udiaeresis Udiaeresis
-            keysym s = s S ssharp
-    
-            ! disable capslock
-            ! remove Lock = Caps_Lock
-	  '';
-	  in "${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}";
+          let
+            myCustomLayout = pkgs.writeText "xkb-layout" ''
+              	    ! Map umlauts to RIGHT ALT + <key>
+                          keycode 108 = Mode_switch
+                          keysym e = e E EuroSign
+                          keysym c = c C cent
+                          keysym a = a A adiaeresis Adiaeresis
+                          keysym o = o O odiaeresis Odiaeresis
+                          keysym u = u U udiaeresis Udiaeresis
+                          keysym s = s S ssharp
+                  
+                          ! disable capslock
+                          ! remove Lock = Caps_Lock
+              	  '';
+          in "${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}";
       };
       xkbOptions = "eurosign:e,caps:ctrl_modifier";
     };
   };
-
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -116,8 +115,9 @@
     users.schneider = {
       isNormalUser = true;
       home = "/home/schneider";
-      extraGroups = [ "wheel" "networkmanager" "docker" ]; # Enable ‘sudo’ for the user.
-     };
+      extraGroups =
+        [ "wheel" "networkmanager" "docker" ]; # Enable ‘sudo’ for the user.
+    };
   };
 
   # List packages installed in system profile. To search, run:
