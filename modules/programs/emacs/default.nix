@@ -32,10 +32,14 @@ in {
         epkgs.diff-hl
         epkgs.doom-modeline
         epkgs.doom-themes
+        epkgs.all-the-icons
 
         # Elixir
         epkgs.alchemist
         epkgs.elixir-mode
+
+        # Racket
+        epkgs.racket-mode
 
         # Latex
         epkgs.auctex-latexmk
@@ -90,7 +94,7 @@ in {
         epkgs.yaml-mode
         epkgs.zoom
       ];
-      package = pkgs.emacsMacport;
+      # package = pkgs.emacsMacport;
     };
 
     xdg.configFile."emacs/early-init.el".source = ./emacs.d/early-init.el;

@@ -5,13 +5,17 @@ in {
   options.modules.shell.zsh = { enable = lib.mkEnableOption "zsh"; };
   config = lib.mkIf cfg.enable {
     programs = {
+      starship = {
+        enable = true;
+        enableZshIntegration = true;
+      };
       zsh = {
         enable = true;
         enableCompletion = true;
         enableAutosuggestions = true;
         enableSyntaxHighlighting = true;
         initExtraBeforeCompInit = ''
-          . $HOME/.nix-profile/etc/profile.d/nix.sh
+          eval "$(starship init zsh)"
         '';
         oh-my-zsh = {
           enable = true;

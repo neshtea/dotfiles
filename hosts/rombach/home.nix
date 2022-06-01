@@ -1,5 +1,5 @@
 { config, pkgs, ... }: rec {
-  imports = [ ./home.nix ];
+  imports = [ ../home.nix ];
   home.packages = with pkgs; [
     # macOS specific stuff
     darwin.apple_sdk.frameworks.CoreFoundation

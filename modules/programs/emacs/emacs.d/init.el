@@ -33,6 +33,14 @@
 
 ;; Set the font.
 (set-frame-font "Iosevka-14" t t)
+;; (set-face-attribute 'default nil
+;;                     :font "Iosevka"
+;;                     :weight 'regular
+;;                     :height 140)
+;; (set-face-attribute 'fixed-pitch nil
+;;                     :font "Iosevka"
+;;                     :weight 'regular
+;;                     :height 140)
 
 ;; Disable menubar/scrollbar/toolbar.
 (menu-bar-mode -1)
@@ -449,6 +457,8 @@ Repeated invocations toggle between the two most recently open buffers."
   :config
   (setq doom-modeline-height 25))
 
+(use-package all-the-icons)
+
 (def-with-leader
   "f +" #'text-scale-increase
   "f =" #'text-scale-increase
@@ -661,6 +671,10 @@ Repeated invocations toggle between the two most recently open buffers."
 			     (turn-on-purescript-indentation)))
   :custom
   (psc-ide-use-npm-bin t))
+
+(use-package racket-mode
+  :defer t
+  :hook (racket-mode . enable-paredit-mode))
 
 (provide 'init)
 ;;; init.el ends here

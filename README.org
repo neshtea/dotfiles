@@ -1,4 +1,7 @@
 #+TITLE: home-manager configuration
+#+AUTHOR: Marco Schneider
+#+EMAIL: marco.schneider@posteo.de
+
 This repository contains my personal [[https://github.com/nix-community/home-manager][home-manager]] configuration.
 
 It is somewhat modularized (see [[./modules]]).  I wouldn't recommend
