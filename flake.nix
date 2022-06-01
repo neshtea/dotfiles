@@ -19,8 +19,16 @@
       # eine flake mit outputs fuer
       # - home-manager mit macos
       # - home-manager + configuration.nix + blablabla
-      nixosConfigurations.anarres = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.anarres = let
         system = "x86_64-linux";
+        pkgs = import nixpkgs {
+          config.allowUnfree = true;
+          inherit system;
+        };
+
+      in nixpkgs.lib.nixosSystem {
+        inherit pkgs system specialArgs;
+
         modules = [
           ./hosts/anarres/configuration.nix
           home-manager.nixosModules.home-manager
