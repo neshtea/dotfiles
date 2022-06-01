@@ -91,4 +91,6 @@
   # Shells and shell tools
   modules.shell.zsh.enable = true;
   modules.shell.tmux.enable = true;
+
+  xdg.configFile."nixpkgs/config.nix".source = ../config.nix;
 }
