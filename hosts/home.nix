@@ -18,39 +18,41 @@
 
   home.packages = with pkgs; [
     cacert
-
-    clojure # for compiling/running clojure code
-    clj-kondo # for static clojure code checking
-    clojure-lsp
-    # we have lots or clojure projects managed via leinigen
-    # that don't provide a nix shell, so let's have this
-    # available everywhere.
-    leiningen
-
     coreutils
 
+    # we have lots or clojure projects that don't provide a nix shell,
+    # so let's have this available everywhere.
+    clojure
+    leiningen
+
+    # most projects don't define a specific docker/docker-compose, so
+    # let's have this available user-wide.
     docker
     docker-compose
 
-    elixir
-    elixir_ls
-
-    tree
-    ffmpeg
-    imagemagick
-    gnugrep
-    gnupg
+    # Same here: Most project that are managed with make assume you
+    # have it already.
     gnumake
+
+    # Accounting
     hledger
     hledger-web
-    multimarkdown
-    nixfmt
-    nodejs
-    ripgrep
+
+    # Some system stuff that is independent of coding/projects
+    ffmpeg
+    gnugrep
+    gnupg
+    imagemagick
     rlwrap
     silver-searcher
-    wget
+    tree
     youtube-dl
+    wget
+
+    # Required for some modules and nice utilities to have
+    nixfmt
+    multimarkdown
+    ripgrep
   ];
 
   programs = {
