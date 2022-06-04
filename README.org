@@ -2,36 +2,61 @@
 #+AUTHOR: Marco Schneider
 #+EMAIL: marco.schneider@posteo.de
 
-This repository contains my personal [[https://github.com/nix-community/home-manager][home-manager]] configuration.
+This repository contains my personal nixos and [[https://github.com/nix-community/home-manager][home-manager]]
+configuration.
+
+It manages the configuration for multiple hosts:
+
+- [[./hosts/rombach]]: My work MacBook Pro, running macOS.
+- [[./hosts/anarres]]: My personal stationary PC, running NixOS.
+
+* Home configuartion
+Shared configuration between hosts can be found in [[./hosts/home.nix]].
+Each host refines that configuration in their respective =home.nix=
+declarations.
+
+* System configuration
+Each NixOS host defines its system configuration in
+- [[./hosts/anarres/configuration.nix][host/<hostname>/configuration.nix]]: System configuration.
+- [[./hosts/anarres/hardware-configuration.nix][host/<hostname>/hardware-configuration.nix]]: Hardware specific
+  configuration configuration.
 
 It is somewhat modularized (see [[./modules]]).  I wouldn't recommend
 anyone trying to copy anything in here (there are better, more well
-thought out configurations like this [[https://github.com/kenranunderscore/dotfiles][this one]]).
+thought out configurations like this [[https://github.com/kenranunderscore/dotfiles][this one]]), but it does the job.
+Modules can be included in the respecfive home configurations via an
+enable option (and possible more).  If, for example, you want your
+host to use the configured [[https://sw.kovidgoyal.net/kitty/][kitty terminal emulator]], just enable it in
+the home configuration like this:
 
+#+begin_src nix
+  modules.programs.kitty.enable = true;
+#+end_src
+
+* Updates
+** Switch to a new generation
+*** NixOS
+Using =nixos-rebuild=:
+#+begin_src
+  nixos-rebuild switch --flake <point to dotfiles> --use-remote-sudo
+#+end_src
+*** macOS
+Using =home-manager=:
+#+begin_src
+  home-manager switch --flake <point to dotfiles>
+#+end_src
+** Update packages
+To update the packages (i.e. upgrade), run
+#+begin_src 
+nix flake update
+#+end_src
+* Notable changes
+** Share configuration between NixOS and Darwin hosts
+As of =329217b05b1faee7c113fbde2da6fdd7f4db02c3=, it manages both my
+personal NixOS machine and my work MacBook Pro.
+** Move to flakes
 As of =194db9ecc5604a9063daea91388e9bf0b302f922=, my configuration is
 using flakes.
 
 For general information on how to use =flakes= with =home-manager=,
 see [[https://nix-community.github.io/home-manager/index.html#ch-nix-flakes][the chapter on Nix flakes in the home-manager manual]].
-* Building
-To initially build the configuration, run
-
-#+begin_src
-nix build --no-link .#homeConfigurations.schneider.activationPackage
-"$(nix path-info .#homeConfigurations.schneider.activationPackage)"/activate
-#+end_src
-
-This has to be done only once.  For updates, see [[Updates][Updates]].
-
-* Updates
-** =switch= to a new generation
-To build a new system (_not_ the [[Building][initial]] build), run
-
-#+begin_src
-home-manager switch --flake .#schneider
-#+end_src 
-** update packages
-To update the packages (i.e. upgrade), run
-#+begin_src 
-nix flake update
-#+end_src
