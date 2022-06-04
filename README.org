@@ -14,7 +14,6 @@ It manages the configuration for multiple hosts:
 Shared configuration between hosts can be found in [[./hosts/home.nix]].
 Each host refines that configuration in their respective =home.nix=
 declarations.
-
 * System configuration
 Each NixOS host defines its system configuration in
 - [[./hosts/anarres/configuration.nix][host/<hostname>/configuration.nix]]: System configuration.
@@ -52,11 +51,11 @@ nix flake update
 #+end_src
 * Notable changes
 ** Share configuration between NixOS and Darwin hosts
-As of =329217b05b1faee7c113fbde2da6fdd7f4db02c3=, it manages both my
+As of [[github.com/neshtea/dotfiles/commit/329217b05b1faee7c113fbde2da6fdd7f4db02c3][=329217b05b1faee7c113fbde2da6fdd7f4db02c3=]] it manages both my
 personal NixOS machine and my work MacBook Pro.
 ** Move to flakes
-As of =194db9ecc5604a9063daea91388e9bf0b302f922=, my configuration is
-using flakes.
+As of [[https://github.com/neshtea/dotfiles/commit/194db9ecc5604a9063daea91388e9bf0b302f922][=194db9ecc5604a9063daea91388e9bf0b302f922=]] my configuration is
+using flakes.  For general information on how to use =flakes= with
+=home-manager=, see [[https://nix-community.github.io/home-manager/index.html#ch-nix-flakes][the chapter on Nix flakes in the home-manager
+manual]].
 
-For general information on how to use =flakes= with =home-manager=,
-see [[https://nix-community.github.io/home-manager/index.html#ch-nix-flakes][the chapter on Nix flakes in the home-manager manual]].
