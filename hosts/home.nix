@@ -93,5 +93,5 @@
   modules.shell.zsh.enable = true;
   modules.shell.tmux.enable = true;
 
-  xdg.configFile."nixpkgs/config.nix".source = ../config.nix;
+  xdg.configFile."nixpkgs/config.nix".source = ../xdg/config.nix;
 }
