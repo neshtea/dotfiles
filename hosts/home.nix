@@ -86,7 +86,6 @@
 
   # Programs
   modules.programs.neovim.enable = true;
-  modules.programs.emacs.enable = true;
 
   # Shells and shell tools
   modules.shell.zsh.enable = true;

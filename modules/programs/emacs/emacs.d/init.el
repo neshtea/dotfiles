@@ -283,56 +283,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (after-init . global-company-mode)
   :diminish company-mode)
 
-(use-package yasnippet
-  :init (yas-global-mode 1)
-  :diminish yas-minor-mode)
-
-;; See https://kristofferbalintona.me/posts/corfu-kind-icon-and-corfu-doc/
-;; (use-package corfu
-;;   :general
-;;   (:keymaps 'corfu-map
-;; 	    "C-n" #'corfu-next
-;; 	    "C-p" #'corfu-previous
-;; 	    "<escape>" #'corfu-quit
-;; 	    "<return>" #'corfu-insert
-;; 	    "M-d" #'corfu-show-documentation
-;; 	    "M-l" #'corfu-show-location)
-;;   (:keymaps '(corfu-map general-override-mode-map)
-;; 	    :states 'insert
-;; 	    "H-SPC" #'corfu-insert-seperator
-;; 	    "SPC" #'corfu-insert-separator)
-;;   :custom
-;;   (corfu-auto nil)
-;;   (corfu-auto-prefix 2)
-;;   (corfu-auto-delay 0.25)
-;;   (corfu-min-width 80)
-;;   (corfu-max-width corfu-min-width)  ; Always keep the same width
-;;   (corfu-count 14)
-;;   (corfu-scroll-margin 4)
-;;   (corfu-cycle nil)
-;;   (corfu-echo-documentation t)
-;;   (corfu-preselect-first t)
-  
-;;   :config
-;;   (corfu-global-mode)
-;;   ;(tab-always-indent 'complete)
-;;   ;(completion-cycle-threshold nil)
-;;   )
-
-;; (use-package no-littering)
-
-;; (use-package kind-icon
-;;   :after corfu
-;;   :custom
-;;   (kind-icon-ues-icons t)
-;;   (kind-icon-default-face 'corfu-default)
-;;   (kind-icon-blend-background nil)
-;;   (kind-icon-blend-frac 0.08)
-
-;;   (svg-lib-icons-dir (no-littering-expand-var-file-name "svg-lib/cache/")) ; Change cache dir
-;;   :config
-;;   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
-
 ;; Working Clojure needs almost no configuration, just some nice
 ;; packages (ciderm, clj-refactor, clojure-mode).
 (use-package clj-refactor
@@ -660,17 +610,6 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (use-package lsp-rescript
   :defer t)
-
-(use-package purescript-mode
-  :defer t)
-
-(use-package psc-ide
-  :defer t
-  :hook (purescript-mode . (lambda ()
-			     (psc-ide-mode)
-			     (turn-on-purescript-indentation)))
-  :custom
-  (psc-ide-use-npm-bin t))
 
 (use-package racket-mode
   :defer t

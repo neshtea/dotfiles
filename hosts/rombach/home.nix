@@ -6,4 +6,9 @@
     darwin.apple_sdk.frameworks.Foundation
     darwin.apple_sdk.frameworks.Security
   ];
+
+  modules.programs.emacs = {
+    enable = true;
+    emacsPackage = pkgs.emacsMacport;
+  };
 }

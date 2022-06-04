@@ -43,6 +43,10 @@
 
   modules.programs.kitty.enable = true;
   # modules.desktop.herbstluftwm.enable = true;
+  modules.programs.emacs = {
+    enable = true;
+    emacsPackage = pkgs.emacs28NativeComp;
+  };
   modules.desktop.xmonad.enable = true;
   modules.desktop.rofi.enable = true;
   modules.desktop.polybar.enable = true;

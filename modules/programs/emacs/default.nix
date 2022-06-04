@@ -2,7 +2,15 @@
 
 let cfg = config.modules.programs.emacs;
 in {
-  options.modules.programs.emacs = { enable = lib.mkEnableOption "emacs"; };
+  options.modules.programs.emacs = {
+    enable = lib.mkEnableOption "emacs";
+    emacsPackage = lib.mkOption {
+      type = lib.types.package;
+      example = lib.literalExpression "pkgs.emacsMacport";
+      description =
+        "The emacs package that should be used as a base for emacs.";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     programs.emacs = {
@@ -10,7 +18,6 @@ in {
       extraPackages = epkgs: [
         # Basics, ergonomics, movement
         epkgs.consult
-        epkgs.corfu
         epkgs.evil
 
         epkgs.evil-collection
@@ -19,12 +26,6 @@ in {
         epkgs.exec-path-from-shell
         epkgs.general
         epkgs.envrc
-        epkgs.no-littering
-        epkgs.yasnippet
-
-        # Purescript
-        epkgs.psc-ide
-        epkgs.purescript-mode
 
         # Visuals
         epkgs.solaire-mode
@@ -60,7 +61,6 @@ in {
         epkgs.lsp-haskell
 
         epkgs.helpful
-        epkgs.kind-icon
         epkgs.hl-todo
         epkgs.hledger-mode
         epkgs.hydra
@@ -71,6 +71,7 @@ in {
         epkgs.marginalia
         epkgs.markdown-mode
 
+        # Ocaml
         epkgs.merlin
         epkgs.merlin-company
         epkgs.ocp-indent
@@ -78,8 +79,6 @@ in {
 
         epkgs.nix-mode
         epkgs.origami
-
-        epkgs.tidal
 
         epkgs.org
         epkgs.org-roam
@@ -94,7 +93,7 @@ in {
         epkgs.yaml-mode
         epkgs.zoom
       ];
-      # package = pkgs.emacsMacport;
+      package = cfg.emacsPackage;
     };
 
     xdg.configFile."emacs/early-init.el".source = ./emacs.d/early-init.el;
