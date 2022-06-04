@@ -141,7 +141,7 @@
     enableSSHSupport = true;
   };
 
-  # List services that you want to enable:
+  powerManagement = { enable = true; };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
