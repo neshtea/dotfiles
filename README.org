@@ -1,4 +1,4 @@
-#+TITLE: home-manager configuration
+#+TITLE: My system configurations for NixOS and Darwin (macOS)
 #+AUTHOR: Marco Schneider
 #+EMAIL: marco.schneider@posteo.de
 
