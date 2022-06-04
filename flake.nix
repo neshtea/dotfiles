@@ -10,19 +10,21 @@
   };
   outputs = inputs@{ nixpkgs, home-manager, ... }:
     let
-      username = "schneider";
-      # zeugs, das ich weiter "unten" in modulen vielleicht wissen
-      # will.
+      username =
+        "schneider"; # conveniently, this is my username on all systems.
+      # Put things in `specialArgs` that we might need for
+      # configuration further down the configuration (for example in
+      # hm modules).
       specialArgs = { inherit inputs; };
     in {
 
-      # eine flake mit outputs fuer
-      # - home-manager mit macos
-      # - home-manager + configuration.nix + blablabla
+      # Configuration for nixos systems.  Uses the system
+      # configuration via the `nixosConfiguration`.  `home-manager` is
+      # used as a module (`home-manager.nixosModules.home-manager`).
       nixosConfigurations.anarres = let
         system = "x86_64-linux";
         pkgs = import nixpkgs {
-          config.allowUnfree = true;
+          config.allowUnfree = true; # sorry rms
           inherit system;
         };
 
@@ -35,28 +37,23 @@
           {
             home-manager = {
               users.${username} = import ./hosts/anarres/home.nix;
-              # Johannes: Pkgs von globalem nix verwenden.  Aber:
-              # globales nix ist ja genau das hier :)
               useGlobalPkgs = true;
-              useUserPackages =
-                # johannes weiss auch nicht genau, iwas mit
-                # nix-env.  Steht in docstrings von
-                # home-manager modul.
-                false;
+              useUserPackages = false;
               extraSpecialArgs = specialArgs;
             };
           }
         ];
       };
 
+      # This only concerns systems that use home-manager directly (in
+      # my case, darwin machines).
       homeConfigurations.${username} = let
-        system = "x86_64-darwin";
+        system = "x86_64-darwin"; # Only relevant for darwin.
         pkgs = import nixpkgs {
-          config.allowUnfree = true;
+          config.allowUnfree = true; # Sorry rms
           inherit system;
         };
       in home-manager.lib.homeManagerConfiguration {
-        # TODO
         configuration = import ./hosts/rombach/home.nix;
 
         inherit system username pkgs;
