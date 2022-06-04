@@ -503,20 +503,6 @@ Repeated invocations toggle between the two most recently open buffers."
   :init
   (add-hook 'after-init-hook 'global-hl-todo-mode))
 
-;;;; Rust
-;; https://robert.kra.hn/posts/2021-02-07_rust-with-emacs/
-(use-package rustic
-  :defer t
-  :hook (rustic-mode . #'snowcrash/rustic-mode-hook)
-  :config
-  ;; uncomment for less flashiness
-  ;; (setq lsp-eldoc-hook nil)
-  ;; (setq lsp-enable-symbol-highlighting nil)
-  ;; (setq lsp-signature-auto-activate nil)
-
-  ;; comment to disable rustfmt on save
-  (setq rustic-format-on-save t))
-
 (def-local-with-leader
   :keymaps 'clojure-mode-map
   "u i" #'lsp-ui-imenu
@@ -527,14 +513,6 @@ Repeated invocations toggle between the two most recently open buffers."
   "l w r" #'lsp-workspace-restart
   "l w s" #'lsp-workspace-shutdown)
 
-(defun snowcrash/rustic-mode-hook ()
-  ;; so that run C-c C-c C-r works without having to confirm, but don't try to
-  ;; save rust buffers that are not file visiting. Once
-  ;; https://github.com/brotzeit/rustic/issues/253 has been resolved this should
-  ;; no longer be necessary.
-  (when buffer-file-name
-    (setq-local buffer-save-without-query t)))
-
 (use-package lsp-mode
   :defer t
   :commands lsp
@@ -544,8 +522,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (lsp-idle-delay 0.6)
   (lsp-rust-analyzer-server-display-inlay-hints t)
   :hook ((elixir-mode . lsp)
-	 (rustic-mode . lsp)
-	 ;(tuareg-mode . lsp)
+	 (tuareg-mode . lsp)
 	 (lsp-mode . #'lsp-ui-mode)))
 
 (use-package lsp-ui

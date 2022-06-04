@@ -20,20 +20,20 @@ in {
         epkgs.consult
         epkgs.evil
 
+        epkgs.envrc
         epkgs.evil-collection
         epkgs.evil-nerd-commenter
         epkgs.evil-org
         epkgs.exec-path-from-shell
         epkgs.general
-        epkgs.envrc
 
         # Visuals
-        epkgs.solaire-mode
+        epkgs.all-the-icons
         epkgs.cycle-themes
         epkgs.diff-hl
         epkgs.doom-modeline
         epkgs.doom-themes
-        epkgs.all-the-icons
+        epkgs.solaire-mode
 
         # Elixir
         epkgs.alchemist
@@ -47,19 +47,24 @@ in {
 
         # Clojure
         epkgs.cider
-        epkgs.clojure-mode
         epkgs.clj-refactor
+        epkgs.clojure-mode
 
-        # Rust
-        epkgs.rustic
-
-        # Misc file modes
-
-        epkgs.dockerfile-mode
-
+        # Haskell
         epkgs.haskell-mode
         epkgs.lsp-haskell
 
+        # Ocaml
+        epkgs.merlin
+        epkgs.merlin-company
+        epkgs.ocp-indent
+        epkgs.utop
+
+        # Misc file modes
+        epkgs.dockerfile-mode
+        epkgs.nix-mode
+
+        # Unsorted, general stuff
         epkgs.helpful
         epkgs.hl-todo
         epkgs.hledger-mode
@@ -70,19 +75,9 @@ in {
         epkgs.magit-todos
         epkgs.marginalia
         epkgs.markdown-mode
-
-        # Ocaml
-        epkgs.merlin
-        epkgs.merlin-company
-        epkgs.ocp-indent
-        epkgs.utop
-
-        epkgs.nix-mode
-        epkgs.origami
-
         epkgs.org
         epkgs.org-roam
-
+        epkgs.origami
         epkgs.projectile
         epkgs.rainbow-delimiters
         epkgs.selectrum
