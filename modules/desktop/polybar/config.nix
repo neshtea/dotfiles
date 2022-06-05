@@ -65,8 +65,7 @@ in {
     margin-top = 0;
   };
 
-  "bar/bottom" = mkBar true "date distro-icon cpu memory" "xworkspaces"
-    "xmonad wlan2 audio powermenu";
+  "bar/bottom" = mkBar false "mpris cpu memory" "xmonad" "wlan2 audio date";
 
   "module/date" = {
     format = "<label>";
@@ -184,28 +183,6 @@ in {
     throttle-output-for = "10";
   };
 
-  "module/powermenu" = {
-    type = "custom/menu";
-    expand-left = true;
-    format = "<label-toggle> <menu>";
-    format-background = "${colors.background}";
-    format-foreground = "${colors.foreground}";
-    format-padding = 1;
-    label-close = " ";
-    label-close-padding-right = 0;
-    label-close-padding-left = 1;
-    label-open = " ";
-    label-open-padding = 1;
-    label-separator = "|";
-    label-separator-padding = 1;
-    menu-0-0 = "  Suspend";
-    menu-0-0-exec = "systemctl suspend";
-    menu-0-1 = "  Reboot";
-    menu-0-1-exec = "v";
-    menu-0-2 = "  Shutdown";
-    menu-0-2-exec = "systemctl poweroff";
-  };
-
   "module/wlan1" = mkWlanModule "wlp3s0";
   "module/wlan2" = mkWlanModule "wlp4s0";
 
@@ -220,20 +197,20 @@ in {
     type = "internal/memory";
   };
 
-  "module/distro-icon" = {
-    exec = "${pkgs.coreutils}/bin/uname -r | ${pkgs.coreutils}/bin/cut -d- -f1";
-    format = "   <label>";
-    format-background = "${colors.background}";
-    format-foreground = "${colors.foreground}";
-    format-padding = 2;
-    interval = "999999999";
-    label = "%output%";
-    type = "custom/script";
-  };
-
   "module/xmonad" = {
     type = "custom/script";
     exec = "${pkgs.xmonad-log}/bin/xmonad-log";
     tail = true;
+  };
+
+  "module/mpris" = let mpris = import ./mpris.nix { inherit pkgs; };
+  in {
+    type = "custom/script";
+    exec = "${mpris}/bin/mpris";
+    tail = true;
+    label-maxlen = 60;
+    interval = 2;
+    format = " <label>";
+    format-padding = 2;
   };
 }
