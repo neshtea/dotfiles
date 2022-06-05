@@ -33,7 +33,7 @@ let
     # display "above" window manager
     wm-restack = "generic";
     override-redirect = true;
-    tray-position = "left";
+    # tray-position = "left";
   };
 
   mkWlanModule = interface: {
