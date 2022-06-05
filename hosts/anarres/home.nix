@@ -17,6 +17,9 @@
     mattermost-desktop
     tdesktop
 
+    # System utilities
+    lm_sensors
+
     ## System gui apps
     # audio controls (meant for pulse, but seems to work
     # with pipewire as well).
