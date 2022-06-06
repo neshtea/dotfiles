@@ -32,9 +32,11 @@ main' dbus = xmonad . docks . ewmhFullscreen . ewmh . dynProjects $ def
     , focusedBorderColor = "#fbf1c7"
     , logHook = myPolybarLogHook dbus
     } `additionalKeysP`
-    [ ("M-f"   , spawn "firefox"                    )
-    , ("M-r"   , spawn "rofi -disable-history -show run" )
-    , ("M-w"   , spawn "rofi -disable-history -show window" )
+    [ ("M-f" , spawn "firefox"                            )
+    , ("M-r" , spawn "rofi -disable-history -show run"    )
+    , ("M-w" , spawn "rofi -disable-history -show window" )
+    , ("M-=" , spawn "pamixer -i 5"                       )
+    , ("M--" , spawn "pamixer -d 5"                       )
     ]
   where
     dynProjects = dynamicProjects projects

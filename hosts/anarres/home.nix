@@ -19,6 +19,7 @@
 
     # System utilities
     lm_sensors
+    pamixer # control pipewire
 
     ## System gui apps
     # audio controls (meant for pulse, but seems to work
