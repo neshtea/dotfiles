@@ -7,13 +7,6 @@ let
     transparent = "#00000000";
     urgent = "#ff4500";
   };
-  mkLayoutTextModule = content: {
-    inherit content;
-    content-background = "${colors.transparent}";
-    content-foreground = "${colors.background}";
-    type = "custom/text";
-    content-font = 2;
-  };
 
   mkBar = bottom: modules-left: modules-center: modules-right: {
     inherit bottom modules-left modules-center modules-right;
@@ -65,7 +58,8 @@ in {
     margin-top = 0;
   };
 
-  "bar/bottom" = mkBar false "mpris cpu memory" "xmonad" "wlan2 audio date";
+  "bar/bottom" =
+    mkBar false "mpris cpu memory filesystem" "xmonad" "wlan2 audio date";
 
   "module/date" = {
     format = "<label>";
@@ -90,41 +84,6 @@ in {
     type = "internal/cpu";
   };
 
-  "module/battery" = {
-    type = "internal/battery";
-    adapter = "AC0";
-    animation-charging-0 = "";
-    animation-charging-1 = "";
-    animation-charging-2 = "";
-    animation-charging-3 = "";
-    animation-charging-4 = "";
-    animation-charging-framerate = 500;
-    battery = "BAT0";
-    format-charging = " <animation-charging> <label-charging>";
-    format-charging-background = "#91ddff";
-    format-charging-foreground = "#141228";
-    format-charging-padding = 1;
-    format-discharging = "<ramp-capacity> <label-discharging>";
-    format-discharging-background = "#91ddff";
-    format-discharging-foreground = "#141228";
-    format-discharging-padding = 1;
-    format-full-background = "#91ddff";
-    format-full-foreground = "#141228";
-    format-full-padding = 1;
-    full-at = 101;
-    label-charging = "%percentage%% +%consumption%W";
-    label-discharging = "%percentage%% -%consumption%W";
-    label-full = " 100%";
-    poll-interval = 2;
-    ramp-capacity-0 = "";
-    ramp-capacity-0-foreground = "#e74c3c";
-    ramp-capacity-1 = "";
-    ramp-capacity-1-foreground = "#e74c3c";
-    ramp-capacity-2 = "";
-    ramp-capacity-3 = "";
-    ramp-capacity-4 = "";
-  };
-
   "module/audio" = {
     format-muted = "<label-muted>";
     format-muted-background = "${colors.background}";
@@ -142,33 +101,6 @@ in {
     label-muted = "MUTED";
     label-volume = "%percentage%%";
     type = "internal/pulseaudio";
-  };
-
-  "module/xworkspaces" = {
-    type = "internal/xworkspaces";
-    enable-scroll = false;
-    pin-workspaces = true;
-    format = "<label-state>";
-    label-monitor = "";
-    label-active = "%name%";
-    label-active-background = "${colors.background}";
-    label-active-foreground = "${colors.foreground}";
-    label-active-padding = 1;
-    label-active-margin = 0;
-    label-active-font = 3;
-    label-occupied = "%name%";
-    label-occupied-background = "${colors.background}";
-    label-occupied-foreground = "#707070";
-    label-occupied-padding = 1;
-    label-occupied-margin = 0;
-    label-empty = "";
-    label-empty-padding = 0;
-    label-empty-margin = 0;
-    label-urgent = "%name%";
-    label-urgent-background = "${colors.background}";
-    label-urgent-foreground = "${colors.urgent}";
-    label-urgent-padding = 1;
-    label-urgent-margin = 0;
   };
 
   "settings" = {
@@ -212,5 +144,16 @@ in {
     interval = 2;
     format = " <label>";
     format-padding = 2;
+  };
+
+  "module/filesystem" = {
+    type = "internal/filesystem";
+    format = "  <label>";
+    format-background = "${colors.background}";
+    format-foreground = "${colors.foreground}";
+    format-padding = 2;
+    format-margin = 0;
+    mount-0 = "/";
+    mount-1 = "/home";
   };
 }
