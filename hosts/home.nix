@@ -38,6 +38,8 @@
     hledger
     hledger-web
 
+    qtpass # gui for gnupass
+
     # Some system stuff that is independent of coding/projects
     ffmpeg
     gnugrep
@@ -84,6 +86,16 @@
       userName = "Marco Schneider";
       userEmail = "marco.schneider@active-group.de";
     };
+
+    password-store = {
+      enable = true;
+      package = pkgs.pass.withExtensions
+        (exts: [ exts.pass-otp exts.pass-import exts.pass-genphrase ]);
+      settings = {
+        PASSWORD_STORE_DIR = "${config.xdg.dataHome}/password-store";
+        PASSWORD_STORE_ENABLE_EXTENSIONS = "true";
+      };
+    };
   };
 
   # Programs
@@ -92,6 +104,8 @@
   # Shells and shell tools
   modules.shell.zsh.enable = true;
   modules.shell.tmux.enable = true;
+
+  xdg.enable = true;
 
   xdg.configFile."nixpkgs/config.nix".source = ../xdg/config.nix;
 }

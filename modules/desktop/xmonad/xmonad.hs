@@ -35,6 +35,7 @@ main' dbus = xmonad . docks . ewmhFullscreen . ewmh . dynProjects $ def
     [ ("M-f" , spawn "firefox"                            )
     , ("M-r" , spawn "rofi -disable-history -show run"    )
     , ("M-w" , spawn "rofi -disable-history -show window" )
+    , ("M-p" , spawn "rofi-pass"                          )
     , ("M-<F12>" , spawn "pamixer -i 5"                   )
     , ("M-<F11>" , spawn "pamixer -d 5"                   )
     , ("M-<F10>" , spawn "pamixer -t"                     )
@@ -64,7 +65,7 @@ homeWs   = "[1] home"
 devWs    = "[2] dev"
 workWs   = "[3] work"
 chatWs   = "[4] chat"
-musicWs  = "[5] media"
+musicWs  = "[5] music"
 systemWs = "[6] system"
 miscWs   = "[7] misc"
 

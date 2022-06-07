@@ -20,6 +20,8 @@
     # System utilities
     lm_sensors
     pamixer # control pipewire
+    playerctl # control media applications from the command line.
+    rofi-pass
 
     ## System gui apps
     # audio controls (meant for pulse, but seems to work
