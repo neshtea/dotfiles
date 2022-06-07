@@ -35,8 +35,12 @@ main' dbus = xmonad . docks . ewmhFullscreen . ewmh . dynProjects $ def
     [ ("M-f" , spawn "firefox"                            )
     , ("M-r" , spawn "rofi -disable-history -show run"    )
     , ("M-w" , spawn "rofi -disable-history -show window" )
-    , ("M-=" , spawn "pamixer -i 5"                       )
-    , ("M--" , spawn "pamixer -d 5"                       )
+    , ("M-<F12>" , spawn "pamixer -i 5"                   )
+    , ("M-<F11>" , spawn "pamixer -d 5"                   )
+    , ("M-<F10>" , spawn "pamixer -t"                     )
+    , ("M-<F9>" , spawn "playerctl next -p spotify"       )
+    , ("M-<F8>" , spawn "playerctl play-pause -p spotify" )
+    , ("M-<F7>" , spawn "playerctl previous -p spotify"   )
     ]
   where
     dynProjects = dynamicProjects projects
