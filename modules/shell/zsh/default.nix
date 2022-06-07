@@ -14,6 +14,7 @@ in {
         enableCompletion = true;
         enableAutosuggestions = true;
         enableSyntaxHighlighting = true;
+        defaultKeymap = "emacs";
         initExtraBeforeCompInit = ''
           eval "$(starship init zsh)"
         '';
