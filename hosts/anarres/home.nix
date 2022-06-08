@@ -46,6 +46,7 @@
 
   modules.programs.kitty.enable = true;
   # modules.desktop.herbstluftwm.enable = true;
+  modules.programs.neovim.enable = true;
   modules.programs.emacs = {
     enable = true;
     emacsPackage = pkgs.emacs28NativeComp;
