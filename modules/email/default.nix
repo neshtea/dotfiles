@@ -11,7 +11,12 @@ in {
       default = "mail";
     };
   };
+
   config = lib.mkIf cfg.enable {
+    programs = {
+      mbsync.enable = true;
+      # mu.enable = true;
+    };
     accounts.email = {
       maildirBasePath = cfg.maildir;
       accounts = {

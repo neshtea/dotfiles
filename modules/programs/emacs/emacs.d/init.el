@@ -592,5 +592,37 @@ Repeated invocations toggle between the two most recently open buffers."
   :defer t
   :hook (racket-mode . enable-paredit-mode))
 
+;; (use-package mu4e
+;;   :defer t
+;;   :commands (mu4e)
+;;   :custom
+;;   (mail-user-agent 'mu4e-user-agent)
+;;   (mu4e-drafts-folder "/drafts")
+;;   (mu4e-attachment-dir "~/Downloads")
+;;   (mu4e-contexts
+;;    `(,(make-mu4e-context
+;;        :name "posteo"
+;;        :match-func (lambda (msg)
+;; 		     (when msg
+;; 		       (string-prefix-p "/posteo"
+;; 					(mu4e-message-field msg :maildir)
+;; 					t)))
+;;        :vars '((user-email-address  . "marco.schneider@posteo.de")
+;; 	       (mu4e-compose-signature . nil)
+;; 	       ;; See
+;; 	       ;; https://posteo.de/en/help/how-do-i-set-up-posteo-in-an-email-client-pop3-imap-and-smtp
+;; 	       ;; for special folder names.
+;; 	       (mu4e-sent-folder . "/posteo/Sent")
+;; 	       (mu4e-trash-folder . "/posteo/Trash")
+;; 	       (mu4e-drafts-folder . "/posteo/Drafts")))))
+;;   (mu4e-bookmarks '((:name "Inbox" :query "maildir:/posteo/Inbox" :key ?i)
+;; 		    (:name "Unread messages" :query "flag:unread AND NOT flag:trashed" :key ?u)
+;; 		    (:name "Sent" :query "maildir:/posteo/Sent" :key ?s )))
+;;   (mu4e-get-mail-command "mbsync -a")
+;;   ;; General email stuff, nothing to do with mu4e in particular.
+;;   (message-send-mail-function #'message-send-mail-with-sendmail)
+;;   (send-mail-function #'message-send-mail-with-sendmail)
+;;   (message-sendmail-envelope-from 'header))
+
 (provide 'init)
 ;;; init.el ends here

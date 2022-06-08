@@ -42,10 +42,7 @@
     source-code-pro
   ];
 
-  programs = {
-    firefox.enable = true;
-    mbsync.enable = true;
-  };
+  programs = { firefox.enable = true; };
 
   modules.programs.kitty.enable = true;
   # modules.desktop.herbstluftwm.enable = true;
@@ -57,7 +54,7 @@
   modules.desktop.xmonad.enable = true;
   modules.desktop.rofi.enable = true;
   modules.desktop.polybar.enable = true;
-  modules.email.enable = true;
+  # modules.email.enable = true;
 
   services = {
     dropbox = {
