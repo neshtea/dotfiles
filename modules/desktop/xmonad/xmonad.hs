@@ -101,8 +101,7 @@ projects =
             }
   , Project { projectName = systemWs
             , projectDirectory = "~/"
-            , projectStartHook = Just $ do spawn "kitty htop"
-                                           spawn "pavucontrol"
+            , projectStartHook = Just $ spawn "pavucontrol"
             }
   , Project { projectName = miscWs
             , projectDirectory = "~/"
