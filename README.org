@@ -51,10 +51,10 @@ nix flake update
 #+end_src
 * Notable changes
 ** Share configuration between NixOS and Darwin hosts
-As of [[github.com/neshtea/dotfiles/commit/329217b05b1faee7c113fbde2da6fdd7f4db02c3][=329217b05b1faee7c113fbde2da6fdd7f4db02c3=]] it manages both my
+As of [[github.com/neshtea/dotfiles/commit/329217b05b1faee7c113fbde2da6fdd7f4db02c3][329217b05b1faee7c113fbde2da6fdd7f4db02c3]] it manages both my
 personal NixOS machine and my work MacBook Pro.
 ** Move to flakes
-As of [[https://github.com/neshtea/dotfiles/commit/194db9ecc5604a9063daea91388e9bf0b302f922][=194db9ecc5604a9063daea91388e9bf0b302f922=]] my configuration is
+As of [[https://github.com/neshtea/dotfiles/commit/194db9ecc5604a9063daea91388e9bf0b302f922][194db9ecc5604a9063daea91388e9bf0b302f922]] my configuration is
 using flakes.  For general information on how to use =flakes= with
 =home-manager=, see [[https://nix-community.github.io/home-manager/index.html#ch-nix-flakes][the chapter on Nix flakes in the home-manager
 manual]].
