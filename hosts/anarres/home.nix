@@ -22,6 +22,7 @@
     pamixer # control pipewire
     playerctl # control media applications from the command line.
     rofi-pass
+    gcc # sometime you just need a c compiler.
 
     ## System gui apps
     # audio controls (meant for pulse, but seems to work
