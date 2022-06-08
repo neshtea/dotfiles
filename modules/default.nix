@@ -1,1 +1,1 @@
-{ ... }: { imports = [ ./desktop ./programs ./shell ]; }
+{ ... }: { imports = [ ./desktop ./email ./programs ./shell ]; }
