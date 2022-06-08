@@ -28,9 +28,6 @@
     # with pipewire as well).
     pavucontrol
 
-    # Languages
-    racket # includes drracket, raco, etc.
-
     # desktop utils
     feh
 
