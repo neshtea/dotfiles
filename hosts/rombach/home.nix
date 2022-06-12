@@ -11,4 +11,5 @@
     enable = true;
     emacsPackage = pkgs.emacsMacport;
   };
+  modules.programs.kitty.enable = true;
 }
