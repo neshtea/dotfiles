@@ -40,10 +40,22 @@ Using =nixos-rebuild=:
   nixos-rebuild switch --flake <point to dotfiles> --use-remote-sudo
 #+end_src
 *** macOS
-Using =home-manager=:
-#+begin_src
-  home-manager switch --flake <point to dotfiles>
+**** Installing
+Assuming you have =nix= installed: Clone this repository and then,
+from the root of the project run:
+#+begin_src shell
+  nix build .#darwinConfigurations.rombach.system --extra-experimental-features nix-command --extra-experimental-features flakes
 #+end_src
+This is only required the first time around.
+**** Switch
+To switch to the next generation of your system/user config, run:
+#+begin_src shell
+  ./result/sw/bin/darwin-rebuild switch --flake .
+#+end_src
+In the flake variant, this is a little less convenient than working
+with =nixos-rebuild= but it does the job (atm it is [[https://github.com/LnL7/nix-darwin#flakes-experimental][marked as
+experimental]]).
+
 ** Update packages
 To update the packages (i.e. upgrade), run
 #+begin_src 

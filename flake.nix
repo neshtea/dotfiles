@@ -3,12 +3,16 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = inputs@{ nixpkgs, home-manager, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, darwin, ... }:
     let
       username =
         "schneider"; # conveniently, this is my username on all systems.
@@ -17,6 +21,32 @@
       # hm modules).
       specialArgs = { inherit inputs; };
     in {
+
+      # Configuraiton for MacOS nix-darwin systems.  This helped me
+      # write this part of the configuration:
+      # https://github.com/shaunsingh/nix-darwin-dotfiles/blob/main/flake.nix
+      darwinConfigurations.rombach = let
+        system = "x86_64-darwin";
+        pkgs = import nixpkgs {
+          config.allowUnfree = true; # sorry rms
+          inherit system;
+        };
+      in darwin.lib.darwinSystem {
+        inherit pkgs system specialArgs;
+
+        modules = [
+          ./hosts/rombach/darwin-configuration.nix
+          home-manager.darwinModule
+          {
+            home-manager = {
+              users.${username} = import ./hosts/rombach/home.nix;
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = specialArgs;
+            };
+          }
+        ];
+      };
 
       # Configuration for nixos systems.  Uses the system
       # configuration via the `nixosConfiguration`.  `home-manager` is
