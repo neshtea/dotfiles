@@ -20,9 +20,6 @@ Each NixOS host defines its system configuration in
 - [[./hosts/anarres/hardware-configuration.nix][host/<hostname>/hardware-configuration.nix]]: Hardware specific
   configuration configuration.
 
-macOS hosts work the same but use [[https://github.com/LnL7/nix-darwin][nix-darwin]].  The equivalent of a
-=configuration.nix= is [[./hosts/rombach/darwin-configuration.nix][host/<hostname>/darwin-configuration.nix]].
-
 It is somewhat modularized (see [[./modules]]).  I wouldn't recommend
 anyone trying to copy anything in here (there are better, more well
 thought out configurations like this [[https://github.com/kenranunderscore/dotfiles][this one]]), but it does the job.
@@ -40,7 +37,7 @@ the home configuration like this:
 Assuming you have =nix= installed: Clone this repository and then,
 from the root of the project run:
 #+begin_src shell
-  nix build .#darwinConfigurations.rombach.system --extra-experimental-features nix-command --extra-experimental-features flakes
+  nix build .#home-configuration.rombach.system --extra-experimental-features nix-command --extra-experimental-features flakes
 #+end_src
 This is only required the first time around.
 * Updates
@@ -53,14 +50,8 @@ Using =nixos-rebuild=:
 *** macOS
 To switch to the next generation of your system/user config, run:
 #+begin_src shell
-  ./result/sw/bin/darwin-rebuild switch --flake .
-  # Or, if darwin-rebuild is installed on it's own
-  darwin-rebuild switch --flake .
+  home-manager switch --flake .
 #+end_src
-In the flake variant, this is a little less convenient than working
-with =nixos-rebuild= but it does the job (atm it is [[https://github.com/LnL7/nix-darwin#flakes-experimental][marked as
-experimental]]).
-
 ** Update packages
 To update the packages (i.e. upgrade), run
 #+begin_src 
@@ -70,6 +61,8 @@ nix flake update
 ** Start experimenting with [[https://github.com/LnL7/nix-darwin][nix-darwin]]
 As of [[https://github.com/neshtea/dotfiles/commit/6bbfe8ccccd0def3068db1b38045edafbadfff2c][6bbfe8ccccd0def3068db1b38045edafbadfff2c]] I start the move over
 to [[https://github.com/LnL7/nix-darwin][nix-darwin]].
+
+This experiment failed, so we're back to =home-manager=.
 ** Share configuration between NixOS and Darwin hosts
 As of [[github.com/neshtea/dotfiles/commit/329217b05b1faee7c113fbde2da6fdd7f4db02c3][329217b05b1faee7c113fbde2da6fdd7f4db02c3]] it manages both my
 personal NixOS machine and my work MacBook Pro.
