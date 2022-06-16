@@ -55,7 +55,6 @@
 (show-paren-mode 1)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
-
 ;; We install packages via nix home-manager, but we still configure
 ;; them via use-package
 (require 'use-package)
@@ -115,20 +114,6 @@ disables all other enabled themes."
     (mapcar #'disable-theme
             custom-enabled-themes)
     (load-theme name t)))
-
-;; Some themes to choose from besides the basic ones.
-;; (use-package doom-themes
-;;   :defer t
-;;   :init
-;;   ;; Make doom-one the default.
-;;   ;(snowcrash/switch-theme 'doom-gruvbox)
-;;   )
-
-;; Distinguish file-visiting buffers from other ones. Only works with
-;; doom-themes (and maybe a few others).
-;; (use-package solaire-mode
-;;   :init
-;;   (solaire-global-mode +1))
 
 ;; Code folding, also used by evil.
 ;; https://github.com/gregsexton/origami.el
@@ -404,14 +389,6 @@ Repeated invocations toggle between the two most recently open buffers."
   :defer t
   :mode "\\.nix\\'"
   :hook (before-save . nix-format-before-save))
-
-;; Nicer modeline with symbols, etc.
-;; (use-package doom-modeline
-;;   :init (doom-modeline-mode 1)
-;;   :config
-;;   (setq doom-modeline-height 25))
-
-(use-package all-the-icons)
 
 (def-with-leader
   "f +" #'text-scale-increase

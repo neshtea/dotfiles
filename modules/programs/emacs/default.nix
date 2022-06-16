@@ -31,9 +31,6 @@ in {
         epkgs.all-the-icons
         epkgs.cycle-themes
         epkgs.diff-hl
-        epkgs.doom-modeline
-        epkgs.doom-themes
-        epkgs.solaire-mode
         epkgs.modus-themes # until we're on emacs 28 everywehere
 
         # Elixir
