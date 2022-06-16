@@ -53,6 +53,8 @@
 
 ;; Alwas show matching parens.
 (show-paren-mode 1)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
 
 ;; We install packages via nix home-manager, but we still configure
 ;; them via use-package
@@ -115,17 +117,18 @@ disables all other enabled themes."
     (load-theme name t)))
 
 ;; Some themes to choose from besides the basic ones.
-(use-package doom-themes
-  :defer t
-  :init
-  ;; Make doom-one the default.
-  (snowcrash/switch-theme 'doom-gruvbox))
+;; (use-package doom-themes
+;;   :defer t
+;;   :init
+;;   ;; Make doom-one the default.
+;;   ;(snowcrash/switch-theme 'doom-gruvbox)
+;;   )
 
 ;; Distinguish file-visiting buffers from other ones. Only works with
 ;; doom-themes (and maybe a few others).
-(use-package solaire-mode
-  :init
-  (solaire-global-mode +1))
+;; (use-package solaire-mode
+;;   :init
+;;   (solaire-global-mode +1))
 
 ;; Code folding, also used by evil.
 ;; https://github.com/gregsexton/origami.el
@@ -189,6 +192,7 @@ Repeated invocations toggle between the two most recently open buffers."
   "t f" #'display-fill-column-indicator-mode
   "s h" #'eshell
   "f s" #'toggle-fullscreen
+  "t t" #'modus-themes-toggle
   "q r" #'restart-emacs
   "SPC" '(execute-extended-command :which-key "M-x")
   "s t" '(snowcrash/switch-theme :which-key "change theme"))
@@ -402,10 +406,10 @@ Repeated invocations toggle between the two most recently open buffers."
   :hook (before-save . nix-format-before-save))
 
 ;; Nicer modeline with symbols, etc.
-(use-package doom-modeline
-  :init (doom-modeline-mode 1)
-  :config
-  (setq doom-modeline-height 25))
+;; (use-package doom-modeline
+;;   :init (doom-modeline-mode 1)
+;;   :config
+;;   (setq doom-modeline-height 25))
 
 (use-package all-the-icons)
 
@@ -623,6 +627,26 @@ Repeated invocations toggle between the two most recently open buffers."
 ;;   (message-send-mail-function #'message-send-mail-with-sendmail)
 ;;   (send-mail-function #'message-send-mail-with-sendmail)
 ;;   (message-sendmail-envelope-from 'header))
+
+(use-package modus-themes
+  :init
+  (setq modus-themes-italic-constructs t
+	modus-themes-bold-constructs nil
+	modus-themes-region '(bg-only)
+	;; Color the current line
+	modus-themes-subtle-line-numbers t
+	modus-themes-fringes 'sublte
+	;; Modeline
+	modus-themes-mode-line '(accented borderless (padding . 6))
+	modus-themes-markup '(background italic bold)
+	modus-themes-syntax '(faint yellow-comments)
+	modus-themes-hl-line '(accented)
+	modus-themes-paren-match '(bold)
+	modus-themes-links '(neutral-underline italic no-color)
+	modus-themes-org-blocks 'gray-background)
+  (modus-themes-load-themes)
+  :config
+  (modus-themes-load-vivendi))
 
 (provide 'init)
 ;;; init.el ends here

@@ -34,6 +34,7 @@ in {
         epkgs.doom-modeline
         epkgs.doom-themes
         epkgs.solaire-mode
+        epkgs.modus-themes # until we're on emacs 28 everywehere
 
         # Elixir
         epkgs.alchemist
