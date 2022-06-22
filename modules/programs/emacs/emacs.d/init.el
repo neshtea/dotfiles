@@ -173,7 +173,6 @@ Repeated invocations toggle between the two most recently open buffers."
   "e"   #'find-file
   "k"   #'kill-buffer
   "TAB" #'er-switch-to-previous-buffer
-  "t l" #'global-display-line-numbers-mode
   "t f" #'display-fill-column-indicator-mode
   "s h" #'eshell
   "f s" #'toggle-fullscreen
