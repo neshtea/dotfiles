@@ -476,11 +476,18 @@ the separator."
   :mode "\\.nix\\'"
   :hook (before-save . nix-format-before-save))
 
+(use-package default-text-scale
+  :defer t
+  :config
+  (default-text-scale-mode))
+
 (def-with-leader
-  "f +" #'text-scale-increase
-  "f =" #'text-scale-increase
-  "f -" #'text-scale-decrease
-  "f 0" #'text-scale-adjust)
+  ;; '+' and '=': When switching between german and us layout, this
+  ;; always bugs me.
+  "f +" #'default-text-scale-increase
+  "f =" #'default-text-scale-increase
+  "f -" #'default-text-scale-decrease
+  "f 0" #'default-text-scale-reset)
 
 (use-package diff-hl
   :init (global-diff-hl-mode))
