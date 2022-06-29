@@ -32,6 +32,10 @@ in {
         epkgs.cycle-themes
         epkgs.diff-hl
         epkgs.modus-themes # until we're on emacs 28 everywehere
+        epkgs.doom-themes
+        epkgs.doom-modeline
+        epkgs.solaire-mode
+        epkgs.default-text-scale
 
         # Elixir
         epkgs.alchemist
