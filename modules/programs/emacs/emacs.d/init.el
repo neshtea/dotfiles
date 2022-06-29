@@ -45,15 +45,14 @@
 the face-font."
   (interactive
    (list (intern (completing-read "Font: " (mapcar #'car (copy-alist neshtea/font-alist))))))
-  (when (not (equal neshtea/current-font font))
-    ;; If the selected font is not the currently active font, switch.
-    (let* ((attrs (alist-get font neshtea/font-alist))
-	   (font (plist-get attrs :font))
-	   (height (plist-get attrs :height)))
-      (setq neshtea/current-font font)
-      (set-face-attribute 'default nil
-			  :font font
-			  :height height))))
+  ;; If the selected font is not the currently active font, switch.
+  (let* ((attrs (alist-get font neshtea/font-alist))
+	 (font (plist-get attrs :font))
+	 (height (plist-get attrs :height)))
+    (setq neshtea/current-font font)
+    (set-face-attribute 'default nil
+			:font font
+			:height height)))
 
 ;; Set the font to the default.
 (neshtea/switch-font neshtea/current-font)
