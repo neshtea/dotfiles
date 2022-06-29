@@ -75,6 +75,7 @@ in {
         epkgs.markdown-mode
         epkgs.org
         epkgs.org-roam
+        epkgs.org-present
         epkgs.origami
         epkgs.projectile
         epkgs.rainbow-delimiters

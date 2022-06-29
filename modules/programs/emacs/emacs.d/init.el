@@ -32,15 +32,31 @@
 (load custom-file 'no-error)
 
 ;; Set the font.
-(set-frame-font "Iosevka-14" t t)
-;; (set-face-attribute 'default nil
-;;                     :font "Iosevka"
-;;                     :weight 'regular
-;;                     :height 140)
-;; (set-face-attribute 'fixed-pitch nil
-;;                     :font "Iosevka"
-;;                     :weight 'regular
-;;                     :height 140)
+(setq neshtea/font-alist
+      '((jetbrains-mono . (:font   "JetBrains Mono"
+			   :height 140))
+	(iosevka        . (:font   "Iosevka"
+			   :height 140))))
+
+(setq neshtea/current-font 'jetbrains-mono)
+
+(defun neshtea/switch-font (font)
+  "Select one of the fonts configured in 'neshtea/font-alist' as
+the face-font."
+  (interactive
+   (list (intern (completing-read "Font: " (mapcar #'car (copy-alist neshtea/font-alist))))))
+  (when (not (equal neshtea/current-font font))
+    ;; If the selected font is not the currently active font, switch.
+    (let* ((attrs (alist-get font neshtea/font-alist))
+	   (font (plist-get attrs :font))
+	   (height (plist-get attrs :height)))
+      (setq neshtea/current-font font)
+      (set-face-attribute 'default nil
+			  :font font
+			  :height height))))
+
+;; Set the font to the default.
+(neshtea/switch-font neshtea/current-font)
 
 ;; Disable menubar/scrollbar/toolbar.
 (menu-bar-mode -1)
@@ -100,7 +116,7 @@
 
 ;; Taken from Johannes init.el
 ;; https://github.com/kenranunderscore/dotfiles/blob/main/modules/programs/emacs/emacs.d/init.el#L80
-(defun snowcrash/switch-theme (name)
+(defun neshtea/switch-theme (name)
   "Switch themes interactively.  Similar to `load-theme' but also
 disables all other enabled themes."
   (interactive
@@ -118,7 +134,7 @@ disables all other enabled themes."
 (use-package doom-themes
   :defer t
   :init
-  (snowcrash/switch-theme 'doom-gruvbox)
+  (neshtea/switch-theme 'doom-palenight)
   :config
   (setq doom-themes-enable-bold t
 	doom-themes-enable-italic t)
@@ -167,7 +183,8 @@ disables all other enabled themes."
 (use-package evil-org
   :defer t
   :after (evil org)
-  :hook (org-mode . evil-org-mode)
+  :hook ((org-mode . evil-org-mode)
+	 (org-agenda-mode . evil-org-mode))
   :config
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
@@ -202,7 +219,8 @@ Repeated invocations toggle between the two most recently open buffers."
   ;; "t t" #'modus-themes-toggle
   "q r" #'restart-emacs
   "SPC" '(execute-extended-command :which-key "M-x")
-  "s t" '(snowcrash/switch-theme :which-key "change theme"))
+  "s f" '(neshtea/switch-font :which-key "switch theme")
+  "s t" '(neshtea/switch-theme :which-key "switch theme"))
 
 ;; Paredit allows to easily work with parens. Especially useful in
 ;; LISP-like languages.
@@ -358,6 +376,48 @@ Repeated invocations toggle between the two most recently open buffers."
 	;; transition into the headlines drawer.
   (org-log-into-drawer 'LOGBOOK)
   (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d!)" "CANCELLED(c!)"))))
+
+;; org-present
+(defun neshtea/org-present-prepare-slide ()
+  (org-overview)
+  (org-show-entry)
+  (org-show-children))
+
+(defun neshtea/org-present-hook ()
+  (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
+                                     (header-line (:height 4.5) variable-pitch)
+                                     (org-code (:height 1.55) org-code)
+                                     (org-verbatim (:height 1.55) org-verbatim)
+                                     (org-block (:height 1.25) org-block)
+                                     (org-block-begin-line (:height 0.7) org-block)))
+  (setq header-line-format " ")
+  (org-display-inline-images)
+  (neshtea/org-present-prepare-slide))
+
+(defun neshtea/org-present-quit-hook ()
+  (setq-local face-remapping-alist '((default variable-pitch default)))
+  (setq header-line-format nil)
+  (org-present-small)
+  (org-remove-inline-images))
+
+(defun neshtea/org-present-prev ()
+  (interactive)
+  (org-present-prev)
+  (neshtea/org-present-prepare-slide))
+
+(defun neshtea/org-present-next ()
+  (interactive)
+  (org-present-next)
+  (neshtea/org-present-prepare-slide))
+
+(use-package org-present
+  :defer t
+  :after org
+  :bind (:map org-present-mode-keymap
+	      ("C-c C-j" . neshtea/org-present-next)
+	      ("C-c C-k" . neshtea/org-present-prev))
+  :hook ((org-present-mode . neshtea/org-present-hook)
+	 (org-present-mode-quit . neshtea/org-present-quit-hook)))
 
 ;; Roam inspired mode for my zettelkasten using org mode.
 (use-package org-roam
