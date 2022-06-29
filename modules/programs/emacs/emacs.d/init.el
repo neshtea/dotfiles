@@ -115,6 +115,29 @@ disables all other enabled themes."
             custom-enabled-themes)
     (load-theme name t)))
 
+(use-package doom-themes
+  :defer t
+  :init
+  (snowcrash/switch-theme 'doom-gruvbox)
+  :config
+  (setq doom-themes-enable-bold t
+	doom-themes-enable-italic t)
+  ;; Enable flashing mode-line on errors.
+  (doom-themes-visual-bell-config)
+  ;; Corrects (and improves) org-modes's native fontification.
+  (doom-themes-org-config))
+
+(use-package solaire-mode
+  :init
+  (solaire-global-mode +1))
+
+(use-package doom-modeline
+  :init (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-height 25))
+
+(use-package all-the-icons)
+
 ;; Code folding, also used by evil.
 ;; https://github.com/gregsexton/origami.el
 (use-package origami
@@ -176,7 +199,7 @@ Repeated invocations toggle between the two most recently open buffers."
   "t f" #'display-fill-column-indicator-mode
   "s h" #'eshell
   "f s" #'toggle-fullscreen
-  "t t" #'modus-themes-toggle
+  ;; "t t" #'modus-themes-toggle
   "q r" #'restart-emacs
   "SPC" '(execute-extended-command :which-key "M-x")
   "s t" '(snowcrash/switch-theme :which-key "change theme"))
@@ -278,7 +301,9 @@ Repeated invocations toggle between the two most recently open buffers."
 (use-package clojure-mode
   :defer t)
 (use-package cider
-  :defer t)
+  :defer t
+  :custom
+  (cider-repl-display-help-banner nil))
 
 (def-local-with-leader
   :keymaps 'clojure-mode-map
@@ -604,25 +629,25 @@ Repeated invocations toggle between the two most recently open buffers."
 ;;   (send-mail-function #'message-send-mail-with-sendmail)
 ;;   (message-sendmail-envelope-from 'header))
 
-(use-package modus-themes
-  :init
-  (setq modus-themes-italic-constructs t
-	modus-themes-bold-constructs nil
-	modus-themes-region '(bg-only)
-	;; Color the current line
-	modus-themes-subtle-line-numbers t
-	modus-themes-fringes 'sublte
-	;; Modeline
-	modus-themes-mode-line '(accented borderless (padding . 6))
-	modus-themes-markup '(background italic bold)
-	modus-themes-syntax '(faint yellow-comments)
-	modus-themes-hl-line '(accented)
-	modus-themes-paren-match '(bold)
-	modus-themes-links '(neutral-underline italic no-color)
-	modus-themes-org-blocks 'gray-background)
-  (modus-themes-load-themes)
-  :config
-  (modus-themes-load-vivendi))
+;; (use-package modus-themes
+;;   :init
+;;   (setq modus-themes-italic-constructs t
+;; 	modus-themes-bold-constructs nil
+;; 	modus-themes-region '(bg-only)
+;; 	;; Color the current line
+;; 	modus-themes-subtle-line-numbers t
+;; 	modus-themes-fringes 'sublte
+;; 	;; Modeline
+;; 	modus-themes-mode-line '(accented borderless (padding . 6))
+;; 	modus-themes-markup '(background italic bold)
+;; 	modus-themes-syntax '(faint yellow-comments)
+;; 	modus-themes-hl-line '(accented)
+;; 	modus-themes-paren-match '(bold)
+;; 	modus-themes-links '(neutral-underline italic no-color)
+;; 	modus-themes-org-blocks 'gray-background)
+;;   (modus-themes-load-themes)
+;;   :config
+;;   (modus-themes-load-vivendi))
 
 (provide 'init)
 ;;; init.el ends here
