@@ -223,23 +223,33 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;; Paredit allows to easily work with parens. Especially useful in
 ;; LISP-like languages.
+
+;; A list of all modes I want lispy modes hooked to.  Add to this list
+;; if new modes join the lispy gang.
+(setq neshtea/lispy-modes '(emacs-lisp-mode
+			    eval-expression-minibuffer-setup
+			    clojure-mode
+			    ielm-mode
+			    lisp-interaction-mode
+			    lisp-mode
+			    scheme-mode))
+
+(defun neshtea/symbol-join (symbols sep)
+  "Similar to 'string-join' but joins 'symbols' using 'sep' as
+the separator."
+ (intern (string-join (mapcar #'symbol-name symbols) sep)))
+
+(defun neshtea/hook-lispy-modes (mode-name)
+  "Add paredit- and rainbow-delimeters-mode to 'mode-name'."
+  (let* ((mode-hook (neshtea/symbol-join (list mode-name 'hook) "-")))
+    (progn
+      (add-hook mode-hook #'enable-paredit-mode)
+      (add-hook mode-hook #'rainbow-delimiters-mode))))
+
 (use-package paredit
   :config
   (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-  ;; TODO :hook
-  (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook       #'rainbow-delimiters-mode)
-  (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
-  (add-hook 'ielm-mode-hook             #'rainbow-delimiters-mode)
-  (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-  (add-hook 'lisp-mode-hook             #'rainbow-delimiters-mode)
-  (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-  (add-hook 'lisp-interaction-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
-  (add-hook 'scheme-mode-hook           #'rainbow-delimiters-mode)
-  (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
-  (add-hook 'clojure-mode-hook          #'rainbow-delimiters-mode))
+  (mapcar #'neshtea/hook-lispy-modes neshtea/lispy-modes))
 
 ;; Syntax highlighting for markdown files. Requires multimarkdown to
 ;; be installed on the system.
