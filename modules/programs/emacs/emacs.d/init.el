@@ -393,18 +393,11 @@ the separator."
   (org-show-children))
 
 (defun neshtea/org-present-hook ()
-  (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
-                                     (header-line (:height 4.5) variable-pitch)
-                                     (org-code (:height 1.55) org-code)
-                                     (org-verbatim (:height 1.55) org-verbatim)
-                                     (org-block (:height 1.25) org-block)
-                                     (org-block-begin-line (:height 0.7) org-block)))
   (setq header-line-format " ")
   (org-display-inline-images)
   (neshtea/org-present-prepare-slide))
 
 (defun neshtea/org-present-quit-hook ()
-  (setq-local face-remapping-alist '((default variable-pitch default)))
   (setq header-line-format nil)
   (org-present-small)
   (org-remove-inline-images))
