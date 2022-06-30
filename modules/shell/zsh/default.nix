@@ -15,6 +15,9 @@ in {
         enableAutosuggestions = true;
         enableSyntaxHighlighting = true;
         defaultKeymap = "emacs";
+        initExtra = ''
+          export PATH="$HOME/.bin:$PATH"
+        '';
         initExtraBeforeCompInit = ''
           eval "$(starship init zsh)"
         '';
