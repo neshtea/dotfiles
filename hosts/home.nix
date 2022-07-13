@@ -79,6 +79,11 @@
       delta.enable = true;
     };
 
+    gpg = {
+      enable = true;
+      homedir = "${config.xdg.dataHome}/gnupg";
+    };
+
     htop.enable = true;
 
     mercurial = {
@@ -94,6 +99,7 @@
       settings = {
         PASSWORD_STORE_DIR = "${config.xdg.dataHome}/password-store";
         PASSWORD_STORE_ENABLE_EXTENSIONS = "true";
+        PASSWORD_STORE_CLIP_TIME = "120";
       };
     };
   };
