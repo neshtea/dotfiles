@@ -47,6 +47,9 @@ in {
         # Latex
         epkgs.auctex-latexmk
 
+        # Dhall
+        epkgs.dhall-mode
+
         # Clojure
         epkgs.cider
         epkgs.clj-refactor
