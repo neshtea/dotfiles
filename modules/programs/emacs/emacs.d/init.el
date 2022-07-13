@@ -133,7 +133,7 @@ disables all other enabled themes."
 (use-package doom-themes
   :defer t
   :init
-  (neshtea/switch-theme 'doom-palenight)
+  (neshtea/switch-theme 'doom-gruvbox)
   :config
   (setq doom-themes-enable-bold t
 	doom-themes-enable-italic t)
