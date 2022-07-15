@@ -322,11 +322,24 @@ the separator."
   :diminish company-mode)
 
 ;; Working Clojure needs almost no configuration, just some nice
-;; packages (ciderm, clj-refactor, clojure-mode).
+;; packages (cider, clj-refactor, clojure-mode).
 (use-package clj-refactor
   :defer t)
+
+(defun neshtea/clojure-mode-hook ()
+  "Hooks everything important for 'clojure-mode'."
+  (interactive)
+  (clj-refactor-mode 1)
+  (add-hook 'before-save-hook
+	    'cider-format-buffer
+	    nil
+	    t))
+
 (use-package clojure-mode
+  ;; https://docs.cider.mx/cider/usage/misc_features.html#formatting-code-with-cljfmt
+  :hook (clojure-mode . neshtea/clojure-mode-hook)
   :defer t)
+
 (use-package cider
   :defer t
   :custom
@@ -349,14 +362,6 @@ the separator."
   "e n a" #'cider-ns-reload-all
   "t a" #'cider-test-run-ns-tests
   "t t" #'cider-test-run-test)
-
-;; https://github.com/clojure-emacs/clj-refactor.el
-(defun custom-clojure-mode-hook ()
-  "Turn on clj-refactor in clojure-mode."
-  (clj-refactor-mode 1)
-  (yas-minor-mode 1))
-
-(add-hook 'clojure-mode-hook #'custom-clojure-mode-hook)
 
 (use-package org-indent
   :defer t
