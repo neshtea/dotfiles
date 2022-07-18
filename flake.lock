@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "gruvbox-material-kitty": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1603863991,
+        "narHash": "sha256-F7+465aORM8/ZJerRMgkEdbfqJXtNA1jlgFu5EFsWzg=",
+        "owner": "rsaihe",
+        "repo": "gruvbox-material-kitty",
+        "rev": "fdf7158e4fe384925cdd81e8c9c29e9906c9522d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rsaihe",
+        "repo": "gruvbox-material-kitty",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -90,6 +106,7 @@
     },
     "root": {
       "inputs": {
+        "gruvbox-material-kitty": "gruvbox-material-kitty",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs"
       }

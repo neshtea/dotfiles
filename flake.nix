@@ -7,6 +7,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    gruvbox-material-kitty = {
+      url = "github:rsaihe/gruvbox-material-kitty";
+      flake = false;
+    };
   };
   outputs = inputs@{ nixpkgs, home-manager, ... }:
     let
@@ -58,6 +62,7 @@
         inherit system username pkgs;
         homeDirectory = "/Users/schneider";
         stateVersion = "22.05";
+        extraSpecialArgs = specialArgs;
       };
     };
 }

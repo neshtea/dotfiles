@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 let cfg = config.modules.programs.kitty;
 in {
   options.modules.programs.kitty = { enable = lib.mkEnableOption "kitty"; };
@@ -6,11 +6,10 @@ in {
     programs.kitty = {
       enable = true;
       extraConfig = ''
-        include ./theme.conf
+        include ./themes/colors/gruvbox-material-dark-hard.conf
       '';
       font = {
-        name = "Iosevka";
-        package = pkgs.iosevka;
+        name = "JetBrains Mono";
         size = 14;
       };
       keybindings = {
@@ -29,6 +28,10 @@ in {
         "cmd+9" = "goto_tab 9";
       };
     };
-    xdg.configFile."kitty/theme.conf".source = ./theme.conf;
+    # xdg.configFile."kitty/theme.conf".source = ./theme.conf;
+    xdg.configFile."kitty/themes" = {
+      source = "${inputs.gruvbox-material-kitty}";
+      recursive = true;
+    };
   };
 }
