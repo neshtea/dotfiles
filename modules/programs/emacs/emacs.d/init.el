@@ -376,7 +376,7 @@ the separator."
   (org-startup-indented t)
   (org-hide-leading-stars t)
   (org-return-follows-link t)
-  (org-startup-folded 'content)
+  (org-startup-folded 'fold)
   (org-agenda-files '("~/Dropbox/Brain/Tasks/gtd.org"))
   (org-capture-templates '(("t" "Todo [inbox/work]" entry
 			    (file+headline "~/Dropbox/Brain/Tasks/gtd.org" "INBOX")
@@ -391,6 +391,13 @@ the separator."
 	;; transition into the headlines drawer.
   (org-log-into-drawer 'LOGBOOK)
   (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d!)" "CANCELLED(c!)"))))
+
+(defun neshtea/org-toggle-emphasis ()
+  "Toggle hiding/showing of org emphasize markers."
+  (interactive)
+  (if org-hide-emphasis-markers
+      (set-variable 'org-hide-emphasis-markers nil)
+    (set-variable 'org-hide-emphasis-markers t)))
 
 ;; org-present
 (defun neshtea/org-present-prepare-slide ()
@@ -439,10 +446,15 @@ the separator."
   :config
   (org-roam-setup))
 
+(defun neshtea/org-gtd-file ()
+  (interactive)
+  (find-file (expand-file-name "~/Dropbox/Brain/Tasks/gtd.org")))
+
 (def-with-leader
   "a o a" #'org-agenda-list
   "a o t" #'org-todo-list
   "a o c" #'consult-org-agenda
+  "a o f" '(neshtea/org-gtd-file :which-key "open GTD file")
   "C c" #'org-capture
 
   "r n f" #'org-roam-node-find
