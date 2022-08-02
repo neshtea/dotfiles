@@ -47,6 +47,13 @@ in {
         # Latex
         epkgs.auctex-latexmk
 
+        # Rust
+        epkgs.rust-mode
+
+        # Purescript
+        epkgs.purescript-mode
+        epkgs.psc-ide
+
         # Dhall
         epkgs.dhall-mode
 

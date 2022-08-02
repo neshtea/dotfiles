@@ -682,6 +682,24 @@ the separator."
   :defer t
   :hook (racket-mode . enable-paredit-mode))
 
+(use-package rust-mode
+  :defer t
+  :custom
+  (rust-format-on-save t))
+
+;;; Purescript
+(use-package psc-ide
+  :defer t)
+
+(defun purs-mode-hook ()
+  (psc-ide-mode)
+  ; (company-mode)  ; NOTE Globally enabled anyway
+  (turn-on-purescript-indentation))
+
+(use-package purescript-mode
+  :defer t
+  :hook (purescript-mode . purs-mode-hook))
+
 (use-package eglot
   :defer t)
 
