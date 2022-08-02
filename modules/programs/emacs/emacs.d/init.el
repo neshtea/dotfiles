@@ -473,6 +473,7 @@ the separator."
   "T c" #'org-toggle-checkbox
   "T i" #'org-toggle-inline-images
   "T t" #'org-todo
+  "T e" '(neshtea/org-toggle-emphasis :which-key "toggle emphasis")
 
   "x o" #'org-open-at-point)
 
