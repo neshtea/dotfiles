@@ -371,6 +371,7 @@ the separator."
   :hook (org-mode . auto-fill-mode)
 
   :custom
+  (org-hide-emphasis-markers t)
   (org-adapt-indentation nil)
   (org-startup-indented t)
   (org-hide-leading-stars t)
