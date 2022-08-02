@@ -21,7 +21,7 @@
  ring-bell-function 'ignore
  ;; Always prefer the "newer" version of a file.
  load-prefer-newer t
- max-lisp-eval-depth 10000)
+ max-lisp-eval-depth 5000)
 
 ;; "When you visit a file, point goes to the last place where it was
 ;; when you previously visited the same file."
@@ -209,7 +209,7 @@ Repeated invocations toggle between the two most recently open buffers."
 ;; Some global keys, not specific to any one particular mode.
 (def-with-leader
   ";"   #'evilnc-comment-or-uncomment-lines
-  "e"   #'find-file
+  ;; "e"   #'find-file
   "k"   #'kill-buffer
   "TAB" #'er-switch-to-previous-buffer
   "t f" #'display-fill-column-indicator-mode
@@ -583,35 +583,35 @@ the separator."
   :init
   (add-hook 'after-init-hook 'global-hl-todo-mode))
 
-(def-local-with-leader
-  :keymaps 'clojure-mode-map
-  "u i" #'lsp-ui-imenu
-  "f r" #'lsp-find-references
-  "l a" #'lsp-execute-code-action
-  "l r" #'lsp-rename
-  "l s" #'lsp-rust-analyzer-status
-  "l w r" #'lsp-workspace-restart
-  "l w s" #'lsp-workspace-shutdown)
+;; (def-local-with-leader
+;;   :keymaps 'clojure-mode-map
+;;   "u i" #'lsp-ui-imenu
+;;   "f r" #'lsp-find-references
+;;   "l a" #'lsp-execute-code-action
+;;   "l r" #'lsp-rename
+;;   "l s" #'lsp-rust-analyzer-status
+;;   "l w r" #'lsp-workspace-restart
+;;   "l w s" #'lsp-workspace-shutdown)
 
-(use-package lsp-mode
-  :defer t
-  :commands lsp
-  :custom
-  (lsp-rust-analyzer-cargo-watch-command "check")
-  (lsp-eldoc-render-all t)
-  (lsp-idle-delay 0.6)
-  (lsp-rust-analyzer-server-display-inlay-hints t)
-  :hook ((elixir-mode . lsp)
-	 (tuareg-mode . lsp)
-	 (lsp-mode . #'lsp-ui-mode)))
+;; (use-package lsp-mode
+;;   :defer t
+;;   :commands lsp
+;;   :custom
+;;   (lsp-rust-analyzer-cargo-watch-command "check")
+;;   (lsp-eldoc-render-all t)
+;;   (lsp-idle-delay 0.6)
+;;   (lsp-rust-analyzer-server-display-inlay-hints t)
+;;   :hook ((elixir-mode . lsp)
+;; 	 (tuareg-mode . lsp)
+;; 	 (lsp-mode . lsp-ui-mode)))
 
-(use-package lsp-ui
-  :defer t
-  :commands lsp-ui-mode
-  :custom
-  (lsp-ui-peek-always-show t)
-  (lsp-ui-sideline-show-hover t)
-  (lsp-ui-doc-enable nil))
+;; (use-package lsp-ui
+;;   :defer t
+;;   :commands lsp-ui-mode
+;;   :custom
+;;   (lsp-ui-peek-always-show t)
+;;   (lsp-ui-sideline-show-hover t)
+;;   (lsp-ui-doc-enable nil))
 
 (use-package merlin
   :hook ((tuareg-mode . merlin-mode)
@@ -640,13 +640,13 @@ the separator."
   (haskell-interactive-popup-errors nil)
   (haskell-compiler-type 'cabal)
   (haskell-process-type 'cabal)
-  (haskell-stylish-on-save 't)
+  (haskell-stylish-on-save t)
   :hook (haskell-mode . interactive-haskell-mode))
 
-(use-package lsp-haskell
-  :custom
-  (lsp-haskell-server-path "haskell-language-server")
-  (lsp-haskell-formatting-provider "stylish-haskell"))
+;; (use-package lsp-haskell
+;;   :custom
+;;   (lsp-haskell-server-path "haskell-language-server")
+;;   (lsp-haskell-formatting-provider "stylish-haskell"))
 
 (def-local-with-leader
   :keymaps 'interactive-haskell-mode-map
@@ -663,9 +663,6 @@ the separator."
   (add-to-list 'company-backends 'hledger-company))
 
 (use-package tuareg
-  :defer t)
-
-(use-package lsp-rescript
   :defer t)
 
 (use-package racket-mode
@@ -723,6 +720,16 @@ the separator."
 ;;   (modus-themes-load-themes)
 ;;   :config
 ;;   (modus-themes-load-vivendi))
+(use-package eglot
+  :defer t)
+
+(def-with-leader
+  ; Eglot Connect
+  "e c" #'eglot
+  ; Eglot Refactor Rename
+  "e r" #'eglot-rename
+  ; Eglot Code Actions
+  "e a" #'eglot-code-actions)
 
 (provide 'init)
 ;;; init.el ends here
