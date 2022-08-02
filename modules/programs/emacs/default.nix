@@ -74,8 +74,9 @@ in {
         epkgs.hl-todo
         epkgs.hledger-mode
         epkgs.hydra
-        epkgs.lsp-mode
-        epkgs.lsp-ui
+        # epkgs.lsp-mode
+        # epkgs.lsp-ui
+        epkgs.eglot
         epkgs.magit
         epkgs.magit-todos
         epkgs.marginalia
