@@ -70,6 +70,17 @@ the face-font."
 (show-paren-mode 1)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
+;; Sometimes, I need relative line numbers.  `display-line-numbers`
+;; has this built in.  This function makes it easier to toggle.
+
+; Default to relative
+(setq display-line-numbers 'relative)
+(defun neshtea/toggle-display-line-numbers-relative ()
+  (interactive)
+  (if (equal 't display-line-numbers)
+      (setq display-line-numbers 'relative)
+      (setq display-line-numbers 't)))
+
 ;; We install packages via nix home-manager, but we still configure
 ;; them via use-package
 (require 'use-package)
@@ -219,7 +230,8 @@ Repeated invocations toggle between the two most recently open buffers."
   "q r" #'restart-emacs
   "SPC" '(execute-extended-command :which-key "M-x")
   "s f" '(neshtea/switch-font :which-key "switch theme")
-  "s t" '(neshtea/switch-theme :which-key "switch theme"))
+  "s t" '(neshtea/switch-theme :which-key "switch theme")
+  "t r" '(neshtea/toggle-display-line-numbers-relative :which-key "toggle relative/absolute line numbers")) t
 
 ;; Paredit allows to easily work with parens. Especially useful in
 ;; LISP-like languages.
