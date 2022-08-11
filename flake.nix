@@ -11,7 +11,12 @@
       url = "github:rsaihe/gruvbox-material-kitty";
       flake = false;
     };
+    active-kondo = {
+      url = "github:active-group/active-kondo";
+      flake = false;
+    };
   };
+
   outputs = inputs@{ nixpkgs, home-manager, ... }:
     let
       username =

@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "active-kondo": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1659453211,
+        "narHash": "sha256-k7/UwA/Xq2QpRC4Y2b/uNb3LPo9/AIbs9jktRVlFGLU=",
+        "owner": "active-group",
+        "repo": "active-kondo",
+        "rev": "bf061000de1fd199b34180434eae152fc2304090",
+        "type": "github"
+      },
+      "original": {
+        "owner": "active-group",
+        "repo": "active-kondo",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -106,6 +122,7 @@
     },
     "root": {
       "inputs": {
+        "active-kondo": "active-kondo",
         "gruvbox-material-kitty": "gruvbox-material-kitty",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs"
