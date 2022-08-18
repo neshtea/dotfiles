@@ -712,16 +712,19 @@ the separator."
   :defer t
   :hook (purescript-mode . purs-mode-hook))
 
-(use-package eglot
-  :defer t)
+(use-package lsp-mode
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :hook
+  (lsp-mode . lsp-enable-which-key-integration)
+  (clojure-mode . lsp)
+  :commands
+  lsp)
 
-(def-with-leader
-  ; Eglot Connect
-  "e c" #'eglot
-  ; Eglot Refactor Rename
-  "e r" #'eglot-rename
-  ; Eglot Code Actions
-  "e a" #'eglot-code-actions)
+(use-package lsp-ui
+  :defer t
+  :commands
+  lsp-ui-mode)
 
 (provide 'init)
 ;;; init.el ends here
