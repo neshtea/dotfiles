@@ -74,7 +74,7 @@ the face-font."
 ;; has this built in.  This function makes it easier to toggle.
 
 ; Default to relative
-(setq display-line-numbers 'relative)
+(setq display-line-numbers-type 'relative)
 (defun neshtea/toggle-display-line-numbers-relative ()
   (interactive)
   (if (equal 't display-line-numbers)
