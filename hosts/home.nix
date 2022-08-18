@@ -23,6 +23,7 @@
     # we have lots or clojure projects that don't provide a nix shell,
     # so let's have this available everywhere.
     clojure
+    clojure-lsp # Not every project brings it's own lsp.
     leiningen
 
     # most projects don't define a specific docker/docker-compose, so
