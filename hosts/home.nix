@@ -39,8 +39,6 @@
     hledger
     hledger-web
 
-    qtpass # gui for gnupass
-
     # Some system stuff that is independent of coding/projects
     ffmpeg
     gnugrep

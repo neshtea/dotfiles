@@ -9,7 +9,7 @@
 
   modules.programs.emacs = {
     enable = true;
-    emacsPackage = pkgs.emacsMacport; # pkgs.emacs28NativeComp;
+    emacsPackage = pkgs.emacsMacport;
   };
   modules.programs.kitty.enable = true;
 
