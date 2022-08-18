@@ -384,12 +384,13 @@ the separator."
   :hook (org-mode . auto-fill-mode)
 
   :custom
+  (org-edit-src-content-indentation 0)  ; Don't indent in src blocks.
   (org-hide-emphasis-markers t)
   (org-adapt-indentation nil)
   (org-startup-indented t)
   (org-hide-leading-stars t)
   (org-return-follows-link t)
-  (org-startup-folded 'fold)
+  (org-startup-folded 'content)
   (org-agenda-files '("~/Dropbox/Brain/Tasks/gtd.org"))
   (org-capture-templates '(("t" "Todo [inbox/work]" entry
 			    (file+headline "~/Dropbox/Brain/Tasks/gtd.org" "INBOX")
@@ -404,6 +405,16 @@ the separator."
 	;; transition into the headlines drawer.
   (org-log-into-drawer 'LOGBOOK)
   (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d!)" "CANCELLED(c!)"))))
+
+(use-package org-appear
+  :hook
+  (org-mode . org-appear-mode)
+  :config
+  (setq org-appear-autolinks t)
+  (setq org-appear-autosubmarkers t)
+  (setq org-appear-autoentities t)
+  (setq org-appear-autokeywords t)
+  (setq org-appear-trigger 'always))
 
 (defun neshtea/org-toggle-emphasis ()
   "Toggle hiding/showing of org emphasize markers."
