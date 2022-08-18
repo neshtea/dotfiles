@@ -244,7 +244,8 @@ Repeated invocations toggle between the two most recently open buffers."
 			    ielm-mode
 			    lisp-interaction-mode
 			    lisp-mode
-			    scheme-mode))
+			    scheme-mode
+			    racket-mode))
 
 (defun neshtea/symbol-join (symbols sep)
   "Similar to 'string-join' but joins 'symbols' using 'sep' as
@@ -691,8 +692,7 @@ the separator."
   :defer t)
 
 (use-package racket-mode
-  :defer t
-  :hook (racket-mode . enable-paredit-mode))
+  :defer t)
 
 (use-package rust-mode
   :defer t
