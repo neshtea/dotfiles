@@ -113,5 +113,4 @@
   xdg.enable = true;
 
   xdg.configFile."nixpkgs/config.nix".source = ../xdg/config.nix;
-  xdg.configFile."clojure/deps.edn".source = ../xdg/clojure/deps.edn;
 }
