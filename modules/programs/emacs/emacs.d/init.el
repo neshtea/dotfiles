@@ -394,10 +394,10 @@ the separator."
   (org-agenda-files '("~/Dropbox/Brain/Tasks/gtd.org"))
   (org-capture-templates '(("t" "Todo [inbox/work]" entry
 			    (file+headline "~/Dropbox/Brain/Tasks/gtd.org" "INBOX")
-			    "* TODO %i%? \n  %U")
+			    "* TODO %i%? \n%U")
 			   ("c" "Capture [inbox]" entry
 			    (file+headline "~/Dropbox/Brain/Tasks/gtd.org" "INBOX")
-			    "* TODO %i%? \n  %a")))
+			    "* TODO %i%? \n%a")))
   (org-refile-targets '(("~/Dropbox/Brain/Tasks/gtd.org" :maxlevel . 2)
 			("~/Dropbox/Brain/Tasks/lists.org" :maxlevel . 2)
 			("~/Dropbox/Brain/Tasks/someday.org" :level . 1)))
