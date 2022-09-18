@@ -77,6 +77,7 @@ in {
         epkgs.nix-mode
 
         # Unsorted, general stuff
+        epkgs.reformatter
         epkgs.helpful
         epkgs.hl-todo
         epkgs.hledger-mode

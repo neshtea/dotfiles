@@ -737,5 +737,11 @@ the separator."
   :commands
   lsp-ui-mode)
 
+(use-package reformatter)
+
+(reformatter-define ocaml-format
+  :program "ocamlformat"
+  :args (list (buffer-file-name)))
+
 (provide 'init)
 ;;; init.el ends here
