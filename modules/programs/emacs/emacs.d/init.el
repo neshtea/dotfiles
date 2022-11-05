@@ -38,6 +38,11 @@
 	(iosevka        . (:font   "Iosevka"
 			   :height 140))))
 
+(set-face-attribute 'variable-pitch nil
+                    :font "Iosevka Aile"
+                    :height 160
+                    :weight 'light)
+
 (setq neshtea/current-font 'jetbrains-mono)
 
 (defun neshtea/switch-font (font)
@@ -144,7 +149,7 @@ disables all other enabled themes."
 (use-package doom-themes
   :defer t
   :init
-  (neshtea/switch-theme 'doom-gruvbox)
+  (neshtea/switch-theme 'doom-palenight)
   :config
   (setq doom-themes-enable-bold t
 	doom-themes-enable-italic t)
@@ -229,9 +234,9 @@ Repeated invocations toggle between the two most recently open buffers."
   ;; "t t" #'modus-themes-toggle
   "q r" #'restart-emacs
   "SPC" '(execute-extended-command :which-key "M-x")
-  "s f" '(neshtea/switch-font :which-key "switch theme")
+  "s f" '(neshtea/switch-font :which-key "switch font")
   "s t" '(neshtea/switch-theme :which-key "switch theme")
-  "t r" '(neshtea/toggle-display-line-numbers-relative :which-key "toggle relative/absolute line numbers")) t
+  "t r" '(neshtea/toggle-display-line-numbers-relative :which-key "toggle relative/absolute line numbers"))
 
 ;; Paredit allows to easily work with parens. Especially useful in
 ;; LISP-like languages.
@@ -380,10 +385,16 @@ the separator."
   :defer t
   :after org)
 
+(defun neshtea/org-mode-setup ()
+  (variable-pitch-mode 1)
+  (org-indent-mode)
+  (auto-fill-mode))
+
 (use-package org
-  :hook (org-mode . auto-fill-mode)
+  :hook (org-mode . neshtea/org-mode-setup)
 
   :custom
+  (org-ellipsis " ▾")
   (org-edit-src-content-indentation 0)  ; Don't indent in src blocks.
   (org-hide-emphasis-markers t)
   (org-adapt-indentation nil)
