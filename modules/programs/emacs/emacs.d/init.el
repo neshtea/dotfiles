@@ -625,36 +625,6 @@ the separator."
   :init
   (add-hook 'after-init-hook 'global-hl-todo-mode))
 
-;; (def-local-with-leader
-;;   :keymaps 'clojure-mode-map
-;;   "u i" #'lsp-ui-imenu
-;;   "f r" #'lsp-find-references
-;;   "l a" #'lsp-execute-code-action
-;;   "l r" #'lsp-rename
-;;   "l s" #'lsp-rust-analyzer-status
-;;   "l w r" #'lsp-workspace-restart
-;;   "l w s" #'lsp-workspace-shutdown)
-
-;; (use-package lsp-mode
-;;   :defer t
-;;   :commands lsp
-;;   :custom
-;;   (lsp-rust-analyzer-cargo-watch-command "check")
-;;   (lsp-eldoc-render-all t)
-;;   (lsp-idle-delay 0.6)
-;;   (lsp-rust-analyzer-server-display-inlay-hints t)
-;;   :hook ((elixir-mode . lsp)
-;; 	 (tuareg-mode . lsp)
-;; 	 (lsp-mode . lsp-ui-mode)))
-
-;; (use-package lsp-ui
-;;   :defer t
-;;   :commands lsp-ui-mode
-;;   :custom
-;;   (lsp-ui-peek-always-show t)
-;;   (lsp-ui-sideline-show-hover t)
-;;   (lsp-ui-doc-enable nil))
-
 (use-package merlin
   :hook ((tuareg-mode . merlin-mode)
 	 (caml-mode . merlin-mode))
@@ -689,6 +659,9 @@ the separator."
 ;;   :custom
 ;;   (lsp-haskell-server-path "haskell-language-server")
 ;;   (lsp-haskell-formatting-provider "stylish-haskell"))
+(use-package eglot
+  :defer t)
+
 
 (def-local-with-leader
   :keymaps 'interactive-haskell-mode-map
@@ -728,14 +701,6 @@ the separator."
   :defer t
   :hook (purescript-mode . purs-mode-hook))
 
-(use-package lsp-mode
-  :init
-  (setq lsp-keymap-prefix "C-c l")
-  :hook
-  (lsp-mode . lsp-enable-which-key-integration)
-  (clojure-mode . lsp)
-  :commands
-  lsp)
 
 (use-package lsp-ui
   :defer t
