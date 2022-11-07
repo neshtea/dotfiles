@@ -10,7 +10,6 @@ in {
       keyMode = "vi";
       newSession = true;
       shell = "${pkgs.zsh}/bin/zsh";
-      prefix = "C-a";
     };
   };
 }
