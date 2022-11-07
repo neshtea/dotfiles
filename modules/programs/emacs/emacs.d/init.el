@@ -38,12 +38,7 @@
 	(iosevka        . (:font   "Iosevka"
 			   :height 140))))
 
-(set-face-attribute 'variable-pitch nil
-                    :font "Iosevka Aile"
-                    :height 160
-                    :weight 'light)
-
-(setq neshtea/current-font 'jetbrains-mono)
+(setq neshtea/current-font 'iosevka)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -149,7 +144,7 @@ disables all other enabled themes."
 (use-package doom-themes
   :defer t
   :init
-  (neshtea/switch-theme 'doom-palenight)
+  (neshtea/switch-theme 'doom-gruvbox)
   :config
   (setq doom-themes-enable-bold t
 	doom-themes-enable-italic t)
@@ -386,7 +381,6 @@ the separator."
   :after org)
 
 (defun neshtea/org-mode-setup ()
-  (variable-pitch-mode 1)
   (org-indent-mode)
   (auto-fill-mode))
 
