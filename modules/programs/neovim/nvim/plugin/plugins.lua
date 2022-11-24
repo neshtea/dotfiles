@@ -24,7 +24,7 @@ return require("packer").startup(function(use)
    -- colorschemes
    use "bluz71/vim-moonfly-colors"
    use "rockerboo/boo-colorscheme-nvim"
-   use "tiagovla/tokyodark.nvim"
+   use 'ellisonleao/gruvbox.nvim'
 
    use {
        "nvim-telescope/telescope.nvim",

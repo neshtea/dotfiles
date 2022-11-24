@@ -6,7 +6,12 @@ in {
   # make config only if someone set enable = true
   config = lib.mkIf cfg.enable {
     home = {
-      packages = with pkgs; [ neovim lua sumneko-lua-language-server stylua ];
+      packages = with pkgs; [
+        neovim-nightly
+        lua
+        sumneko-lua-language-server
+        stylua
+      ];
       activation = {
         symlinkNeovimConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           if [ ! -h $HOME/.config/nvim ]; then

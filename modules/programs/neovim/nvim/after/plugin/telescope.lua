@@ -12,7 +12,7 @@ telescope.setup {
             theme = 'dropdown',
         },
         man_pages = {
-            theme = 'dropbox',
+            theme = 'dropdown',
         },
         live_grep = {
             theme = 'dropdown,'
@@ -40,12 +40,15 @@ local function project_files()
     end
 end
 
+
+
 nnoremap('<leader>fp', project_files)
 nnoremap('<leader>ff', require('telescope.builtin').find_files)
 nnoremap('<leader>bb', require('telescope.builtin').buffers)
 nnoremap('<leader>fg', require('telescope.builtin').live_grep)
 nnoremap('<leader>fs', require('telescope.builtin').grep_string)
 nnoremap('<leader>fq', require('telescope.builtin').quickfix)
+
 
 nnoremap('<leader>hm', require('telescope.builtin').man_pages)
 

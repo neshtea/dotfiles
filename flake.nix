@@ -12,12 +12,16 @@
       flake = false;
     };
     kitty-themes = {
-        url = "https://github.com/dexpota/kitty-themes";
-        flake = false;
+      url = "https://github.com/dexpota/kitty-themes";
+      flake = false;
     };
     active-kondo = {
       url = "github:active-group/active-kondo";
       flake = false;
+    };
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -61,9 +65,10 @@
       # my case, darwin machines).
       homeConfigurations.${username} = let
         system = "x86_64-darwin"; # Only relevant for darwin.
+        overlays = [ inputs.neovim-nightly-overlay.overlay ];
         pkgs = import nixpkgs {
           config.allowUnfree = true; # Sorry rms
-          inherit system;
+          inherit overlays system;
         };
       in home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
