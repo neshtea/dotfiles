@@ -11,6 +11,10 @@
       url = "github:rsaihe/gruvbox-material-kitty";
       flake = false;
     };
+    kitty-themes = {
+        url = "https://github.com/dexpota/kitty-themes";
+        flake = false;
+    };
     active-kondo = {
       url = "github:active-group/active-kondo";
       flake = false;
@@ -62,12 +66,18 @@
           inherit system;
         };
       in home-manager.lib.homeManagerConfiguration {
-        configuration = import ./hosts/rombach/home.nix;
-
-        inherit system username pkgs;
-        homeDirectory = "/Users/schneider";
-        stateVersion = "22.05";
+        inherit pkgs;
         extraSpecialArgs = specialArgs;
+        modules = [
+          ./hosts/rombach/home.nix
+          {
+            home = {
+              inherit username;
+              homeDirectory = "/Users/schneider";
+              stateVersion = "22.05";
+            };
+          }
+        ];
       };
     };
 }
