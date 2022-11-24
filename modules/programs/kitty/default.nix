@@ -9,7 +9,6 @@ in {
         include ./themes/colors/gruvbox-material-dark-hard.conf
       '';
       font = {
-        # name = "JetBrains Mono";
         name = "Iosevka";
         size = 14;
       };
