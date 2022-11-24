@@ -276,15 +276,31 @@ the separator."
 ;; Selectrum is a better solution for incremental narrowing in Emacs, 
 ;; replacing Helm, Ivy, and Ido.
 ;; https://github.com/raxod502/selectrum
-(use-package selectrum :init (selectrum-mode +1))
+;; (use-package selectrum :init (selectrum-mode +1))
 
 ;; selectrum-prescient helps with surfacing frequently used
 ;; completions.
-(use-package selectrum-prescient
-  :after selectrum
+;; (use-package selectrum-prescient
+;;   :after selectrum
+;;   :init
+;;   (selectrum-prescient-mode +1)
+;;   (prescient-persist-mode +1))
+(use-package vertico
   :init
-  (selectrum-prescient-mode +1)
-  (prescient-persist-mode +1))
+  (vertico-mode)
+  :custom
+  (vertico-cycle t)
+  (vertico-resize t))
+
+(use-package savehist
+  :init
+  (savehist-mode))
+
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
 
 ;; consult provides a huge array of cap based searches.
 (use-package consult
@@ -660,8 +676,18 @@ the separator."
 ;;   (lsp-haskell-server-path "haskell-language-server")
 ;;   (lsp-haskell-formatting-provider "stylish-haskell"))
 (use-package eglot
-  :defer t)
+  :defer t
+  :config
+  ;; don't ask before lsp intiated writes.
+  (setq eglot-confirm-server-initiated-edits nil))
 
+;; eglot keymap
+(def-with-leader
+  "l a" #'eglot-code-actions
+  "l d" #'eldoc-doc-buffer
+  "l r" #'eglot-rename
+  "l g d" #'xref-find-definitions
+  "l g r" #'xref-find-references)
 
 (def-local-with-leader
   :keymaps 'interactive-haskell-mode-map

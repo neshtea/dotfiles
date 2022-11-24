@@ -94,12 +94,14 @@ in {
         epkgs.origami
         epkgs.projectile
         epkgs.rainbow-delimiters
-        epkgs.selectrum
-        epkgs.selectrum-prescient
+        # epkgs.selectrum
+        # epkgs.selectrum-prescient
         epkgs.tuareg
         epkgs.use-package
         epkgs.which-key
         epkgs.yaml-mode
+        epkgs.vertico
+        epkgs.orderless
         epkgs.zoom
       ];
       package = cfg.emacsPackage;
