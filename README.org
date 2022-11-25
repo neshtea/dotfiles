@@ -57,6 +57,11 @@ To update the packages (i.e. upgrade), run
 #+begin_src 
 nix flake update
 #+end_src
+
+Or, if you only want to update the =nixpkgs= input, run
+#+begin_src
+run flake lock --update-input nixpkgs
+#+end_src
 * Notable changes
 ** Start experimenting with [[https://github.com/LnL7/nix-darwin][nix-darwin]]
 As of [[https://github.com/neshtea/dotfiles/commit/6bbfe8ccccd0def3068db1b38045edafbadfff2c][6bbfe8ccccd0def3068db1b38045edafbadfff2c]] I start the move over
