@@ -22,8 +22,6 @@ return require("packer").startup(function(use)
    use "wbthomason/packer.nvim"
 
    -- colorschemes
-   use "bluz71/vim-moonfly-colors"
-   use "rockerboo/boo-colorscheme-nvim"
    use 'ellisonleao/gruvbox.nvim'
 
    use {
