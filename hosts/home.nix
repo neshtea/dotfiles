@@ -20,6 +20,8 @@
     cacert
     coreutils
 
+    st
+
     # we have lots or clojure projects that don't provide a nix shell,
     # so let's have this available everywhere.
     clojure
@@ -30,6 +32,16 @@
     # let's have this available user-wide.
     docker
     docker-compose
+
+    # tree-sitter
+    (tree-sitter.withPlugins (p: [
+      p.tree-sitter-clojure
+      p.tree-sitter-elisp
+      p.tree-sitter-ruby
+      p.tree-sitter-ocaml
+      p.tree-sitter-ocaml-interface
+      p.tree-sitter-nix
+    ]))
 
     gcc
 
@@ -68,11 +80,6 @@
       nix-direnv.enable = true;
     };
 
-    fzf = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-
     git = {
       enable = true;
       userName = "Marco Schneider";
@@ -92,25 +99,15 @@
       userName = "Marco Schneider";
       userEmail = "marco.schneider@active-group.de";
     };
-
-    password-store = {
-      enable = true;
-      package = pkgs.pass.withExtensions
-        (exts: [ exts.pass-otp exts.pass-import exts.pass-genphrase ]);
-      settings = {
-        PASSWORD_STORE_DIR = "${config.xdg.dataHome}/password-store";
-        PASSWORD_STORE_ENABLE_EXTENSIONS = "true";
-        PASSWORD_STORE_CLIP_TIME = "120";
-      };
-    };
   };
 
   # Programs
   modules.programs.neovim.enable = true;
 
   # Shells and shell tools
-  modules.shell.zsh.enable = true;
+  modules.shell.fzf.enable = true;
   modules.shell.tmux.enable = true;
+  modules.shell.zsh.enable = true;
 
   xdg.enable = true;
 
