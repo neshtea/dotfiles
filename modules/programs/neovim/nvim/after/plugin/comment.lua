@@ -1,4 +1,4 @@
-require('Comment').setup {
-    sticky = true,
-    ignore = '^$',
-}
+-- require('Comment').setup {
+--     sticky = true,
+--     ignore = '^$',
+-- }

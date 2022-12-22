@@ -23,29 +23,29 @@ return require("packer").startup(function(use)
 
    -- colorschemes
    use 'ellisonleao/gruvbox.nvim'
+   use 'ibhagwan/fzf-lua'
 
-   use {
-       "nvim-telescope/telescope.nvim",
-       requires = { { "nvim-lua/plenary.nvim" }, { "nvim-treesitter/nvim-treesitter" } }
-   }
-   use "nvim-telescope/telescope-ui-select.nvim"
-   use {
-       "nvim-telescope/telescope-fzf-native.nvim",
-       run = "make"
-   }
+   use 'nvim-lua/plenary.nvim' -- required by many other plugins
 
-   use { "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" }
-   use "nvim-treesitter/nvim-treesitter"
+   use 'tpope/vim-fugitive'
+   use 'tpope/vim-commentary'
+
+   use { "folke/which-key.nvim" }
+   -- See https://github.com/nvim-treesitter/nvim-treesitter/wiki/Installation#packernvim
+   use {
+       "nvim-treesitter/nvim-treesitter",
+       run = function ()
+           local ts_update = require('nvim-treesitter.install').update({with_sync = true })
+           ts_update()
+       end,
+   }
    use "kylechui/nvim-surround"
    use "editorconfig/editorconfig-vim"
-   use "windwp/nvim-autopairs"
-
    use "neovim/nvim-lspconfig"
    use "hrsh7th/cmp-nvim-lsp"
    use "hrsh7th/cmp-buffer"
    use "hrsh7th/cmp-path"
    use "hrsh7th/nvim-cmp"
-   use { "glepnir/lspsaga.nvim", branch = "main" }
    use "onsails/lspkind.nvim"
    use "mrcjkb/haskell-tools.nvim"
 
@@ -54,10 +54,7 @@ return require("packer").startup(function(use)
 
    use "kyazdani42/nvim-web-devicons"
    use 'nvim-lualine/lualine.nvim'
-
-   use "numtostr/comment.nvim"
-
-   use "nvim-orgmode/orgmode"
+   use "Olical/conjure"
 
    if packer_bootstrap then
        require("packer").sync()

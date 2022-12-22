@@ -1,9 +1,15 @@
+-- TODO:
+-- - luasnip
+-- - configure vim-fugitive?
+-- - configure vim-comment?
+-- - Figure out netrw
+
 vim.g.mapleader = " "  -- SPC key as map-leader.
 
 local opt = vim.opt
 
 opt.nu = true  -- Show line numbers
-opt.relativenumber = true  -- Show relative line-numbers.
+-- opt.relativenumber = true  -- Show relative line-numbers.
 
 -- Set tabs to four spaces.
 opt.tabstop = 4
@@ -29,3 +35,6 @@ opt.completeopt = "menu,menuone,noselect"
 vim.g.autoformat = 1
 
 opt.exrc = true
+
+opt.foldenable = false
+opt.foldmethod = 'indent'

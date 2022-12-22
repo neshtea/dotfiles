@@ -8,12 +8,12 @@ in {
     home = {
       packages = with pkgs; [
         neovim-nightly
-        # Make nvim happy if it needs to complie tree-sitter grammars on the fly.
-        tree-sitter
         nodejs
         lua
         sumneko-lua-language-server
         stylua
+        jq # Formatter for json
+        python310Packages.mdformat # Formatter for markdown
       ];
       activation = {
         symlinkNeovimConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

@@ -6,8 +6,6 @@ lspconfig.util.default_config = vim.tbl_deep_extend('force', lspconfig.util.defa
     capabilities = capabilities,
 })
 
-require('lspsaga').init_lsp_saga()
-
 local nnoremap = require('neshtea.remap').nnoremap
 nnoremap('<leader>e', vim.diagnostic.open_float)
 nnoremap('<leader>e', vim.diagnostic.goto_prev)
@@ -31,6 +29,16 @@ local on_attach = function(_, bufnr)
 end
 
 lspconfig.ocamllsp.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+
+lspconfig.erlangls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+
+lspconfig.elixirls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
