@@ -1,3 +1,4 @@
+
 ;;; init.el --- Summary
 
 ;; Commentary:
@@ -74,8 +75,9 @@ the face-font."
 ;; has this built in.  This function makes it easier to toggle.
 
 ; Default to relative
-(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type 't)  ; regular line numbers by default.
 (defun neshtea/toggle-display-line-numbers-relative ()
+  "Toggle between relative and 'regular' line numbers."
   (interactive)
   (if (equal 't display-line-numbers)
       (setq display-line-numbers 'relative)
@@ -140,6 +142,21 @@ disables all other enabled themes."
     (mapcar #'disable-theme
             custom-enabled-themes)
     (load-theme name t)))
+
+;; tree-sitter
+(use-package tree-sitter
+  :init
+  ;; Enable for all supported major modes.
+  (global-tree-sitter-mode)
+  :config
+  (add-hook #'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+(use-package tree-sitter-langs)
+
+;; Add my commonly used languages that are not already part of
+;; tree-sitter-langs.  Installed via the emacs nix module.
+(add-to-list 'tree-sitter-major-mode-language-alist '(clojure-mode . clojure))
+(add-to-list 'tree-sitter-major-mode-language-alist '(emacs-lisp-mode . elisp))
 
 (use-package doom-themes
   :defer t
@@ -671,10 +688,6 @@ the separator."
   (haskell-stylish-on-save t)
   :hook (haskell-mode . interactive-haskell-mode))
 
-;; (use-package lsp-haskell
-;;   :custom
-;;   (lsp-haskell-server-path "haskell-language-server")
-;;   (lsp-haskell-formatting-provider "stylish-haskell"))
 (use-package eglot
   :defer t
   :config
@@ -726,12 +739,6 @@ the separator."
 (use-package purescript-mode
   :defer t
   :hook (purescript-mode . purs-mode-hook))
-
-
-(use-package lsp-ui
-  :defer t
-  :commands
-  lsp-ui-mode)
 
 (use-package reformatter)
 

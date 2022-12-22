@@ -112,4 +112,5 @@
   xdg.enable = true;
 
   xdg.configFile."nixpkgs/config.nix".source = ../xdg/config.nix;
+  xdg.configFile."wezterm/wezterm.nix".source = ../xdg/wezterm/wezterm.lua;
 }

@@ -31,11 +31,14 @@ in {
         epkgs.all-the-icons
         epkgs.cycle-themes
         epkgs.diff-hl
-        epkgs.modus-themes # until we're on emacs 28 everywehere
         epkgs.doom-themes
         epkgs.doom-modeline
         epkgs.solaire-mode
         epkgs.default-text-scale
+
+        # tree-sitter
+        epkgs.tree-sitter
+        epkgs.tree-sitter-langs
 
         # Elixir
         epkgs.alchemist
