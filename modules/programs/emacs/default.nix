@@ -31,8 +31,8 @@ in {
         epkgs.all-the-icons
         epkgs.cycle-themes
         epkgs.diff-hl
-        epkgs.doom-themes
         epkgs.default-text-scale
+        epkgs.gruvbox-theme
 
         # tree-sitter
         epkgs.tree-sitter
@@ -50,13 +50,6 @@ in {
 
         # Rust
         epkgs.rust-mode
-
-        # Purescript
-        epkgs.purescript-mode
-        epkgs.psc-ide
-
-        # Dhall
-        epkgs.dhall-mode
 
         # Clojure
         epkgs.cider
@@ -78,7 +71,6 @@ in {
         epkgs.nix-mode
 
         # Unsorted, general stuff
-        epkgs.reformatter
         epkgs.helpful
         epkgs.hl-todo
         epkgs.hledger-mode
@@ -94,9 +86,6 @@ in {
         epkgs.org-present
         epkgs.origami
         epkgs.projectile
-        epkgs.rainbow-delimiters
-        # epkgs.selectrum
-        # epkgs.selectrum-prescient
         epkgs.tuareg
         epkgs.use-package
         epkgs.which-key

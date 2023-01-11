@@ -143,6 +143,9 @@ disables all other enabled themes."
             custom-enabled-themes)
     (load-theme name t)))
 
+;; Set the theme to gruvbox
+(neshtea/switch-theme 'gruvbox-dark-medium)
+
 ;; tree-sitter
 (use-package tree-sitter
   :init
@@ -157,18 +160,6 @@ disables all other enabled themes."
 ;; tree-sitter-langs.  Installed via the emacs nix module.
 (add-to-list 'tree-sitter-major-mode-language-alist '(clojure-mode . clojure))
 (add-to-list 'tree-sitter-major-mode-language-alist '(emacs-lisp-mode . elisp))
-
-(use-package doom-themes
-  :defer t
-  :init
-  (neshtea/switch-theme 'doom-gruvbox)
-  :config
-  (setq doom-themes-enable-bold t
-	doom-themes-enable-italic t)
-  ;; Enable flashing mode-line on errors.
-  (doom-themes-visual-bell-config)
-  ;; Corrects (and improves) org-modes's native fontification.
-  (doom-themes-org-config))
 
 (use-package all-the-icons)
 
@@ -261,11 +252,9 @@ the separator."
  (intern (string-join (mapcar #'symbol-name symbols) sep)))
 
 (defun neshtea/hook-lispy-modes (mode-name)
-  "Add paredit- and rainbow-delimeters-mode to 'mode-name'."
+  "Add paredit-mode to 'mode-name'."
   (let* ((mode-hook (neshtea/symbol-join (list mode-name 'hook) "-")))
-    (progn
-      (add-hook mode-hook #'enable-paredit-mode)
-      (add-hook mode-hook #'rainbow-delimiters-mode))))
+    (add-hook mode-hook #'enable-paredit-mode)))
 
 (use-package paredit
   :config
@@ -717,25 +706,6 @@ the separator."
   :defer t
   :custom
   (rust-format-on-save t))
-
-;;; Purescript
-(use-package psc-ide
-  :defer t)
-
-(defun purs-mode-hook ()
-  (psc-ide-mode)
-  ; (company-mode)  ; NOTE Globally enabled anyway
-  (turn-on-purescript-indentation))
-
-(use-package purescript-mode
-  :defer t
-  :hook (purescript-mode . purs-mode-hook))
-
-(use-package reformatter)
-
-(reformatter-define ocaml-format
-  :program "ocamlformat"
-  :args (list (buffer-file-name)))
 
 (provide 'init)
 ;;; init.el ends here
