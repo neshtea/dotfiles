@@ -170,15 +170,6 @@ disables all other enabled themes."
   ;; Corrects (and improves) org-modes's native fontification.
   (doom-themes-org-config))
 
-(use-package solaire-mode
-  :init
-  (solaire-global-mode +1))
-
-(use-package doom-modeline
-  :init (doom-modeline-mode 1)
-  :config
-  (setq doom-modeline-height 25))
-
 (use-package all-the-icons)
 
 ;; Code folding, also used by evil.

@@ -32,8 +32,6 @@ in {
         epkgs.cycle-themes
         epkgs.diff-hl
         epkgs.doom-themes
-        epkgs.doom-modeline
-        epkgs.solaire-mode
         epkgs.default-text-scale
 
         # tree-sitter
