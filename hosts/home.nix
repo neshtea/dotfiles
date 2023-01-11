@@ -20,8 +20,6 @@
     cacert
     coreutils
 
-    st
-
     # we have lots or clojure projects that don't provide a nix shell,
     # so let's have this available everywhere.
     clojure
@@ -112,5 +110,4 @@
   xdg.enable = true;
 
   xdg.configFile."nixpkgs/config.nix".source = ../xdg/config.nix;
-  xdg.configFile."wezterm/wezterm.nix".source = ../xdg/wezterm/wezterm.lua;
 }
