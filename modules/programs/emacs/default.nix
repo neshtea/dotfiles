@@ -56,6 +56,11 @@ in {
         epkgs.clj-refactor
         epkgs.clojure-mode
 
+        # Common Lisp
+        epkgs.sly
+        epkgs.sly-quicklisp
+        epkgs.sly-asdf
+
         # Haskell
         epkgs.haskell-mode
         epkgs.lsp-haskell

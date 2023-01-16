@@ -39,7 +39,7 @@
 	(iosevka        . (:font   "Iosevka"
 			   :height 140))))
 
-(setq neshtea/current-font 'iosevka)
+(setq neshtea/current-font 'jetbrains-mono)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -143,8 +143,17 @@ disables all other enabled themes."
             custom-enabled-themes)
     (load-theme name t)))
 
+(setq modus-themes-mode-line '(accented borderless (padding . 5)))
+(setq modus-themes-italic-constructs t)
+(setq modus-themes-syntax '(yellow-comments green-strings))
+(setq modus-themes-paren-match '(bold))
+(setq modus-themes-headings '((t . (monochrome))))
+(setq modus-themes-org-blocks 'gray-background)
+(setq modus-themes-fringes nil)
+
 ;; Set the theme to gruvbox
-(neshtea/switch-theme 'gruvbox-dark-medium)
+;; (neshtea/switch-theme 'gruvbox-dark-medium)
+(neshtea/switch-theme 'modus-vivendi)
 
 ;; tree-sitter
 (use-package tree-sitter
@@ -706,6 +715,19 @@ the separator."
   :defer t
   :custom
   (rust-format-on-save t))
+
+(use-package sly
+  :config
+  ;; default to sbcl
+  (setq inferior-lisp-program "sbcl"))
+
+(use-package sly-quicklisp)
+
+(use-package sly-asdf)
+
+(def-local-with-leader
+  :keymaps 'sly-mode-map
+  "e e" #'sly-eval-defun)
 
 (provide 'init)
 ;;; init.el ends here
