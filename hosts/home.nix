@@ -62,6 +62,8 @@
     youtube-dl
     wget
 
+    subversion
+
     # Required for some modules and nice utilities to have
     nixfmt
     multimarkdown
