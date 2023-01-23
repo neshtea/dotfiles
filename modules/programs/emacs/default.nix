@@ -61,6 +61,10 @@ in {
         epkgs.sly-quicklisp
         epkgs.sly-asdf
 
+        # Scheme
+        epkgs.geiser
+        epkgs.geiser-guile
+
         # Haskell
         epkgs.haskell-mode
         epkgs.lsp-haskell

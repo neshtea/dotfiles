@@ -729,5 +729,9 @@ the separator."
   :keymaps 'sly-mode-map
   "e e" #'sly-eval-defun)
 
+(use-package geiser)
+
+(use-package geiser-guile)
+
 (provide 'init)
 ;;; init.el ends here
