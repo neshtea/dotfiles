@@ -12,6 +12,7 @@
     emacsPackage = pkgs.emacsMacport;
   };
   modules.programs.kitty.enable = true;
+  # modules.programs.docker.enable = true;
 
   xdg.configFile."clj-kondo" = {
     source = "${inputs.active-kondo}";
