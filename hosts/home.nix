@@ -102,7 +102,7 @@
   };
 
   # Programs
-  # modules.programs.neovim.enable = true;
+  modules.programs.neovim.enable = true;
 
   # Shells and shell tools
   modules.shell.fzf.enable = true;

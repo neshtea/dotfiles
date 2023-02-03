@@ -19,10 +19,10 @@
       url = "github:active-group/active-kondo";
       flake = false;
     };
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # neovim-nightly-overlay = {
+    #   url = "github:nix-community/neovim-nightly-overlay";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs = inputs@{ nixpkgs, home-manager, ... }:
@@ -64,8 +64,9 @@
       # This only concerns systems that use home-manager directly (in
       # my case, darwin machines).
       homeConfigurations.${username} = let
-        system = "x86_64-darwin"; # Only relevant for darwin.
-        overlays = [ inputs.neovim-nightly-overlay.overlay ];
+        system = "aarch64-darwin"; # Only relevant for darwin.
+        # overlays = [ inputs.neovim-nightly-overlay.overlay ];
+        overlays = [ ];
         pkgs = import nixpkgs {
           config.allowUnfree = true; # Sorry rms
           inherit overlays system;
@@ -74,7 +75,7 @@
         inherit pkgs;
         extraSpecialArgs = specialArgs;
         modules = [
-          ./hosts/rombach/home.nix
+          ./hosts/wayfarer/home.nix
           {
             home = {
               inherit username;

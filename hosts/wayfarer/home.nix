@@ -9,7 +9,8 @@
 
   modules.programs.emacs = {
     enable = true;
-    emacsPackage = pkgs.emacsMacport;
+    emacsPackage = pkgs.emacs;
+    # emacsPackage = pkgs.emacsMacport;
   };
   modules.programs.kitty.enable = true;
   # modules.programs.docker.enable = true;
