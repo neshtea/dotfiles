@@ -153,7 +153,7 @@ disables all other enabled themes."
 
 ;; Set the theme to gruvbox
 ;; (neshtea/switch-theme 'gruvbox-dark-medium)
-(neshtea/switch-theme 'modus-vivendi)
+(neshtea/switch-theme 'gruvbox-dark-hard)
 
 ;; tree-sitter
 (use-package tree-sitter
