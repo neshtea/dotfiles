@@ -26,6 +26,7 @@ in {
         epkgs.evil-org
         epkgs.exec-path-from-shell
         epkgs.general
+        epkgs.reformatter
 
         # Visuals
         epkgs.all-the-icons

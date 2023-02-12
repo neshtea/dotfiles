@@ -647,6 +647,8 @@ the separator."
   :init
   (add-hook 'after-init-hook 'global-hl-todo-mode))
 
+(use-package reformatter)
+
 (use-package merlin
   :hook ((tuareg-mode . merlin-mode)
 	 (caml-mode . merlin-mode))
@@ -662,6 +664,10 @@ the separator."
 
 (use-package ocp-indent
   :defer t)
+
+(reformatter-define ocaml-format
+		    :program "ocamlformat"
+		    :args (list (buffer-file-name)))
 
 (use-package envrc
   :defer t
