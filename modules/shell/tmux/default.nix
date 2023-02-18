@@ -7,6 +7,10 @@ in {
       enable = true;
       baseIndex = 1;
       clock24 = true;
+      extraConfig = ''
+        set-option -g renumber-windows on
+      '';
+
       keyMode = "vi";
       newSession = true;
       shell = "${pkgs.zsh}/bin/zsh";
