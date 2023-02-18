@@ -667,7 +667,7 @@ the separator."
 
 (reformatter-define ocaml-format
 		    :program "ocamlformat"
-		    :args (list (buffer-file-name)))
+		    :args (list "--name" (buffer-file-name) "-"))
 
 (use-package envrc
   :defer t
