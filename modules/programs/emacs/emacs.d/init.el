@@ -665,6 +665,7 @@ the separator."
 (use-package ocp-indent
   :defer t)
 
+;; Based on https://github.com/ludwigpacifici/ocamlreformat.el/blob/master/ocamlreformat.el
 (reformatter-define ocaml-format
 		    :program "ocamlformat"
 		    :args (list "--name" (buffer-file-name) "-"))
