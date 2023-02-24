@@ -152,7 +152,6 @@ disables all other enabled themes."
 (setq modus-themes-fringes nil)
 
 ;; Set the theme to gruvbox
-;; (neshtea/switch-theme 'gruvbox-dark-medium)
 (neshtea/switch-theme 'gruvbox-dark-hard)
 
 ;; tree-sitter
@@ -278,6 +277,8 @@ the separator."
 	 ("\\.md\\'" . markdown-mode)
 	 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
+
+(use-package markdown-toc)
 
 ;; Selectrum is a better solution for incremental narrowing in Emacs, 
 ;; replacing Helm, Ivy, and Ido.

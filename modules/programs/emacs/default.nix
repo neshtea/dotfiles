@@ -90,6 +90,7 @@ in {
         epkgs.magit-todos
         epkgs.marginalia
         epkgs.markdown-mode
+        epkgs.markdown-toc
         epkgs.org
         epkgs.org-roam
         epkgs.org-appear
