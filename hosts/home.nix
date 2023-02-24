@@ -85,6 +85,11 @@
       userName = "Marco Schneider";
       userEmail = "marco.schneider@active-group.de";
       delta.enable = true;
+      extraConfig = {
+        init.defaultBranch = "main";
+        merge.conflicstyle = "diff3";
+        pull.rebase = "true";
+      };
     };
 
     gpg = {
