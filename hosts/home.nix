@@ -89,6 +89,11 @@
         init.defaultBranch = "main";
         merge.conflicstyle = "diff3";
         pull.rebase = "true";
+        url = {
+          # kenranunderscore forces me to use this as well... :D
+          "https://github.com/" = { insteadOf = "gh:"; };
+          "ssh://git@gitlab.active-group.de:1022/ag/" = { insteadOf = "ag:"; };
+        };
       };
     };
 
