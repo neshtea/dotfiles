@@ -171,6 +171,9 @@ disables all other enabled themes."
 
 (use-package all-the-icons)
 
+(use-package doom-modeline
+  :hook (after-init . doom-modeline-mode))
+
 ;; Code folding, also used by evil.
 ;; https://github.com/gregsexton/origami.el
 (use-package origami
