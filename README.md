@@ -9,26 +9,27 @@ configuration.
 
 It manages the configuration for multiple hosts:
 
-- [](./hosts/wayfarer): My work MacBook Pro, running macOS.
-- [](./hosts/anarres): My personal stationary PC, running NixOS.
+- [wayfarer](./hosts/wayfarer): My work MacBook Pro, running macOS.
+- [anarres](./hosts/anarres): My personal stationary PC, running NixOS.
 
 # Home Configuration
 
 Shared configuration between hosts can be found in
-[](./hosts/home.nix).  Each host refines that configuration in their
-respective `home.nix` declarations.
+[home.nix](./hosts/home.nix).  Each host refines that configuration in
+their respective `home.nix` declarations.
 
 # Systen Configuration
 
 Each NixOS host defines its system configuration in
 
-- [](./hosts/anarres/configuration.nix): System configuration.
-- [](./hosts/anarres/hardware-configuration.nix): Hardware specific
-  configuration configuration.
+- [`configuration.nix`](./hosts/anarres/configuration.nix): System
+  configuration.
+- [`hardware-configuration.nix`](./hosts/anarres/hardware-configuration.nix):
+  Hardware specific configuration configuration.
 
-It is somewhat modularized (see [](./modules)).  I wouldn't recommend
-anyone trying to copy anything in here (there are better, more well
-thought out configurations like this [this
+It is somewhat modularized (see [`modules`](./modules)).  I wouldn't
+recommend anyone trying to copy anything in here (there are better,
+more well thought out configurations like this [this
 one](https://github.com/kenranunderscore/dotfiles)), but it gets the
 job done.
 
