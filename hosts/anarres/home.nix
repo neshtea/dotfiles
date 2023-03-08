@@ -55,7 +55,6 @@
   modules.desktop.xmonad.enable = true;
   modules.desktop.rofi.enable = true;
   modules.desktop.polybar.enable = true;
-  # modules.email.enable = true;
 
   services = {
     dropbox = {
