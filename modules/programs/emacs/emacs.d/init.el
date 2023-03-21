@@ -688,6 +688,12 @@ the separator."
   (haskell-stylish-on-save t)
   :hook (haskell-mode . interactive-haskell-mode))
 
+(use-package ormolu
+ :hook (haskell-mode . ormolu-format-on-save-mode)
+ :bind
+ (:map haskell-mode-map
+   ("C-c r" . ormolu-format-buffer)))
+
 (use-package eglot
   :defer t
   :config

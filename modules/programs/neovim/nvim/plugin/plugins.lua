@@ -56,6 +56,9 @@ return require("packer").startup(function(use)
    use 'nvim-lualine/lualine.nvim'
    use "Olical/conjure"
 
+   -- Purescript
+   use 'purescript-contrib/purescript-vim'
+
    if packer_bootstrap then
        require("packer").sync()
    end

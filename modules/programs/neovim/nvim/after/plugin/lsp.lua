@@ -43,6 +43,11 @@ lspconfig.elixirls.setup {
     capabilities = capabilities,
 }
 
+lspconfig.purescriptls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+
 lspconfig.sumneko_lua.setup {
     on_attach = on_attach,
     capabilities = capabilities,

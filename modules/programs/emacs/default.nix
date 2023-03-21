@@ -70,6 +70,7 @@ in {
         # Haskell
         epkgs.haskell-mode
         epkgs.lsp-haskell
+        epkgs.ormolu
 
         # Ocaml
         epkgs.merlin
