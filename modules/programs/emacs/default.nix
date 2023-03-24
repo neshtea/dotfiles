@@ -95,6 +95,7 @@ in {
         epkgs.markdown-toc
         epkgs.org
         epkgs.org-roam
+        epkgs.org-roam-ui
         epkgs.org-appear
         epkgs.org-present
         epkgs.origami

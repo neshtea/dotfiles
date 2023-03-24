@@ -37,9 +37,10 @@
       '((jetbrains-mono . (:font   "JetBrains Mono"
 			   :height 140))
 	(iosevka        . (:font   "Iosevka"
-			   :height 140))))
+			   :height 160))))
 
-(setq neshtea/current-font 'jetbrains-mono)
+;; (setq neshtea/current-font 'jetbrains-mono)
+(setq neshtea/current-font 'iosevka)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -318,7 +319,7 @@ the separator."
   (setq register-preview-delay 0
 	register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
-  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+  ;(advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
 
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :config
@@ -422,16 +423,16 @@ the separator."
   (org-hide-leading-stars t)
   (org-return-follows-link t)
   (org-startup-folded 'content)
-  (org-agenda-files '("~/Dropbox/Brain/Tasks/gtd.org"))
+  (org-agenda-files '("~/Dropbox/Brain/org/gtd.org"))
+  (org-agenda-span 10)
+  (org-agenda-start-on-weekday nil)
+  (org-agenda-start-day "-3d")
   (org-capture-templates '(("t" "Todo [inbox/work]" entry
-			    (file+headline "~/Dropbox/Brain/Tasks/gtd.org" "INBOX")
-			    "* TODO %i%? \n%U")
-			   ("c" "Capture [inbox]" entry
-			    (file+headline "~/Dropbox/Brain/Tasks/gtd.org" "INBOX")
-			    "* TODO %i%? \n%a")))
-  (org-refile-targets '(("~/Dropbox/Brain/Tasks/gtd.org" :maxlevel . 2)
-			("~/Dropbox/Brain/Tasks/lists.org" :maxlevel . 2)
-			("~/Dropbox/Brain/Tasks/someday.org" :level . 1)))
+			    (file+headline "~/Dropbox/Brain/org/gtd.org" "INBOX")
+			    "* TODO %i%? \n%U")))
+  (org-refile-targets '(("~/Dropbox/Brain/org/gtd.org" :maxlevel . 2)
+			("~/Dropbox/Brain/org/lists.org" :maxlevel . 2)
+			("~/Dropbox/Brain/org/projects.org" :maxlevel . 1)))
 	;; When the state of a section headline changes, log the
 	;; transition into the headlines drawer.
   (org-log-into-drawer 'LOGBOOK)
@@ -496,14 +497,36 @@ the separator."
   :init
   (setq org-roam-v2-ack t)
   :custom
-  (org-roam-directory "~/Dropbox/Brain/Knowledge/")
-  (org-roam-index-file "index.org")
+  (org-roam-directory "~/Dropbox/Brain/org/zettelkasten")
+  (org-roam-dailies-directory "dailies/")
+  (org-roam-node-display-template
+        (concat "${title:*} "
+                (propertize "${tags:10}" 'face 'org-tag)))
+  (org-roam-dailies-capture-templates
+   '(("d" "default" entry
+      "* %?"
+      :target (file+head "%<%Y-%m-%d>.org"
+			 "#+title: %<%Y-%m-%d>\n"))))
+
+  (org-roam-capture-templates
+   '(("d" "default" plain
+      "%?" :target
+      (file+head "${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)))
   :config
   (org-roam-setup))
 
+(use-package org-roam-ui
+  :after org-roam
+  :custom
+  (org-roam-ui-sync-theme t)
+  (org-roam-ui-follow t)
+  (org-roam-ui-update-on-save t)
+  (org-roam-ui-open-on-start t))
+
 (defun neshtea/org-gtd-file ()
   (interactive)
-  (find-file (expand-file-name "~/Dropbox/Brain/Tasks/gtd.org")))
+  (find-file (expand-file-name "~/Dropbox/Brain/org/gtd.org")))
 
 (def-with-leader
   "a o a" #'org-agenda-list
@@ -511,6 +534,14 @@ the separator."
   "a o c" #'consult-org-agenda
   "a o f" '(neshtea/org-gtd-file :which-key "open GTD file")
   "C c" #'org-capture
+  ;; Also available as r d c
+  "C t" #'org-roam-dailies-capture-today
+
+  ;; Dailies
+  "r d c" #'org-roam-dailies-capture-today  ; also available as C t
+  "r d t" #'org-roam-dailies-goto-today
+  "r d n" #'org-roam-dailies-goto-next-note
+  "r d p" #'org-roam-dailies-goto-previous-note
 
   "r n f" #'org-roam-node-find
   "r n c" #'org-roam-capture
