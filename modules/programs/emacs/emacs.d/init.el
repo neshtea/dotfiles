@@ -313,13 +313,21 @@ the separator."
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
 
+(defun neshtea/projectile-project-find-function (dir)
+  (let ((root (projectile-project-root dir)))
+    (and root (cons 'transient root))))
+
+(use-package project
+  :config
+  (add-hook 'project-find-functions #'neshtea/projectile-project-find-function))
+
 ;; consult provides a huge array of cap based searches.
 (use-package consult
   :init
   (setq register-preview-delay 0
 	register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
-  ;(advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+					;(advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
 
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :config
@@ -724,6 +732,17 @@ the separator."
  :bind
  (:map haskell-mode-map
    ("C-c r" . ormolu-format-buffer)))
+
+(use-package purescript-mode
+  :defer t
+  :hook
+  (purescript-mode . turn-on-purescript-indentation)
+  :custom
+  (purescript-stylish-on-save t))
+
+(reformatter-define purescript-format
+  :program "purs-tidy"
+  :args (list "format"))
 
 (use-package eglot
   :defer t

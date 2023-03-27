@@ -10,7 +10,7 @@ in {
       '';
       font = {
         name = "Iosevka";
-        size = 14;
+        size = 16;
       };
       keybindings = {
         "cmd+d" = "new_window_with_cwd";

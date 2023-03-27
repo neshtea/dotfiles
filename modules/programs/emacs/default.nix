@@ -72,6 +72,9 @@ in {
         epkgs.lsp-haskell
         epkgs.ormolu
 
+        # Purescript
+        epkgs.purescript-mode
+
         # Ocaml
         epkgs.merlin
         epkgs.merlin-company
