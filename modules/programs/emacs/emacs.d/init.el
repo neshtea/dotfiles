@@ -327,7 +327,6 @@ the separator."
   (setq register-preview-delay 0
 	register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
-					;(advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
 
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :config
