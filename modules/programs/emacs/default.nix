@@ -100,7 +100,6 @@ in {
         epkgs.org-roam
         epkgs.org-roam-ui
         epkgs.org-appear
-        epkgs.org-present
         epkgs.origami
         epkgs.projectile
         epkgs.tuareg

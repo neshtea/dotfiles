@@ -1,4 +1,3 @@
-
 ;;; init.el --- Summary
 
 ;; Commentary:
@@ -59,6 +58,9 @@ the face-font."
 ;; Set the font to the default.
 (neshtea/switch-font neshtea/current-font)
 
+(global-set-key (kbd "C-. s f") #'neshtea/switch-font)
+(global-set-key (kbd "C-. s t") #'neshtea/switch-theme)
+
 ;; Disable menubar/scrollbar/toolbar.
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
@@ -107,25 +109,21 @@ the face-font."
   ;; We always want to display completions.
   (add-hook 'after-init-hook #'which-key-mode))
 
-;; General is used to define keybindings (replaces previously used
-;; evil-leader).
-(require 'general)
-
 ;;    We define two general definers here:
 ;; 1. def-with-leader: Define "global" keys, prefixed by "SPC"
 ;; 2. def-local-with-leader: Define "local" keys (keys for
 ;;    specific modes, i.e. org-mode, clojure, ...)
-(general-create-definer def-with-leader
-  :keymaps 'override
-  :states '(normal insert emacs visual motion)
-  :prefix "SPC"
-  :non-normal-prefix "C-SPC")
+;; (general-create-definer def-with-leader
+;;   :keymaps 'override
+;;   :states '(normal insert emacs visual motion)
+;;   :prefix "SPC"
+;;   :non-normal-prefix "C-SPC")
 
-(general-create-definer def-local-with-leader
-  :keymaps 'override
-  :states '(normal insert emacs visual motion)
-  :prefix ","
-  :non-normal-prefix "C-,")
+;; (general-create-definer def-local-with-leader
+;;   :keymaps 'override
+;;   :states '(normal insert emacs visual motion)
+;;   :prefix ","
+;;   :non-normal-prefix "C-,")
 
 ;; Taken from Johannes init.el
 ;; https://github.com/kenranunderscore/dotfiles/blob/main/modules/programs/emacs/emacs.d/init.el#L80
@@ -175,53 +173,15 @@ disables all other enabled themes."
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode))
 
-;; Code folding, also used by evil.
-;; https://github.com/gregsexton/origami.el
-(use-package origami
-  :init
-  (global-origami-mode))
-
-;;;;  evil
-;; Make editing files a little saner (that is, make it behave like
-;; vim).
-(use-package evil
-  :init
-  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-  (setq evil-want-keybinding nil)
-  :config
-  (evil-mode 1)
-  (setq evil-undo-system 'emacs))
-
-;; evil-collection contains a large repository of behaviours that make
-;; lots of buffers behave the way you would expect in evil-mode.
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
-
-;; Same as evil-collection, but specific to org-mode.
-;; https://github.com/Somelauw/evil-org-mode
-(use-package evil-org
-  :defer t
-  :after (evil org)
-  :hook ((org-mode . evil-org-mode)
-	 (org-agenda-mode . evil-org-mode))
-  :config
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
-
-;; Make commenting a little easier.
-(use-package evil-nerd-commenter)
-
 ;;;; Generic, non-mode specific helpers.
 ;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/
-(defun er-switch-to-previous-buffer ()
+(defun neshtea/switch-to-previous-buffer ()
   "Switch to previously open buffer.
 Repeated invocations toggle between the two most recently open buffers."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
-(defun toggle-fullscreen ()
+(defun neshtea/toggle-fullscreen ()
   "Toggle full screen."
   (interactive)
   (set-frame-parameter
@@ -229,20 +189,8 @@ Repeated invocations toggle between the two most recently open buffers."
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
 
 ;; Some global keys, not specific to any one particular mode.
-(def-with-leader
-  ";"   #'evilnc-comment-or-uncomment-lines
-  ;; "e"   #'find-file
-  "k"   #'kill-buffer
-  "TAB" #'er-switch-to-previous-buffer
-  "t f" #'display-fill-column-indicator-mode
-  "s h" #'eshell
-  "f s" #'toggle-fullscreen
-  ;; "t t" #'modus-themes-toggle
-  "q r" #'restart-emacs
-  "SPC" '(execute-extended-command :which-key "M-x")
-  "s f" '(neshtea/switch-font :which-key "switch font")
-  "s t" '(neshtea/switch-theme :which-key "switch theme")
-  "t r" '(neshtea/toggle-display-line-numbers-relative :which-key "toggle relative/absolute line numbers"))
+(global-set-key (kbd "C-. t s") #'neshtea/toggle-fullscreen)
+(global-set-key (kbd "C-. t r") #'neshtea/toggle-display-line-numbers-relative)
 
 ;; Paredit allows to easily work with parens. Especially useful in
 ;; LISP-like languages.
@@ -328,30 +276,34 @@ the separator."
 	register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
 
+  :bind
+  (("C-c c m" . consult-mode-command)
+   ("C-c c h" . consult-history)
+   ("C-c c b" . consult-bookmark)
+   ("C-c c l" . consult-line)
+   ("C-c c o" . consult-outline)
+   ("C-c c b" . consult-buffer)
+   ("C-c c r" . consult-ripgrep))
+  
   :hook (completion-list-mode . consult-preview-at-point-mode)
+
   :config
   (autoload 'projectile-project-root "projectile")
   (setq consult-project-root-function #'projectile-project-root))
-
-(def-with-leader
-  "c m" #'consult-mode-command
-  "c h" #'consult-history
-  "c b" #'consult-bookmark
-  "c l" #'consult-line
-  "c o" #'consult-outline
-  "b b" #'consult-buffer
-  "/"   #'consult-ripgrep)
 
 ;; marginalia annotates completion candidates in the completion at
 ;; point buffer. Plays nicely with consult, etc.
 (use-package marginalia :init (marginalia-mode))
 
 ;; Easily find projects and files within projects.
-(use-package projectile :init (projectile-mode +1))
+(use-package project
+  :bind
+  (("C-c p f" . project-find-file)))
 
-(def-with-leader
-  "p p" #'projectile-switch-project
-  "p f" #'project-find-file)
+(use-package projectile
+  :init (projectile-mode +1)
+  :bind
+  (("C-c p p" . projectile-switch-project)))
 
 ;; Highlights docker files and provides some basic commands (none of
 ;; which I use).
@@ -390,25 +342,12 @@ the separator."
 (use-package cider
   :defer t
   :custom
-  (cider-repl-display-help-banner nil))
-
-(def-local-with-leader
-  :keymaps 'clojure-mode-map
-  "= =" #'clojure-align
-  "h a" #'cider-apropos
-  "h c" #'cider-cheatsheet
-  "h d" #'cider-clojuredocs
-  "h j" #'cider-javadoc
-  "h h" #'cider-doc
-  "h n" #'cider-browse-ns
-  "h s" #'cider-browser-spec
-  "e ," #'cider-eval-sexp-at-point
-  "e b" #'cider-eval-buffer
-  "e e" #'cider-eval-last-sexp
-  "e m" #'cider-macroexpand-1
-  "e n a" #'cider-ns-reload-all
-  "t a" #'cider-test-run-ns-tests
-  "t t" #'cider-test-run-test)
+  (cider-repl-display-help-banner nil)
+  :bind (:map clojure-mode-map
+	      ("C-. h d" . cider-clojure-docs)
+	      ("C-. h h" . cider-doc)
+	      ("C-. t t" . cider-test-run-test)
+	      ("C-. t a" . cider-test-run-ns-test)))
 
 (use-package org-indent
   :defer t
@@ -418,9 +357,18 @@ the separator."
   (org-indent-mode)
   (auto-fill-mode))
 
+(defun neshtea/org-gtd-file ()
+  (interactive)
+  (find-file (expand-file-name "~/Dropbox/Brain/org/gtd.org")))
+
 (use-package org
   :hook (org-mode . neshtea/org-mode-setup)
 
+  :bind (("C-c o a" . org-agenda-list)
+	 ("C-c o t" . org-todo-list)
+	 ("C-c o f" . neshtea/org-gtd-file)
+	 ("C-c o c c" . org-capture))
+  
   :custom
   (org-ellipsis " ▾")
   (org-edit-src-content-indentation 0)  ; Don't indent in src blocks.
@@ -443,17 +391,17 @@ the separator."
 	;; When the state of a section headline changes, log the
 	;; transition into the headlines drawer.
   (org-log-into-drawer 'LOGBOOK)
-  (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d!)" "CANCELLED(c!)"))))
+  (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d!)" "CANCELLED"))))
 
 (use-package org-appear
   :hook
   (org-mode . org-appear-mode)
-  :config
-  (setq org-appear-autolinks t)
-  (setq org-appear-autosubmarkers t)
-  (setq org-appear-autoentities t)
-  (setq org-appear-autokeywords t)
-  (setq org-appear-trigger 'always))
+  :custom
+  (org-appear-autolinks t)
+  (org-appear-autosubmarkers t)
+  (org-appear-autoentities t)
+  (org-appear-autokeywords t)
+  (org-appear-trigger 'always))
 
 (defun neshtea/org-toggle-emphasis ()
   "Toggle hiding/showing of org emphasize markers."
@@ -462,45 +410,21 @@ the separator."
       (set-variable 'org-hide-emphasis-markers nil)
     (set-variable 'org-hide-emphasis-markers t)))
 
-;; org-present
-(defun neshtea/org-present-prepare-slide ()
-  (org-overview)
-  (org-show-entry)
-  (org-show-children))
-
-(defun neshtea/org-present-hook ()
-  (setq header-line-format " ")
-  (org-display-inline-images)
-  (neshtea/org-present-prepare-slide))
-
-(defun neshtea/org-present-quit-hook ()
-  (setq header-line-format nil)
-  (org-present-small)
-  (org-remove-inline-images))
-
-(defun neshtea/org-present-prev ()
-  (interactive)
-  (org-present-prev)
-  (neshtea/org-present-prepare-slide))
-
-(defun neshtea/org-present-next ()
-  (interactive)
-  (org-present-next)
-  (neshtea/org-present-prepare-slide))
-
-(use-package org-present
-  :defer t
-  :after org
-  :bind (:map org-present-mode-keymap
-	      ("C-c C-j" . neshtea/org-present-next)
-	      ("C-c C-k" . neshtea/org-present-prev))
-  :hook ((org-present-mode . neshtea/org-present-hook)
-	 (org-present-mode-quit . neshtea/org-present-quit-hook)))
-
 ;; Roam inspired mode for my zettelkasten using org mode.
 (use-package org-roam
   :defer t
   :after org
+  :bind
+  (("C-c o r c" . org-roam-capture)
+   ("C-c o r f" . org-roam-node-find)
+   ("C-c o d t" . org-roam-dailies-goto-today)
+   ("C-c o d n" . org-roam-dailies-goto-next-note)
+   ("C-c o d p" . org-roam-dailies-goto-previous-note)
+   
+   :map org-mode-map
+	("C-c n l" . org-roam-buffer-toggle)
+	("C-c n f" . org-roam-node-find)
+	("C-c n i" . org-roam-node-insert))
   :init
   (setq org-roam-v2-ack t)
   :custom
@@ -531,57 +455,6 @@ the separator."
   (org-roam-ui-update-on-save t)
   (org-roam-ui-open-on-start t))
 
-(defun neshtea/org-gtd-file ()
-  (interactive)
-  (find-file (expand-file-name "~/Dropbox/Brain/org/gtd.org")))
-
-(def-with-leader
-  "a o a" #'org-agenda-list
-  "a o t" #'org-todo-list
-  "a o c" #'consult-org-agenda
-  "a o f" '(neshtea/org-gtd-file :which-key "open GTD file")
-  "C c" #'org-capture
-  ;; Also available as r d c
-  "C t" #'org-roam-dailies-capture-today
-
-  ;; Dailies
-  "r d c" #'org-roam-dailies-capture-today  ; also available as C t
-  "r d t" #'org-roam-dailies-goto-today
-  "r d n" #'org-roam-dailies-goto-next-note
-  "r d p" #'org-roam-dailies-goto-previous-note
-
-  "r n f" #'org-roam-node-find
-  "r n c" #'org-roam-capture
-  "r n i" #'org-roam-node-insert
-  "r n t" #'org-roam-buffer-toggle
-  "r n a a" #'org-roam-alias-add
-  "r n a r" #'org-roam-alias-remove)
-
-(def-local-with-leader
-  :keymaps '(org-mode-map org-agenda-mode-map)
-  "d d" #'org-deadline
-  "d s" #'org-schedule
-  "s A" #'org-archive-subtree
-  "s l" #'org-demote-subtree
-  "s h" #'org-promote-subtree
-  "s k" #'org-move-subtree-up
-  "s j" #'org-move-subtree-down
-  "s r" #'org-refile
-  "s s" #'org-sparse-tree
-  "s S" #'org-sort-entries
-
-  "i d" #'org-insert-drawer
-  "i l" #'org-insert-link
-  "i n" #'org-add-note
-  "i t" #'org-set-tags-command
-  
-  "T c" #'org-toggle-checkbox
-  "T i" #'org-toggle-inline-images
-  "T t" #'org-todo
-  "T e" '(neshtea/org-toggle-emphasis :which-key "toggle emphasis")
-
-  "x o" #'org-open-at-point)
-
 ;; Work with nix files (syntax highlighting and indentation). 
 (use-package nix-mode
   :defer t
@@ -590,16 +463,11 @@ the separator."
 
 (use-package default-text-scale
   :defer t
+  :bind (("C-c t =" . default-text-scale-increase)
+	 ("C-c t -" . default-text-scale-decrease)
+	 ("C-c t 0" . default-text-scale-reset))
   :config
   (default-text-scale-mode))
-
-(def-with-leader
-  ;; '+' and '=': When switching between german and us layout, this
-  ;; always bugs me.
-  "f +" #'default-text-scale-increase
-  "f =" #'default-text-scale-increase
-  "f -" #'default-text-scale-decrease
-  "f 0" #'default-text-scale-reset)
 
 (use-package diff-hl
   :init (global-diff-hl-mode))
@@ -607,24 +475,13 @@ the separator."
 ;; Magit (and Neogit for Neovim) are the very best tools for
 ;; interacting with git.
 (use-package magit
-  :hook ((git-commit-mode . evil-insert-state)  ; Start commit messages in insert mode.
+  :hook (;(git-commit-mode . evil-insert-state)  ; Start commit messages in insert mode.
 	 ;; https://github.com/dgutov/diff-hl#magit
 	 (magit-pre-refresh . diff-hl-magit-pre-refresh)
 	 (magit-post-refresh . diff-hl-magit-post-refresh))  
   :after diff-hl
   :config
   (setq-default git-magit-status-fullscreen t))
-
-(def-with-leader
-  "g i" #'magit-init
-  "g s" #'magit
-  "g b" #'magit-blame
-  "g i" #'magit-gitignore)
-
-(def-with-leader
-  "t c i" #'timeclock-in
-  "t c o" #'timeclock-out
-  "f f t" #'timeclock-visit-timelog)
 
 ;; Used for golden-ration mode.
 (use-package zoom
@@ -633,16 +490,13 @@ the separator."
   ;; https://github.com/cyrus-and/zoom#example-configurations
   (setq zoom-size '(0.618 . 0.618)))
 
-(def-with-leader "z z" #'zoom-mode)
+;; (def-with-leader "z z" #'zoom-mode)
 
 (use-package helpful
-  :after evil)
-
-(def-with-leader
-  "h f" #'helpful-callable
-  "h v" #'helpful-variable
-  "h k" #'helpful-key
-  "h p" #'helpful-at-point)
+  :bind (("C-h f" . helpful-callable)
+	 ("C-h v" . helpful-variable)
+	 ("C-h k" . helpful-key)
+	 ("C-h p" . helpful-at-point)))
 
 ;;;; Elixir
 (use-package elixir-mode
@@ -660,30 +514,6 @@ the separator."
   ;(alchemist-execute-command (expand-file-name "~/.nix-profile/bin/elixir"))
   ;(alchemist-compile-command (expand-file-name "~/.nix-profile/bin/elixirc"))
   )
-
-(def-local-with-leader
-  :keymaps 'elixir-mode-map
-  "a x" #'alchemist-mix
-  "a c" #'alchemist-mix-compile
-  "a r" #'alchemist-mix-run
-
-  ;; hex
-  "a X i" #'alchemist-hex-info-at-point
-  "a X I" #'alchemist-hex-info
-  "a X s" #'alchemist-hex-search
-
-  ;; tests
-  "a t"     #'alchemist-mix-test
-  "a m t f" #'alchemist-mix-test-file
-  "a m t b" #'alchemist-mix-test-this-buffer
-  "a m t ." #'alchemist-mix-test-at-point
-
-  ;; documentation
-  "a h h" #'alchemist-help
-  "a h e" #'alchemist-help-search-at-point
-
-  ;; jump to definition
-  "a g d" #'alchemist-goto-definition-at-point)
 
 (use-package hl-todo
   :init
@@ -724,6 +554,9 @@ the separator."
   (haskell-compiler-type 'cabal)
   (haskell-process-type 'cabal)
   (haskell-stylish-on-save t)
+  :bind (:map haskell-mode-map
+	      ("C-. i i" . haskell-navigate-to-imports-go)
+	      ("C-. i r" . haskell-navigate-imports-return))
   :hook (haskell-mode . interactive-haskell-mode))
 
 (use-package ormolu
@@ -745,22 +578,18 @@ the separator."
 
 (use-package eglot
   :defer t
+  :bind (:map eglot-mode-map
+	      ("C-c <tab>" . company-complete)
+	      ("C-c l a" . elgot-code-actions)
+	      ("C-c l d" . eldoc-doc-buffer)
+	      ("C-c l r" . eglot-rename)
+	      ("C-c l g d" . xref-find-definitions)
+	      ("C-c l g r" . xref-find-references)
+	      ("C-c l e n" . flymake-goto-next-error)
+	      ("C-c l e p" . flymake-goto-previous-error))
   :config
   ;; don't ask before lsp intiated writes.
   (setq eglot-confirm-server-initiated-edits nil))
-
-;; eglot keymap
-(def-with-leader
-  "l a" #'eglot-code-actions
-  "l d" #'eldoc-doc-buffer
-  "l r" #'eglot-rename
-  "l g d" #'xref-find-definitions
-  "l g r" #'xref-find-references)
-
-(def-local-with-leader
-  :keymaps 'interactive-haskell-mode-map
-  "i i" '(haskell-navigate-to-imports-go :which-key "go to imports")
-  "i r" '(haskell-navigate-imports-return :which-key "return from imports"))
 
 (use-package hledger-mode
   :defer t
@@ -790,10 +619,6 @@ the separator."
 (use-package sly-quicklisp)
 
 (use-package sly-asdf)
-
-(def-local-with-leader
-  :keymaps 'sly-mode-map
-  "e e" #'sly-eval-defun)
 
 (use-package geiser)
 
