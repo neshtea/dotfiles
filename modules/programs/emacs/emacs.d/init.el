@@ -39,7 +39,7 @@
 			   :height 160))))
 
 ;; (setq neshtea/current-font 'jetbrains-mono)
-(setq neshtea/current-font 'iosevka)
+(setq neshtea/current-font 'jetbrains-mono)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -151,7 +151,8 @@ disables all other enabled themes."
 (setq modus-themes-fringes nil)
 
 ;; Set the theme to gruvbox
-(neshtea/switch-theme 'gruvbox-dark-hard)
+;; (neshtea/switch-theme 'gruvbox-dark-hard)
+(neshtea/switch-theme 'wombat)
 
 ;; tree-sitter
 (use-package tree-sitter
@@ -361,16 +362,21 @@ the separator."
   (interactive)
   (find-file (expand-file-name "~/Dropbox/Brain/org/gtd.org")))
 
+(defun neshtea/org-projects-file ()
+  (interactive)
+  (find-file (expand-file-name "~/Dropbox/Brain/org/projects.org")))
+
 (use-package org
   :hook (org-mode . neshtea/org-mode-setup)
 
   :bind (("C-c o a" . org-agenda-list)
 	 ("C-c o t" . org-todo-list)
 	 ("C-c o f" . neshtea/org-gtd-file)
+	 ("C-c o p" . neshtea/org-projects-file)
 	 ("C-c o c c" . org-capture))
   
   :custom
-  (org-ellipsis " ▾")
+  ;; (org-ellipsis " ▾")
   (org-edit-src-content-indentation 0)  ; Don't indent in src blocks.
   (org-hide-emphasis-markers t)
   (org-adapt-indentation nil)
@@ -390,6 +396,8 @@ the separator."
 			("~/Dropbox/Brain/org/projects.org" :maxlevel . 1)))
 	;; When the state of a section headline changes, log the
 	;; transition into the headlines drawer.
+  ;; When the state of a section headline changes, log the
+  ;; transition into the headlines drawer.
   (org-log-into-drawer 'LOGBOOK)
   (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d!)" "CANCELLED"))))
 
@@ -450,7 +458,7 @@ the separator."
 (use-package org-roam-ui
   :after org-roam
   :custom
-  (org-roam-ui-sync-theme t)
+  (org-roam-ui-syncn-theme t)
   (org-roam-ui-follow t)
   (org-roam-ui-update-on-save t)
   (org-roam-ui-open-on-start t))
