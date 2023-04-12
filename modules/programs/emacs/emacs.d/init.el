@@ -38,7 +38,6 @@
 	(iosevka        . (:font   "Iosevka"
 			   :height 160))))
 
-;; (setq neshtea/current-font 'jetbrains-mono)
 (setq neshtea/current-font 'jetbrains-mono)
 
 (defun neshtea/switch-font (font)
@@ -74,10 +73,34 @@ the face-font."
 (show-paren-mode 1)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
+;; taken from https://www.emacswiki.org/emacs/CopyingWholeLines
+(defun neshtea/copy-line (arg)
+  "Copy lines (as many as prefix argument) in the kill ring.
+      Ease of use features:
+      - Move to start of next line.
+      - Appends the copy on sequential calls.
+      - Use newline as last char even on the last line of the buffer.
+      - If region is active, copy its lines."
+  (interactive "p")
+  (let ((beg (line-beginning-position))
+        (end (line-end-position arg)))
+    (when mark-active
+      (if (> (point) (mark))
+          (setq beg (save-excursion (goto-char (mark)) (line-beginning-position)))
+        (setq end (save-excursion (goto-char (mark)) (line-end-position)))))
+    (if (eq last-command 'copy-line)
+        (kill-append (buffer-substring beg end) (< end beg))
+      (kill-ring-save beg end)))
+  (kill-append "\n" nil)
+  (beginning-of-line (or (and arg (1+ arg)) 2))
+  (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
+
+(global-set-key (kbd "C-c C-k") #'neshtea/copy-line)
+
 ;; Sometimes, I need relative line numbers.  `display-line-numbers`
 ;; has this built in.  This function makes it easier to toggle.
 
-; Default to relative
+					; Default to relative
 (setq display-line-numbers-type 't)  ; regular line numbers by default.
 (defun neshtea/toggle-display-line-numbers-relative ()
   "Toggle between relative and 'regular' line numbers."
@@ -151,8 +174,7 @@ disables all other enabled themes."
 (setq modus-themes-fringes nil)
 
 ;; Set the theme to gruvbox
-;; (neshtea/switch-theme 'gruvbox-dark-hard)
-(neshtea/switch-theme 'wombat)
+(neshtea/switch-theme 'gruvbox-dark-hard)
 
 ;; tree-sitter
 (use-package tree-sitter
@@ -422,17 +444,6 @@ the separator."
 (use-package org-roam
   :defer t
   :after org
-  :bind
-  (("C-c o r c" . org-roam-capture)
-   ("C-c o r f" . org-roam-node-find)
-   ("C-c o d t" . org-roam-dailies-goto-today)
-   ("C-c o d n" . org-roam-dailies-goto-next-note)
-   ("C-c o d p" . org-roam-dailies-goto-previous-note)
-   
-   :map org-mode-map
-	("C-c n l" . org-roam-buffer-toggle)
-	("C-c n f" . org-roam-node-find)
-	("C-c n i" . org-roam-node-insert))
   :init
   (setq org-roam-v2-ack t)
   :custom
@@ -454,6 +465,14 @@ the separator."
       :unnarrowed t)))
   :config
   (org-roam-setup))
+
+;; I need to have these keys available everywhere
+(global-set-key (kbd "C-c o r c") #'org-roam-capture)
+(global-set-key (kbd "C-c o r f") #'org-roam-node-find)
+(global-set-key (kbd "C-c o d t") #'org-roam-dailies-goto-today)
+(global-set-key (kbd "C-c o d p") #'org-roam-dailies-goto-previous-note)
+(global-set-key (kbd "C-c o d n") #'org-roam-dailies-goto-next-note)
+(global-set-key (kbd "C-c o d c") #'org-roam-dailies-capture-today)
 
 (use-package org-roam-ui
   :after org-roam
