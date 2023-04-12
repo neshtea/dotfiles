@@ -9,8 +9,8 @@ in {
         include ./themes/colors/gruvbox-material-dark-hard.conf
       '';
       font = {
-        name = "Iosevka";
-        size = 16;
+        name = "JetBrains Mono";
+        size = 14;
       };
       keybindings = {
         "cmd+d" = "new_window_with_cwd";
