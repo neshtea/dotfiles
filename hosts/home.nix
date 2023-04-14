@@ -52,6 +52,9 @@
     hledger
     hledger-web
 
+    # LaTeX
+    texlive.combined.scheme-full
+
     # Some system stuff that is independent of coding/projects
     ffmpeg
     gnugrep
