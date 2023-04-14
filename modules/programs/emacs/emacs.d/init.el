@@ -57,8 +57,8 @@ the face-font."
 ;; Set the font to the default.
 (neshtea/switch-font neshtea/current-font)
 
-(global-set-key (kbd "C-. s f") #'neshtea/switch-font)
-(global-set-key (kbd "C-. s t") #'neshtea/switch-theme)
+(keymap-global-set "C-. s f" #'neshtea/switch-font)
+(keymap-global-set "C-. s t" #'neshtea/switch-theme)
 
 ;; Disable menubar/scrollbar/toolbar.
 (menu-bar-mode -1)
@@ -95,7 +95,7 @@ the face-font."
   (beginning-of-line (or (and arg (1+ arg)) 2))
   (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
 
-(global-set-key (kbd "C-c C-k") #'neshtea/copy-line)
+(keymap-global-set "C-c C-k" #'neshtea/copy-line)
 
 ;; Sometimes, I need relative line numbers.  `display-line-numbers`
 ;; has this built in.  This function makes it easier to toggle.
@@ -212,8 +212,8 @@ Repeated invocations toggle between the two most recently open buffers."
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
 
 ;; Some global keys, not specific to any one particular mode.
-(global-set-key (kbd "C-. t s") #'neshtea/toggle-fullscreen)
-(global-set-key (kbd "C-. t r") #'neshtea/toggle-display-line-numbers-relative)
+(keymap-global-set "C-. t s" #'neshtea/toggle-fullscreen)
+(keymap-global-set "C-. t r" #'neshtea/toggle-display-line-numbers-relative)
 
 ;; Paredit allows to easily work with parens. Especially useful in
 ;; LISP-like languages.
@@ -467,17 +467,17 @@ the separator."
   (org-roam-setup))
 
 ;; I need to have these keys available everywhere
-(global-set-key (kbd "C-c o r c") #'org-roam-capture)
-(global-set-key (kbd "C-c o r f") #'org-roam-node-find)
-(global-set-key (kbd "C-c o d t") #'org-roam-dailies-goto-today)
-(global-set-key (kbd "C-c o d p") #'org-roam-dailies-goto-previous-note)
-(global-set-key (kbd "C-c o d n") #'org-roam-dailies-goto-next-note)
-(global-set-key (kbd "C-c o d c") #'org-roam-dailies-capture-today)
+(keymap-global-set "C-c o r c" #'org-roam-caputre)
+(keymap-global-set "C-c o r f" #'org-roam-node-find)
+(keymap-global-set "C-c o d t" #'org-roam-dailies-goto-today)
+(keymap-global-set "C-c o d p" #'org-roam-dailies-goto-previous-note)
+(keymap-global-set "C-c o d n" #'org-roam-dailies-goto-next-note)
+(keymap-global-set "C-c o d c" #'org-roam-dailies-capture-today)
 
 (use-package org-roam-ui
   :after org-roam
   :custom
-  (org-roam-ui-syncn-theme t)
+  (org-roam-ui-sync-theme t)
   (org-roam-ui-follow t)
   (org-roam-ui-update-on-save t)
   (org-roam-ui-open-on-start t))
