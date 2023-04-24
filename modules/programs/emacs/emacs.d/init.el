@@ -57,8 +57,8 @@ the face-font."
 ;; Set the font to the default.
 (neshtea/switch-font neshtea/current-font)
 
-(keymap-global-set "C-. s f" #'neshtea/switch-font)
-(keymap-global-set "C-. s t" #'neshtea/switch-theme)
+(global-set-key (kbd "C-. s f") #'neshtea/switch-font)
+(global-set-key (kbd "C-. s t") #'neshtea/switch-theme)
 
 ;; Disable menubar/scrollbar/toolbar.
 (menu-bar-mode -1)
@@ -95,7 +95,7 @@ the face-font."
   (beginning-of-line (or (and arg (1+ arg)) 2))
   (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
 
-(keymap-global-set "C-c C-k" #'neshtea/copy-line)
+(global-set-key (kbd "C-c C-k") #'neshtea/copy-line)
 
 ;; Sometimes, I need relative line numbers.  `display-line-numbers`
 ;; has this built in.  This function makes it easier to toggle.
@@ -212,8 +212,8 @@ Repeated invocations toggle between the two most recently open buffers."
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
 
 ;; Some global keys, not specific to any one particular mode.
-(keymap-global-set "C-. t s" #'neshtea/toggle-fullscreen)
-(keymap-global-set "C-. t r" #'neshtea/toggle-display-line-numbers-relative)
+(global-set-key (kbd "C-. t s") #'neshtea/toggle-fullscreen)
+(global-set-key (kbd "C-. t r") #'neshtea/toggle-display-line-numbers-relative)
 
 ;; Paredit allows to easily work with parens. Especially useful in
 ;; LISP-like languages.
@@ -319,14 +319,10 @@ the separator."
 (use-package marginalia :init (marginalia-mode))
 
 ;; Easily find projects and files within projects.
-(use-package project
-  :bind
-  (("C-c p f" . project-find-file)))
+(use-package project)
 
 (use-package projectile
-  :init (projectile-mode +1)
-  :bind
-  (("C-c p p" . projectile-switch-project)))
+  :init (projectile-mode +1))
 
 ;; Highlights docker files and provides some basic commands (none of
 ;; which I use).
@@ -436,9 +432,10 @@ the separator."
 (defun neshtea/org-toggle-emphasis ()
   "Toggle hiding/showing of org emphasize markers."
   (interactive)
-  (if org-hide-emphasis-markers
-      (set-variable 'org-hide-emphasis-markers nil)
-    (set-variable 'org-hide-emphasis-markers t)))
+  (let ((markers org-hide-emphasis-markers))
+    (if markers
+	(setq-local org-hide-emphasis-markers nil)
+      (setq-local org-hide-emphasis-markers t))))
 
 ;; Roam inspired mode for my zettelkasten using org mode.
 (use-package org-roam
@@ -467,12 +464,12 @@ the separator."
   (org-roam-setup))
 
 ;; I need to have these keys available everywhere
-(keymap-global-set "C-c o r c" #'org-roam-caputre)
-(keymap-global-set "C-c o r f" #'org-roam-node-find)
-(keymap-global-set "C-c o d t" #'org-roam-dailies-goto-today)
-(keymap-global-set "C-c o d p" #'org-roam-dailies-goto-previous-note)
-(keymap-global-set "C-c o d n" #'org-roam-dailies-goto-next-note)
-(keymap-global-set "C-c o d c" #'org-roam-dailies-capture-today)
+(global-set-key (kbd "C-c o r c") #'org-roam-caputre)
+(global-set-key (kbd "C-c o r f") #'org-roam-node-find)
+(global-set-key (kbd "C-c o d t") #'org-roam-dailies-goto-today)
+(global-set-key (kbd "C-c o d p") #'org-roam-dailies-goto-previous-note)
+(global-set-key (kbd "C-c o d n") #'org-roam-dailies-goto-next-note)
+(global-set-key (kbd "C-c o d c") #'org-roam-dailies-capture-today)
 
 (use-package org-roam-ui
   :after org-roam
