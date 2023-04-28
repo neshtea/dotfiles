@@ -18,8 +18,8 @@ in {
       extraPackages = epkgs: [
         # Basics, ergonomics, movement
         epkgs.consult
-        epkgs.evil
 
+        epkgs.emacsql
         epkgs.envrc
         epkgs.evil-collection
         epkgs.evil-nerd-commenter
