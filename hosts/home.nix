@@ -99,6 +99,26 @@
           "ssh://git@gitlab.active-group.de:1022/ag/" = { insteadOf = "ag:"; };
         };
       };
+      ignores = [
+        # (n)vim
+        "*.swp"
+        ".exrc"
+        ".nvimrc"
+
+        # Direnv
+        ".direnv/"
+        ".envrc"
+
+        # macOS
+        ".DS_Store"
+
+        # Emacs: backup, auto-save, lock files, directory-local
+        # variables
+        "*~"
+        "\\#*\\#"
+        ".\\#*"
+        ".dir-locals.el"
+      ];
     };
 
     gpg = {
