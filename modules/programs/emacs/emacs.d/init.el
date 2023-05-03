@@ -496,8 +496,7 @@ the separator."
 (use-package diff-hl
   :init (global-diff-hl-mode))
 
-;; Magit (and Neogit for Neovim) are the very best tools for
-;; interacting with git.
+;; Magit are the very best tools for interacting with git.
 (use-package magit
   :hook (;(git-commit-mode . evil-insert-state)  ; Start commit messages in insert mode.
 	 ;; https://github.com/dgutov/diff-hl#magit

@@ -92,7 +92,6 @@ in {
         epkgs.hydra
         epkgs.eglot
         epkgs.magit
-        epkgs.magit-todos
         epkgs.marginalia
         epkgs.markdown-mode
         epkgs.markdown-toc
