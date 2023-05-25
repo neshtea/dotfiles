@@ -574,19 +574,11 @@ the separator."
   :custom
   (haskell-process-type 'cabal-repl)
   (haskell-interactive-popup-errors nil)
-  (haskell-compiler-type 'cabal)
-  (haskell-process-type 'cabal)
-  (haskell-stylish-on-save t)
+  ;; TODO Remove, use dir-locals
   :bind (:map haskell-mode-map
-	      ("C-. i i" . haskell-navigate-to-imports-go)
+	      ("C-. i i" . haskell-navigate-imports-go)
 	      ("C-. i r" . haskell-navigate-imports-return))
   :hook (haskell-mode . interactive-haskell-mode))
-
-(use-package ormolu
- :hook (haskell-mode . ormolu-format-on-save-mode)
- :bind
- (:map haskell-mode-map
-   ("C-c r" . ormolu-format-buffer)))
 
 (use-package purescript-mode
   :defer t
