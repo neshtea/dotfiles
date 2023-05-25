@@ -27,6 +27,7 @@ in {
         "cmd+8" = "goto_tab 8";
         "cmd+9" = "goto_tab 9";
       };
+      settings = { "shell_integration" = "no-cursor"; };
     };
     # xdg.configFile."kitty/theme.conf".source = ./theme.conf;
     xdg.configFile."kitty/themes" = {
