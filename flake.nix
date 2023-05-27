@@ -70,6 +70,8 @@
         pkgs = import nixpkgs {
           config.allowUnfree = true; # Sorry rms
           inherit overlays system;
+          # Use this flake.nix's nixpkgs for stuff like `nix shell nixpkgs#<foo>`.
+          nix.registry = { this.flake = inputs.nixpkgs; };
         };
       in home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
