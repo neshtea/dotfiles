@@ -27,6 +27,7 @@
 ;; when you previously visited the same file."
 ;; https://www.emacswiki.org/emacs/SavePlace
 (save-place-mode 1)
+(set-fill-column 80)
 
 ;; Don't show errors when loading the custom file.
 (load custom-file 'no-error)
