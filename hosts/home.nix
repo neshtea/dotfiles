@@ -69,6 +69,8 @@
     nixfmt
     multimarkdown
     ripgrep
+
+    texlive.combined.scheme-full
   ];
 
   programs = {
