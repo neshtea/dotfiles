@@ -27,7 +27,9 @@
 ;; when you previously visited the same file."
 ;; https://www.emacswiki.org/emacs/SavePlace
 (save-place-mode 1)
-(set-fill-column 80)
+
+;; Set a more sensible default for the maximum width of a column.
+(setq-default fill-column 80)
 
 ;; Don't show errors when loading the custom file.
 (load custom-file 'no-error)
@@ -177,27 +179,22 @@ disables all other enabled themes."
 ;; Set the theme to gruvbox
 (neshtea/switch-theme 'gruvbox-dark-hard)
 
-;; tree-sitter
-(use-package tree-sitter
-  :init
-  ;; Enable for all supported major modes.
-  (global-tree-sitter-mode)
-  :config
-  (add-hook #'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
-(use-package tree-sitter-langs)
-
-;; Add my commonly used languages that are not already part of
-;; tree-sitter-langs.  Installed via the emacs nix module.
-(add-to-list 'tree-sitter-major-mode-language-alist '(clojure-mode . clojure))
-(add-to-list 'tree-sitter-major-mode-language-alist '(emacs-lisp-mode . elisp))
-
 (use-package all-the-icons)
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode))
 
-;;;; Generic, non-mode specific helpers.
+;; treesit
+(setq treesit-language-source-alist
+      '((ocaml "https://github.com/tree-sitter/tree-sitter-ocaml/"
+	       "master"
+	       "ocaml/src")
+	(ocaml-interface "https://github.com/tree-sitter/tree-sitter-ocaml/"
+			 "master"
+			 "interface/src")))
+
+
+;;;; Generic, non-mode specific helpers.o
 ;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/
 (defun neshtea/switch-to-previous-buffer ()
   "Switch to previously open buffer.
@@ -254,20 +251,6 @@ the separator."
 	 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package markdown-toc)
-
-;; Selectrum is a better solution for incremental narrowing in Emacs, 
-;; replacing Helm, Ivy, and Ido.
-;; https://github.com/raxod502/selectrum
-;; (use-package selectrum :init (selectrum-mode +1))
-
-;; selectrum-prescient helps with surfacing frequently used
-;; completions.
-;; (use-package selectrum-prescient
-;;   :after selectrum
-;;   :init
-;;   (selectrum-prescient-mode +1)
-;;   (prescient-persist-mode +1))
 (use-package vertico
   :init
   (vertico-mode)
@@ -572,6 +555,7 @@ the separator."
 
 ;;; Haskell
 (use-package haskell-mode
+  :defer t
   :custom
   (haskell-process-type 'cabal-repl)
   (haskell-interactive-popup-errors nil)

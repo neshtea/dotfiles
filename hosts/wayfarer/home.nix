@@ -5,12 +5,12 @@
     darwin.apple_sdk.frameworks.CoreFoundation
     darwin.apple_sdk.frameworks.Foundation
     darwin.apple_sdk.frameworks.Security
-    colima
+    jre
   ];
 
   modules.programs.emacs = {
     enable = true;
-    emacsPackage = pkgs.emacs;
+    emacsPackage = pkgs.emacs-git;
     # emacsPackage = pkgs.emacsMacport;
   };
   modules.programs.kitty.enable = true;

@@ -36,10 +36,6 @@ in {
         epkgs.gruvbox-theme
         epkgs.doom-modeline
 
-        # tree-sitter
-        epkgs.tree-sitter
-        epkgs.tree-sitter-langs
-
         # Elixir
         epkgs.alchemist
         epkgs.elixir-mode
@@ -89,12 +85,9 @@ in {
         epkgs.helpful
         epkgs.hl-todo
         epkgs.hledger-mode
-        epkgs.hydra
-        epkgs.eglot
         epkgs.magit
         epkgs.marginalia
         epkgs.markdown-mode
-        epkgs.markdown-toc
         epkgs.org
         epkgs.org-roam
         epkgs.org-roam-ui
@@ -102,7 +95,6 @@ in {
         epkgs.origami
         epkgs.projectile
         epkgs.tuareg
-        epkgs.use-package
         epkgs.which-key
         epkgs.yaml-mode
         epkgs.vertico

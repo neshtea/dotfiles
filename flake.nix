@@ -23,6 +23,11 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    emacs-overlay = {
+      url =
+        "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ nixpkgs, home-manager, ... }:
@@ -66,7 +71,7 @@
       homeConfigurations.${username} = let
         system = "aarch64-darwin"; # Only relevant for darwin.
         # overlays = [ inputs.neovim-nightly-overlay.overlay ];
-        overlays = [ ];
+        overlays = [ inputs.emacs-overlay.overlays.default ];
         pkgs = import nixpkgs {
           config.allowUnfree = true; # Sorry rms
           inherit overlays system;
