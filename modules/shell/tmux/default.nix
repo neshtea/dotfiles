@@ -11,7 +11,7 @@ in {
         set-option -g renumber-windows on
       '';
 
-      keyMode = "vi";
+      keyMode = "emacs";
       newSession = true;
       shell = "${pkgs.zsh}/bin/zsh";
     };
