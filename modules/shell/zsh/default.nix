@@ -13,7 +13,7 @@ in {
         enable = true;
         enableCompletion = true;
         enableAutosuggestions = true;
-        enableSyntaxHighlighting = true;
+        syntaxHighlighting.enable = true;
         defaultKeymap = "emacs";
         # NOTE I need the `TEXINPUTS` variable to build
         # LaTeX-documents with my companies templates.  Since the repo
