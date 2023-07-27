@@ -593,10 +593,9 @@ the separator."
 
 (use-package hledger-mode
   :defer t
-  :mode ("\\.journal\\'" "\\.hledger\\'")
   :hook (hledger-view-mode . #'hl-line-mode)
   :custom
-  (hledger-jfile (expand-file-name "~/Dropbox/Brain/Finance/ledger2022.journal"))
+  (hledger-jfile (expand-file-name "~/Dropbox/Brain/Finance/ledger2023.journal"))
   :config
   (add-to-list 'company-backends 'hledger-company))
 
