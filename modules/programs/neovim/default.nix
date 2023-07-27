@@ -11,7 +11,6 @@ in {
         neovim
         nodejs
         lua
-        sumneko-lua-language-server
         stylua
         jq # Formatter for json
         python310Packages.mdformat # Formatter for markdown
