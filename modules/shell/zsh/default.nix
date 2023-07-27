@@ -21,7 +21,7 @@ in {
         # for my deriviation.  I'm responsible for checking out the
         # repo by hand and put it in the correct location.
         initExtra = ''
-          export PATH="$HOME/.bin:$PATH"
+          export PATH="$HOME/bin:$PATH"
           export TEXINPUTS="$HOME/repos/ag/howto/tex:$TEXINPUTS"
         '';
         initExtraBeforeCompInit = ''
