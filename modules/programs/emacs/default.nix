@@ -56,12 +56,11 @@ in {
 
         # Common Lisp
         epkgs.sly
-        epkgs.sly-quicklisp
-        epkgs.sly-asdf
 
         # Scheme
         epkgs.geiser
         epkgs.geiser-guile
+        epkgs.geiser-chicken
 
         # Haskell
         epkgs.haskell-mode

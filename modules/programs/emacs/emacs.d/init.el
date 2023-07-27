@@ -615,13 +615,11 @@ the separator."
   ;; default to sbcl
   (setq inferior-lisp-program "sbcl"))
 
-(use-package sly-quicklisp)
-
-(use-package sly-asdf)
-
 (use-package geiser)
 
 (use-package geiser-guile)
+
+(use-package geiser-chicken)
 
 (provide 'init)
 ;;; init.el ends here
