@@ -47,7 +47,6 @@ in {
         # Haskell
         epkgs.haskell-mode
         epkgs.lsp-haskell
-        epkgs.ormolu
 
         # Ocaml
         epkgs.merlin
@@ -70,7 +69,6 @@ in {
         epkgs.org-roam
         epkgs.org-roam-ui
         epkgs.org-appear
-        epkgs.origami
         epkgs.projectile
         epkgs.tuareg
         epkgs.which-key
