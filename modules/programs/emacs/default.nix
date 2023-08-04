@@ -18,15 +18,12 @@ in {
       extraPackages = epkgs: [
         # Basics, ergonomics, movement
         epkgs.consult
-
         epkgs.emacsql
         epkgs.envrc
         epkgs.exec-path-from-shell
         epkgs.reformatter
 
         # Visuals
-        epkgs.all-the-icons
-        epkgs.cycle-themes
         epkgs.diff-hl
         epkgs.default-text-scale
         epkgs.gruvbox-theme
