@@ -21,9 +21,6 @@ in {
 
         epkgs.emacsql
         epkgs.envrc
-        epkgs.evil-collection
-        epkgs.evil-nerd-commenter
-        epkgs.evil-org
         epkgs.exec-path-from-shell
         epkgs.reformatter
 

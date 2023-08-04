@@ -439,9 +439,7 @@ the separator."
 
 ;; Magit are the very best tools for interacting with git.
 (use-package magit
-  :hook (;(git-commit-mode . evil-insert-state)  ; Start commit messages in insert mode.
-	 ;; https://github.com/dgutov/diff-hl#magit
-	 (magit-pre-refresh . diff-hl-magit-pre-refresh)
+  :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
 	 (magit-post-refresh . diff-hl-magit-post-refresh))  
   :after diff-hl
   :config
