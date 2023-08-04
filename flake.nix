@@ -7,14 +7,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    gruvbox-material-kitty = {
-      url = "github:rsaihe/gruvbox-material-kitty";
-      flake = false;
-    };
-    kitty-themes = {
-      url = "https://github.com/dexpota/kitty-themes";
-      flake = false;
-    };
     active-kondo = {
       url = "github:active-group/active-kondo";
       flake = false;

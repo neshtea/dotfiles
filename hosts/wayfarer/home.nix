@@ -13,7 +13,6 @@
     emacsPackage = pkgs.emacs-git;
     # emacsPackage = pkgs.emacsMacport;
   };
-  modules.programs.kitty.enable = true;
   # modules.programs.docker.enable = true;
 
   xdg.configFile."clj-kondo" = {

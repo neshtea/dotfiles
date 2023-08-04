@@ -29,10 +29,5 @@ in {
       };
       settings = { "shell_integration" = "no-cursor"; };
     };
-    # xdg.configFile."kitty/theme.conf".source = ./theme.conf;
-    xdg.configFile."kitty/themes" = {
-      source = "${inputs.gruvbox-material-kitty}";
-      recursive = true;
-    };
   };
 }
