@@ -25,7 +25,6 @@ in {
         epkgs.evil-nerd-commenter
         epkgs.evil-org
         epkgs.exec-path-from-shell
-        epkgs.general
         epkgs.reformatter
 
         # Visuals

@@ -111,22 +111,6 @@ the face-font."
   ;; We always want to display completions.
   (add-hook 'after-init-hook #'which-key-mode))
 
-;;    We define two general definers here:
-;; 1. def-with-leader: Define "global" keys, prefixed by "SPC"
-;; 2. def-local-with-leader: Define "local" keys (keys for
-;;    specific modes, i.e. org-mode, clojure, ...)
-;; (general-create-definer def-with-leader
-;;   :keymaps 'override
-;;   :states '(normal insert emacs visual motion)
-;;   :prefix "SPC"
-;;   :non-normal-prefix "C-SPC")
-
-;; (general-create-definer def-local-with-leader
-;;   :keymaps 'override
-;;   :states '(normal insert emacs visual motion)
-;;   :prefix ","
-;;   :non-normal-prefix "C-,")
-
 ;; Taken from Johannes init.el
 ;; https://github.com/kenranunderscore/dotfiles/blob/main/modules/programs/emacs/emacs.d/init.el#L80
 (defun neshtea/switch-theme (name)
