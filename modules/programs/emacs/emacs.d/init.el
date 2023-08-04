@@ -141,16 +141,6 @@ disables all other enabled themes."
 
 (use-package all-the-icons)
 
-;; treesit
-(setq treesit-language-source-alist
-      '((ocaml "https://github.com/tree-sitter/tree-sitter-ocaml/"
-	       "master"
-	       "ocaml/src")
-	(ocaml-interface "https://github.com/tree-sitter/tree-sitter-ocaml/"
-			 "master"
-			 "interface/src")))
-
-
 ;;;; Generic, non-mode specific helpers.o
 ;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/
 (defun neshtea/switch-to-previous-buffer ()
