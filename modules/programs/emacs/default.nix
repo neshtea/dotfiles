@@ -31,10 +31,6 @@ in {
         epkgs.default-text-scale
         epkgs.gruvbox-theme
 
-        # Elixir
-        epkgs.alchemist
-        epkgs.elixir-mode
-
         # Racket
         epkgs.racket-mode
 

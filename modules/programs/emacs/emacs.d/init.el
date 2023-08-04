@@ -452,30 +452,11 @@ the separator."
   ;; https://github.com/cyrus-and/zoom#example-configurations
   (setq zoom-size '(0.618 . 0.618)))
 
-;; (def-with-leader "z z" #'zoom-mode)
-
 (use-package helpful
   :bind (("C-h f" . helpful-callable)
 	 ("C-h v" . helpful-variable)
 	 ("C-h k" . helpful-key)
 	 ("C-h p" . helpful-at-point)))
-
-;;;; Elixir
-(use-package elixir-mode
-  :hook (elixir-mode . (lambda () 
-			 (add-hook 'before-save-hook 'elixir-format nil t))))
-
-(use-package alchemist
-  ;:custom
-  ;; See https://alchemist.readthedocs.io/en/latest/configuration/
-  ;; NOTE I don't want to pollute my global environment with those
-  ;; specific tools but rather have a nix-shell with these things
-  ;; installed.
-  ;(alchemist-mix-command (expand-file-name "~/.nix-profile/bin/mix"))
-  ;(alchemist-iex-program-name (expand-file-name "~/.nix-profile/bin/iex"))
-  ;(alchemist-execute-command (expand-file-name "~/.nix-profile/bin/elixir"))
-  ;(alchemist-compile-command (expand-file-name "~/.nix-profile/bin/elixirc"))
-  )
 
 (use-package hl-todo
   :init
