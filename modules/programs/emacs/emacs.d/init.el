@@ -149,15 +149,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
-(defun neshtea/toggle-fullscreen ()
-  "Toggle full screen."
-  (interactive)
-  (set-frame-parameter
-     nil 'fullscreen
-     (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
-
-;; Some global keys, not specific to any one particular mode.
-(global-set-key (kbd "C-. t s") #'neshtea/toggle-fullscreen)
 (global-set-key (kbd "C-. t r") #'neshtea/toggle-display-line-numbers-relative)
 
 ;; Paredit allows to easily work with parens. Especially useful in
