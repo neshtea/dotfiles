@@ -128,18 +128,8 @@ disables all other enabled themes."
             custom-enabled-themes)
     (load-theme name t)))
 
-(setq modus-themes-mode-line '(accented borderless (padding . 5)))
-(setq modus-themes-italic-constructs t)
-(setq modus-themes-syntax '(yellow-comments green-strings))
-(setq modus-themes-paren-match '(bold))
-(setq modus-themes-headings '((t . (monochrome))))
-(setq modus-themes-org-blocks 'gray-background)
-(setq modus-themes-fringes nil)
-
 ;; Set the theme to gruvbox
 (neshtea/switch-theme 'gruvbox-dark-hard)
-
-(use-package all-the-icons)
 
 ;;;; Generic, non-mode specific helpers.o
 ;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/
