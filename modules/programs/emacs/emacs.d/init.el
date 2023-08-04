@@ -117,12 +117,10 @@ the face-font."
   "Switch themes interactively.  Similar to `load-theme' but also
 disables all other enabled themes."
   (interactive
-   (list (intern
-	  (completing-read
-	   "Theme: "
-	   (mapcar #'symbol-name
-                   (-difference (custom-available-themes)
-                                custom-enabled-themes))))))
+   (list (intern (completing-read "Theme: "
+				  (mapcar #'symbol-name
+					  (-difference (custom-available-themes)
+						       custom-enabled-themes))))))
   (progn
     (mapcar #'disable-theme
             custom-enabled-themes)
