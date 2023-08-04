@@ -28,14 +28,8 @@ in {
         epkgs.default-text-scale
         epkgs.gruvbox-theme
 
-        # Racket
-        epkgs.racket-mode
-
         # Latex
         epkgs.auctex-latexmk
-
-        # Rust
-        epkgs.rust-mode
 
         # Clojure
         epkgs.cider
@@ -54,9 +48,6 @@ in {
         epkgs.haskell-mode
         epkgs.lsp-haskell
         epkgs.ormolu
-
-        # Purescript
-        epkgs.purescript-mode
 
         # Ocaml
         epkgs.merlin

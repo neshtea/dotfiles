@@ -501,17 +501,6 @@ the separator."
 	      ("C-. i r" . haskell-navigate-imports-return))
   :hook (haskell-mode . interactive-haskell-mode))
 
-(use-package purescript-mode
-  :defer t
-  :hook
-  (purescript-mode . turn-on-purescript-indentation)
-  :custom
-  (purescript-stylish-on-save t))
-
-(reformatter-define purescript-format
-  :program "purs-tidy"
-  :args (list "format"))
-
 (use-package eglot
   :defer t
   :bind (:map eglot-mode-map
@@ -537,14 +526,6 @@ the separator."
 
 (use-package tuareg
   :defer t)
-
-(use-package racket-mode
-  :defer t)
-
-(use-package rust-mode
-  :defer t
-  :custom
-  (rust-format-on-save t))
 
 (use-package sly
   :config
