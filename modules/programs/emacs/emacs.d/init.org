@@ -1,0 +1,712 @@
+#+TITLE: Literate Emacs Configuration (=init.el=)
+#+AUTHOR: Marco Schneider
+
+This file contains my (literate) Emacs configuration.  It is fairly minimal --
+especially since I removed evil and live the holy lifestyle --, though somewhat
+all over the place.  This document is also meant to motivate me to better
+understand everything by forcing me to explain it (to myself).
+
+* General
+
+I use =use-package= for managing my packages and do most of my configuration in
+the =use-package=-macro as well.  In more recent versions of emacs, it comes with
+the distribution.  My packages are actually downloaded via nix, but this is
+besides the point here and serves only to explain why I don't use any of the
+other package-systems (like for example [[https://github.com/radian-software/straight.el][straight.el]]).
+
+* TODO old config
+
+#+begin_src elisp
+;;; init.el --- Summary
+
+;; Commentary:
+;;; Configuration for Emacs
+
+;;;; GENERAL
+(setq
+ ;; Don't show the standart Emacs startup screen.
+ inhibit-splash-screen t
+ ;; Don't make backup files the first time it is saved.
+ make-backup-files nil
+ ;; Don't clutter init.el with custom but instead write it to
+ ;; ~/.emacs.d/custom.el.
+ custom-file (expand-file-name "~/.config/emacs/custom.el")
+ ;; Remap some mac-specific keys.
+ ns-alternate-modifier 'none
+ ns-command-modifier 'meta
+ ns-function-modifier 'super
+ ;; Turn off all alarms completely.
+ ;; See https://www.emacswiki.org/emacs/AlarmBell.
+ ring-bell-function 'ignore
+ ;; Always prefer the "newer" version of a file.
+ load-prefer-newer t
+ max-lisp-eval-depth 5000)
+
+;; "When you visit a file, point goes to the last place where it was
+;; when you previously visited the same file."
+;; https://www.emacswiki.org/emacs/SavePlace
+(save-place-mode 1)
+
+;; Set a more sensible default for the maximum width of a column.
+(setq-default fill-column 80)
+
+;; Don't show errors when loading the custom file.
+(load custom-file 'no-error)
+
+;; Set the font.
+(setq neshtea/font-alist
+      '((jetbrains-mono . (:font   "JetBrains Mono"
+			   :height 140))
+	(iosevka        . (:font   "Iosevka"
+			   :height 160))))
+
+(setq neshtea/current-font 'jetbrains-mono)
+
+(defun neshtea/switch-font (font)
+  "Select one of the fonts configured in 'neshtea/font-alist' as
+the face-font."
+  (interactive
+   (list (intern (completing-read "Font: " (mapcar #'car (copy-alist neshtea/font-alist))))))
+  ;; If the selected font is not the currently active font, switch.
+  (let* ((attrs (alist-get font neshtea/font-alist))
+	 (font (plist-get attrs :font))
+	 (height (plist-get attrs :height)))
+    (setq neshtea/current-font font)
+    (set-face-attribute 'default nil
+			:font font
+			:height height)))
+
+;; Set the font to the default.
+(neshtea/switch-font neshtea/current-font)
+
+(global-set-key (kbd "C-. s f") #'neshtea/switch-font)
+(global-set-key (kbd "C-. s t") #'neshtea/switch-theme)
+
+;; Disable menubar/scrollbar/toolbar.
+(menu-bar-mode -1)
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
+
+;; Answer y or n to yes-or-no questions.
+;; http://pragmaticemacs.com/emacs/make-all-prompts-y-or-n/
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; Alwas show matching parens.
+(show-paren-mode 1)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
+;; Sometimes, I need relative line numbers.  `display-line-numbers`
+;; has this built in.  This function makes it easier to toggle.
+
+					; Default to relative
+(setq display-line-numbers-type 't)  ; regular line numbers by default.
+(defun neshtea/toggle-display-line-numbers-relative ()
+  "Toggle between relative and 'regular' line numbers."
+  (interactive)
+  (if (equal 't display-line-numbers)
+      (setq display-line-numbers 'relative)
+      (setq display-line-numbers 't)))
+
+;; We install packages via nix home-manager, but we still configure
+;; them via use-package
+(require 'use-package)
+
+;; Especially on MacOS, the exec path is always wrong.  This package
+;; tries to fix that.
+;; SEE https://github.com/purcell/exec-path-from-shell#usage
+(use-package exec-path-from-shell)
+
+(dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
+  (add-to-list 'exec-path-from-shell-variables var))
+
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
+;; Display possible keyboard shortcut completions.
+(use-package which-key
+  :custom
+  (which-key-idle-delay 0.3)  ; Show completions relatively fast.
+  :init
+  ;; We always want to display completions.
+  (add-hook 'after-init-hook #'which-key-mode))
+
+;; Taken from Johannes init.el
+;; https://github.com/kenranunderscore/dotfiles/blob/main/modules/programs/emacs/emacs.d/init.el#L80
+(defun neshtea/switch-theme (name)
+  "Switch themes interactively.  Similar to `load-theme' but also
+disables all other enabled themes."
+  (interactive
+   (list (intern (completing-read "Theme: "
+				  (mapcar #'symbol-name
+					  (-difference (custom-available-themes)
+						       custom-enabled-themes))))))
+  (progn
+    (mapcar #'disable-theme
+            custom-enabled-themes)
+    (load-theme name t)))
+
+;; Set the theme to gruvbox
+(neshtea/switch-theme 'gruvbox-dark-hard)
+
+;;;; Generic, non-mode specific helpers.o
+;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/
+(defun neshtea/switch-to-previous-buffer ()
+  "Switch to previously open buffer.
+Repeated invocations toggle between the two most recently open buffers."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
+
+(global-set-key (kbd "C-. t r") #'neshtea/toggle-display-line-numbers-relative)
+
+(use-package vertico
+  :init
+  (vertico-mode)
+  :custom
+  (vertico-cycle t)
+  (vertico-resize t))
+
+(use-package savehist
+  :init
+  (savehist-mode))
+
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+
+(defun neshtea/projectile-project-find-function (dir)
+  (let ((root (projectile-project-root dir)))
+    (and root (cons 'transient root))))
+
+(use-package project
+  :config
+  (add-hook 'project-find-functions #'neshtea/projectile-project-find-function))
+
+;; consult provides a huge array of cap based searches.
+(use-package consult
+  :init
+  (setq register-preview-delay 0
+	register-preview-function #'consult-register-format)
+  (advice-add #'register-preview :override #'consult-register-window)
+
+  :bind
+  (("C-c c m" . consult-mode-command)
+   ("C-c c h" . consult-history)
+   ("C-c c b" . consult-bookmark)
+   ("C-c c l" . consult-line)
+   ("C-c c o" . consult-outline)
+   ("C-c c b" . consult-buffer)
+   ("C-c c r" . consult-ripgrep))
+  
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+
+  :config
+  (autoload 'projectile-project-root "projectile")
+  (setq consult-project-root-function #'projectile-project-root))
+
+;; marginalia annotates completion candidates in the completion at
+;; point buffer. Plays nicely with consult, etc.
+(use-package marginalia :init (marginalia-mode))
+
+;; Easily find projects and files within projects.
+(use-package project)
+
+(use-package projectile
+  :init (projectile-mode +1))
+
+;; Complete anything -- auto completion framework.
+(use-package company
+  :hook
+  (after-init . global-company-mode)
+  :diminish company-mode)
+
+(use-package default-text-scale
+  :defer t
+  :bind (("C-c t =" . default-text-scale-increase)
+	 ("C-c t -" . default-text-scale-decrease)
+	 ("C-c t 0" . default-text-scale-reset))
+  :config
+  (default-text-scale-mode))
+
+(use-package diff-hl
+  :init (global-diff-hl-mode))
+
+;; Magit are the very best tools for interacting with git.
+(use-package magit
+  :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
+	 (magit-post-refresh . diff-hl-magit-post-refresh))  
+  :after diff-hl
+  :config
+  (setq-default git-magit-status-fullscreen t))
+
+;; Used for golden-ration mode.
+(use-package zoom
+  :config
+  ;; Resize the selected window using the golden ratio:
+  ;; https://github.com/cyrus-and/zoom#example-configurations
+  (setq zoom-size '(0.618 . 0.618)))
+
+(use-package helpful
+  :bind (("C-h f" . helpful-callable)
+	 ("C-h v" . helpful-variable)
+	 ("C-h k" . helpful-key)
+	 ("C-h p" . helpful-at-point)))
+
+(use-package hledger-mode
+  :defer t
+  :hook (hledger-view-mode . #'hl-line-mode)
+  :custom
+  (hledger-jfile (expand-file-name "~/Dropbox/Brain/Finance/ledger2023.journal"))
+  :config
+  (add-to-list 'company-backends 'hledger-company))
+
+(use-package hl-todo
+  :init
+  (add-hook 'after-init-hook 'global-hl-todo-mode))
+
+(use-package envrc
+  :defer t
+  :init (envrc-global-mode))
+;;;; Programming language support
+;;; Nix language support
+
+;; Work with nix files (syntax highlighting and indentation). 
+(provide 'init)
+;;; init.el ends here
+
+#+end_src
+* org-mode
+
+I use org-mode quite extensively for the following purposes:
+
+- taking everyday notes via org-roam's dailies
+- managing my tasks in a GTD manner
+- managing my zettelkasten via org-roam
+  
+** org-mode
+
+In org-mode, I always want to use =org-indent-mode= and =auto-fill-mode=.  This is
+handled via the =neshtea/org-mode-setup= function that I hook to the
+=org-mode-hook=.
+
+To quickly jump to my GDT and projects file, I use the =neshtea/org-gtd-file= and
+=neshtea/org-projects-file= functions.
+
+The rest is just very basic org-mode setup, nothing out of the ordinary.
+
+#+begin_src elisp
+(use-package org-indent
+  :defer t
+  :after org)
+
+(defun neshtea/org-mode-setup ()
+  (org-indent-mode)
+  (auto-fill-mode))
+
+(defun neshtea/org-gtd-file ()
+  (interactive)
+  (find-file (expand-file-name "~/Dropbox/Brain/org/gtd.org")))
+
+(defun neshtea/org-projects-file ()
+  (interactive)
+  (find-file (expand-file-name "~/Dropbox/Brain/org/projects.org")))
+
+(use-package org
+  :hook (org-mode . neshtea/org-mode-setup)
+
+  :bind (("C-c o a" . org-agenda-list)
+	 ("C-c o t" . org-todo-list)
+	 ("C-c o f" . neshtea/org-gtd-file)
+	 ("C-c o p" . neshtea/org-projects-file)
+	 ("C-c o c c" . org-capture))
+  
+  :custom
+  ;; (org-ellipsis " ▾")
+  (org-edit-src-content-indentation 0)  ; Don't indent in src blocks.
+  (org-hide-emphasis-markers t)
+  (org-adapt-indentation nil)
+  (org-startup-indented t)
+  (org-hide-leading-stars t)
+  (org-return-follows-link t)
+  (org-startup-folded 'content)
+  (org-agenda-files '("~/Dropbox/Brain/org/gtd.org"))
+  (org-agenda-span 10)
+  (org-agenda-start-on-weekday nil)
+  (org-agenda-start-day "-3d")
+  (org-capture-templates '(("t" "Todo [inbox/work]" entry
+			    (file+headline "~/Dropbox/Brain/org/gtd.org" "INBOX")
+			    "* TODO %i%? \n%U")))
+  (org-refile-targets '(("~/Dropbox/Brain/org/gtd.org" :maxlevel . 2)
+			("~/Dropbox/Brain/org/lists.org" :maxlevel . 2)
+			("~/Dropbox/Brain/org/projects.org" :maxlevel . 1)))
+	;; When the state of a section headline changes, log the
+	;; transition into the headlines drawer.
+  ;; When the state of a section headline changes, log the
+  ;; transition into the headlines drawer.
+  (org-log-into-drawer 'LOGBOOK)
+  (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d!)" "CANCELLED"))))
+
+
+#+end_src
+
+** Visuals
+
+When reading through org files, I don't want to be distracted by markup.
+[[https://github.com/awth13/org-appear][org-appear]] allows me to show/hide the formatting markup.  I configured it to
+only show markup when the cursor is on the marked up word.
+
+#+begin_src elisp
+(use-package org-appear
+  :hook
+  (org-mode . org-appear-mode)
+  :custom
+  (org-appear-autolinks t)
+  (org-appear-autosubmarkers t)
+  (org-appear-autoentities t)
+  (org-appear-autokeywords t)
+  (org-appear-trigger 'always))
+#+end_src
+
+Sometimes though, I want to see everything at once, which is when I call
+=neshtea/org-toggle-markup=.
+
+#+begin_src elisp
+(defun neshtea/org-toggle-emphasis ()
+  "Toggle hiding/showing of org emphasize markers."
+  (interactive)
+  (let ((markers org-hide-emphasis-markers))
+    (if markers
+	(setq-local org-hide-emphasis-markers nil)
+      (setq-local org-hide-emphasis-markers t))))
+#+end_src
+
+** org-roam and org-roam-ui
+[[https://www.orgroam.com][org-roam]] is my zettelkasten as well as my store for daily notes.
+
+#+begin_src elisp
+;;;; Org mode configuration
+
+;; Roam inspired mode for my zettelkasten using org mode.
+(use-package org-roam
+  :defer t
+  :after org
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/Dropbox/Brain/org/zettelkasten")
+  (org-roam-dailies-directory "dailies/")
+  (org-roam-node-display-template
+        (concat "${title:*} "
+                (propertize "${tags:10}" 'face 'org-tag)))
+  (org-roam-dailies-capture-templates
+   '(("d" "default" entry
+      "* %?"
+      :target (file+head "%<%Y-%m-%d>.org"
+			 "#+title: %<%Y-%m-%d>\n"))))
+
+  (org-roam-capture-templates
+   '(("d" "default" plain
+      "%?" :target
+      (file+head "${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)))
+  :config
+  (org-roam-setup))
+
+;; I need to have these keys available everywhere
+(global-set-key (kbd "C-c o r c") #'org-roam-caputre)
+(global-set-key (kbd "C-c o r f") #'org-roam-node-find)
+(global-set-key (kbd "C-c o d t") #'org-roam-dailies-goto-today)
+(global-set-key (kbd "C-c o d p") #'org-roam-dailies-goto-previous-note)
+(global-set-key (kbd "C-c o d n") #'org-roam-dailies-goto-next-note)
+(global-set-key (kbd "C-c o d c") #'org-roam-dailies-capture-today)
+#+end_src
+
+When I'm feeling fancy, I like to have a look at my zettelkasten in a more
+aesthetically pleasing way.  [[https://github.com/org-roam/org-roam-ui][org-roam-ui]] can give my a view similar to what
+Obsidian (or other tools) provide.  You can see your zettelkasten in your
+webbrower and it keeps in sync with open buffers in emacs.  Neat!
+
+#+begin_src elisp
+(use-package org-roam-ui
+  :after org-roam
+  :custom
+  (org-roam-ui-sync-theme t)
+  (org-roam-ui-follow t)
+  (org-roam-ui-update-on-save t)
+  (org-roam-ui-open-on-start t))
+#+end_src
+
+* (Programming) Language Support
+
+I try to keep this to a minimum, preferring to remove support for languages I
+don't actively use.
+
+
+** Generic language support
+
+This section contains some tools that are language agnostic but still help when
+working with code.
+
+*** =reformatter=
+
+[[https://github.com/purcell/emacs-reformatter][reformatter]] is a useful package for defining custom formatters.  These
+formatters define modes and functions to format source-code.  Usually, I wil
+define a formatter and hook the resulting minor-mode (=x-format-on-save-mode=)
+into the major-mode where it's needed.
+
+#+begin_src elisp
+(use-package reformatter)
+#+end_src
+
+** Eglot
+
+I used to use [[https://emacs-lsp.github.io/lsp-mode/][LSP Mode]] before switching to [[https://joaotavora.github.io/eglot/][eglot]].  While LSP Mode is much more
+fully featured, I come by with using eglot just fine (and it's built-in in newer
+emacs versions).  It's relatively light weight and doesn't slow down emacs as
+LSP Mode did for large files.
+
+There's again not much you need to configure.  I set some keys (which, tbh, I
+never really use) and that's it.
+
+#+begin_src elisp
+(use-package eglot
+  :defer t
+  :bind (:map eglot-mode-map
+	      ("C-c <tab>" . company-complete)
+	      ("C-c l a" . elgot-code-actions)
+	      ("C-c l d" . eldoc-doc-buffer)
+	      ("C-c l r" . eglot-rename)
+	      ("C-c l g d" . xref-find-definitions)
+	      ("C-c l g r" . xref-find-references)
+	      ("C-c l e n" . flymake-goto-next-error)
+	      ("C-c l e p" . flymake-goto-previous-error))
+  :config
+  ;; don't ask before lsp intiated writes.
+  (setq eglot-confirm-server-initiated-edits nil))
+#+end_src
+
+** Clojure
+
+My main lanuage as I use it for work.  Clojure support is mainly achieved via
+[[https://cider.mx][cider]] "the Clojure(Script) Interactive Development Environment that Rocks!".
+
+Clojure support consists of these packages
+
+- [[https://github.com/clojure-emacs/clojure-mode/][clojure-mode]]
+- [[https://cider.mx][cider]]
+- [[https://github.com/clojure-emacs/clj-refactor.el][clj-refactor]]
+  
+*** =clj-refactor=
+
+=clj-refactor= is an extensions to =cider= and provides may useful functions for
+refactoring Clojure-code.  You only need to turn it on.
+
+#+begin_src elisp
+(use-package clj-refactor
+  :defer t)
+#+end_src
+
+*** =clojure-mode=
+
+The basis for working with Clojure is =clojure-mode=.  It provides all the basics
+like font-locking or indentation.  I use a custom mode-hook that initiates
+=clj-refactor= and a format-on save.
+
+#+begin_src elisp
+(defun neshtea/clojure-mode-hook ()
+  "Hooks everything important for 'clojure-mode'."
+  (interactive)
+  (clj-refactor-mode 1)
+  (add-hook 'before-save-hook
+	    'cider-format-buffer
+	    nil
+	    t))
+
+(use-package clojure-mode
+  ;; https://docs.cider.mx/cider/usage/misc_features.html#formatting-code-with-cljfmt
+  :hook (clojure-mode . neshtea/clojure-mode-hook)
+  :defer t)
+#+end_src
+
+*** =cider=
+
+Cider provides everything else you want when using a Lisp, especially the repl
+support.  There isn't much to configure here --  just set some keys for easier
+access for some functions and disable the message that gets printed when
+starting a new repl.
+
+#+begin_src elisp
+(use-package cider
+  :defer t
+  :custom
+  (cider-repl-display-help-banner nil)
+  :bind (:map clojure-mode-map
+	      ("C-. h d" . cider-clojure-docs)
+	      ("C-. h h" . cider-doc)
+	      ("C-. t t" . cider-test-run-test)
+	      ("C-. t a" . cider-test-run-ns-test)))
+#+end_src
+
+** Common Lisp
+
+From time to time, I program some Common Lisp.  For this, I use
+[[https://github.com/joaotavora/sly][sly]], currently without any other packages.  Since I only ever use the
+=sbcl=-implementation of CL, I set it as my =inferior-lisp-program= as well.
+
+#+begin_src elisp
+(use-package sly
+  :config
+  ;; default to sbcl
+  (setq inferior-lisp-program "sbcl"))
+#+end_src
+
+** Scheme
+
+When programming in Scheme, I use [[https://github.com/emacsmirror/geiser][geiser]] with supporting packages for [[https://www.gnu.org/software/guile/][Guile]] and
+[[http://www.call-cc.org][CHICKEN]] scheme.
+
+#+begin_src elisp
+(use-package geiser)
+
+(use-package geiser-guile)
+
+(use-package geiser-chicken)
+#+end_src
+
+** Generic S-Expression based language support
+
+When working with s-expression based languages, you want to use [[https://www.emacswiki.org/emacs/ParEdit][ParEdit]] (or
+something [[https://github.com/abo-abo/lispy][similar]]).  I collect all modes I want to have ParEdit turned on by
+default in the =neshtea/lispy-modes= variable.
+
+#+begin_src elisp
+;; A list of all modes I want lispy modes hooked to.  Add to this list
+;; if new modes join the lispy gang.
+(setq neshtea/lispy-modes '(emacs-lisp-mode
+			    eval-expression-minibuffer-setup
+			    clojure-mode
+			    ielm-mode
+			    lisp-interaction-mode
+			    lisp-mode
+			    scheme-mode
+			    racket-mode))
+#+end_src elisp
+
+I then configure paredit to hook into each of these modes.
+
+#+begin_src elisp
+(defun neshtea/symbol-join (symbols sep)
+  "Similar to 'string-join' but joins 'symbols' using 'sep' as
+the separator."
+ (intern (string-join (mapcar #'symbol-name symbols) sep)))
+
+(defun neshtea/hook-lispy-modes (mode-name)
+  "Add paredit-mode to 'mode-name'."
+  (let* ((mode-hook (neshtea/symbol-join (list mode-name 'hook) "-")))
+    (add-hook mode-hook #'enable-paredit-mode)))
+
+(use-package paredit
+  :config
+  (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+  (mapcar #'neshtea/hook-lispy-modes neshtea/lispy-modes))
+#+end_src
+
+** OCaml
+
+[[https://ocaml.github.io/merlin/][Merlin]] is the main package for writing OCaml code.  It provides all the tooling
+for "completion, Typing, Navigation, Refactoring, Code generation".
+=merlin-company= provides =company= completions.
+
+#+begin_src elisp
+;;; OCaml language support
+(use-package merlin
+  :hook ((tuareg-mode . merlin-mode)
+         (caml-mode . merlin-mode))
+  :custom
+  (merlin-command "ocamlmerlin"))
+
+(use-package merlin-company
+  :defer t)
+#+end_src
+
+[[https://github.com/ocaml/tuareg][tuareg]] provides some other facilities like running a repl hooked into your OCaml
+buffers.
+
+#+begin_src elisp
+(use-package tuareg
+  :defer t)
+#+end_src
+
+Lastly, I define a reformatter =ocaml-format= that uses the =ocamlformat= program to
+format my buffers.  It generates a mode called =ocaml-format-on-save-mode= which I
+turn on in my OCaml projects (usually via a dir-local variable because I don't
+have =ocamlformat= installed globally).
+
+#+begin_src elisp
+;; Based on https://github.com/ludwigpacifici/ocamlreformat.el/blob/master/ocamlreformat.el
+(reformatter-define ocaml-format
+  :program "ocamlformat"
+  :args (list "--name" (buffer-file-name) "-"))
+#+end_src
+
+** Haskell
+
+I don't actually do much programming in Haskell.  I need to read it sometimes
+in work contexts.  Therefore, this configuration is very minimal.  I only use a
+very barebones [[https://github.com/haskell/haskell-mode][haskell-mode]] config and leave the rest to eglot.
+
+#+begin_src elisp
+;;;; Haskell language support.
+(use-package haskell-mode
+  :defer t
+  :custom
+  (haskell-process-type 'cabal-repl)
+  (haskell-interactive-popup-errors nil)
+  ;; TODO Remove, use dir-locals
+  :bind (:map haskell-mode-map
+	      ("C-. i i" . haskell-navigate-imports-go)
+	      ("C-. i r" . haskell-navigate-imports-return))
+  :hook (haskell-mode . interactive-haskell-mode))
+#+end_src
+
+** nix
+
+Since I don't actually program in nix that much, I don't need any real support.
+[[https://github.com/NixOS/nix-mode][nix-mode]] provides me with everything I need.  I only turn on the
+=nix-format-before-save= mode to always have it tidy.
+
+#+begin_src elisp
+(use-package nix-mode
+  :defer t
+  :mode "\\.nix\\'"
+  :hook (before-save . nix-format-before-save))
+#+end_src
+
+** File formats
+
+This section just contains support for some file formats.  None of these require
+explanation.  It contains support for
+
+- markdown
+- dockerfile
+- yaml
+
+#+begin_src elisp
+
+;;; Markdown language support
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+	 ("\\.md\\'" . markdown-mode)
+	 ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
+(use-package dockerfile-mode
+  :defer t)
+
+;;; YAML language support
+(use-package yaml-mode
+  :defer t)
+#+end_src
+
