@@ -151,44 +151,6 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (global-set-key (kbd "C-. t r") #'neshtea/toggle-display-line-numbers-relative)
 
-;; Paredit allows to easily work with parens. Especially useful in
-;; LISP-like languages.
-
-;; A list of all modes I want lispy modes hooked to.  Add to this list
-;; if new modes join the lispy gang.
-(setq neshtea/lispy-modes '(emacs-lisp-mode
-			    eval-expression-minibuffer-setup
-			    clojure-mode
-			    ielm-mode
-			    lisp-interaction-mode
-			    lisp-mode
-			    scheme-mode
-			    racket-mode))
-
-(defun neshtea/symbol-join (symbols sep)
-  "Similar to 'string-join' but joins 'symbols' using 'sep' as
-the separator."
- (intern (string-join (mapcar #'symbol-name symbols) sep)))
-
-(defun neshtea/hook-lispy-modes (mode-name)
-  "Add paredit-mode to 'mode-name'."
-  (let* ((mode-hook (neshtea/symbol-join (list mode-name 'hook) "-")))
-    (add-hook mode-hook #'enable-paredit-mode)))
-
-(use-package paredit
-  :config
-  (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-  (mapcar #'neshtea/hook-lispy-modes neshtea/lispy-modes))
-
-;; Syntax highlighting for markdown files. Requires multimarkdown to
-;; be installed on the system.
-(use-package markdown-mode
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-	 ("\\.md\\'" . markdown-mode)
-	 ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
-
 (use-package vertico
   :init
   (vertico-mode)
@@ -246,50 +208,13 @@ the separator."
 (use-package projectile
   :init (projectile-mode +1))
 
-;; Highlights docker files and provides some basic commands (none of
-;; which I use).
-(use-package dockerfile-mode
-  :defer t)
-
-;; Highighting and indentation for yaml.
-(use-package yaml-mode
-  :defer t)
-
 ;; Complete anything -- auto completion framework.
 (use-package company
   :hook
   (after-init . global-company-mode)
   :diminish company-mode)
 
-;; Working Clojure needs almost no configuration, just some nice
-;; packages (cider, clj-refactor, clojure-mode).
-(use-package clj-refactor
-  :defer t)
-
-(defun neshtea/clojure-mode-hook ()
-  "Hooks everything important for 'clojure-mode'."
-  (interactive)
-  (clj-refactor-mode 1)
-  (add-hook 'before-save-hook
-	    'cider-format-buffer
-	    nil
-	    t))
-
-(use-package clojure-mode
-  ;; https://docs.cider.mx/cider/usage/misc_features.html#formatting-code-with-cljfmt
-  :hook (clojure-mode . neshtea/clojure-mode-hook)
-  :defer t)
-
-(use-package cider
-  :defer t
-  :custom
-  (cider-repl-display-help-banner nil)
-  :bind (:map clojure-mode-map
-	      ("C-. h d" . cider-clojure-docs)
-	      ("C-. h h" . cider-doc)
-	      ("C-. t t" . cider-test-run-test)
-	      ("C-. t a" . cider-test-run-ns-test)))
-
+;;;; Org mode configuration
 (use-package org-indent
   :defer t
   :after org)
@@ -401,12 +326,6 @@ the separator."
   (org-roam-ui-update-on-save t)
   (org-roam-ui-open-on-start t))
 
-;; Work with nix files (syntax highlighting and indentation). 
-(use-package nix-mode
-  :defer t
-  :mode "\\.nix\\'"
-  :hook (before-save . nix-format-before-save))
-
 (use-package default-text-scale
   :defer t
   :bind (("C-c t =" . default-text-scale-increase)
@@ -439,12 +358,65 @@ the separator."
 	 ("C-h k" . helpful-key)
 	 ("C-h p" . helpful-at-point)))
 
+(use-package hledger-mode
+  :defer t
+  :hook (hledger-view-mode . #'hl-line-mode)
+  :custom
+  (hledger-jfile (expand-file-name "~/Dropbox/Brain/Finance/ledger2023.journal"))
+  :config
+  (add-to-list 'company-backends 'hledger-company))
+
 (use-package hl-todo
   :init
   (add-hook 'after-init-hook 'global-hl-todo-mode))
 
+(use-package envrc
+  :defer t
+  :init (envrc-global-mode))
+
 (use-package reformatter)
 
+;;;; Programming language support
+
+;;; Clojure language support.
+
+;; Working Clojure needs almost no configuration, just some nice
+;; packages (cider, clj-refactor, clojure-mode).
+(use-package clj-refactor
+  :defer t)
+
+(defun neshtea/clojure-mode-hook ()
+  "Hooks everything important for 'clojure-mode'."
+  (interactive)
+  (clj-refactor-mode 1)
+  (add-hook 'before-save-hook
+	    'cider-format-buffer
+	    nil
+	    t))
+
+(use-package clojure-mode
+  ;; https://docs.cider.mx/cider/usage/misc_features.html#formatting-code-with-cljfmt
+  :hook (clojure-mode . neshtea/clojure-mode-hook)
+  :defer t)
+
+(use-package cider
+  :defer t
+  :custom
+  (cider-repl-display-help-banner nil)
+  :bind (:map clojure-mode-map
+	      ("C-. h d" . cider-clojure-docs)
+	      ("C-. h h" . cider-doc)
+	      ("C-. t t" . cider-test-run-test)
+	      ("C-. t a" . cider-test-run-ns-test)))
+
+;;; Nix language support
+
+;; Work with nix files (syntax highlighting and indentation). 
+(use-package nix-mode
+  :defer t
+  :mode "\\.nix\\'"
+  :hook (before-save . nix-format-before-save))
+;;; OCaml language support
 (use-package merlin
   :hook ((tuareg-mode . merlin-mode)
 	 (caml-mode . merlin-mode))
@@ -461,16 +433,15 @@ the separator."
 (use-package ocp-indent
   :defer t)
 
+(use-package tuareg
+  :defer t)
+
 ;; Based on https://github.com/ludwigpacifici/ocamlreformat.el/blob/master/ocamlreformat.el
 (reformatter-define ocaml-format
-		    :program "ocamlformat"
-		    :args (list "--name" (buffer-file-name) "-"))
+  :program "ocamlformat"
+  :args (list "--name" (buffer-file-name) "-"))
 
-(use-package envrc
-  :defer t
-  :init (envrc-global-mode))
-
-;;; Haskell
+;;;; Haskell language support.
 (use-package haskell-mode
   :defer t
   :custom
@@ -497,27 +468,62 @@ the separator."
   ;; don't ask before lsp intiated writes.
   (setq eglot-confirm-server-initiated-edits nil))
 
-(use-package hledger-mode
-  :defer t
-  :hook (hledger-view-mode . #'hl-line-mode)
-  :custom
-  (hledger-jfile (expand-file-name "~/Dropbox/Brain/Finance/ledger2023.journal"))
-  :config
-  (add-to-list 'company-backends 'hledger-company))
-
-(use-package tuareg
-  :defer t)
-
+;;; Common Lisp language support.
 (use-package sly
   :config
   ;; default to sbcl
   (setq inferior-lisp-program "sbcl"))
 
+;;; Scheme language support
 (use-package geiser)
 
 (use-package geiser-guile)
 
 (use-package geiser-chicken)
+
+;;; Generic s-expression based languages support
+
+;; A list of all modes I want lispy modes hooked to.  Add to this list
+;; if new modes join the lispy gang.
+(setq neshtea/lispy-modes '(emacs-lisp-mode
+			    eval-expression-minibuffer-setup
+			    clojure-mode
+			    ielm-mode
+			    lisp-interaction-mode
+			    lisp-mode
+			    scheme-mode
+			    racket-mode))
+
+(defun neshtea/symbol-join (symbols sep)
+  "Similar to 'string-join' but joins 'symbols' using 'sep' as
+the separator."
+ (intern (string-join (mapcar #'symbol-name symbols) sep)))
+
+(defun neshtea/hook-lispy-modes (mode-name)
+  "Add paredit-mode to 'mode-name'."
+  (let* ((mode-hook (neshtea/symbol-join (list mode-name 'hook) "-")))
+    (add-hook mode-hook #'enable-paredit-mode)))
+
+(use-package paredit
+  :config
+  (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+  (mapcar #'neshtea/hook-lispy-modes neshtea/lispy-modes))
+
+;;; Docker language support
+(use-package dockerfile-mode
+  :defer t)
+
+;;; YAML language support
+(use-package yaml-mode
+  :defer t)
+
+;;; Markdown language support
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+	 ("\\.md\\'" . markdown-mode)
+	 ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
 
 (provide 'init)
 ;;; init.el ends here
