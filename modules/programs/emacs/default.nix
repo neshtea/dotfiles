@@ -33,7 +33,6 @@ in {
         epkgs.diff-hl
         epkgs.default-text-scale
         epkgs.gruvbox-theme
-        epkgs.doom-modeline
 
         # Elixir
         epkgs.alchemist

@@ -141,9 +141,6 @@ disables all other enabled themes."
 
 (use-package all-the-icons)
 
-(use-package doom-modeline
-  :hook (after-init . doom-modeline-mode))
-
 ;; treesit
 (setq treesit-language-source-alist
       '((ocaml "https://github.com/tree-sitter/tree-sitter-ocaml/"
