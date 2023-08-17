@@ -39,9 +39,10 @@
       '((jetbrains-mono . (:font   "JetBrains Mono"
 			   :height 140))
 	(iosevka        . (:font   "Iosevka"
-			   :height 160))))
+			   :height 140))))
 
-(setq neshtea/current-font 'jetbrains-mono)
+;; (setq neshtea/current-font 'jetbrains-mono)
+(setq neshtea/current-font 'iosevka)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -127,7 +128,8 @@ disables all other enabled themes."
     (load-theme name t)))
 
 ;; Set the theme to gruvbox
-(neshtea/switch-theme 'gruvbox-dark-hard)
+;; (neshtea/switch-theme 'gruvbox-dark-hard)
+(neshtea/switch-theme 'zenburn)
 
 ;;;; Generic, non-mode specific helpers.o
 ;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/
@@ -276,6 +278,13 @@ Repeated invocations toggle between the two most recently open buffers."
 (use-package org-roam
   :defer t
   :after org
+  :bind (("C-c o r c" . #'org-roam-capture)
+	 ("C-c o r f" . #'org-roam-node-find)
+	 ("C-c o r i" . #'org-roam-node-insert)
+	 ("C-c o d t" . #'org-roam-dailies-goto-today)
+	 ("C-c o d p" . #'org-roam-dailies-goto-previous-note)
+	 ("C-c o d n" . #'org-roam-dailies-goto-next-note)
+	 ("C-c o d c" . #'org-roam-dailies-capture-today))
   :init
   (setq org-roam-v2-ack t)
   :custom
@@ -297,14 +306,6 @@ Repeated invocations toggle between the two most recently open buffers."
       :unnarrowed t)))
   :config
   (org-roam-setup))
-
-;; I need to have these keys available everywhere
-(global-set-key (kbd "C-c o r c") #'org-roam-caputre)
-(global-set-key (kbd "C-c o r f") #'org-roam-node-find)
-(global-set-key (kbd "C-c o d t") #'org-roam-dailies-goto-today)
-(global-set-key (kbd "C-c o d p") #'org-roam-dailies-goto-previous-note)
-(global-set-key (kbd "C-c o d n") #'org-roam-dailies-goto-next-note)
-(global-set-key (kbd "C-c o d c") #'org-roam-dailies-capture-today)
 
 (use-package org-roam-ui
   :after org-roam
@@ -461,6 +462,11 @@ Repeated invocations toggle between the two most recently open buffers."
   :config
   ;; default to sbcl
   (setq inferior-lisp-program "sbcl"))
+
+(use-package sly-quicklisp)
+
+;;; Racket language support
+(use-package racket-mode)
 
 ;;; Scheme language support
 (use-package geiser)

@@ -27,6 +27,7 @@ in {
         epkgs.diff-hl
         epkgs.default-text-scale
         epkgs.gruvbox-theme
+        epkgs.zenburn-theme
 
         # Latex
         epkgs.auctex-latexmk
@@ -38,11 +39,15 @@ in {
 
         # Common Lisp
         epkgs.sly
+        epkgs.sly-quicklisp
 
         # Scheme
         epkgs.geiser
         epkgs.geiser-guile
         epkgs.geiser-chicken
+
+        # Racket
+        epkgs.racket-mode
 
         # Haskell
         epkgs.haskell-mode
