@@ -20,11 +20,15 @@
     cacert
     coreutils
 
+    tree-sitter
     # we have lots or clojure projects that don't provide a nix shell,
     # so let's have this available everywhere.
     clojure
     clojure-lsp # Not every project brings it's own lsp.
+    rust-analyzer
+    lua-language-server
     leiningen
+    neovim
 
     # most projects don't define a specific docker/docker-compose, so
     # let's have this available user-wide.
@@ -69,6 +73,9 @@
     nixfmt
     multimarkdown
     ripgrep
+    fd
+    nodejs
+    perl
 
     texlive.combined.scheme-full
   ];
@@ -133,9 +140,6 @@
       userEmail = "marco.schneider@active-group.de";
     };
   };
-
-  # Programs
-  # modules.programs.neovim.enable = true;
 
   # Shells and shell tools
   modules.shell.fzf.enable = true;

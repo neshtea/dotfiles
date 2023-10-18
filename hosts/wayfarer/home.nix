@@ -8,6 +8,10 @@
     jre
   ];
 
+  # Programs
+  # modules.programs.neovim.enable = true;
+  # modules.programs.kitty.enable = true;
+
   modules.programs.emacs = {
     enable = true;
     emacsPackage = pkgs.emacs-git;
