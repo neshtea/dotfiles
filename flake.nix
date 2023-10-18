@@ -63,7 +63,10 @@
       homeConfigurations.${username} = let
         system = "aarch64-darwin"; # Only relevant for darwin.
         # overlays = [ inputs.neovim-nightly-overlay.overlay ];
-        overlays = [ inputs.emacs-overlay.overlays.default ];
+        overlays = [
+          inputs.emacs-overlay.overlays.default
+          inputs.neovim-nightly-overlay.overlay
+        ];
         pkgs = import nixpkgs {
           config.allowUnfree = true; # Sorry rms
           inherit overlays system;
