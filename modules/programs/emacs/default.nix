@@ -59,6 +59,9 @@ in {
         epkgs.ocp-indent
         epkgs.utop
 
+        # Rust
+        epkgs.rustic
+
         # Misc file modes
         epkgs.dockerfile-mode
         epkgs.nix-mode

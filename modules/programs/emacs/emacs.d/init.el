@@ -519,5 +519,7 @@ the separator."
 	 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
+;;; Rust language support
+(use-package rustic)
 (provide 'init)
 ;;; init.el ends here
