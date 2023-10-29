@@ -44,6 +44,7 @@
       p.tree-sitter-ocaml-interface
       p.tree-sitter-nix
       p.tree-sitter-haskell
+	  p.tree-sitter-make
     ]))
 
     gcc
