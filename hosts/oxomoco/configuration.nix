@@ -6,7 +6,6 @@
 
 {
   nix = {
-    package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -19,8 +18,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "anarres"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.hostName = "oxomoco"; # Define your hostname.
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
@@ -53,7 +51,6 @@
     };
     xserver = {
       enable = true;
-      videoDrivers = [ "radeon" ];
       libinput = {
         enable = true;
         mouse.naturalScrolling = true;
@@ -98,8 +95,8 @@
   };
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
-  services.printing.drivers = [ pkgs.samsung-unified-linux-driver ];
+  # services.printing.enable = true;
+  # services.printing.drivers = [ pkgs.samsung-unified-linux-driver ];
 
   # Enable sound.
   sound.enable = true;
@@ -110,23 +107,19 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users = {
-    defaultUserShell = "${pkgs.zsh}/bin/zsh";
-    users.schneider = {
-      isNormalUser = true;
-      home = "/home/schneider";
-      extraGroups =
-        [ "wheel" "networkmanager" "docker" ]; # Enable ‘sudo’ for the user.
-    };
+  users.users.schneider = {
+    isNormalUser = true;
+    home = "/home/schneider";
+    extraGroups =
+      [ "wheel" "networkmanager" "docker" ]; # Enable ‘sudo’ for the user.
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment = {
     systemPackages = with pkgs; [
-      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+      vim
       wget
-      firefox
     ];
     pathsToLink = [ "/share/zsh" ];
   };
@@ -141,7 +134,7 @@
     enableSSHSupport = true;
   };
 
-  powerManagement = { enable = true; };
+  powerManagement.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -158,7 +151,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.11"; # Did you read the comment?
+  system.stateVersion = "23.05"; # Did you read the comment? -- no (:
 
 }
 

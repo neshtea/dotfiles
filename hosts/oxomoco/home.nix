@@ -5,21 +5,17 @@
 
   home.packages = with pkgs; [
     # Basic desktop apps
+    firefox
     thunderbird
-    linphone # making phone calls
-    scrot # Screenshots
     keepassxc
-    spotify
 
     # Chat
     signal-desktop
     element-desktop
-    mattermost-desktop
     tdesktop
 
     # System utilities
     lm_sensors
-    pamixer # control pipewire
     playerctl # control media applications from the command line.
     rofi-pass
     gcc # sometime you just need a c compiler.
@@ -37,19 +33,15 @@
     fira-code
     font-awesome_5
     jetbrains-mono
-    nerdfonts
-    noto-fonts
-    roboto-mono
-    source-code-pro
   ];
 
   programs = { firefox.enable = true; };
 
   modules.programs.kitty.enable = true;
-  # modules.desktop.herbstluftwm.enable = true;
-  modules.programs.neovim.enable = true;
+  modules.desktop.herbstluftwm.enable = false;
+  modules.programs.neovim.enable = false;
   modules.programs.emacs = {
-    enable = true;
+    enable = false;
     emacsPackage = pkgs.emacs28NativeComp;
   };
   modules.desktop.xmonad.enable = true;

@@ -34,7 +34,7 @@
       # Configuration for nixos systems.  Uses the system
       # configuration via the `nixosConfiguration`.  `home-manager` is
       # used as a module (`home-manager.nixosModules.home-manager`).
-      nixosConfigurations.anarres = let
+      nixosConfigurations.oxomoco = let
         system = "x86_64-linux";
         pkgs = import nixpkgs {
           config.allowUnfree = true; # sorry rms
@@ -45,11 +45,11 @@
         inherit pkgs system specialArgs;
 
         modules = [
-          ./hosts/anarres/configuration.nix
+          ./hosts/oxomoco/configuration.nix
           home-manager.nixosModules.home-manager
           {
             home-manager = {
-              users.${username} = import ./hosts/anarres/home.nix;
+              users.${username} = import ./hosts/oxomoco/home.nix;
               useGlobalPkgs = true;
               useUserPackages = false;
               extraSpecialArgs = specialArgs;
