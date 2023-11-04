@@ -27,6 +27,7 @@
     # audio controls (meant for pulse, but seems to work
     # with pipewire as well).
     pavucontrol
+    networkmanagerapplet
 
     # Fonts
     iosevka
