@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   nix = {
@@ -43,6 +43,7 @@
   };
 
   services = {
+    tlp.enable = true;
     pipewire = {
       enable = true;
       pulse.enable = true;
@@ -51,46 +52,50 @@
     };
     xserver = {
       enable = true;
-      libinput = {
-        enable = true;
-        mouse.naturalScrolling = true;
-      };
-      layout = "us";
+      # libinput = {
+      #   enable = true;
+      #   mouse.naturalScrolling = true;
+      # };
+      # layout = "us";
       displayManager = {
-        session = [{
-          manage = "window";
-          name = "fake";
-          start = "";
-        }];
-        defaultSession = "none+fake";
-        autoLogin = {
-          enable = true;
-          user = "schneider";
+        # session = [{
+        #   manage = "window";
+        #   name = "fake";
+        #   start = "";
+        # }];
+        # defaultSession = "none+fake";
+        # autoLogin = {
+        #   enable = true;
+        #   user = "schneider";
+        # };
+        gdm = {
+          enable = true; 
+          wayland = true;
         };
-        lightdm = {
-          enable = true;
-          greeters.mini.enable = true;
-          greeters.mini.user = "schneider";
-        };
-        sessionCommands =
-          # https://nixos.wiki/wiki/Keyboard_Layout_Customization
-          let
-            myCustomLayout = pkgs.writeText "xkb-layout" ''
-              	    ! Map umlauts to RIGHT ALT + <key>
-                          keycode 108 = Mode_switch
-                          keysym e = e E EuroSign
-                          keysym c = c C cent
-                          keysym a = a A adiaeresis Adiaeresis
-                          keysym o = o O odiaeresis Odiaeresis
-                          keysym u = u U udiaeresis Udiaeresis
-                          keysym s = s S ssharp
-                  
-                          ! disable capslock
-                          ! remove Lock = Caps_Lock
-              	  '';
-          in "${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}";
+        # lightdm = {
+        #   enable = true;
+        #   greeters.mini.enable = true;
+        #   greeters.mini.user = "schneider";
+        # };
+        # sessionCommands =
+        #   # https://nixos.wiki/wiki/Keyboard_Layout_Customization
+        #   let
+        #     myCustomLayout = pkgs.writeText "xkb-layout" ''
+        #       	    ! Map umlauts to RIGHT ALT + <key>
+        #                   keycode 108 = Mode_switch
+        #                   keysym e = e E EuroSign
+        #                   keysym c = c C cent
+        #                   keysym a = a A adiaeresis Adiaeresis
+        #                   keysym o = o O odiaeresis Odiaeresis
+        #                   keysym u = u U udiaeresis Udiaeresis
+        #                   keysym s = s S ssharp
+        #           
+        #                   ! disable capslock
+        #                   ! remove Lock = Caps_Lock
+        #       	  '';
+        #   in "${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}";
       };
-      xkbOptions = "eurosign:e,caps:ctrl_modifier";
+      # xkbOptions = "eurosign:e,caps:ctrl_modifier";
     };
   };
 
@@ -102,6 +107,9 @@
   sound.enable = true;
   # use pipewire
   # hardware.pulseaudio.enable = true;
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -110,6 +118,7 @@
   users.users.schneider = {
     isNormalUser = true;
     home = "/home/schneider";
+    shell = "${lib.getExe pkgs.zsh}";
     extraGroups =
       [ "wheel" "networkmanager" "docker" ]; # Enable ‘sudo’ for the user.
   };
@@ -120,11 +129,52 @@
     systemPackages = with pkgs; [
       vim
       wget
+      # Stuff for hyprland
+      wofi
+      waybar
+      hyprpaper
+      wireplumber
+      dunst
+      xdg-desktop-portal-hyprland
+      dropbox-cli
+      wl-clipboard
     ];
     pathsToLink = [ "/share/zsh" ];
   };
 
+  systemd.user.services.dropbox = {
+    description = "Dropbox";
+    wantedBy = [ "graphical-session.target" ];
+    environment = {
+      QT_PLUGIN_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtPluginPrefix;
+      QML_IMPORT_PATH = "/run/current/system/sw/" + pkgs.qt5.qtbase.qtQmlPrefix;
+    };
+    serviceConfig = {
+      ExecStart = "${lib.getBin pkgs.dropbox}/bin/dropbox";
+      ExecReload = "${lib.getBin pkgs.coreutils}/bin/kill -HUP $MAINMPID";
+      KillMode = "control-group";
+      Restart = "on-failure";
+      PrivateTmp = true;
+      ProtectSystem = "full";
+      Nice = 10;
+    };
+  };
+
+  networking.firewall = {
+    allowedTCPPorts = [ 17500 ];
+    allowedUDPPorts = [ 17500 ];
+  };
+
   virtualisation.docker.enable = true;
+
+  programs = { 
+    hyprland = {
+      enable = true;
+      xwayland.enable = true;
+    };
+    waybar.enable = true;
+  };
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
