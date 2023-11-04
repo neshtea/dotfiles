@@ -10,7 +10,7 @@ configuration.
 It manages the configuration for multiple hosts:
 
 - [wayfarer](./hosts/wayfarer): My work MacBook Pro, running macOS.
-- [anarres](./hosts/anarres): My personal stationary PC, running NixOS.
+- [oxomoco](./hosts/oxomoco): My personal laptop, running NixOS.
 
 # Home Configuration
 
@@ -22,9 +22,9 @@ their respective `home.nix` declarations.
 
 Each NixOS host defines its system configuration in
 
-- [`configuration.nix`](./hosts/anarres/configuration.nix): System
+- [`configuration.nix`](./hosts/oxomoco/configuration.nix): System
   configuration.
-- [`hardware-configuration.nix`](./hosts/anarres/hardware-configuration.nix):
+- [`hardware-configuration.nix`](./hosts/oxomoco/hardware-configuration.nix):
   Hardware specific configuration configuration.
 
 It is somewhat modularized (see [`modules`](./modules)).  I wouldn't
