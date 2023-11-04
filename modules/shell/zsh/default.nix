@@ -14,6 +14,12 @@ in {
         enableCompletion = true;
         enableAutosuggestions = true;
         syntaxHighlighting.enable = true;
+        shellGlobalAliases = {
+          nrs = "nixos-rebuild switch --flake ~/dotfiles/ --use-remote-sudo";
+          serve = "${pkgs.python3}/bin/python3 -m http.server";
+          # git
+          gls = "git log --oneline";
+        };
         defaultKeymap = "emacs";
         # NOTE I need the `TEXINPUTS` variable to build
         # LaTeX-documents with my companies templates.  Since the repo
