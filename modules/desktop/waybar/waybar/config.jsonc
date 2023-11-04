@@ -9,7 +9,7 @@
     // "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "custom/media"],
     "modules-left": ["hyprland/workspaces", "custom/playerctl"],
     "modules-center": ["cpu", "memory", "disk"],
-    "modules-right": ["tray", "network", "pulseaudio", "clock"],
+    "modules-right": ["tray", "network", "pulseaudio", "battery", "clock"],
     "disk": {
         "format": "{percentage_free}%"
     },

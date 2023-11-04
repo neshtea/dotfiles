@@ -40,6 +40,7 @@
   modules.programs.wezterm.enable = true;
 
   # Desktop stuff
+  modules.desktop.hyprland.enable = true;
   modules.desktop.waybar.enable = true;
   modules.desktop.wofi.enable = true;
 
