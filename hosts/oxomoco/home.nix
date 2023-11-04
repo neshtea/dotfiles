@@ -39,6 +39,7 @@
   modules.programs.wezterm.enable = true;
 
   # Desktop stuff
+  modules.desktop.waybar.enable = true;
   modules.desktop.wofi.enable = true;
 
   modules.desktop.herbstluftwm.enable = false;
