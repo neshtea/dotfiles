@@ -37,6 +37,10 @@
 
   modules.programs.kitty.enable = false;
   modules.programs.wezterm.enable = true;
+
+  # Desktop stuff
+  modules.desktop.wofi.enable = true;
+
   modules.desktop.herbstluftwm.enable = false;
   modules.programs.neovim.enable = true;
   modules.programs.emacs = {

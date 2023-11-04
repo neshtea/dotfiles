@@ -1,1 +1,1 @@
-{ ... }: { imports = [ ./herbstluftwm ./rofi ./xmonad ./polybar ]; }
+{ ... }: { imports = [ ./herbstluftwm ./rofi ./xmonad ./polybar ./wofi ]; }
