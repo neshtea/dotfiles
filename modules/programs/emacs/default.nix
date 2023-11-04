@@ -17,6 +17,7 @@ in {
       enable = true;
       extraPackages = epkgs: [
         # Basics, ergonomics, movement
+        epkgs.use-package
         epkgs.consult
         epkgs.emacsql
         epkgs.envrc
