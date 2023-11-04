@@ -7,6 +7,7 @@
     # Basic desktop apps
     firefox
     thunderbird
+    google-chrome
     keepassxc
     dolphin
 
