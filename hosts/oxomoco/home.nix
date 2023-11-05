@@ -6,6 +6,7 @@
   home.packages = with pkgs; [
     # Basic desktop apps
     firefox
+    brave
     thunderbird
     google-chrome
     keepassxc
