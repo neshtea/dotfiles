@@ -129,15 +129,21 @@
     systemPackages = with pkgs; [
       vim
       wget
-      # Stuff for hyprland
+      # Stuff for wayland/hyprland
       wofi
       waybar
       hyprpaper
       wireplumber
       dunst
+      xdg-desktop-portal-wlr
       xdg-desktop-portal-hyprland
-      dropbox-cli
       wl-clipboard
+      egl-wayland
+      qt6.qtwayland
+      libsForQt5.qt5.qtwayland
+      xwayland
+      
+      dropbox-cli
     ];
     pathsToLink = [ "/share/zsh" ];
   };

@@ -11,12 +11,17 @@
     google-chrome
     keepassxc
     dolphin
+    obsidian
 
     # Chat
     signal-desktop
     element-desktop
     tdesktop
 
+    # Streaming
+    obs-studio
+    obs-studio-plugins.wlrobs
+    
     # Music
     plexamp
 

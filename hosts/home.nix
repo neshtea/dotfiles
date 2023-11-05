@@ -62,7 +62,6 @@
     gnupg
     imagemagick
     rlwrap
-    silver-searcher
     tree
     youtube-dl
     wget
@@ -76,8 +75,6 @@
     fd
     nodejs
     perl
-
-    # texlive.combined.scheme-full
   ];
 
   programs = {
