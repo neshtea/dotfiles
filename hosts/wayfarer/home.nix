@@ -11,6 +11,12 @@
   # Programs
   # modules.programs.neovim.enable = true;
   # modules.programs.kitty.enable = true;
+  modules.programs = {
+    wezterm = {
+      enable = true;
+      installPackage = false;
+    };
+  };
 
   modules.programs.emacs = {
     enable = true;
