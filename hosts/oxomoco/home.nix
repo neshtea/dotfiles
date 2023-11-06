@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: rec {
+{ pkgs, ... }: {
   imports = [ ../home.nix ];
 
   fonts.fontconfig.enable = pkgs.lib.mkForce true;
@@ -21,7 +21,7 @@
     # Streaming
     obs-studio
     obs-studio-plugins.wlrobs
-    
+
     # Music
     plexamp
 
@@ -55,7 +55,7 @@
   modules.programs.neovim.enable = true;
   modules.programs.emacs = {
     enable = true;
-    emacsPackage = pkgs.emacs28NativeComp;
+    emacsPackage = pkgs.emacs-git;
   };
   modules.desktop.xmonad.enable = false;
   modules.desktop.rofi.enable = false;

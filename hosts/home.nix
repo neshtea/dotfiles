@@ -27,6 +27,7 @@
     clojure-lsp # Not every project brings it's own lsp.
     rust-analyzer
     lua-language-server
+    nil
     leiningen
     neovim
 

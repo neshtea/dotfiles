@@ -40,6 +40,8 @@
         pkgs = import nixpkgs {
           config.allowUnfree = true; # sorry rms
           inherit system;
+
+          overlays = [ inputs.emacs-overlay.overlays.default ];
         };
 
       in nixpkgs.lib.nixosSystem {
