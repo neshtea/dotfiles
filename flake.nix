@@ -17,8 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     emacs-overlay = {
-      url =
-        "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
+      url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
