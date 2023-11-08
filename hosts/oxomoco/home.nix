@@ -44,7 +44,10 @@
   ];
 
   modules.programs.kitty.enable = false;
-  modules.programs.wezterm.enable = true;
+  modules.programs.wezterm = {
+    enable = true;
+    installPackage = true;
+  };
 
   # Desktop stuff
   modules.desktop.hyprland.enable = true;
