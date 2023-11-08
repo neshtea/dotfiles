@@ -120,7 +120,7 @@
     home = "/home/schneider";
     shell = "${lib.getExe pkgs.zsh}";
     extraGroups =
-      [ "wheel" "networkmanager" "docker" ]; # Enable ‘sudo’ for the user.
+      [ "wheel" "networkmanager" "docker" "video" ]; # Enable ‘sudo’ for the user.
   };
 
   # List packages installed in system profile. To search, run:
@@ -179,6 +179,7 @@
       xwayland.enable = true;
     };
     waybar.enable = true;
+    light.enable = true;
   };
 
 
