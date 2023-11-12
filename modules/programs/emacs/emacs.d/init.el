@@ -128,8 +128,13 @@ disables all other enabled themes."
     (load-theme name t)))
 
 ;; Set the theme to gruvbox
-;; (neshtea/switch-theme 'gruvbox-dark-hard)
-(neshtea/switch-theme 'zenburn)
+(use-package doom-themes
+  :config
+  (setq doom-themes-enable-bold nil
+	doom-themes-enable-italic t)
+  (doom-themes-org-config))
+
+(neshtea/switch-theme 'doom-gruvbox)
 
 ;;;; Generic, non-mode specific helpers.o
 ;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/

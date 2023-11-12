@@ -29,6 +29,7 @@ in {
         epkgs.default-text-scale
         epkgs.gruvbox-theme
         epkgs.zenburn-theme
+        epkgs.doom-themes
 
         # Latex
         epkgs.auctex-latexmk
