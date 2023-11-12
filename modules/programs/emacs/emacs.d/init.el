@@ -244,7 +244,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (org-hide-leading-stars t)
   (org-return-follows-link t)
   (org-startup-folded 'content)
-  (org-agenda-files '("~/Dropbox/Brain/org/gtd.org"))
+  (org-agenda-files '("~/Dropbox/Brain/org/gtd.org" "~/Dropbox/Brain/org/zettelkasten/dailies/"))
   (org-agenda-span 10)
   (org-agenda-start-on-weekday nil)
   (org-agenda-start-day "-3d")
