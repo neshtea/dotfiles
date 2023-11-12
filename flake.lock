@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "active-kondo": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1687436084,
-        "narHash": "sha256-XWwYTW+Dic4zcAaCA+B6spklz7Phgfn1Imt7zl10QuQ=",
-        "owner": "active-group",
-        "repo": "active-kondo",
-        "rev": "4c935bbc39f48b798baec8a6ced3a7989356ea7a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "active-group",
-        "repo": "active-kondo",
-        "type": "github"
-      }
-    },
     "emacs-overlay": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -272,7 +256,6 @@
     },
     "root": {
       "inputs": {
-        "active-kondo": "active-kondo",
         "emacs-overlay": "emacs-overlay",
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
