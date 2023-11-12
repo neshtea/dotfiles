@@ -25,8 +25,4 @@
   };
   # modules.programs.docker.enable = true;
 
-  xdg.configFile."clj-kondo" = {
-    source = "${inputs.active-kondo}";
-    recursive = true;
-  };
 }
