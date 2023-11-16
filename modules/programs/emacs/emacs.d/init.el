@@ -36,13 +36,20 @@
 
 ;; Set the font.
 (setq neshtea/font-alist
-      '((jetbrains-mono . (:font   "JetBrains Mono"
-			   :height 140))
-	(iosevka        . (:font   "Iosevka"
-			   :height 140))))
+      '((jetbrains-mono . (:font "JetBrains Mono"
+				 :height 140))
+	(iosevka . (:font "Iosevka"
+			  :height 140))
+	(monaspace-radon . (:font "Monaspace Radon"
+				  :height 140))
+	(monaspace-argon . (:font "Monaspace Argon"
+				  :height 140))
+	(comic-mono . (:font "Comic Mono" :height 140))
+	))
+
 
 ;; (setq neshtea/current-font 'jetbrains-mono)
-(setq neshtea/current-font 'iosevka)
+(setq neshtea/current-font 'monospace-radon)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as

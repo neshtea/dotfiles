@@ -9,7 +9,7 @@ end
 config.enable_tab_bar = false
 
 config.color_scheme = 'Gruvbox dark, pale (base16)'
-config.font = wezterm.font('Iosevka')
+config.font = wezterm.font('Monaspace Radon')
 config.font_size = 16.0
 
 local os = wezterm.target_triple
