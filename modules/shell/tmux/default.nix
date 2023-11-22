@@ -10,9 +10,18 @@ in {
       extraConfig = ''
         set-option -g renumber-windows on
       '';
-
-      keyMode = "emacs";
+      historyLimit = 10000;
+      keyMode = "vi";
+      mouse = true;
       newSession = true;
+      plugins = with pkgs; [
+        tmuxPlugins.catppuccin
+        {
+          plugin = tmuxPlugins.catppuccin;
+
+        }
+      ];
+      prefix = "C-Space";
       shell = "${pkgs.zsh}/bin/zsh";
     };
   };

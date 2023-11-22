@@ -18,7 +18,7 @@ Shared configuration between hosts can be found in
 [home.nix](./hosts/home.nix).  Each host refines that configuration in
 their respective `home.nix` declarations.
 
-# Systen Configuration
+# System Configuration
 
 Each NixOS host defines its system configuration in
 

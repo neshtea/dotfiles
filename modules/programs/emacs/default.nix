@@ -30,6 +30,7 @@ in {
         epkgs.gruvbox-theme
         epkgs.zenburn-theme
         epkgs.doom-themes
+        epkgs.catppuccin-theme
 
         # Latex
         epkgs.auctex-latexmk

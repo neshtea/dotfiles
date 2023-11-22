@@ -44,12 +44,16 @@
 				  :height 140))
 	(monaspace-argon . (:font "Monaspace Argon"
 				  :height 140))
+	(monaspace-neon . (:font "Monaspace Neon"
+				  :height 140))
+	(monaspace-krypton . (:font "Monaspace Krypton"
+				 :height 140))
 	(comic-mono . (:font "Comic Mono" :height 140))
 	))
 
 
 ;; (setq neshtea/current-font 'jetbrains-mono)
-(setq neshtea/current-font 'monospace-radon)
+(setq neshtea/current-font 'jetbrains-mono)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -141,7 +145,12 @@ disables all other enabled themes."
 	doom-themes-enable-italic t)
   (doom-themes-org-config))
 
-(neshtea/switch-theme 'doom-gruvbox)
+;; (neshtea/switch-theme 'doom-gruvbox)
+
+(setq catppuccin-flavor 'mocha)
+
+(neshtea/switch-theme 'catppuccin)
+
 
 ;;;; Generic, non-mode specific helpers.o
 ;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/
