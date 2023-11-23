@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: rec {
+{ config, pkgs, inputs, ... }: rec {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -13,6 +13,8 @@
   home.stateVersion = "22.05";
 
   imports = [ ../modules ];
+
+  nix.registry = { this.flake = inputs.nixpkgs; };
 
   home.username = "schneider";
 
