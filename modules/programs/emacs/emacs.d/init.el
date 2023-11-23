@@ -3,6 +3,21 @@
 ;; Commentary:
 ;;; Configuration for Emacs
 
+;; (use-package benchmark-init
+;;   :demand
+;;   :config (benchmark-init/activate)
+;;   :hook (after-init . benchmark-init/deactivate))
+
+(add-hook
+ 'emacs-startup-hook
+ (lambda ()
+   (message
+    "Emacs startup took %s with %d garbage collections"
+    (format
+     "%.2f seconds"
+     (float-time (time-subtract after-init-time before-init-time)))
+    gcs-done)))
+
 ;;;; GENERAL
 (setq
  ;; Don't show the standart Emacs startup screen.
@@ -104,6 +119,9 @@ the face-font."
 ;; them via use-package
 (require 'use-package)
 
+(use-package ibuffer
+  :defer t)
+
 ;; Especially on MacOS, the exec path is always wrong.  This package
 ;; tries to fix that.
 ;; SEE https://github.com/purcell/exec-path-from-shell#usage
@@ -140,6 +158,7 @@ disables all other enabled themes."
 
 ;; Set the theme to gruvbox
 (use-package doom-themes
+  :defer t
   :config
   (setq doom-themes-enable-bold nil
 	doom-themes-enable-italic t)
@@ -189,6 +208,7 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;; consult provides a huge array of cap based searches.
 (use-package consult
+  :defer t
   :init
   (setq register-preview-delay 0
 	register-preview-function #'consult-register-format)
@@ -211,10 +231,8 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;; marginalia annotates completion candidates in the completion at
 ;; point buffer. Plays nicely with consult, etc.
-(use-package marginalia :init (marginalia-mode))
-
-;; Easily find projects and files within projects.
-(use-package project)
+(use-package marginalia
+  :init (marginalia-mode))
 
 (use-package projectile
   :init (projectile-mode +1))
@@ -243,14 +261,13 @@ Repeated invocations toggle between the two most recently open buffers."
   (find-file (expand-file-name "~/Dropbox/Brain/org/projects.org")))
 
 (use-package org
+  :defer t
   :hook (org-mode . neshtea/org-mode-setup)
-
   :bind (("C-c o a" . org-agenda-list)
 	 ("C-c o t" . org-todo-list)
 	 ("C-c o f" . neshtea/org-gtd-file)
 	 ("C-c o p" . neshtea/org-projects-file)
 	 ("C-c o c c" . org-capture))
-  
   :custom
   ;; (org-ellipsis " ▾")
   (org-edit-src-content-indentation 0)  ; Don't indent in src blocks.
@@ -278,6 +295,8 @@ Repeated invocations toggle between the two most recently open buffers."
   (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d!)" "CANCELLED"))))
 
 (use-package org-appear
+  :defer t
+  :after org
   :hook
   (org-mode . org-appear-mode)
   :custom
@@ -329,6 +348,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (org-roam-setup))
 
 (use-package org-roam-ui
+  :defer t
   :after org-roam
   :custom
   (org-roam-ui-sync-theme t)
@@ -345,10 +365,12 @@ Repeated invocations toggle between the two most recently open buffers."
   (default-text-scale-mode))
 
 (use-package diff-hl
+  :defer t
   :init (global-diff-hl-mode))
 
 ;; Magit are the very best tools for interacting with git.
 (use-package magit
+  :defer t
   :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
 	 (magit-post-refresh . diff-hl-magit-post-refresh))  
   :after diff-hl
@@ -357,12 +379,14 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;; Used for golden-ration mode.
 (use-package zoom
+  :defer t
   :config
   ;; Resize the selected window using the golden ratio:
   ;; https://github.com/cyrus-and/zoom#example-configurations
   (setq zoom-size '(0.618 . 0.618)))
 
 (use-package helpful
+  :defer t
   :bind (("C-h f" . helpful-callable)
 	 ("C-h v" . helpful-variable)
 	 ("C-h k" . helpful-key)
@@ -381,7 +405,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (add-hook 'after-init-hook 'global-hl-todo-mode))
 
 (use-package envrc
-  :defer t
   :init (envrc-global-mode))
 
 (use-package reformatter)
@@ -428,12 +451,14 @@ Repeated invocations toggle between the two most recently open buffers."
   :hook (before-save . nix-format-before-save))
 ;;; OCaml language support
 (use-package merlin
+  :defer t
   :hook ((tuareg-mode . merlin-mode)
 	 (caml-mode . merlin-mode))
   :custom
   (merlin-command "ocamlmerlin"))
 
-(use-package utop
+(use-package utop  ;; maybe reconsider this package
+  :defer t
   :hook
   (tuareg-mode . utop-minor-mode))
 
@@ -480,21 +505,27 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;;; Common Lisp language support.
 (use-package sly
+  :defer t
   :config
   ;; default to sbcl
   (setq inferior-lisp-program "sbcl"))
 
-(use-package sly-quicklisp)
+(use-package sly-quicklisp
+  :defer t)
 
 ;;; Racket language support
-(use-package racket-mode)
+(use-package racket-mode
+  :defer t)
 
 ;;; Scheme language support
-(use-package geiser)
+(use-package geiser
+  :defer t)
 
-(use-package geiser-guile)
+(use-package geiser-guile
+  :defer t)
 
-(use-package geiser-chicken)
+(use-package geiser-chicken
+  :defer t)
 
 ;;; Generic s-expression based languages support
 
@@ -534,6 +565,7 @@ the separator."
 
 ;;; Markdown language support
 (use-package markdown-mode
+  :defer t
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
 	 ("\\.md\\'" . markdown-mode)
@@ -541,6 +573,9 @@ the separator."
   :init (setq markdown-command "multimarkdown"))
 
 ;;; Rust language support
-(use-package rustic)
+(use-package rustic
+  :defer t)
+
 (provide 'init)
 ;;; init.el ends here
+

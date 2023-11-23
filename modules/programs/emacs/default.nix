@@ -70,6 +70,7 @@ in {
         epkgs.nix-mode
 
         # Unsorted, general stuff
+        epkgs.benchmark-init
         epkgs.helpful
         epkgs.hl-todo
         epkgs.hledger-mode
