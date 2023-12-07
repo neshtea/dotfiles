@@ -30,6 +30,8 @@ in {
         epkgs.gruvbox-theme
         epkgs.zenburn-theme
         epkgs.doom-themes
+        epkgs.doom-modeline
+        epkgs.nerd-icons
         epkgs.catppuccin-theme
 
         # Latex

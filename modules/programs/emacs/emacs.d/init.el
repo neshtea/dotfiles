@@ -164,6 +164,12 @@ disables all other enabled themes."
 	doom-themes-enable-italic t)
   (doom-themes-org-config))
 
+(use-package doom-modeline
+  :hook (after-init . doom-modeline-mode))
+
+(use-package nerd-icons
+  :defer t)
+
 ;; (neshtea/switch-theme 'doom-gruvbox)
 
 (setq catppuccin-flavor 'mocha)
