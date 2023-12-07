@@ -270,7 +270,7 @@ Repeated invocations toggle between the two most recently open buffers."
   :defer t
   :hook (org-mode . neshtea/org-mode-setup)
   :bind (("C-c o a" . org-agenda-list)
-	 ("C-c o t" . org-todo-list)
+	 ("C-c o t l" . org-todo-list)
 	 ("C-c o f" . neshtea/org-gtd-file)
 	 ("C-c o p" . neshtea/org-projects-file)
 	 ("C-c o c c" . org-capture))
@@ -283,18 +283,21 @@ Repeated invocations toggle between the two most recently open buffers."
   (org-hide-leading-stars t)
   (org-return-follows-link t)
   (org-startup-folded 'content)
-  (org-agenda-files '("~/Dropbox/Brain/org/gtd.org" "~/Dropbox/Brain/org/zettelkasten/dailies/"))
-  (org-agenda-span 10)
-  (org-agenda-start-on-weekday nil)
-  (org-agenda-start-day "-3d")
+  (org-agenda-files '(
+		      "~/Dropbox/Brain/org/gtd.org"
+		      "~/Dropbox/Brain/org/zettelkasten/dailies/"
+		      "~/Dropbox/Brain/org/timetracking.org"
+		      ))
+  (org-agenda-span 7)
+  (org-agenda-start-on-weekday 1)
   (org-capture-templates '(("t" "Todo [inbox/work]" entry
 			    (file+headline "~/Dropbox/Brain/org/gtd.org" "INBOX")
-			    "* TODO %i%? \n%U")))
+			    "* TODO %?\n  SCHEDULED: %t\n  %U")))
   (org-refile-targets '(("~/Dropbox/Brain/org/gtd.org" :maxlevel . 2)
 			("~/Dropbox/Brain/org/lists.org" :maxlevel . 2)
 			("~/Dropbox/Brain/org/projects.org" :maxlevel . 1)))
-	;; When the state of a section headline changes, log the
-	;; transition into the headlines drawer.
+  ;; When the state of a section headline changes, log the
+  ;; transition into the headlines drawer.
   ;; When the state of a section headline changes, log the
   ;; transition into the headlines drawer.
   (org-log-into-drawer 'LOGBOOK)
@@ -498,7 +501,7 @@ Repeated invocations toggle between the two most recently open buffers."
   :defer t
   :bind (:map eglot-mode-map
 	      ("C-c <tab>" . company-complete)
-	      ("C-c l a" . elgot-code-actions)
+	      ("C-c l a" . eglot-code-actions)
 	      ("C-c l d" . eldoc-doc-buffer)
 	      ("C-c l r" . eglot-rename)
 	      ("C-c l g d" . xref-find-definitions)
