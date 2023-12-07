@@ -11,18 +11,11 @@
   # Programs
   # modules.programs.neovim.enable = true;
   # modules.programs.kitty.enable = true;
-  modules.programs = {
-    wezterm = {
-      enable = true;
-      installPackage = false;
-    };
-  };
+  modules.programs.wezterm.enable = true;
 
   modules.programs.emacs = {
     enable = true;
     emacsPackage = pkgs.emacs-git;
     # emacsPackage = pkgs.emacsMacport;
   };
-  # modules.programs.docker.enable = true;
-
 }
