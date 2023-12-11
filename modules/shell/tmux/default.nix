@@ -8,9 +8,12 @@ in {
       baseIndex = 1;
       clock24 = true;
       extraConfig = ''
+        # Make neovim :checkhealth happy
+        set-option -sa terminal-features ',xterm-256color:RGB'
+        set -sg escape-time 10
         set-option -g renumber-windows on
       '';
-      historyLimit = 10000;
+      historyLimit = 9999;
       keyMode = "emacs";
       mouse = true;
       newSession = true;
@@ -20,6 +23,7 @@ in {
       ];
       prefix = "C-Space";
       shell = "${pkgs.zsh}/bin/zsh";
+      terminal = "screen-256color";
     };
   };
 }
