@@ -204,13 +204,7 @@ Repeated invocations toggle between the two most recently open buffers."
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
 
-(defun neshtea/projectile-project-find-function (dir)
-  (let ((root (projectile-project-root dir)))
-    (and root (cons 'transient root))))
-
-(use-package project
-  :config
-  (add-hook 'project-find-functions #'neshtea/projectile-project-find-function))
+(use-package project)
 
 ;; consult provides a huge array of cap based searches.
 (use-package consult
