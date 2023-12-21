@@ -8,10 +8,9 @@ end
 -- tab bar
 config.enable_tab_bar = false
 
--- config.color_scheme = 'Gruvbox dark, pale (base16)'
-config.color_scheme = 'Catppuccin Mocha'
+config.color_scheme = 'Gruvbox dark, pale (base16)'
+-- config.color_scheme = 'Catppuccin Mocha'
 config.font = wezterm.font('Jetbrains Mono')
-config.font_size = 14.0
 -- config.font = wezterm.font('Iosevka')
 config.font = wezterm.font('SF Mono')
 config.font_size = 15.0

@@ -170,11 +170,11 @@ disables all other enabled themes."
 (use-package nerd-icons
   :defer t)
 
-;; (neshtea/switch-theme 'doom-gruvbox)
+(neshtea/switch-theme 'doom-gruvbox)
 
-(setq catppuccin-flavor 'mocha)
+;; (setq catppuccin-flavor 'mocha)
 
-(neshtea/switch-theme 'catppuccin)
+;; (neshtea/switch-theme 'catppuccin)
 
 
 ;;;; Generic, non-mode specific helpers.o
