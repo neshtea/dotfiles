@@ -56,10 +56,6 @@
     # have it already.
     gnumake
 
-    # Accounting
-    hledger
-    hledger-web
-
     # Some system stuff that is independent of coding/projects
     ffmpeg
     gnugrep
