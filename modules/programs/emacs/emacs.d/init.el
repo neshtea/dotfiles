@@ -249,6 +249,25 @@ Repeated invocations toggle between the two most recently open buffers."
   (after-init . global-company-mode)
   :diminish company-mode)
 
+(use-package default-text-scale
+  :defer t
+  ;; NOTE: Moved to hydra
+  ;; :bind (("C-c t =" . default-text-scale-increase)
+  ;; 	 ("C-c t -" . default-text-scale-decrease)
+  ;; 	 ("C-c t 0" . default-text-scale-reset))
+  :config
+  (default-text-scale-mode))
+
+(use-package hydra
+  :defer t
+  :after default-text-scale)
+
+(defhydra hyrda-zoom (global-map "C-c t")
+  "zoom"
+  ("=" default-text-scale-increase)
+  ("-" default-text-scale-decrease)
+  ("0" default-text-scale-reset))
+
 ;;;; Org mode configuration
 (use-package org-indent
   :defer t
@@ -364,14 +383,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (org-roam-ui-follow t)
   (org-roam-ui-update-on-save t)
   (org-roam-ui-open-on-start t))
-
-(use-package default-text-scale
-  :defer t
-  :bind (("C-c t =" . default-text-scale-increase)
-	 ("C-c t -" . default-text-scale-decrease)
-	 ("C-c t 0" . default-text-scale-reset))
-  :config
-  (default-text-scale-mode))
 
 (use-package diff-hl
   :defer t

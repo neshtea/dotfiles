@@ -23,6 +23,7 @@ in {
         epkgs.envrc
         epkgs.exec-path-from-shell
         epkgs.reformatter
+        epkgs.hydra
 
         # Visuals
         epkgs.diff-hl
