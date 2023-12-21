@@ -1,5 +1,6 @@
 { config, pkgs, inputs, ... }: rec {
-  imports = [ ../home.nix inputs.mac-app-util.homeManagerModules.default ];
+  imports =
+    [ ../home.nix ../email.nix inputs.mac-app-util.homeManagerModules.default ];
   home.packages = with pkgs; [
     # macOS specific stuff
     darwin.apple_sdk.frameworks.CoreFoundation

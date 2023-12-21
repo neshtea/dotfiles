@@ -25,6 +25,9 @@ in {
         epkgs.reformatter
         epkgs.hydra
 
+        # Email
+        epkgs.notmuch
+
         # Visuals
         epkgs.diff-hl
         epkgs.default-text-scale

@@ -406,14 +406,6 @@ Repeated invocations toggle between the two most recently open buffers."
 	 ("C-h k" . helpful-key)
 	 ("C-h p" . helpful-at-point)))
 
-(use-package hledger-mode
-  :defer t
-  :hook (hledger-view-mode . #'hl-line-mode)
-  :custom
-  (hledger-jfile (expand-file-name "~/Dropbox/Brain/Finance/ledger2023.journal"))
-  :config
-  (add-to-list 'company-backends 'hledger-company))
-
 (use-package hl-todo
   :init
   (add-hook 'after-init-hook 'global-hl-todo-mode))
@@ -589,6 +581,38 @@ the separator."
 ;;; Rust language support
 (use-package rustic
   :defer t)
+
+(defun neshtea/notmuch-archive ()
+  "Add archive tag, remove inbox/unread."
+  (interactive)
+  (notmuch-search-add-tag '("+archive" "-inbox" "-unread")))
+
+(use-package notmuch
+  :init
+  (setq user-mail-address "marco.schneider@active-group.de")
+  :bind
+  (:map notmuch-search-mode-map
+	("a" . neshtea/notmuch-archive))
+  :custom
+  (message-send-mail-function 'message-send-mail-with-sendmail)
+  (message-kill-buffer-on-exit t)
+  (message-sendmail-envelope-from 'header)
+  (mail-envelop-from 'header)
+  (mail-user-agent 'message-user-agent)
+  (notmuch-hello-sections
+   '(notmuch-hello-insert-inbox
+     notmuch-hello-insert-saved-searches
+     notmuch-hello-insert-alltags))
+  (notmuch-search-oldest-first nil)
+  (notmuch-maildir-use-notmuch-insert t)
+  (notmuch-archive-tags '("-inbox" "-unread" "+archive"))
+  (notmuch-message-replied-tags '("+replied" "+sent"))
+  (notmuch-fcc-dirs
+   '(("marco.schneider@active-group.de" . "ag/Sent -inbox -unread +sent")))
+  (notmuch-saved-searches
+   '((:name "inbox" :query "tag:inbox" :key "i")
+     (:name "unread" :query "tag:unread" :key "u")
+     (:name "sent" :query "tag:sent" :key "s"))))
 
 (provide 'init)
 ;;; init.el ends here
