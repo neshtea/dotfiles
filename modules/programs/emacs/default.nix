@@ -24,6 +24,8 @@ in {
         epkgs.exec-path-from-shell
         epkgs.reformatter
         epkgs.hydra
+        epkgs.company
+        epkgs.company-box
 
         # Email
         epkgs.notmuch

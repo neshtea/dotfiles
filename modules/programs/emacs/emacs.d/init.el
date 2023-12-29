@@ -243,6 +243,11 @@ Repeated invocations toggle between the two most recently open buffers."
   (after-init . global-company-mode)
   :diminish company-mode)
 
+(use-package company-box
+  :defer t
+  :after company
+  :hook (company-mode . company-box-mode))
+
 (use-package default-text-scale
   :defer t
   ;; NOTE: Moved to hydra
