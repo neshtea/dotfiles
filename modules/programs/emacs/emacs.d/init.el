@@ -68,7 +68,7 @@
 	))
 
 ;; (setq neshtea/current-font 'jetbrains-mono)
-(setq neshtea/current-font 'sf-mono)
+(setq neshtea/current-font 'iosevka)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -170,12 +170,10 @@ disables all other enabled themes."
 (use-package nerd-icons
   :defer t)
 
-(neshtea/switch-theme 'doom-gruvbox)
+;; we include the theme directly as source -- nix/home-manager will put it here
+(load-file (expand-file-name "~/.config/emacs/rose-pine-theme.el"))
 
-;; (setq catppuccin-flavor 'mocha)
-
-;; (neshtea/switch-theme 'catppuccin)
-
+(neshtea/switch-theme 'rose-pine)
 
 ;;;; Generic, non-mode specific helpers.o
 ;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/
