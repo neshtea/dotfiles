@@ -192,6 +192,11 @@ Repeated invocations toggle between the two most recently open buffers."
   (vertico-cycle t)
   (vertico-resize t))
 
+(use-package vertico-posframe
+  :after vertico
+  :init
+  (vertico-posframe-mode 1))
+
 (use-package savehist
   :init
   (savehist-mode))

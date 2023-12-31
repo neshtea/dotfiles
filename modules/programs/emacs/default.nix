@@ -99,6 +99,7 @@ in {
         epkgs.which-key
         epkgs.yaml-mode
         epkgs.vertico
+        epkgs.vertico-posframe
         epkgs.orderless
         epkgs.zoom
       ];
