@@ -427,19 +427,24 @@ Repeated invocations toggle between the two most recently open buffers."
 (use-package clj-refactor
   :defer t)
 
-(defun neshtea/clojure-mode-hook ()
-  "Hooks everything important for 'clojure-mode'."
-  (interactive)
-  (clj-refactor-mode 1)
-  (add-hook 'before-save-hook
-	    'cider-format-buffer
-	    nil
-	    t))
+;; (defun neshtea/clojure-mode-hook ()
+;;   "Hooks everything important for 'clojure-mode'."
+;;   (interactive)
+;;   (clj-refactor-mode 1)
+;;   (add-hook 'before-save-hook
+;; 	    'cider-format-buffer
+;; 	    nil
+;; 	    t))
 
-(use-package clojure-mode
-  ;; https://docs.cider.mx/cider/usage/misc_features.html#formatting-code-with-cljfmt
-  :hook (clojure-mode . neshtea/clojure-mode-hook)
-  :defer t)
+;; (use-package clojure-mode
+;;   ;; https://docs.cider.mx/cider/usage/misc_features.html#formatting-code-with-cljfmt
+;;   :hook (clojure-mode . neshtea/clojure-mode-hook)
+;;   :defer t)
+
+(use-package clojure-ts-mode
+  :defer t
+  :config
+  (setq clojure-ts-indent-style 'semantic))
 
 (use-package cider
   :defer t
@@ -458,7 +463,11 @@ Repeated invocations toggle between the two most recently open buffers."
   :defer t
   :mode "\\.nix\\'"
   :hook (before-save . nix-format-before-save))
+
 ;;; OCaml language support
+(use-package ocaml-ts-mode
+  :defer t)
+
 (use-package merlin
   :defer t
   :hook ((tuareg-mode . merlin-mode)
@@ -510,7 +519,8 @@ Repeated invocations toggle between the two most recently open buffers."
 	      ("C-c l e p" . flymake-goto-previous-error))
   :config
   ;; don't ask before lsp intiated writes.
-  (setq eglot-confirm-server-initiated-edits nil))
+  (setq eglot-confirm-server-initiated-edits nil)
+  (add-to-list 'eglot-server-programs '(ocaml-ts-mode . ("ocamllsp"))))
 
 ;;; Common Lisp language support.
 (use-package sly

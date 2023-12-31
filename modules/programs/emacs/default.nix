@@ -46,6 +46,7 @@ in {
         # Clojure
         epkgs.cider
         epkgs.clj-refactor
+        epkgs.clojure-ts-mode
         epkgs.clojure-mode
 
         # Common Lisp
@@ -65,6 +66,7 @@ in {
         epkgs.lsp-haskell
 
         # Ocaml
+        epkgs.ocaml-ts-mode
         epkgs.merlin
         epkgs.merlin-company
         epkgs.ocp-indent
