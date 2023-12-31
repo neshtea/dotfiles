@@ -48,6 +48,7 @@
       p.tree-sitter-nix
       p.tree-sitter-haskell
       p.tree-sitter-make
+      p.tree-sitter-markdown-inline
     ]))
 
     gcc

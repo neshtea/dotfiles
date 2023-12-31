@@ -20,6 +20,11 @@
       url = "github:konrad1977/pinerose-emacs";
       flake = false;
     };
+    rose-pine-wezterm = {
+      url = "github:neapsix/wezterm";
+      flake = false;
+    };
+
     mac-app-util.url = "github:hraban/mac-app-util";
   };
 

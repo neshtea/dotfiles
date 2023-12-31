@@ -346,7 +346,8 @@
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
-        "rose-pine-emacs": "rose-pine-emacs"
+        "rose-pine-emacs": "rose-pine-emacs",
+        "rose-pine-wezterm": "rose-pine-wezterm"
       }
     },
     "rose-pine-emacs": {
@@ -362,6 +363,22 @@
       "original": {
         "owner": "konrad1977",
         "repo": "pinerose-emacs",
+        "type": "github"
+      }
+    },
+    "rose-pine-wezterm": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1681936532,
+        "narHash": "sha256-yKAdZa1NotM+w8q1u2N2oxxfBo3YcoS5ZdRr+retAB0=",
+        "owner": "neapsix",
+        "repo": "wezterm",
+        "rev": "8f14b2017478e8cdb65a54ade169680a9a45a51a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "neapsix",
+        "repo": "wezterm",
         "type": "github"
       }
     },
