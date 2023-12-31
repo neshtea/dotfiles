@@ -624,6 +624,10 @@ the separator."
      (:name "sent" :query "tag:sent" :key "s")
      (:name "phoenix" :query "tag:phoenix-ng" :key "p"))))
 
+;;; Lua language support
+(use-package lua-mode
+  :defer t)
+
 (provide 'init)
 ;;; init.el ends here
 

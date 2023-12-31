@@ -70,6 +70,9 @@ in {
         epkgs.ocp-indent
         epkgs.utop
 
+        # Lua
+        epkgs.lua-mode
+
         # Rust
         epkgs.rustic
 
