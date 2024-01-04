@@ -24,7 +24,10 @@
       url = "github:neapsix/wezterm";
       flake = false;
     };
-
+    tpm-source = {
+      url = "github:tmux-plugins/tpm";
+      flake = false;
+    };
     mac-app-util.url = "github:hraban/mac-app-util";
   };
 

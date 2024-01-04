@@ -347,7 +347,8 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "rose-pine-emacs": "rose-pine-emacs",
-        "rose-pine-wezterm": "rose-pine-wezterm"
+        "rose-pine-wezterm": "rose-pine-wezterm",
+        "tpm-source": "tpm-source"
       }
     },
     "rose-pine-emacs": {
@@ -424,6 +425,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tpm-source": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1677502767,
+        "narHash": "sha256-hW8mfwB8F9ZkTQ72WQp/1fy8KL1IIYMZBtZYIwZdMQc=",
+        "owner": "tmux-plugins",
+        "repo": "tpm",
+        "rev": "99469c4a9b1ccf77fade25842dc7bafbc8ce9946",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tmux-plugins",
+        "repo": "tpm",
         "type": "github"
       }
     }
