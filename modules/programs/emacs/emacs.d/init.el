@@ -643,26 +643,6 @@ the separator."
 (use-package lua-mode
   :defer t)
 
-;;; Dashboard
-(use-package dashboard
-  :after nerd-icons
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashbaord-banner-logo-title "Grüß Gottle")
-  (setq dashboard-startup-banner 'logo)
-  (setq dashboard-center-content t)
-  (setq dashboard-dhow-shortcuts nil)
-  (setq dashboard-items '((recents . 5)
-			  (projects . 5)
-			  (agenda . 5)))
-  ;; (setq dashboard-display-icons-p t)
-  ;; (setq dashboard-icon-type 'nerd-icons)
-  ;; (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-set-init-info t)
-  (setq dashboard-week-agenda t)
-  )
-
 (provide 'init)
 ;;; init.el ends here
 

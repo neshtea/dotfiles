@@ -39,7 +39,6 @@ in {
         epkgs.doom-modeline
         epkgs.nerd-icons
         epkgs.catppuccin-theme
-        epkgs.dashboard
 
         # Latex
         epkgs.auctex-latexmk
