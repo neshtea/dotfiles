@@ -66,7 +66,6 @@ in {
         epkgs.lsp-haskell
 
         # Ocaml
-        epkgs.ocaml-ts-mode
         epkgs.merlin
         epkgs.merlin-company
         epkgs.ocp-indent

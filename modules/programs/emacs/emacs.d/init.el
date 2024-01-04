@@ -469,10 +469,6 @@ Repeated invocations toggle between the two most recently open buffers."
   :mode "\\.nix\\'"
   :hook (before-save . nix-format-before-save))
 
-;;; OCaml language support
-(use-package ocaml-ts-mode
-  :defer t)
-
 (use-package merlin
   :defer t
   :hook ((tuareg-mode . merlin-mode)
@@ -524,8 +520,7 @@ Repeated invocations toggle between the two most recently open buffers."
 	      ("C-c l e p" . flymake-goto-previous-error))
   :config
   ;; don't ask before lsp intiated writes.
-  (setq eglot-confirm-server-initiated-edits nil)
-  (add-to-list 'eglot-server-programs '(ocaml-ts-mode . ("ocamllsp"))))
+  (setq eglot-confirm-server-initiated-edits nil))
 
 ;;; Common Lisp language support.
 (use-package sly
