@@ -43,6 +43,9 @@
 ;; https://www.emacswiki.org/emacs/SavePlace
 (save-place-mode 1)
 
+;; Startup with a maximized window
+(toggle-frame-maximized)
+
 ;; Set a more sensible default for the maximum width of a column.
 (setq-default fill-column 80)
 
