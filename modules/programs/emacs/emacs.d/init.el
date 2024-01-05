@@ -93,6 +93,12 @@ the face-font."
 (global-set-key (kbd "C-. s f") #'neshtea/switch-font)
 (global-set-key (kbd "C-. s t") #'neshtea/switch-theme)
 
+;; windmove
+(global-set-key (kbd "C-c h") #'windmove-left)
+(global-set-key (kbd "C-c j") #'windmove-down)
+(global-set-key (kbd "C-c k") #'windmove-up)
+(global-set-key (kbd "C-c l") #'windmove-right)
+
 ;; Disable menubar/scrollbar/toolbar.
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
