@@ -33,6 +33,15 @@
     leiningen
     neovim-nightly
 
+    # Basic OCaml stuff if the project doesn't bring it.
+    dune_3
+    opam
+    ocamlPackages.merlin
+    ocamlPackages.ocamlformat
+    ocamlPackages.ocaml-lsp
+    ocamlPackages.utop
+    ocamlPackages.dune-release
+
     # most projects don't define a specific docker/docker-compose, so
     # let's have this available user-wide.
     docker
