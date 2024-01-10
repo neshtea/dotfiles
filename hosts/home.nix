@@ -51,8 +51,6 @@
       p.tree-sitter-markdown-inline
     ]))
 
-    gcc
-
     # Same here: Most project that are managed with make assume you
     # have it already.
     gnumake
