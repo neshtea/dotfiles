@@ -288,6 +288,12 @@ Repeated invocations toggle between the two most recently open buffers."
   :config
   (eshell-syntax-highlighting-global-mode +1))
 
+(use-package dired
+  :defer t)
+
+(use-package dired-x
+  :defer t)
+
 ;;;; Org mode configuration
 (use-package org-indent
   :defer t
@@ -593,6 +599,9 @@ the separator."
   (mapcar #'neshtea/hook-lispy-modes neshtea/lispy-modes))
 
 ;;; Docker language support
+(use-package docker
+  :defer t)
+
 (use-package dockerfile-mode
   :defer t)
 

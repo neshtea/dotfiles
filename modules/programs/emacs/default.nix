@@ -80,8 +80,11 @@ in {
         # Rust
         epkgs.rustic
 
-        # Misc file modes
+        # Docker
+        epkgs.docker
         epkgs.dockerfile-mode
+
+        # Misc file modes
         epkgs.nix-mode
 
         # Unsorted, general stuff
