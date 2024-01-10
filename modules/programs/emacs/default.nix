@@ -30,6 +30,9 @@ in {
         # Email
         epkgs.notmuch
 
+        # Eshell
+        epkgs.eshell-syntax-highlighting
+
         # Visuals
         epkgs.diff-hl
         epkgs.default-text-scale

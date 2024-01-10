@@ -279,6 +279,15 @@ Repeated invocations toggle between the two most recently open buffers."
   ("-" default-text-scale-decrease)
   ("0" default-text-scale-reset))
 
+(use-package eshell
+  :defer t)
+
+(use-package eshell-syntax-highlighting
+  :defer t
+  :after eshell-mode
+  :config
+  (eshell-syntax-highlighting-global-mode +1))
+
 ;;;; Org mode configuration
 (use-package org-indent
   :defer t
