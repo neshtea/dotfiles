@@ -58,15 +58,6 @@
 				 :height 140))
 	(iosevka . (:font "Iosevka"
 			  :height 150))
-	(monaspace-radon . (:font "Monaspace Radon"
-				  :height 140))
-	(monaspace-argon . (:font "Monaspace Argon"
-				  :height 140))
-	(monaspace-neon . (:font "Monaspace Neon"
-				  :height 140))
-	(monaspace-krypton . (:font "Monaspace Krypton"
-				 :height 140))
-	(comic-mono . (:font "Comic Mono" :height 140))
 	(sf-mono . (:font "SF Mono" :height 150))
 	))
 
@@ -126,8 +117,12 @@ the face-font."
 
 ;; We install packages via nix home-manager, but we still configure
 ;; them via use-package
-(require 'use-package)
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
 
+(require 'use-package)
+(setq use-package-always-ensure t)
 (use-package ibuffer
   :defer t)
 
@@ -165,7 +160,6 @@ disables all other enabled themes."
             custom-enabled-themes)
     (load-theme name t)))
 
-;; Set the theme to gruvbox
 (use-package doom-themes
   :defer t
   :config
@@ -179,10 +173,7 @@ disables all other enabled themes."
 (use-package nerd-icons
   :defer t)
 
-;; we include the theme directly as source -- nix/home-manager will put it here
-(load-file (expand-file-name "~/.config/emacs/rose-pine-theme.el"))
-
-(neshtea/switch-theme 'rose-pine)
+(neshtea/switch-theme 'doom-gruvbox)
 
 ;;;; Generic, non-mode specific helpers.o
 ;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/
@@ -288,15 +279,9 @@ Repeated invocations toggle between the two most recently open buffers."
   :config
   (eshell-syntax-highlighting-global-mode +1))
 
-(use-package dired
-  :defer t)
-
-(use-package dired-x
-  :defer t)
-
 ;;;; Org mode configuration
 (use-package org-indent
-  :defer t
+  :ensure nil
   :after org)
 
 (defun neshtea/org-mode-setup ()
