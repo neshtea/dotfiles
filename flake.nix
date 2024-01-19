@@ -16,18 +16,6 @@
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    rose-pine-emacs = {
-      url = "github:konrad1977/pinerose-emacs";
-      flake = false;
-    };
-    rose-pine-wezterm = {
-      url = "github:neapsix/wezterm";
-      flake = false;
-    };
-    tpm-source = {
-      url = "github:tmux-plugins/tpm";
-      flake = false;
-    };
     mac-app-util.url = "github:hraban/mac-app-util";
   };
 

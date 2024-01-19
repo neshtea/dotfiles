@@ -7,9 +7,15 @@ in {
 
   };
   config = lib.mkIf cfg.enable {
-    home = { packages = [ pkgs.wezterm ]; };
-    xdg.configFile."wezterm/wezterm.lua".source = ./wezterm/wezterm.lua;
-    xdg.configFile."wezterm/lua/rose-pine.lua".source =
-      "${inputs.rose-pine-wezterm}/lua/rose-pine.lua";
+    home = {
+      activation = {
+        symlinkWezterm = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          if [ ! -e $XDG_CONFIG_HOME/wezterm ]; then
+            $DRY_RUN_CMD ln -snf $HOME/dotfiles/modules/programs/wezterm/wezterm $XDG_CONFIG_HOME/wezterm
+          fi
+        '';
+      };
+      packages = [ pkgs.wezterm ];
+    };
   };
 }

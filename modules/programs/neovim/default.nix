@@ -7,22 +7,13 @@ in {
   config = lib.mkIf cfg.enable {
     home = {
       packages = with pkgs; [
-        # neovim-nightly
-        neovim
+        neovim-nightly
         nodejs
         lua
         stylua
         jq # Formatter for json
         python310Packages.mdformat # Formatter for markdown
       ];
-      # activation = {
-      #   symlinkNeovimConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      #     if [ ! -h $HOME/.config/nvim ]; then
-      #         $DRY_RUN_CMD mkdir -p $HOME/.config
-      #         $DRY_RUN_CMD ln -snf $HOME/dotfiles/modules/programs/neovim/nvim $HOME/.config/nvim
-      #     fi
-      #   '';
-      # };
     };
   };
 }

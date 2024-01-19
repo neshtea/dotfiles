@@ -345,42 +345,7 @@
         "mac-app-util": "mac-app-util",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_2",
-        "rose-pine-emacs": "rose-pine-emacs",
-        "rose-pine-wezterm": "rose-pine-wezterm",
-        "tpm-source": "tpm-source"
-      }
-    },
-    "rose-pine-emacs": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1680864540,
-        "narHash": "sha256-hQLx3g90umMJ6bE4535WbmzqJnAKTzVFIpn3JLir4Rg=",
-        "owner": "konrad1977",
-        "repo": "pinerose-emacs",
-        "rev": "a3990b0d41f93516d82b50b7ac3d163377e68f62",
-        "type": "github"
-      },
-      "original": {
-        "owner": "konrad1977",
-        "repo": "pinerose-emacs",
-        "type": "github"
-      }
-    },
-    "rose-pine-wezterm": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1681936532,
-        "narHash": "sha256-yKAdZa1NotM+w8q1u2N2oxxfBo3YcoS5ZdRr+retAB0=",
-        "owner": "neapsix",
-        "repo": "wezterm",
-        "rev": "8f14b2017478e8cdb65a54ade169680a9a45a51a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "neapsix",
-        "repo": "wezterm",
-        "type": "github"
+        "nixpkgs": "nixpkgs_2"
       }
     },
     "systems": {
@@ -425,22 +390,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "tpm-source": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1677502767,
-        "narHash": "sha256-hW8mfwB8F9ZkTQ72WQp/1fy8KL1IIYMZBtZYIwZdMQc=",
-        "owner": "tmux-plugins",
-        "repo": "tpm",
-        "rev": "99469c4a9b1ccf77fade25842dc7bafbc8ce9946",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tmux-plugins",
-        "repo": "tpm",
         "type": "github"
       }
     }

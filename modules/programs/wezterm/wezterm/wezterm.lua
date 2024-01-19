@@ -8,10 +8,10 @@ end
 -- tab bar
 config.enable_tab_bar = false
 
-local colors = require("lua/rose-pine").colors()
-local window_frame = require("lua/rose-pine").window_frame()
+-- local colors = require("lua/rose-pine").colors()
+-- local window_frame = require("lua/rose-pine").window_frame()
 
--- config.color_scheme = 'Gruvbox dark, pale (base16)'
+config.color_scheme = 'Gruvbox dark, pale (base16)'
 config.colors = colors
 config.window_frame = window_frame
 config.font = wezterm.font('Iosevka')
