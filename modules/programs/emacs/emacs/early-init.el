@@ -7,3 +7,8 @@
 ;; be started at the end of my init file, which will then control the
 ;; GC behavior.
 (setq gc-cons-threshold most-positive-fixnum)
+
+;; Users of Emacs versions >= 27 will want to add:
+(setq package-enable-at-startup nil)
+;; to their early init-file to prevent package.el loading packages prior to
+;; their init-file loading.

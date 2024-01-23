@@ -1,7 +1,27 @@
-;;; init.el --- Summary
+;; init.el --- Summary
 
 ;; Commentary:
 ;;; Configuration for Emacs
+
+;; Bootstrap straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 ;; (use-package benchmark-init
 ;;   :demand
@@ -115,14 +135,6 @@ the face-font."
       (setq display-line-numbers 'relative)
       (setq display-line-numbers 't)))
 
-;; We install packages via nix home-manager, but we still configure
-;; them via use-package
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
-
-(require 'use-package)
-(setq use-package-always-ensure t)
 (use-package ibuffer
   :defer t)
 
@@ -280,9 +292,9 @@ Repeated invocations toggle between the two most recently open buffers."
   (eshell-syntax-highlighting-global-mode +1))
 
 ;;;; Org mode configuration
-(use-package org-indent
-  :ensure nil
-  :after org)
+;; (use-package org-indent
+;;   :ensure nil
+;;   :after org)
 
 (defun neshtea/org-mode-setup ()
   (org-indent-mode)
@@ -649,6 +661,16 @@ the separator."
 ;;; Lua language support
 (use-package lua-mode
   :defer t)
+
+(use-package copilot
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
+  :ensure t
+  :bind (:map copilot-completion-map
+	      ("<tab>" . copilot-accept-completion)
+	      ("TAB" . copilot-accept-completion))
+  :config
+  (add-to-list 'copilot-major-mode-alist '("tuareg" . "ocaml")))
+
 
 (provide 'init)
 ;;; init.el ends here
