@@ -31,7 +31,7 @@
     lua-language-server
     nil
     leiningen
-    neovim-nightly
+    neovim
 
     # most projects don't define a specific docker/docker-compose, so
     # let's have this available user-wide.
