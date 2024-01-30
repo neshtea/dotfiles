@@ -635,7 +635,10 @@ the separator."
   :bind
   (:map notmuch-search-mode-map
 	("A" . neshtea/notmuch-archive)
-	("R" . neshtea/notmuch-read))
+	("R" . neshtea/notmuch-read)
+	:map notmuch-show-mode-map
+	("A" . neshtea/notmuch-achive)
+	("C-c C-a" . notmuch-show-save-attachments))
   :custom
   (message-send-mail-function 'message-send-mail-with-sendmail)
   (message-kill-buffer-on-exit t)
