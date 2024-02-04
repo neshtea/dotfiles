@@ -182,6 +182,9 @@ disables all other enabled themes."
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode))
 
+(use-package solaire-mode
+  :init (solaire-global-mode +1))
+
 (use-package nerd-icons
   :defer t)
 
