@@ -82,7 +82,7 @@
 	))
 
 ;; (setq neshtea/current-font 'jetbrains-mono)
-(setq neshtea/current-font 'iosevka)
+(setq neshtea/current-font 'jetbrains-mono)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -188,7 +188,8 @@ disables all other enabled themes."
 (use-package nerd-icons
   :defer t)
 
-(neshtea/switch-theme 'doom-gruvbox)
+;; (neshtea/switch-theme 'doom-gruvbox)
+(neshtea/switch-theme 'doom-horizon)
 
 ;;;; Generic, non-mode specific helpers.o
 ;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/
@@ -617,6 +618,9 @@ the separator."
 	 ("\\.md\\'" . markdown-mode)
 	 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
+
+(use-package markdown-toc
+  :defer t)
 
 ;;; Rust language support
 (use-package rustic
