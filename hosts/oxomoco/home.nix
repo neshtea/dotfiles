@@ -6,12 +6,9 @@
   home.packages = with pkgs; [
     # Basic desktop apps
     firefox
-    brave
-    thunderbird
     google-chrome
     keepassxc
     dolphin
-    obsidian
 
     # Chat
     signal-desktop
@@ -44,10 +41,7 @@
   ];
 
   modules.programs.kitty.enable = false;
-  modules.programs.wezterm = {
-    enable = true;
-    installPackage = true;
-  };
+  modules.programs.wezterm.enable = true;
 
   # Desktop stuff
   modules.desktop.hyprland.enable = true;

@@ -7,7 +7,7 @@ in {
   config = lib.mkIf cfg.enable {
     home = {
       packages = with pkgs; [
-        neovim-nightly
+        neovim
         nodejs
         lua
         stylua
