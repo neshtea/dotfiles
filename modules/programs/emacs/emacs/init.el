@@ -513,12 +513,21 @@ Repeated invocations toggle between the two most recently open buffers."
   :defer t)
 
 (use-package tuareg
-  :defer t)
+  :defer t
+  :hook (tuareg-mode . ocaml-format-on-save-mode))
+
+(use-package dune
+  :hook ((dune-mode . dune-format-on-save-mode)))
 
 ;; Based on https://github.com/ludwigpacifici/ocamlreformat.el/blob/master/ocamlreformat.el
 (reformatter-define ocaml-format
   :program "ocamlformat"
   :args (list "--name" (buffer-file-name) "-"))
+
+(reformatter-define dune-format
+  :program "dune"
+  :args '("format-dune-file")
+  :lighter " DuneFmt")
 
 ;;;; Haskell language support.
 (use-package haskell-mode
