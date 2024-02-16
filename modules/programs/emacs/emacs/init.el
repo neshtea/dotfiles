@@ -135,8 +135,7 @@ the face-font."
       (setq display-line-numbers 'relative)
       (setq display-line-numbers 't)))
 
-(use-package ibuffer
-  :defer t)
+(use-package ibuffer :defer t)
 
 ;; Especially on MacOS, the exec path is always wrong.  This package
 ;; tries to fix that.
@@ -179,14 +178,11 @@ disables all other enabled themes."
 	doom-themes-enable-italic t)
   (doom-themes-org-config))
 
-(use-package doom-modeline
-  :hook (after-init . doom-modeline-mode))
+(use-package doom-modeline :hook (after-init . doom-modeline-mode))
 
-(use-package solaire-mode
-  :init (solaire-global-mode +1))
+(use-package solaire-mode :init (solaire-global-mode +1))
 
-(use-package nerd-icons
-  :defer t)
+(use-package nerd-icons :defer t)
 
 ;; (neshtea/switch-theme 'doom-gruvbox)
 (neshtea/switch-theme 'doom-horizon)
@@ -213,9 +209,7 @@ Repeated invocations toggle between the two most recently open buffers."
   :init
   (vertico-posframe-mode 1))
 
-(use-package savehist
-  :init
-  (savehist-mode))
+(use-package savehist :init (savehist-mode))
 
 (use-package orderless
   :init
@@ -250,11 +244,9 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;; marginalia annotates completion candidates in the completion at
 ;; point buffer. Plays nicely with consult, etc.
-(use-package marginalia
-  :init (marginalia-mode))
+(use-package marginalia :init (marginalia-mode))
 
-(use-package projectile
-  :init (projectile-mode +1))
+(use-package projectile :init (projectile-mode +1))
 
 ;; Complete anything -- auto completion framework.
 (use-package company
@@ -286,8 +278,7 @@ Repeated invocations toggle between the two most recently open buffers."
   ("-" default-text-scale-decrease)
   ("0" default-text-scale-reset))
 
-(use-package eshell
-  :defer t)
+(use-package eshell :defer t)
 
 (use-package eshell-syntax-highlighting
   :defer t
@@ -305,7 +296,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (auto-fill-mode))
 
 (defun neshtea/org-gtd-file ()
-  (interactive)
+  (interactive)n
   (find-file (expand-file-name "~/Dropbox/Brain/org/gtd.org")))
 
 (defun neshtea/org-projects-file ()
@@ -441,8 +432,7 @@ Repeated invocations toggle between the two most recently open buffers."
   :init
   (add-hook 'after-init-hook 'global-hl-todo-mode))
 
-(use-package envrc
-  :init (envrc-global-mode))
+(use-package envrc :init (envrc-global-mode))
 
 (use-package reformatter)
 
@@ -452,22 +442,7 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;; Working Clojure needs almost no configuration, just some nice
 ;; packages (cider, clj-refactor, clojure-mode).
-(use-package clj-refactor
-  :defer t)
-
-;; (defun neshtea/clojure-mode-hook ()
-;;   "Hooks everything important for 'clojure-mode'."
-;;   (interactive)
-;;   (clj-refactor-mode 1)
-;;   (add-hook 'before-save-hook
-;; 	    'cider-format-buffer
-;; 	    nil
-;; 	    t))
-
-;; (use-package clojure-mode
-;;   ;; https://docs.cider.mx/cider/usage/misc_features.html#formatting-code-with-cljfmt
-;;   :hook (clojure-mode . neshtea/clojure-mode-hook)
-;;   :defer t)
+(use-package clj-refactor :defer t)
 
 (use-package clojure-ts-mode
   :defer t
@@ -504,18 +479,15 @@ Repeated invocations toggle between the two most recently open buffers."
   :hook
   (tuareg-mode . utop-minor-mode))
 
-(use-package merlin-company
-  :defer t)
+(use-package merlin-company :defer t)
 
-(use-package ocp-indent
-  :defer t)
+(use-package ocp-indent :defer t)
 
 (use-package tuareg
   :defer t
   :hook (tuareg-mode . ocaml-format-on-save-mode))
 
-(use-package dune
-  :hook ((dune-mode . dune-format-on-save-mode)))
+(use-package dune :hook ((dune-mode . dune-format-on-save-mode)))
 
 ;; Based on https://github.com/ludwigpacifici/ocamlreformat.el/blob/master/ocamlreformat.el
 (reformatter-define ocaml-format
@@ -561,22 +533,17 @@ Repeated invocations toggle between the two most recently open buffers."
   ;; default to sbcl
   (setq inferior-lisp-program "sbcl"))
 
-(use-package sly-quicklisp
-  :defer t)
+(use-package sly-quicklisp :defer t)
 
 ;;; Racket language support
-(use-package racket-mode
-  :defer t)
+(use-package racket-mode :defer t)
 
 ;;; Scheme language support
-(use-package geiser
-  :defer t)
+(use-package geiser :defer t)
 
-(use-package geiser-guile
-  :defer t)
+(use-package geiser-guile :defer t)
 
-(use-package geiser-chicken
-  :defer t)
+(use-package geiser-chicken :defer t)
 
 ;;; Generic s-expression based languages support
 
@@ -606,16 +573,13 @@ the separator."
   (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
   (mapcar #'neshtea/hook-lispy-modes neshtea/lispy-modes))
 
-;;; Docker language support
-(use-package docker
-  :defer t)
+;;; Docker support
+(use-package docker :defer t)
 
-(use-package dockerfile-mode
-  :defer t)
+(use-package dockerfile-mode :defer t)
 
 ;;; YAML language support
-(use-package yaml-mode
-  :defer t)
+(use-package yaml-mode :defer t)
 
 ;;; Markdown language support
 (use-package markdown-mode
@@ -626,12 +590,10 @@ the separator."
 	 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package markdown-toc
-  :defer t)
+(use-package markdown-toc :defer t)
 
 ;;; Rust language support
-(use-package rustic
-  :defer t)
+(use-package rustic :defer t)
 
 (defun neshtea/notmuch-archive ()
   "Add archive tag, remove inbox/unread."
@@ -676,8 +638,7 @@ the separator."
      (:name "phoenix" :query "tag:phoenix-ng" :key "p"))))
 
 ;;; Lua language support
-(use-package lua-mode
-  :defer t)
+(use-package lua-mode :defer t)
 
 (provide 'init)
 ;;; init.el ends here
