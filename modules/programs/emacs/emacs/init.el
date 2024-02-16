@@ -681,16 +681,6 @@ the separator."
 (use-package lua-mode
   :defer t)
 
-(use-package copilot
-  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
-  :ensure t
-  :bind (:map copilot-completion-map
-	      ("<tab>" . copilot-accept-completion)
-	      ("TAB" . copilot-accept-completion))
-  :config
-  (add-to-list 'copilot-major-mode-alist '("tuareg" . "ocaml")))
-
-
 (provide 'init)
 ;;; init.el ends here
 
