@@ -344,8 +344,6 @@ Repeated invocations toggle between the two most recently open buffers."
 			("~/Dropbox/Brain/org/projects.org" :maxlevel . 1)))
   ;; When the state of a section headline changes, log the
   ;; transition into the headlines drawer.
-  ;; When the state of a section headline changes, log the
-  ;; transition into the headlines drawer.
   (org-log-into-drawer 'LOGBOOK)
   (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d!)" "CANCELLED"))))
 
