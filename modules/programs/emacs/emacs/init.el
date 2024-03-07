@@ -296,7 +296,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (auto-fill-mode))
 
 (defun neshtea/org-gtd-file ()
-  (interactive)n
+  (interactive)
   (find-file (expand-file-name "~/Dropbox/Brain/org/gtd.org")))
 
 (defun neshtea/org-projects-file ()
