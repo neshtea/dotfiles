@@ -477,7 +477,9 @@ Repeated invocations toggle between the two most recently open buffers."
 (use-package utop  ;; maybe reconsider this package
   :defer t
   :hook
-  (tuareg-mode . utop-minor-mode))
+  (tuareg-mode . utop-minor-mode)
+  :config
+  (setq utop-command "opam exec -- dune utop . -- -emacs"))
 
 (use-package merlin-company :defer t)
 
@@ -486,6 +488,9 @@ Repeated invocations toggle between the two most recently open buffers."
 (use-package tuareg
   :defer t
   :hook (tuareg-mode . ocaml-format-on-save-mode))
+
+(use-package reason-mode
+  :straight (:host github :github "reasonml-editor/reason-mode"))
 
 (use-package dune :hook ((dune-mode . dune-format-on-save-mode)))
 
