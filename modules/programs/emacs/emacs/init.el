@@ -526,7 +526,8 @@ Repeated invocations toggle between the two most recently open buffers."
 	      ("C-c l g d" . xref-find-definitions)
 	      ("C-c l g r" . xref-find-references)
 	      ("C-c l e n" . flymake-goto-next-error)
-	      ("C-c l e p" . flymake-goto-previous-error))
+	      ("C-c l e p" . flymake-goto-previous-error)
+	      ("C-c l f" . eglot-format-buffer))
   :config
   ;; don't ask before lsp intiated writes.
   (setq eglot-confirm-server-initiated-edits nil))
