@@ -645,6 +645,22 @@ the separator."
 ;;; Lua language support
 (use-package lua-mode :defer t)
 
+(defun neshtea/reload-dir-locals (proj)
+  (interactive (list (project-current)))
+  (unless proj
+    (user-error "There doesn't seem to be a project here"))
+  ;; Load the variables; they are stored buffer-locally, so...
+  (hack-dir-local-variables)
+  ;; Hold onto them...
+  (let ((locals dir-local-variables-alist))
+    (dolist (buffer (buffer-list))
+      (with-current-buffer buffer
+        (when (and (equal proj (project-current))
+                   buffer-file-name)
+          ;; transfer the loaded values to this buffer...
+          (setq-local dir-local-variables-alist locals)
+          ;; and apply them.
+          (hack-local-variables-apply))))))
+
 (provide 'init)
 ;;; init.el ends here
-
