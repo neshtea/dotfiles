@@ -18,13 +18,8 @@ in {
       mouse = true;
       newSession = true;
       plugins = with pkgs; [
-        # tmuxPlugins.gruvbox
-        # { plugin = tmuxPlugins.gruvbox; }
-        # tmuxPlugins.nord
-        # { plugin = tmuxPlugins.nord; }
-        tmuxPlugins.onedark-theme
-        { plugin = tmuxPlugins.onedark-theme; }
-
+        tmuxPlugins.gruvbox
+        { plugin = tmuxPlugins.gruvbox; }
       ];
       prefix = "C-Space";
       shell = "${pkgs.zsh}/bin/zsh";

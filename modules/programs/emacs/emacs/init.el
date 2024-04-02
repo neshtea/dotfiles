@@ -184,8 +184,7 @@ disables all other enabled themes."
 
 (use-package nerd-icons :defer t)
 
-;; (neshtea/switch-theme 'doom-gruvbox)
-(neshtea/switch-theme 'doom-horizon)
+(neshtea/switch-theme 'doom-gruvbox)
 
 ;;;; Generic, non-mode specific helpers.o
 ;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/
