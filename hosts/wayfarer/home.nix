@@ -16,7 +16,7 @@
 
   modules.programs.emacs = {
     enable = true;
-    emacsPackage = pkgs.emacs-git;
+    emacsPackage = pkgs.emacs29;
     # emacsPackage = pkgs.emacsMacport;
   };
 }

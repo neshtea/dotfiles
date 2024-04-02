@@ -8,10 +8,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    emacs-overlay = {
-      url = "github:nix-community/emacs-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     mac-app-util = {
       url = "github:hraban/mac-app-util";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,8 +31,6 @@
         pkgs = import nixpkgs {
           config.allowUnfree = true; # sorry rms
           inherit system;
-
-          overlays = [ inputs.emacs-overlay.overlays.default ];
         };
 
       in nixpkgs.lib.nixosSystem {
@@ -61,10 +55,9 @@
       # my case, darwin machines).
       homeConfigurations.${username} = let
         system = "aarch64-darwin"; # Only relevant for darwin.
-        overlays = [ inputs.emacs-overlay.overlays.default ];
         pkgs = import nixpkgs {
           config.allowUnfree = true; # Sorry rms
-          inherit overlays system;
+          inherit system;
           # Use this flake.nix's nixpkgs for stuff like `nix shell nixpkgs#<foo>`.
           nix.registry = { this.flake = inputs.nixpkgs; };
         };
