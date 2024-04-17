@@ -593,48 +593,6 @@ the separator."
 ;;; Rust language support
 (use-package rustic :defer t)
 
-(defun neshtea/notmuch-archive ()
-  "Add archive tag, remove inbox/unread."
-  (interactive)
-  (notmuch-search-add-tag '("+archive" "-inbox" "-unread")))
-
-(defun neshtea/notmuch-read ()
-  "Remove inbox/unread."
-  (interactive)
-  (notmuch-search-add-tag '("-inbox" "-unread")))
-
-(use-package notmuch
-  :init
-  (setq user-mail-address "marco.schneider@active-group.de")
-  :bind
-  (:map notmuch-search-mode-map
-	("A" . neshtea/notmuch-archive)
-	("R" . neshtea/notmuch-read)
-	:map notmuch-show-mode-map
-	("A" . neshtea/notmuch-achive)
-	("C-c C-a" . notmuch-show-save-attachments))
-  :custom
-  (message-send-mail-function 'message-send-mail-with-sendmail)
-  (message-kill-buffer-on-exit t)
-  (message-sendmail-envelope-from 'header)
-  (mail-envelop-from 'header)
-  (mail-user-agent 'message-user-agent)
-  (notmuch-hello-sections
-   '(notmuch-hello-insert-inbox
-     notmuch-hello-insert-saved-searches
-     notmuch-hello-insert-alltags))
-  (notmuch-search-oldest-first nil)
-  (notmuch-maildir-use-notmuch-insert t)
-  (notmuch-archive-tags '("-inbox" "-unread" "+archive"))
-  (notmuch-message-replied-tags '("+replied" "+sent"))
-  (notmuch-fcc-dirs
-   '(("marco.schneider@active-group.de" . "ag/Sent -inbox -unread +sent +work")))
-  (notmuch-saved-searches
-   '((:name "inbox" :query "tag:inbox" :key "i")
-     (:name "unread" :query "tag:unread" :key "u")
-     (:name "sent" :query "tag:sent" :key "s")
-     (:name "phoenix" :query "tag:phoenix-ng" :key "p"))))
-
 ;;; Lua language support
 (use-package lua-mode :defer t)
 
