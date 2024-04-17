@@ -178,13 +178,14 @@ disables all other enabled themes."
 	doom-themes-enable-italic t)
   (doom-themes-org-config))
 
-(use-package doom-modeline :hook (after-init . doom-modeline-mode))
-
 (use-package solaire-mode :init (solaire-global-mode +1))
 
 (use-package nerd-icons :defer t)
 
-(neshtea/switch-theme 'doom-gruvbox)
+(straight-use-package ;; NOTE: There's something wrong with the expression above...
+ '(xcode-theme :type git :host github :repo "juniorxxue/xcode-theme"))
+
+(neshtea/switch-theme 'xcode-light)
 
 ;;;; Generic, non-mode specific helpers.o
 ;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/
@@ -202,11 +203,6 @@ Repeated invocations toggle between the two most recently open buffers."
   :custom
   (vertico-cycle t)
   (vertico-resize t))
-
-(use-package vertico-posframe
-  :after vertico
-  :init
-  (vertico-posframe-mode 1))
 
 (use-package savehist :init (savehist-mode))
 
@@ -443,10 +439,7 @@ Repeated invocations toggle between the two most recently open buffers."
 ;; packages (cider, clj-refactor, clojure-mode).
 (use-package clj-refactor :defer t)
 
-(use-package clojure-ts-mode
-  :defer t
-  :config
-  (setq clojure-ts-indent-style 'semantic))
+(use-package clojure-mode)
 
 (use-package cider
   :defer t
