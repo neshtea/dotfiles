@@ -103,6 +103,8 @@ the face-font."
 
 (global-set-key (kbd "C-. s f") #'neshtea/switch-font)
 (global-set-key (kbd "C-. s t") #'neshtea/switch-theme)
+(global-set-key (kbd "C-. s r r") #'neshtea/random-theme)
+(global-set-key (kbd "C-. s r f ") #'neshtea/random-favourite-theme)
 
 ;; windmove
 (global-set-key (kbd "C-c h") #'windmove-left)
@@ -171,6 +173,23 @@ disables all other enabled themes."
             custom-enabled-themes)
     (load-theme name t)))
 
+(defun neshtea/random-theme (&optional themes)
+  ;; NOTE Motivated by watching kenranunderscores use something like this
+  "Select a random theme out of all available themes and load
+it. Optionally, you can supply a list of themes to select from."
+  (interactive)
+  (let* ((themes (or themes (custom-available-themes)))
+	 (next-theme (nth (random (length themes)) themes)))
+    (message "Selected theme %s." next-theme)
+    (neshtea/switch-theme next-theme)))
+
+(setq neshtea/favourite-themes '(doom-gruvbox
+				 base16-horizon-dark))
+
+(defun neshtea/random-favourite-theme ()
+  "Select a random theme out of all of `neshtea/favourite-themes`."
+  (neshtea/random-theme neshtea/favourite-themes))
+
 (use-package doom-themes
   :defer t
   :config
@@ -178,14 +197,21 @@ disables all other enabled themes."
 	doom-themes-enable-italic t)
   (doom-themes-org-config))
 
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode))
+
 (use-package solaire-mode :init (solaire-global-mode +1))
+
+(use-package base16-theme
+  :defer t)
 
 (use-package nerd-icons :defer t)
 
-(straight-use-package ;; NOTE: There's something wrong with the expression above...
+(straight-use-package
  '(xcode-theme :type git :host github :repo "juniorxxue/xcode-theme"))
 
-(neshtea/switch-theme 'xcode-light)
+(neshtea/switch-theme 'base16-gruvbox-dark-medium)
 
 ;;;; Generic, non-mode specific helpers.o
 ;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/
