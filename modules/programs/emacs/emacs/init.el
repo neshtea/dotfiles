@@ -183,7 +183,7 @@ it. Optionally, you can supply a list of themes to select from."
     (message "Selected theme %s." next-theme)
     (neshtea/switch-theme next-theme)))
 
-(setq neshtea/favourite-themes '(doom-gruvbox
+(setq neshtea/favourite-themes '(base16-gruvbox-dark-medium
 				 base16-horizon-dark))
 
 (defun neshtea/random-favourite-theme ()
