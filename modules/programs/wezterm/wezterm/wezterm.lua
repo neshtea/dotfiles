@@ -13,7 +13,7 @@ config.color_scheme = 'Gruvbox dark, pale (base16)'
 -- config.color_scheme = 'Nord (base16)'
 config.colors = colors
 config.window_frame = window_frame
-config.font = wezterm.font('SF Mono')
+config.font = wezterm.font('Iosevka')
 config.font_size = 15.0
 
 local os = wezterm.target_triple
