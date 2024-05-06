@@ -12,6 +12,10 @@
       url = "github:hraban/mac-app-util";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ nixpkgs, home-manager, ... }:
@@ -31,6 +35,7 @@
         pkgs = import nixpkgs {
           config.allowUnfree = true; # sorry rms
           inherit system;
+          overlays = [ inputs.emacs-overlay.overlays.default ];
         };
 
       in nixpkgs.lib.nixosSystem {
@@ -58,6 +63,7 @@
         pkgs = import nixpkgs {
           config.allowUnfree = true; # Sorry rms
           inherit system;
+          overlays = [ inputs.emacs-overlay.overlays.default ];
           # Use this flake.nix's nixpkgs for stuff like `nix shell nixpkgs#<foo>`.
           nix.registry = { this.flake = inputs.nixpkgs; };
         };
