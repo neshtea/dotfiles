@@ -319,7 +319,7 @@ Repeated invocations toggle between the two most recently open buffers."
   (find-file (expand-file-name "~/Dropbox/Brain/org/projects.org")))
 
 (use-package org
-  :defer t
+  :straight (:type built-in)
   :hook (org-mode . neshtea/org-mode-setup)
   :bind (("C-c o a" . org-agenda-list)
 	 ("C-c o t l" . org-todo-list)
@@ -327,19 +327,20 @@ Repeated invocations toggle between the two most recently open buffers."
 	 ("C-c o p" . neshtea/org-projects-file)
 	 ("C-c o c c" . org-capture))
   :custom
-  ;; (org-ellipsis " ▾")
   (org-edit-src-content-indentation 0)  ; Don't indent in src blocks.
-  (org-hide-emphasis-markers t)
-  (org-adapt-indentation nil)
-  (org-startup-indented t)
-  (org-hide-leading-stars t)
   (org-return-follows-link t)
   (org-startup-folded 'content)
   (org-agenda-files '(
 		      "~/Dropbox/Brain/org/gtd.org"
 		      "~/Dropbox/Brain/org/zettelkasten/dailies/"
 		      "~/Dropbox/Brain/org/timetracking.org"
-		      ))
+		      "~/Dropbox/Brain/org/kollegys.org"))
+  (org-ellipsis "…")
+  (org-pretty-entities t)
+  (org-hide-emphasis-markers t)
+  (org-adapt-indentation nil)
+  (org-startup-indented t)
+  (org-hide-leading-stars t)
   (org-agenda-span 7)
   (org-agenda-start-on-weekday 1)
   (org-capture-templates '(("t" "Todo [inbox/work]" entry
@@ -354,7 +355,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d!)" "CANCELLED"))))
 
 (use-package org-appear
-  :defer t
   :after org
   :hook
   (org-mode . org-appear-mode)
@@ -375,7 +375,6 @@ Repeated invocations toggle between the two most recently open buffers."
 
 ;; Roam inspired mode for my zettelkasten using org mode.
 (use-package org-roam
-  :defer t
   :after org
   :bind (("C-c o r c" . #'org-roam-capture)
 	 ("C-c o r f" . #'org-roam-node-find)
