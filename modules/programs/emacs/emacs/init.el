@@ -103,8 +103,6 @@ the face-font."
 
 (global-set-key (kbd "C-. s f") #'neshtea/switch-font)
 (global-set-key (kbd "C-. s t") #'neshtea/switch-theme)
-(global-set-key (kbd "C-. s r r") #'neshtea/random-theme)
-(global-set-key (kbd "C-. s r f ") #'neshtea/random-favourite-theme)
 
 ;; windmove
 (global-set-key (kbd "C-c h") #'windmove-left)
@@ -187,15 +185,11 @@ it. Optionally, you can supply a list of themes to select from."
 				 base16-horizon-dark))
 
 (defun neshtea/random-favourite-theme ()
-  "Select a random theme out of all of `neshtea/favourite-themes`."
+  (interactive)
   (neshtea/random-theme neshtea/favourite-themes))
 
-(use-package doom-themes
-  :defer t
-  :config
-  (setq doom-themes-enable-bold nil
-	doom-themes-enable-italic t)
-  (doom-themes-org-config))
+(global-set-key (kbd "C-. s r r") #'neshtea/random-theme)
+(global-set-key (kbd "C-. s r f ") #'neshtea/random-favourite-theme)
 
 (use-package doom-modeline
   :ensure t
