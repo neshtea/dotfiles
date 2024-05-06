@@ -632,5 +632,25 @@ the separator."
           ;; and apply them.
           (hack-local-variables-apply))))))
 
+;;; PureScript language support
+(defun neshtea/purescript-mode-hook ()
+  (psc-ide-mode)
+  (turn-on-purescript-indentation))
+
+(use-package purescript-mode
+  :defer t
+  :hook (purescript-mode . neshtea/purescript-mode-hook))
+
+(use-package psc-ide
+  :defer t
+  :config
+  (setq psc-ide-use-npm t))
+
+(reformatter-define purescript-format
+  :program "npx purs-tidy"
+  :args (list "format-in-place" (buffer-file-name)))
+
+
+
 (provide 'init)
 ;;; init.el ends here
