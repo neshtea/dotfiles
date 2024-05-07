@@ -58,6 +58,8 @@
  load-prefer-newer t
  max-lisp-eval-depth 5000)
 
+(setq-default cursor-type 'hbar)
+
 ;; "When you visit a file, point goes to the last place where it was
 ;; when you previously visited the same file."
 ;; https://www.emacswiki.org/emacs/SavePlace
@@ -177,12 +179,16 @@ disables all other enabled themes."
 it. Optionally, you can supply a list of themes to select from."
   (interactive)
   (let* ((themes (or themes (custom-available-themes)))
-	 (next-theme (nth (random (length themes)) themes)))
+	 (but-active-themes (seq-difference themes
+					    custom-enabled-themes))
+	 (next-theme (nth (random (length but-active-themes))
+			  but-active-themes)))
     (message "Selected theme %s." next-theme)
     (neshtea/switch-theme next-theme)))
 
 (setq neshtea/favourite-themes '(base16-gruvbox-dark-medium
-				 base16-horizon-dark))
+				 base16-horizon-dark
+				 base16-default-dark))
 
 (defun neshtea/random-favourite-theme ()
   (interactive)
@@ -301,6 +307,13 @@ Repeated invocations toggle between the two most recently open buffers."
   :config
   (eshell-syntax-highlighting-global-mode +1))
 
+(use-package casual-dired
+  :straight (casual-dired :type git
+			  :host github
+			  :repo "kickingvegas/casual-dired")
+  :ensure t
+  :bind (:map dired-mode-map ("C-o" . 'casual-dired-tmenu)))
+
 ;;;; Org mode configuration
 ;; (use-package org-indent
 ;;   :ensure nil
@@ -348,7 +361,8 @@ Repeated invocations toggle between the two most recently open buffers."
 			    "* TODO %?\n  SCHEDULED: %t\n  %U")))
   (org-refile-targets '(("~/Dropbox/Brain/org/gtd.org" :maxlevel . 2)
 			("~/Dropbox/Brain/org/lists.org" :maxlevel . 2)
-			("~/Dropbox/Brain/org/projects.org" :maxlevel . 1)))
+			("~/Dropbox/Brain/org/projects.org" :maxlevel . 1)
+			("~/Dropbox/Brain/org/kollegys.org" :maxlevel . 1)))
   ;; When the state of a section headline changes, log the
   ;; transition into the headlines drawer.
   (org-log-into-drawer 'LOGBOOK)
@@ -364,6 +378,10 @@ Repeated invocations toggle between the two most recently open buffers."
   (org-appear-autoentities t)
   (org-appear-autokeywords t)
   (org-appear-trigger 'always))
+
+(use-package org-modern
+  :hook ((org-mode . org-modern-mode)
+	 (org-agenda-finalize . org-modern-agenda)))
 
 (defun neshtea/org-toggle-emphasis ()
   "Toggle hiding/showing of org emphasize markers."
@@ -422,7 +440,8 @@ Repeated invocations toggle between the two most recently open buffers."
 (use-package magit
   :defer t
   :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
-	 (magit-post-refresh . diff-hl-magit-post-refresh))  
+	 (magit-post-refresh . diff-hl-magit-post-refresh))
+  :bind (("C-g" . magit))
   :after diff-hl
   :config
   (setq-default git-magit-status-fullscreen t))
