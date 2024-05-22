@@ -336,10 +336,13 @@ Repeated invocations toggle between the two most recently open buffers."
   :straight (:type built-in)
   :hook (org-mode . neshtea/org-mode-setup)
   :bind (("C-c o a" . org-agenda-list)
-	 ("C-c o t l" . org-todo-list)
+	 ("C-c o t t" . org-todo-list)
+	 ("C-c o t l" . org-tags-view)
 	 ("C-c o f" . neshtea/org-gtd-file)
 	 ("C-c o p" . neshtea/org-projects-file)
 	 ("C-c o c c" . org-capture))
+  :config
+  (set-face-attribute 'org-ellipsis nil :inherit 'default :box nil)
   :custom
   (org-edit-src-content-indentation 0)  ; Don't indent in src blocks.
   (org-return-follows-link t)
@@ -356,10 +359,18 @@ Repeated invocations toggle between the two most recently open buffers."
   (org-startup-indented t)
   (org-hide-leading-stars t)
   (org-agenda-span 7)
+  (org-agenda-sorting-strategy
+   '((agenda time-up priority-down todo-state-up category-keep)
+     (todo priority-down todo-state-up category-keep)
+     (tags priority-down category-keep)
+     (search category-keep)))
   (org-agenda-start-on-weekday 1)
   (org-capture-templates '(("t" "Todo [inbox/work]" entry
 			    (file+headline "~/Dropbox/Brain/org/gtd.org" "INBOX")
-			    "* TODO %?\n  SCHEDULED: %t\n  %U")))
+			    "* TODO %?\n%U")
+			   ("s" "scheduled Todo [inbox/work]" entry
+			    (file+headline "~/Dropbox/Brain/org/gtd.org" "INBOX")
+			    "* TODO %?\nSCHEDULED: %t\n%U")))
   (org-refile-targets '(("~/Dropbox/Brain/org/gtd.org" :maxlevel . 2)
 			("~/Dropbox/Brain/org/lists.org" :maxlevel . 2)
 			("~/Dropbox/Brain/org/projects.org" :maxlevel . 1)
@@ -382,7 +393,32 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (use-package org-modern
   :hook ((org-mode . org-modern-mode)
-	 (org-agenda-finalize . org-modern-agenda)))
+	 (org-agenda-finalize . org-modern-agenda))
+  :config
+  (setq
+   ;; Edit settings
+   org-auto-align-tags nil
+   org-tags-column 0
+   org-catch-invisible-edits 'show-and-error
+   org-special-ctrl-a/e t
+   org-insert-heading-respect-content t
+
+   ;; Org styling, hide markup etc.
+   org-hide-emphasis-markers t
+   org-pretty-entities t
+
+   ;; Agenda styling
+   org-agenda-tags-column 0
+   org-agenda-block-separator ?─
+   org-agenda-time-grid
+   '((daily today require-timed)
+     (800 1000 1200 1400 1600 1800 2000)
+     " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+   org-agenda-current-time-string
+   "◀── now ─────────────────────────────────────────────────")
+  ;; Ellipsis styling
+  (setq org-ellipsis "…")
+  (set-face-attribute 'org-ellipsis nil :inherit 'default :box nil))
 
 (defun neshtea/org-toggle-emphasis ()
   "Toggle hiding/showing of org emphasize markers."
