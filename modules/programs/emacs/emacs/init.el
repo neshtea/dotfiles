@@ -188,7 +188,8 @@ it. Optionally, you can supply a list of themes to select from."
 
 (setq neshtea/favourite-themes '(base16-gruvbox-dark-medium
 				 base16-horizon-dark
-				 base16-default-dark))
+				 base16-default-dark
+				 base16-onedark))
 
 (defun neshtea/random-favourite-theme ()
   (interactive)
