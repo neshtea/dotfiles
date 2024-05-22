@@ -478,7 +478,6 @@ Repeated invocations toggle between the two most recently open buffers."
   :defer t
   :hook ((magit-pre-refresh . diff-hl-magit-pre-refresh)
 	 (magit-post-refresh . diff-hl-magit-post-refresh))
-  :bind (("C-c g" . magit))
   :after diff-hl
   :config
   (setq-default git-magit-status-fullscreen t))
