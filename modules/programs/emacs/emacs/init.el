@@ -186,17 +186,25 @@ it. Optionally, you can supply a list of themes to select from."
     (message "Selected theme %s." next-theme)
     (neshtea/switch-theme next-theme)))
 
-(setq neshtea/favourite-themes '(base16-gruvbox-dark-medium
-				 base16-horizon-dark
-				 base16-default-dark
-				 base16-onedark))
+(setq neshtea/favourite-dark-themes '(base16-gruvbox-dark-medium
+				      base16-horizon-dark
+				      base16-default-dark
+				      base16-onedark))
 
-(defun neshtea/random-favourite-theme ()
+(setq neshtea/favourite-light-themes '(base16-default-light
+				       base16-ia-light))
+
+(defun neshtea/random-favourite-dark-theme ()
   (interactive)
-  (neshtea/random-theme neshtea/favourite-themes))
+  (neshtea/random-theme neshtea/favourite-dark-themes))
+
+(defun neshtea/random-favourite-light-theme ()
+  (interactive)
+  (neshtea/random-theme neshtea/favourite-light-themes))
 
 (global-set-key (kbd "C-. s r r") #'neshtea/random-theme)
-(global-set-key (kbd "C-. s r f ") #'neshtea/random-favourite-theme)
+(global-set-key (kbd "C-. s r d") #'neshtea/random-favourite-dark-theme)
+(global-set-key (kbd "C-. s r l") #'neshtea/random-favourite-light-theme)
 
 (use-package doom-modeline
   :ensure t
@@ -705,7 +713,12 @@ the separator."
   :program "npx purs-tidy"
   :args (list "format-in-place" (buffer-file-name)))
 
-
+(use-package hledger-mode
+  :defer t
+  :mode ("\\.journal\\'" . hledger-mode)
+  :config
+  (setq hledger-jfile "~/Dropbox/Brain/Finance/ledger.journal")
+  (add-to-list 'company-backends 'hledger-company))
 
 (provide 'init)
 ;;; init.el ends here
