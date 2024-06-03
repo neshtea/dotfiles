@@ -15,6 +15,8 @@
     efi.canTouchEfiVariables = true;
   };
 
+  security.polkit.enable = true;
+
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
 
@@ -57,12 +59,12 @@
     };
     xserver = {
       enable = true;
-      displayManager = {
-        gdm = {
-          enable = true;
-          wayland = true;
-        };
+      desktopManager = {
+        xterm.enable = true;
+        xfce.enable = true;
       };
+      xkbOptions = "ctrl:swapcaps";
+      displayManager.defaultSession = "xfce";
     };
   };
 
@@ -89,27 +91,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment = {
-    systemPackages = with pkgs; [
-      vim
-      wget
-      # Stuff for wayland/hyprland
-      wofi
-      hyprpaper
-      wireplumber
-      dunst
-      xdg-desktop-portal-wlr
-      xdg-desktop-portal-hyprland
-      wl-clipboard
-      egl-wayland
-      qt6.qtwayland
-      libsForQt5.qt5.qtwayland
-      xwayland
-      gnome.nautilus
-      gnome.sushi
-
-      dropbox
-      dropbox-cli
-    ];
+    systemPackages = with pkgs; [ vim wget wireplumber dropbox dropbox-cli ];
     pathsToLink = [ "/share/zsh" ];
     sessionVariables = rec {
       XDG_CACHE_HOME = "$HOME/.cache";
@@ -145,12 +127,6 @@
   virtualisation.docker.enable = true;
 
   programs = {
-    hyprland = {
-      enable = true;
-      xwayland.enable = true;
-    };
-    waybar.enable = true;
-    light.enable = true;
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;

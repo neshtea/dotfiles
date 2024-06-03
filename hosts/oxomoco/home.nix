@@ -5,8 +5,7 @@
 
   home.packages = with pkgs; [
     # Basic desktop apps
-    firefox
-    google-chrome
+    brave
     keepassxc
     dolphin
 
@@ -44,9 +43,9 @@
   modules.programs.wezterm.enable = true;
 
   # Desktop stuff
-  modules.desktop.hyprland.enable = true;
-  modules.desktop.waybar.enable = true;
-  modules.desktop.wofi.enable = true;
+  modules.desktop.hyprland.enable = false;
+  modules.desktop.waybar.enable = false;
+  modules.desktop.wofi.enable = false;
 
   modules.desktop.herbstluftwm.enable = false;
   modules.programs.neovim.enable = true;
