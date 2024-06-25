@@ -189,10 +189,12 @@ it. Optionally, you can supply a list of themes to select from."
 (setq neshtea/favourite-dark-themes '(base16-gruvbox-dark-medium
 				      base16-horizon-dark
 				      base16-default-dark
-				      base16-onedark))
+				      base16-onedark
+				      base16-catppuccin-mocha))
 
 (setq neshtea/favourite-light-themes '(base16-default-light
-				       base16-ia-light))
+				       base16-ia-light
+				       base16-catppuccin-latte))
 
 (defun neshtea/random-favourite-dark-theme ()
   (interactive)
@@ -216,9 +218,6 @@ it. Optionally, you can supply a list of themes to select from."
   :defer t)
 
 (use-package nerd-icons :defer t)
-
-(straight-use-package
- '(xcode-theme :type git :host github :repo "juniorxxue/xcode-theme"))
 
 (neshtea/switch-theme 'base16-gruvbox-dark-medium)
 
@@ -332,16 +331,26 @@ Repeated invocations toggle between the two most recently open buffers."
   (org-indent-mode)
   (auto-fill-mode))
 
+(defvar icloud-base-dir (file-name-as-directory (expand-file-name "~/Library/Mobile Documents/com~apple~CloudDocs/")))
+
+(defun icloud-file (relative-dir)
+  (concat icloud-base-dir relative-dir))
+
+(defun icloud-org-file (relative-file-name)
+  (concat (icloud-file "Documents/org/") relative-file-name))
+
+(icloud-org-file "gtd.org")
+
 (defun neshtea/org-gtd-file ()
   (interactive)
-  (find-file (expand-file-name "~/Dropbox/Brain/org/gtd.org")))
+  (find-file (icloud-org-file "gtd.org")))
 
 (defun neshtea/org-projects-file ()
   (interactive)
-  (find-file (expand-file-name "~/Dropbox/Brain/org/projects.org")))
+  (find-file (icloud-org-file "projects.org")))
 
 (use-package org
-  :straight (:type built-in)
+  ;; :straight (:type built-in)
   :hook (org-mode . neshtea/org-mode-setup)
   :bind (("C-c o a" . org-agenda-list)
 	 ("C-c o t t" . org-todo-list)
@@ -355,11 +364,8 @@ Repeated invocations toggle between the two most recently open buffers."
   (org-edit-src-content-indentation 0)  ; Don't indent in src blocks.
   (org-return-follows-link t)
   (org-startup-folded 'content)
-  (org-agenda-files '(
-		      "~/Dropbox/Brain/org/gtd.org"
-		      "~/Dropbox/Brain/org/zettelkasten/dailies/"
-		      "~/Dropbox/Brain/org/timetracking.org"
-		      "~/Dropbox/Brain/org/kollegys.org"))
+  (org-agenda-files `(,(icloud-org-file "gtd.org")
+		      ,(icloud-org-file "zettelkasten/dailies/")))
   (org-ellipsis "…")
   (org-pretty-entities t)
   (org-hide-emphasis-markers t)
@@ -373,16 +379,13 @@ Repeated invocations toggle between the two most recently open buffers."
      (tags priority-down category-keep)
      (search category-keep)))
   (org-agenda-start-on-weekday 1)
-  (org-capture-templates '(("t" "Todo [inbox/work]" entry
-			    (file+headline "~/Dropbox/Brain/org/gtd.org" "INBOX")
+  (org-capture-templates `(("t" "Todo [inbox/work]" entry
+			    (file+headline ,(icloud-org-file "gtd.org") "INBOX")
 			    "* TODO %?\n%U")
 			   ("s" "scheduled Todo [inbox/work]" entry
-			    (file+headline "~/Dropbox/Brain/org/gtd.org" "INBOX")
+			    (file+headline ,(icloud-org-file "gtd.org") "INBOX")
 			    "* TODO %?\nSCHEDULED: %t\n%U")))
-  (org-refile-targets '(("~/Dropbox/Brain/org/gtd.org" :maxlevel . 2)
-			("~/Dropbox/Brain/org/lists.org" :maxlevel . 2)
-			("~/Dropbox/Brain/org/projects.org" :maxlevel . 1)
-			("~/Dropbox/Brain/org/kollegys.org" :maxlevel . 1)))
+  (org-refile-targets `((,(icloud-org-file "gtd.org") :maxlevel . 3)))
   ;; When the state of a section headline changes, log the
   ;; transition into the headlines drawer.
   (org-log-into-drawer 'LOGBOOK)
@@ -449,7 +452,7 @@ Repeated invocations toggle between the two most recently open buffers."
   :init
   (setq org-roam-v2-ack t)
   :custom
-  (org-roam-directory "~/Dropbox/Brain/org/zettelkasten")
+  (org-roam-directory (icloud-org-file "zettelkasten/"))
   (org-roam-dailies-directory "dailies/")
   (org-roam-node-display-template
         (concat "${title:*} "
@@ -458,12 +461,18 @@ Repeated invocations toggle between the two most recently open buffers."
    '(("d" "default" entry
       "* %?"
       :target (file+head "%<%Y-%m-%d>.org"
-			 "#+title: %<%Y-%m-%d>\n"))))
+			 ; :todo: tag means the note has not been scanned for
+			 ; long term noteworthiness yet.
+			 "#+title: %<%Y-%m-%d>\n#+filetags: :todo:\n"))))
 
   (org-roam-capture-templates
    '(("d" "default" plain
       "%?" :target
       (file+head "${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)
+     ("e" "exzerpt" plain
+      "%?" :target
+      (file+head "exzerpte/${slug}.org" "#+title ${title}\n#+filetags: :exzerpt:\n")
       :unnarrowed t)))
   :config
   (org-roam-setup))
@@ -712,13 +721,6 @@ the separator."
 (reformatter-define purescript-format
   :program "npx purs-tidy"
   :args (list "format-in-place" (buffer-file-name)))
-
-(use-package hledger-mode
-  :defer t
-  :mode ("\\.journal\\'" . hledger-mode)
-  :config
-  (setq hledger-jfile "~/Dropbox/Brain/Finance/ledger.journal")
-  (add-to-list 'company-backends 'hledger-company))
 
 (provide 'init)
 ;;; init.el ends here
