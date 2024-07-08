@@ -64,6 +64,7 @@
     tree
     youtube-dl
     wget
+    jq
 
     subversion
 
@@ -121,6 +122,10 @@
         "\\#*\\#"
         ".\\#*"
         ".dir-locals.el"
+
+        # Clojure, LSP, ...
+        ".clj-kondo/"
+        ".lsp/"
       ];
     };
 
