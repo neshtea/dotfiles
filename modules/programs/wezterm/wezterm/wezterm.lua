@@ -8,8 +8,8 @@ end
 -- tab bar
 config.enable_tab_bar = false
 
-config.color_scheme = 'Gruvbox dark, pale (base16)'
--- config.color_scheme = 'Catppuccin Mocha'
+-- config.color_scheme = 'Gruvbox dark, pale (base16)'
+config.color_scheme = 'Catppuccin Mocha'
 -- config.color_scheme = 'Horizon Dark (base16)'
 -- config.color_scheme = 'Nord (base16)'
 config.colors = colors
