@@ -187,6 +187,7 @@ it. Optionally, you can supply a list of themes to select from."
     (neshtea/switch-theme next-theme)))
 
 (setq neshtea/favourite-dark-themes '(base16-gruvbox-dark-medium
+				      base16-tokyo-night-dark
 				      base16-horizon-dark
 				      base16-default-dark
 				      base16-onedark
@@ -219,7 +220,7 @@ it. Optionally, you can supply a list of themes to select from."
 
 (use-package nerd-icons :defer t)
 
-(neshtea/switch-theme 'base16-gruvbox-dark-medium)
+(neshtea/switch-theme 'base16-tokyo-night-dark)
 
 ;;;; Generic, non-mode specific helpers.o
 ;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/
