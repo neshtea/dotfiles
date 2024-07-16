@@ -30,6 +30,7 @@
     rust-analyzer
     lua-language-server
     nil
+    nixd
     leiningen
     neovim
 
@@ -69,7 +70,7 @@
     subversion
 
     # Required for some modules and nice utilities to have
-    nixfmt
+    nixfmt-rfc-style
     multimarkdown
     ripgrep
     fd
