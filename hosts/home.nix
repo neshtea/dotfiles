@@ -62,7 +62,7 @@
     imagemagick
     rlwrap
     tree
-    youtube-dl
+    yt-dlp
     wget
     jq
 
