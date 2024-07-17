@@ -369,7 +369,7 @@ Repeated invocations toggle between the two most recently open buffers."
 		      ,(icloud-org-file "zettelkasten/dailies/")))
   (org-ellipsis "…")
   (org-pretty-entities t)
-  (org-hide-emphasis-markers t)
+  (org-hide-emphasis-markers nil)
   (org-adapt-indentation nil)
   (org-startup-indented t)
   (org-hide-leading-stars t)
@@ -402,35 +402,6 @@ Repeated invocations toggle between the two most recently open buffers."
   (org-appear-autoentities t)
   (org-appear-autokeywords t)
   (org-appear-trigger 'always))
-
-(use-package org-modern
-  :hook ((org-mode . org-modern-mode)
-	 (org-agenda-finalize . org-modern-agenda))
-  :config
-  (setq
-   ;; Edit settings
-   org-auto-align-tags nil
-   org-tags-column 0
-   org-catch-invisible-edits 'show-and-error
-   org-special-ctrl-a/e t
-   org-insert-heading-respect-content t
-
-   ;; Org styling, hide markup etc.
-   org-hide-emphasis-markers t
-   org-pretty-entities t
-
-   ;; Agenda styling
-   org-agenda-tags-column 0
-   org-agenda-block-separator ?─
-   org-agenda-time-grid
-   '((daily today require-timed)
-     (800 1000 1200 1400 1600 1800 2000)
-     " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
-   org-agenda-current-time-string
-   "◀── now ─────────────────────────────────────────────────")
-  ;; Ellipsis styling
-  (setq org-ellipsis "…")
-  (set-face-attribute 'org-ellipsis nil :inherit 'default :box nil))
 
 (defun neshtea/org-toggle-emphasis ()
   "Toggle hiding/showing of org emphasize markers."
