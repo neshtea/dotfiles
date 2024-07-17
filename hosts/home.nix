@@ -103,7 +103,16 @@ rec {
       userEmail = "marco.schneider@active-group.de";
       delta.enable = true;
       extraConfig = {
-        gpg.format = "ssh";
+        commit = {
+          gpgsign = "true";
+        };
+        tag = {
+          gpgsign = "true";
+        };
+        gpg = {
+          format = "ssh";
+          ssh.allowedSignersFile = "~/.ssh/allowed_signers";
+        };
         init.defaultBranch = "main";
         merge.conflicstyle = "diff3";
         pull.rebase = "true";
@@ -144,7 +153,7 @@ rec {
       ];
       signing = {
         signByDefault = true;
-        key = "~/.ssh/id_rsa";
+        key = "~/.ssh/id_rsa.pub";
       };
     };
 
