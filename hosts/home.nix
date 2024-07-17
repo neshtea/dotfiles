@@ -1,4 +1,10 @@
-{ config, pkgs, inputs, ... }: rec {
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+rec {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -14,7 +20,9 @@
 
   imports = [ ../modules ];
 
-  nix.registry = { this.flake = inputs.nixpkgs; };
+  nix.registry = {
+    this.flake = inputs.nixpkgs;
+  };
 
   home.username = "schneider";
 
@@ -95,13 +103,19 @@
       userEmail = "marco.schneider@active-group.de";
       delta.enable = true;
       extraConfig = {
+        gpg.format = "ssh";
         init.defaultBranch = "main";
         merge.conflicstyle = "diff3";
         pull.rebase = "true";
+        push.autoSetupRemote = "true";
         url = {
           # kenranunderscore forces me to use this as well... :D
-          "https://github.com/" = { insteadOf = "gh:"; };
-          "ssh://git@gitlab.active-group.de:1022/ag/" = { insteadOf = "ag:"; };
+          "https://github.com/" = {
+            insteadOf = "gh:";
+          };
+          "ssh://git@gitlab.active-group.de:1022/ag/" = {
+            insteadOf = "ag:";
+          };
         };
       };
       ignores = [
@@ -128,6 +142,10 @@
         ".clj-kondo/"
         ".lsp/"
       ];
+      signing = {
+        signByDefault = true;
+        key = "~/.ssh/id_rsa";
+      };
     };
 
     gpg = {
