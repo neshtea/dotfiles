@@ -540,9 +540,10 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (use-package ocp-indent :defer t)
 
+(add-to-list 'auto-mode-alist '("\\.mlx\\'" . tuareg-mode))
+
 (use-package tuareg
-  :defer t
-  :hook (tuareg-mode . ocaml-format-on-save-mode))
+  :defer t)
 
 (use-package reason-mode
   :straight (:host github :github "reasonml-editor/reason-mode"))
@@ -553,6 +554,10 @@ Repeated invocations toggle between the two most recently open buffers."
 (reformatter-define ocaml-format
   :program "ocamlformat"
   :args (list "--name" (buffer-file-name) "-"))
+
+(reformatter-define ocaml-mlx-format
+  :program "ocamlformat-mlx"
+  :args (list "--name" (buffer-file-name) "--impl" "-"))
 
 (reformatter-define dune-format
   :program "dune"
@@ -571,21 +576,42 @@ Repeated invocations toggle between the two most recently open buffers."
 	      ("C-. i r" . haskell-navigate-imports-return))
   :hook (haskell-mode . interactive-haskell-mode))
 
-(use-package eglot
-  :defer t
-  :bind (:map eglot-mode-map
-	      ("C-c <tab>" . company-complete)
-	      ("C-c l a" . eglot-code-actions)
-	      ("C-c l d" . eldoc-doc-buffer)
-	      ("C-c l r" . eglot-rename)
-	      ("C-c l g d" . xref-find-definitions)
-	      ("C-c l g r" . xref-find-references)
-	      ("C-c l e n" . flymake-goto-next-error)
-	      ("C-c l e p" . flymake-goto-previous-error)
-	      ("C-c l f" . eglot-format-buffer))
+;; (use-package eglot
+;;   :defer t
+;;   :bind (:map eglot-mode-map
+;; 	      ("C-c <tab>" . company-complete)
+;; 	      ("C-c l a" . eglot-code-actions)
+;; 	      ("C-c l d" . eldoc-doc-buffer)
+;; 	      ("C-c l r" . eglot-rename)
+;; 	      ("C-c l g d" . xref-find-definitions)
+;; 	      ("C-c l g r" . xref-find-references)
+;; 	      ("C-c l e n" . flymake-goto-next-error)
+;; 	      ("C-c l e p" . flymake-goto-previous-error)
+;; 	      ("C-c l f" . eglot-format-buffer))
+;;   :config
+;;   ;; don't ask before lsp intiated writes.
+;;   (setq eglot-confirm-server-initiated-edits nil))
+
+(use-package lsp-mode
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :hook
+  (clojure-mode . lsp)
   :config
-  ;; don't ask before lsp intiated writes.
-  (setq eglot-confirm-server-initiated-edits nil))
+  (setq lsp-ui-doc-enable t)
+  (setq lsp-diagnostics-provider :flycheck)
+  :commands lsp)
+
+(use-package lsp-ui
+  :commands lsp-ui-mode)
+
+(use-package consult-lsp
+  :defer
+  :after lsp-mode)
+
+(use-package flycheck
+  :after lsp-mode
+  :defer t)
 
 ;;; Common Lisp language support.
 (use-package sly
