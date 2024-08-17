@@ -48,23 +48,25 @@
   services = {
     openssh.enable = true;
     blueman.enable = true;
-    tlp.enable = true;
-    pipewire = {
+    printing = {
       enable = true;
-      pulse.enable = true;
-      alsa = {
-        enable = true;
-        support32Bit = true;
-      };
+      drivers = [ pkgs.samsung-unified-linux-driver ];
+      allowFrom = [ "all" ];
+      browsing = true;
+      defaultShared = true;
+      openFirewall = true;
     };
     xserver = {
       enable = true;
-      desktopManager = {
-        xterm.enable = true;
-        xfce.enable = true;
-      };
+      desktopManager.gnome.enable = true;
       xkbOptions = "ctrl:swapcaps";
-      displayManager.defaultSession = "xfce";
+      displayManager.gdm.enable = true;
+    };
+    tailscale.enable = true;
+    plex = {
+      enable = true;
+      openFirewall = true;
+      user = "schneider";
     };
   };
 
@@ -134,7 +136,7 @@
 
   };
 
-  powerManagement.enable = true;
+  powerManagement = { enable = true; };
 
   system.stateVersion = "23.05";
 }
