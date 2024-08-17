@@ -26,6 +26,9 @@
     playerctl # control media applications from the command line.
     gcc # sometime you just need a c compiler.
 
+    # E-Mail
+    thunderbird
+
     ## System gui apps
     # audio controls (meant for pulse, but seems to work
     # with pipewire as well).
