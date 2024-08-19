@@ -84,7 +84,7 @@
 	))
 
 ;; (setq neshtea/current-font 'jetbrains-mono)
-(setq neshtea/current-font 'iosevka)
+(setq neshtea/current-font 'jetbrains-mono)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -123,7 +123,6 @@ the face-font."
 
 ;; Alwas show matching parens.
 (show-paren-mode 1)
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 ;; Sometimes, I need relative line numbers.  `display-line-numbers`
 ;; has this built in.  This function makes it easier to toggle.
@@ -191,7 +190,8 @@ it. Optionally, you can supply a list of themes to select from."
 				      base16-horizon-dark
 				      base16-default-dark
 				      base16-onedark
-				      base16-catppuccin-mocha))
+				      base16-catppuccin-mocha
+				      base16-rose-pine))
 
 (setq neshtea/favourite-light-themes '(base16-default-light
 				       base16-ia-light
@@ -220,7 +220,7 @@ it. Optionally, you can supply a list of themes to select from."
 
 (use-package nerd-icons :defer t)
 
-(neshtea/switch-theme 'base16-tokyo-night-dark)
+(neshtea/switch-theme 'base16-gruvbox-dark-medium)
 
 ;;;; Generic, non-mode specific helpers.o
 ;; https://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/

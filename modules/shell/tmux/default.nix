@@ -1,7 +1,17 @@
-{ config, pkgs, lib, inputs, ... }:
-let cfg = config.modules.shell.tmux;
-in {
-  options.modules.shell.tmux = { enable = lib.mkEnableOption "tmux"; };
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
+let
+  cfg = config.modules.shell.tmux;
+in
+{
+  options.modules.shell.tmux = {
+    enable = lib.mkEnableOption "tmux";
+  };
   config = lib.mkIf cfg.enable {
     programs.tmux = {
       enable = true;
