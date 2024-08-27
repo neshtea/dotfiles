@@ -150,6 +150,12 @@ rec {
         # Clojure, LSP, ...
         ".clj-kondo/"
         ".lsp/"
+        ".calva/"
+        ".shadow-cljs/"
+        ".cpcache/"
+
+        # JavaScript
+        "node_modules/"
       ];
       signing = {
         signByDefault = true;
