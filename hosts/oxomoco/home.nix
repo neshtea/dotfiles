@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [ ../home.nix ];
 
   fonts.fontconfig.enable = pkgs.lib.mkForce true;
@@ -6,6 +7,8 @@
   home.packages = with pkgs; [
     # Basic desktop apps
     brave
+    google-chrome
+    mattermost
     keepassxc
     dolphin
 
