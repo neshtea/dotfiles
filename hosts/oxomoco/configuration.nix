@@ -91,7 +91,11 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment = {
-    systemPackages = with pkgs; [ vim wget wireplumber dropbox dropbox-cli ];
+    systemPackages = with pkgs; [
+      vim
+      wget
+      wireplumber
+    ];
     pathsToLink = [ "/share/zsh" ];
     sessionVariables = rec {
       XDG_CACHE_HOME = "$HOME/.cache";
@@ -105,25 +109,6 @@
     };
   };
 
-  systemd.user.services.dropbox = {
-    description = "Dropbox";
-    wantedBy = [ "graphical-session.target" ];
-    environment = {
-      QT_PLUGIN_PATH = "/run/current-system/sw/"
-        + pkgs.qt5.qtbase.qtPluginPrefix;
-      QML_IMPORT_PATH = "/run/current/system/sw/" + pkgs.qt5.qtbase.qtQmlPrefix;
-    };
-    serviceConfig = {
-      ExecStart = "${lib.getBin pkgs.dropbox}/bin/dropbox";
-      ExecReload = "${lib.getBin pkgs.coreutils}/bin/kill -HUP $MAINMPID";
-      KillMode = "control-group";
-      Restart = "on-failure";
-      PrivateTmp = true;
-      ProtectSystem = "full";
-      Nice = 10;
-    };
-  };
-
   virtualisation.docker.enable = true;
 
   programs = {
@@ -134,8 +119,9 @@
 
   };
 
-  powerManagement = { enable = true; };
+  powerManagement = {
+    enable = true;
+  };
 
   system.stateVersion = "23.05";
 }
-
