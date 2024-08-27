@@ -332,23 +332,22 @@ Repeated invocations toggle between the two most recently open buffers."
   (org-indent-mode)
   (auto-fill-mode))
 
-(defvar icloud-base-dir (file-name-as-directory (expand-file-name "~/Library/Mobile Documents/com~apple~CloudDocs/")))
+;; (defvar cloud-base-dir (file-name-as-directory (expand-file-name "~/Library/Mobile Documents/com~apple~CloudDocs/")))
+(defvar cloud-base-dir (file-name-as-directory (expand-file-name "~/Dropbox/")))
 
-(defun icloud-file (relative-dir)
-  (concat icloud-base-dir relative-dir))
+(defun cloud-file (relative-dir)
+  (concat cloud-base-dir relative-dir))
 
-(defun icloud-org-file (relative-file-name)
-  (concat (icloud-file "Documents/org/") relative-file-name))
-
-(icloud-org-file "gtd.org")
+(defun cloud-org-file (relative-file-name)
+  (concat (cloud-file "Documents/org/") relative-file-name))
 
 (defun neshtea/org-gtd-file ()
   (interactive)
-  (find-file (icloud-org-file "gtd.org")))
+  (find-file (cloud-org-file "gtd.org")))
 
 (defun neshtea/org-projects-file ()
   (interactive)
-  (find-file (icloud-org-file "projects.org")))
+  (find-file (cloud-org-file "projects.org")))
 
 (use-package org
   ;; :straight (:type built-in)
@@ -365,8 +364,8 @@ Repeated invocations toggle between the two most recently open buffers."
   (org-edit-src-content-indentation 0)  ; Don't indent in src blocks.
   (org-return-follows-link t)
   (org-startup-folded 'content)
-  (org-agenda-files `(,(icloud-org-file "gtd.org")
-		      ,(icloud-org-file "zettelkasten/dailies/")))
+  (org-agenda-files `(,(cloud-org-file "gtd.org")
+		      ,(cloud-org-file "zettelkasten/dailies/")))
   (org-ellipsis "…")
   (org-pretty-entities t)
   (org-hide-emphasis-markers nil)
@@ -381,12 +380,12 @@ Repeated invocations toggle between the two most recently open buffers."
      (search category-keep)))
   (org-agenda-start-on-weekday 1)
   (org-capture-templates `(("t" "Todo [inbox/work]" entry
-			    (file+headline ,(icloud-org-file "gtd.org") "INBOX")
+			    (file+headline ,(cloud-org-file "gtd.org") "INBOX")
 			    "* TODO %?\n%U")
 			   ("s" "scheduled Todo [inbox/work]" entry
-			    (file+headline ,(icloud-org-file "gtd.org") "INBOX")
+			    (file+headline ,(cloud-org-file "gtd.org") "INBOX")
 			    "* TODO %?\nSCHEDULED: %t\n%U")))
-  (org-refile-targets `((,(icloud-org-file "gtd.org") :maxlevel . 3)))
+  (org-refile-targets `((,(cloud-org-file "gtd.org") :maxlevel . 3)))
   ;; When the state of a section headline changes, log the
   ;; transition into the headlines drawer.
   (org-log-into-drawer 'LOGBOOK)
@@ -424,7 +423,7 @@ Repeated invocations toggle between the two most recently open buffers."
   :init
   (setq org-roam-v2-ack t)
   :custom
-  (org-roam-directory (icloud-org-file "zettelkasten/"))
+  (org-roam-directory (cloud-org-file "zettelkasten/"))
   (org-roam-dailies-directory "dailies/")
   (org-roam-node-display-template
         (concat "${title:*} "
