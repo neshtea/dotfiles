@@ -11,6 +11,7 @@
     mattermost
     keepassxc
     dolphin
+    dbeaver
 
     # Chat
     signal-desktop
@@ -63,4 +64,13 @@
   modules.desktop.rofi.enable = false;
   modules.desktop.polybar.enable = false;
 
+  dconf = {
+    enable = true;
+    settings = {
+      "org/gnome/shell" = {
+        disable-user-extension = false;
+        enabled-extensions = [ pkgs.gnomeExtensions.material-shell ];
+      };
+    };
+  };
 }
