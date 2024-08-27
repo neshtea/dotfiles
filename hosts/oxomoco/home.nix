@@ -12,6 +12,7 @@
     keepassxc
     dolphin
     dbeaver
+    dropbox
 
     # Chat
     signal-desktop
