@@ -1,8 +1,17 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
-let cfg = config.modules.shell.zsh;
-in {
-  options.modules.shell.zsh = { enable = lib.mkEnableOption "zsh"; };
+let
+  cfg = config.modules.shell.zsh;
+in
+{
+  options.modules.shell.zsh = {
+    enable = lib.mkEnableOption "zsh";
+  };
   config = lib.mkIf cfg.enable {
     programs = {
       starship = {
@@ -29,6 +38,7 @@ in {
         initExtra = ''
           export PATH="$HOME/bin:$PATH"
           export TEXINPUTS="$HOME/repos/ag/howto/tex:$TEXINPUTS"
+          . "$HOME/.cargo/env"
         '';
         initExtraBeforeCompInit = ''
           if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
