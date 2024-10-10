@@ -4,7 +4,7 @@
   inputs,
   ...
 }:
-rec {
+{
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -29,16 +29,19 @@ rec {
   home.packages = with pkgs; [
     cacert
     coreutils
-
     tree-sitter
-    # we have lots or clojure projects that don't provide a nix shell,
-    # so let's have this available everywhere.
     clojure
-    clojure-lsp # Not every project brings it's own lsp.
+    go
+    ruby
+    rubocop
     rust-analyzer
+    clojure-lsp # Not every project brings it's own lsp.
+    gopls # TODO Remove, this is only intended for following a guide
     lua-language-server
+    # haskellPackages.hls
     nil
     nixd
+    rubyPackages_3_3.solargraph
     leiningen
     neovim
 
@@ -57,6 +60,7 @@ rec {
       p.tree-sitter-nix
       p.tree-sitter-haskell
       p.tree-sitter-make
+      p.tree-sitter-markdown
       p.tree-sitter-markdown-inline
     ]))
 
