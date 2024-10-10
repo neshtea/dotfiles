@@ -17,11 +17,6 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
-;; (use-package benchmark-init
-;;   :demand
-;;   :config (benchmark-init/activate)
-;;   :hook (after-init . benchmark-init/deactivate))
-
 (add-hook
  'emacs-startup-hook
  (lambda ()
@@ -242,7 +237,8 @@ it. Optionally, you can supply a list of themes to select from."
 (use-package dune :defer
   :hook ((dune-mode . dune-format-on-save-mode)))
 
-;; Based on https://github.com/ludwigpacifici/ocamlreformat.el/blob/master/ocamlreformat.el
+(use-package reformatter :defer)
+
 (reformatter-define ocaml-format
   :program "ocamlformat"
   :args (list "--name" (buffer-file-name) "-"))
@@ -326,7 +322,6 @@ the separator."
 (use-package geiser-guile :defer)
 (use-package geiser-chicken :defer)
 (use-package envrc :init (envrc-global-mode))
-(use-package reformatter :defer)
 (use-package clj-refactor :defer)
 (use-package clojure-mode :defer)
 (use-package magit :defer)
