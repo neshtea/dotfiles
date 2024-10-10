@@ -27,10 +27,6 @@ in
       keyMode = "emacs";
       mouse = true;
       newSession = true;
-      plugins = with pkgs; [
-        tmuxPlugins.gruvbox
-        { plugin = tmuxPlugins.gruvbox; }
-      ];
       prefix = "C-Space";
       shell = "${pkgs.zsh}/bin/zsh";
       terminal = "screen-256color";
