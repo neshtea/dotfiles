@@ -50,11 +50,12 @@
 (load custom-file 'no-error)  ; Don't show errors when loading the custom file.
 
 (setq neshtea/font-alist  ; TODO copy the latest version from kenranunderscore
-      '((jetbrains-mono . (:font "JetBrains Mono"
-				 :height 140))
-	(iosevka . (:font "Iosevka"
-			  :height 150))
-	(sf-mono . (:font "SF Mono" :height 150))
+      '((jetbrains-mono . (:family "JetBrains Mono"))
+	(iosevka . (:family "Iosevka"))
+	(sf-mono . (:family
+		    "SF Mono"
+		    :width
+		    'condensed))
 	))
 
 (setq neshtea/current-font 'jetbrains-mono)
@@ -66,12 +67,16 @@ the face-font."
    (list (intern (completing-read "Font: " (mapcar #'car (copy-alist neshtea/font-alist))))))
   ;; If the selected font is not the currently active font, switch.
   (let* ((attrs (alist-get font neshtea/font-alist))
-	 (font (plist-get attrs :font))
-	 (height (plist-get attrs :height)))
-    (setq neshtea/current-font font)
+	 (family (plist-get attrs :family))
+	 (height (plist-get attrs :height))
+	 (width (plist-get attrs :width)))
+    (setq neshtea/current-font family)
     (set-face-attribute 'default nil
-			:font font
-			:height height)))
+			:family family
+			:height (or height
+				    140)
+			:width (or width
+				   'normal))))
 
 ;; Set the font to the default.
 (neshtea/switch-font neshtea/current-font)
