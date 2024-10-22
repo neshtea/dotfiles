@@ -50,6 +50,8 @@
     docker
     docker-compose
 
+    lazygit
+
     # tree-sitter
     (tree-sitter.withPlugins (p: [
       p.tree-sitter-clojure
