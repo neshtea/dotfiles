@@ -9,9 +9,7 @@ end
 config.enable_tab_bar = false
 
 config.color_scheme = 'Gruvbox dark, pale (base16)'
-config.colors = colors
-config.window_frame = window_frame
-config.font = wezterm.font("Jetbrains Mono")
+config.font = wezterm.font("Iosevka")
 config.font_size = 14.0
 config.adjust_window_size_when_changing_font_size = false
 
