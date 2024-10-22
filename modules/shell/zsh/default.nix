@@ -50,17 +50,13 @@ in
           enable = true;
           plugins = [
             "git"
-            "sudo"
             "brew"
-            "cabal"
             "common-aliases"
             "direnv"
             "docker"
             "docker-compose"
             "fzf"
             "gpg-agent"
-            "ripgrep"
-            "rust"
             "ssh-agent"
             "tmux"
           ];
