@@ -275,6 +275,7 @@ it. Optionally, you can supply a list of themes to select from."
   :config
   (setq lsp-ui-doc-enable t)
   (setq lsp-diagnostics-provider :flycheck)
+  (add-to-list 'lsp-language-id-configuration '(".*\\.mlx$" . "ocaml"))
   :commands lsp)
 
 (use-package lsp-ui :defer :commands lsp-ui-mode)
