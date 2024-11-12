@@ -58,7 +58,7 @@
 		    'condensed))
 	))
 
-(setq neshtea/current-font 'jetbrains-mono)
+(setq neshtea/current-font 'iosevka)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
