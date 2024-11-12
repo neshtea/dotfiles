@@ -58,9 +58,7 @@ in
             "fzf"
             "gpg-agent"
             "ssh-agent"
-            "tmux"
           ];
-          theme = "minimal";
         };
       };
     };

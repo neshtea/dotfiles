@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  inputs,
   ...
 }:
 let
@@ -28,7 +27,7 @@ in
       mouse = true;
       newSession = true;
       prefix = "C-Space";
-      shell = "${pkgs.zsh}/bin/zsh";
+      shell = "${config.programs.zsh.package}/bin/zsh";
       terminal = "screen-256color";
     };
   };
