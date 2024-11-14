@@ -21,6 +21,11 @@ in
         set-option -sa terminal-features ',xterm-256color:RGB'
         set -sg escape-time 10
         set-option -g renumber-windows on
+
+        # Fixes tmux-sensible always picking /bin/sh as it's shell
+        # See https://github.com/nix-community/home-manager/issues/5952#issuecomment-2409056750
+        set -gu default-command
+        set -g default-shell "${config.programs.zsh.package}/bin/zsh"
       '';
       historyLimit = 9999;
       keyMode = "emacs";
