@@ -95,6 +95,7 @@
       vim
       wget
       wireplumber
+      gnomeExtensions.pop-shell
     ];
     pathsToLink = [ "/share/zsh" ];
     sessionVariables = rec {
