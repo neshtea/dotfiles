@@ -8,16 +8,18 @@
     # Basic desktop apps
     brave
     google-chrome
-    mattermost
+    mattermost-desktop
+
     keepassxc
     dolphin
-    dbeaver
+    dbeaver-bin
     dropbox
 
     # Chat
     signal-desktop
     element-desktop
     tdesktop
+    spotify
 
     # Streaming
     obs-studio
@@ -65,13 +67,5 @@
   modules.desktop.rofi.enable = false;
   modules.desktop.polybar.enable = false;
 
-  dconf = {
-    enable = true;
-    settings = {
-      "org/gnome/shell" = {
-        disable-user-extension = false;
-        enabled-extensions = [ pkgs.gnomeExtensions.material-shell ];
-      };
-    };
-  };
+  dconf.enable = true;
 }
