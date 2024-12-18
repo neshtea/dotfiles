@@ -8,9 +8,9 @@ end
 -- tab bar
 config.enable_tab_bar = false
 
-config.color_scheme = 'Gruvbox dark, pale (base16)'
-config.font = wezterm.font("Iosevka")
-config.font_size = 14.0
+config.color_scheme = 'Gruvbox dark, hard (base16)'
+config.font = wezterm.font("JetBrains Mono")
+config.font_size = 12.0
 config.adjust_window_size_when_changing_font_size = false
 config.audible_bell = "Disabled"
 
