@@ -202,6 +202,9 @@ it. Optionally, you can supply a list of themes to select from."
   :hook (company-mode . company-box-mode)
   :diminish company-box-mode)
 
+(use-package company-lsp :defer
+  :after lsp-mode)
+
 (use-package zoom :defer
   :config (setq zoom-size '(0.618 . 0.618)))
 
