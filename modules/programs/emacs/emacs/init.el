@@ -144,7 +144,7 @@ it. Optionally, you can supply a list of themes to select from."
 (use-package base16-theme :defer)
 (use-package nerd-icons :defer)
 
-(neshtea/switch-theme 'base16-gruvbox-dark-medium)
+(neshtea/switch-theme 'base16-gruvbox-dark-hard)
 
 (use-package vertico
   :init
