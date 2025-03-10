@@ -38,10 +38,7 @@
     clojure-lsp # Not every project brings it's own lsp.
     gopls # TODO Remove, this is only intended for following a guide
     lua-language-server
-    # haskellPackages.hls
-    nil
     nixd
-    rubyPackages_3_3.solargraph
     leiningen
     neovim
 
@@ -49,22 +46,6 @@
     # let's have this available user-wide.
     docker
     docker-compose
-
-    lazygit
-
-    # tree-sitter
-    (tree-sitter.withPlugins (p: [
-      p.tree-sitter-clojure
-      p.tree-sitter-elisp
-      p.tree-sitter-ruby
-      p.tree-sitter-ocaml
-      p.tree-sitter-ocaml-interface
-      p.tree-sitter-nix
-      p.tree-sitter-haskell
-      p.tree-sitter-make
-      p.tree-sitter-markdown
-      p.tree-sitter-markdown-inline
-    ]))
 
     # Same here: Most project that are managed with make assume you
     # have it already.

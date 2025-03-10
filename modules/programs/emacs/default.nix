@@ -1,14 +1,21 @@
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
-let cfg = config.modules.programs.emacs;
-in {
+let
+  cfg = config.modules.programs.emacs;
+in
+{
   options.modules.programs.emacs = {
     enable = lib.mkEnableOption "emacs";
     emacsPackage = lib.mkOption {
       type = lib.types.package;
       example = lib.literalExpression "pkgs.emacsMacport";
-      description =
-        "The emacs package that should be used as a base for emacs.";
+      description = "The emacs package that should be used as a base for emacs.";
     };
   };
 
@@ -21,7 +28,18 @@ in {
           fi
         '';
       };
-      packages = [ cfg.emacsPackage ];
+
+      packages =
+        let
+          emacsWithPackages = (pkgs.emacsPackagesFor cfg.emacsPackage).emacsWithPackages (p: [
+            p.vterm
+            p.treesit-grammars.with-all-grammars
+          ]);
+        in
+        [
+          emacsWithPackages
+          pkgs.texliveMedium # for org pdf export
+        ];
     };
   };
 }

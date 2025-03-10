@@ -39,6 +39,7 @@ in
           export PATH="$HOME/bin:$PATH"
           export TEXINPUTS="$HOME/repos/ag/howto/tex:$TEXINPUTS"
           . "$HOME/.cargo/env"
+          . $HOME/.ghcup/env
         '';
         initExtraBeforeCompInit = ''
           if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then

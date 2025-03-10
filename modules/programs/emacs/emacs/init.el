@@ -58,7 +58,7 @@
 		    'condensed))
 	))
 
-(setq neshtea/current-font 'iosevka)
+(setq neshtea/current-font 'jetbrains-mono)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -142,9 +142,10 @@ it. Optionally, you can supply a list of themes to select from."
     (neshtea/switch-theme next-theme)))
 
 (use-package base16-theme :defer)
+(use-package doom-themes :defer)
 (use-package nerd-icons :defer)
 
-(neshtea/switch-theme 'base16-gruvbox-dark-hard)
+(neshtea/switch-theme 'base16-gruvbox-material-dark-medium)
 
 (use-package vertico
   :init
@@ -265,10 +266,23 @@ it. Optionally, you can supply a list of themes to select from."
   :custom
   (haskell-process-type 'cabal-repl)
   (haskell-interactive-popup-errors nil)
+  :config
+  (setq haskell-indentation-left-offset 4
+	haskell-indentation-layout-offset 4
+	haskell-indentation-starter-offset 4)
   :bind (:map haskell-mode-map
 	      ("C-. i i" . haskell-navigate-imports-go)
 	      ("C-. i r" . haskell-navigate-imports-return))
-  :hook (haskell-mode . interactive-haskell-mode))
+  :hook ((haskell-mode . interactive-haskell-mode)
+	 (haskell-mode . lsp)))
+
+(use-package yasnippet :defer
+  :config
+  (yas-global-mode 1))
+
+(use-package lsp-haskell :defer
+  :custom
+  (lsp-haskell-formatting-provider "fourmolu"))
 
 (use-package lsp-mode :defer
   :init
@@ -342,6 +356,33 @@ the separator."
 	 ("\\.md\\'" . markdown-mode)
 	 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
+
+(use-package scala-ts-mode :defer
+  :mode ("\\.scala\\'" "\\.sbt\\'"))
+
+;; https://emacs-lsp.github.io/lsp-metals/
+(use-package lsp-metals :defer
+  :custom (lsp-metals-enable-semantic-highlighting t))
+
+(use-package org :defer
+  :hook ((org-mode . org-indent-mode)))
+
+(use-package org-modern :defer
+  :hook ((org-mode . org-modern-mode))
+  :config
+  (setq org-auto-align-tags nil
+	org-tags-column 0
+	org-fold-catch-invisible-edits 'show-and-error
+	org-special-ctrl-a/e t
+	org-insert-heading-respect-content t
+
+	org-hide-emphasis-markers t
+	org-pretty-entities t
+
+	org-ellipsis "…")
+  (set-face-attribute 'org-ellipsis nil :inherit 'default :box nil))
+
+(use-package go-mode)
 
 (provide 'init)
 ;;; init.el ends here
