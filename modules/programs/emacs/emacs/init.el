@@ -38,7 +38,11 @@
  ns-function-modifier 'super
  ring-bell-function 'ignore  ; Turn off all alarms completely. See https://www.emacswiki.org/emacs/AlarmBell.
  load-prefer-newer t  ; Always prefer the "newer" version of a file.
- max-lisp-eval-depth 5000)
+ max-lisp-eval-depth 5000
+ ;; isearch
+ isearch-allow-scroll t  ; don't cancel isearch on scroll
+ isearch-lazy-count t  ; show number of matches
+ ) 
 
 (setq-default cursor-type 'hbar)
 
@@ -239,7 +243,9 @@ it. Optionally, you can supply a list of themes to select from."
 
 (use-package merlin-company :defer)
 (add-to-list 'auto-mode-alist '("\\.mlx\\'" . tuareg-mode))
-(use-package tuareg :defer)
+(use-package tuareg :defer
+  :hook ((tuareg-mode . lsp-deferred)
+	 (tuareg-mode . ocaml-format-on-save-mode)))
 (use-package reason-mode :defer
   :straight (:host github :github "reasonml-editor/reason-mode"))
 
@@ -358,7 +364,12 @@ the separator."
   :init (setq markdown-command "multimarkdown"))
 
 (use-package scala-ts-mode :defer
-  :mode ("\\.scala\\'" "\\.sbt\\'"))
+  :mode (("\\.scala\\'" . scala-ts-mode)
+	 ("\\.sbt\\'" . scala-ts-mode))
+  :hook (scala-ts-mode . lsp-deferred)
+  :config
+  (setq major-mode-remap-alist
+	'((scala-mode . scala-ts-mode))))
 
 ;; https://emacs-lsp.github.io/lsp-metals/
 (use-package lsp-metals :defer
@@ -382,7 +393,15 @@ the separator."
 	org-ellipsis "…")
   (set-face-attribute 'org-ellipsis nil :inherit 'default :box nil))
 
-(use-package go-mode)
+(use-package go-mode :defer)
+
+(use-package adoc-mode :defer)
+
+(use-package windmove :defer
+  :bind (("C-c <left>" . #'windmove-left)
+	 ("C-c <right>" . #'windmove-right)
+	 ("C-c <down>" . #'windmove-down)
+	 ("C-c <up>" . #'windmove-up)))
 
 (provide 'init)
 ;;; init.el ends here
