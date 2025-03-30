@@ -71,7 +71,7 @@
     fd
     nodejs
     perl
-    zulu17
+    zulu23
   ];
 
   programs = {
