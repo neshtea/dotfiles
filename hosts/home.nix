@@ -141,6 +141,8 @@
         ".shadow-cljs/"
         ".cpcache/"
 
+        ".vscode/"
+
         # JavaScript
         "node_modules/"
       ];
