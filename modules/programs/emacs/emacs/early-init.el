@@ -1,4 +1,5 @@
-;; Emacs startup can be significantly sped up by reducing the number
+;; -*- lexical-binding: t; -*-
+;; Emacs startup can be significantly sped up by reducing the number  
 ;; of garbage collections that take place during initialization.  The
 ;; default `gc-cons-threshold' of 80 kilobytes is way too low for any
 ;; more recent system.  Still it's beneficial to reset this temporary
