@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name
@@ -42,9 +43,14 @@
  ;; isearch
  isearch-allow-scroll t  ; don't cancel isearch on scroll
  isearch-lazy-count t  ; show number of matches
- ) 
+ )
+
+;; MacOS
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
 
 (setq-default cursor-type 'hbar)
+(setq-default indent-tabs-mode nil)
 
 ;; "When you visit a file, point goes to the last place where it was when you
 ;; previously visited the same file."  https://www.emacswiki.org/emacs/SavePlace
@@ -62,7 +68,7 @@
 		    'condensed))
 	))
 
-(setq neshtea/current-font 'jetbrains-mono)
+(setq neshtea/current-font 'iosevka)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -147,6 +153,9 @@ it. Optionally, you can supply a list of themes to select from."
 
 (use-package base16-theme :defer)
 (use-package doom-themes :defer)
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
 (use-package nerd-icons :defer)
 
 (neshtea/switch-theme 'base16-gruvbox-material-dark-medium)
@@ -295,10 +304,12 @@ it. Optionally, you can supply a list of themes to select from."
   (setq lsp-keymap-prefix "C-c l")
   :hook
   (clojure-mode . lsp)
+  (lsp-mode . lsp-lens-mode)
   :config
   (setq lsp-ui-doc-enable t)
   (setq lsp-diagnostics-provider :flycheck)
   (add-to-list 'lsp-language-id-configuration '(".*\\.mlx$" . "ocaml"))
+  (setq lsp-elixir-server-command '("elixir-ls"))
   :commands lsp)
 
 (use-package lsp-ui :defer :commands lsp-ui-mode)
@@ -345,6 +356,8 @@ the separator."
 (use-package rustic :defer)
 (use-package lua-mode :defer)
 (use-package elixir-mode :defer)
+(use-package gleam-ts-mode :defer
+  :mode (rx ".gleam" eos))
 (use-package sly-quicklisp :defer)
 (use-package racket-mode :defer)
 (use-package geiser :defer)
@@ -366,10 +379,15 @@ the separator."
 (use-package scala-ts-mode :defer
   :mode (("\\.scala\\'" . scala-ts-mode)
 	 ("\\.sbt\\'" . scala-ts-mode))
-  :hook (scala-ts-mode . lsp-deferred)
+  :hook ((scala-ts-mode . lsp-deferred)))
+
+(use-package sbt-mode :defer
+  :commands sbt-start sbt-command
   :config
-  (setq major-mode-remap-alist
-	'((scala-mode . scala-ts-mode))))
+  (setq sbt:program-options '("-Dsbt.supershell=false")))
+
+(setq major-mode-remap-alist
+      '((scala-mode . scala-ts-mode)))
 
 ;; https://emacs-lsp.github.io/lsp-metals/
 (use-package lsp-metals :defer
@@ -402,6 +420,14 @@ the separator."
 	 ("C-c <right>" . #'windmove-right)
 	 ("C-c <down>" . #'windmove-down)
 	 ("C-c <up>" . #'windmove-up)))
+
+(use-package lsp-pyright :defer
+  :custom (lsp-pyright-langserver-command "pyright")
+  :hook (python-mode . (lambda ()
+			 (require 'lsp-pyright)
+			 (lsp))))
+
+(use-package golden-ratio :defer)
 
 (provide 'init)
 ;;; init.el ends here
