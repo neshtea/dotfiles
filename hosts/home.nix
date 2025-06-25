@@ -27,34 +27,22 @@
   home.username = "schneider";
 
   home.packages = with pkgs; [
+    nixVersions.latest
+
     cacert
     coreutils
     tree-sitter
     clojure
-    go
-    ruby
-    rubocop
-    rust-analyzer
-    clojure-lsp # Not every project brings it's own lsp.
-    gopls # TODO Remove, this is only intended for following a guide
+    clojure-lsp
     lua-language-server
     nixd
     leiningen
     neovim
 
-    # most projects don't define a specific docker/docker-compose, so
-    # let's have this available user-wide.
-    docker
-    docker-compose
-
-    # Same here: Most project that are managed with make assume you
-    # have it already.
+    docker-client
     gnumake
-
     # Some system stuff that is independent of coding/projects
     ffmpeg
-    gnugrep
-    gnupg
     imagemagick
     rlwrap
     tree
@@ -70,13 +58,10 @@
     ripgrep
     fd
     nodejs
-    perl
     zulu23
   ];
 
   programs = {
-    bat.enable = true;
-
     direnv = {
       enable = true;
       enableZshIntegration = true;
@@ -151,13 +136,6 @@
         key = "~/.ssh/id_rsa.pub";
       };
     };
-
-    gpg = {
-      enable = true;
-      homedir = "${config.xdg.dataHome}/gnupg";
-    };
-
-    htop.enable = true;
 
     mercurial = {
       enable = true;
