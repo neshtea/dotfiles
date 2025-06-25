@@ -1,24 +1,6 @@
-*~
-\#*\#
-*.elc
-.cache/
-.lsp-session*
-.org-id-locations
-bookmarks
-config.el
-history
-auto-save-list/
-eln-cache/
-elpa/
-org-roam.db
-places
-projectile-bookmarks.eld
-racket-mode/
-custom.el
-projectile-bookmarks.eld
-projectile.cache
-projects
-transient/
-tramp
-quelpa/
-straight/
+# Ignore everything
+*
+
+# Except these
+init.el
+early-init.el
