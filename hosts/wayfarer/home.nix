@@ -27,4 +27,6 @@ rec {
     enable = true;
     emacsPackage = pkgs.emacs-git;
   };
+
+  modules.programs.vscode.enable = true;
 }
