@@ -32,39 +32,6 @@
       specialArgs = { inherit inputs; };
     in
     {
-      # Configuration for nixos systems.  Uses the system
-      # configuration via the `nixosConfiguration`.  `home-manager` is
-      # used as a module (`home-manager.nixosModules.home-manager`).
-      nixosConfigurations.oxomoco =
-        let
-          system = "x86_64-linux";
-          pkgs = import nixpkgs {
-            config.allowUnfree = true; # sorry rms
-            inherit system;
-            overlays = [ 
-              inputs.emacs-overlay.overlays.default
-            ];
-          };
-
-        in
-        nixpkgs.lib.nixosSystem {
-          inherit pkgs system specialArgs;
-
-          modules = [
-            ./hosts/oxomoco/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                users.${username} = import ./hosts/oxomoco/home.nix;
-                useGlobalPkgs = true;
-                useUserPackages = false;
-                extraSpecialArgs = specialArgs;
-              };
-            }
-            inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t490
-          ];
-        };
-
       # This only concerns systems that use home-manager directly (in
       # my case, darwin machines).
       homeConfigurations.${username} =
