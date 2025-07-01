@@ -1,5 +1,5 @@
 { ... }:
 
 {
-  imports = [ ./emacs ./docker ./kitty ./neovim ./vscode ./wezterm ];
+  imports = [ ./emacs ./docker ./kitty ./neovim ./wezterm ];
 }

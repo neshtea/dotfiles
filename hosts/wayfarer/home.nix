@@ -27,6 +27,4 @@ rec {
     enable = true;
     emacsPackage = pkgs.emacs-macport;
   };
-
-  modules.programs.vscode.enable = true;
 }
