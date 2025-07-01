@@ -7,6 +7,6 @@ let cfg = config.modules.programs.docker;
 in {
   options.modules.programs.docker = { enable = lib.mkEnableOption "docker"; };
   config = lib.mkIf cfg.enable {
-    home = { packages = with pkgs; [ docker docker-compose ]; };
+    home = { packages = with pkgs; [ docker ]; };
   };
 }
