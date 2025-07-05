@@ -68,7 +68,7 @@
 		    'condensed))
 	))
 
-(setq neshtea/current-font 'iosevka)
+(setq neshtea/current-font 'sf-mono)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -356,6 +356,7 @@ the separator."
 (use-package rustic :defer)
 (use-package lua-mode :defer)
 (use-package elixir-mode :defer)
+(use-package erlang :defer)
 (use-package gleam-ts-mode :defer
   :mode (rx ".gleam" eos))
 (use-package sly-quicklisp :defer)
@@ -379,7 +380,8 @@ the separator."
 (use-package scala-ts-mode :defer
   :mode (("\\.scala\\'" . scala-ts-mode)
 	 ("\\.sbt\\'" . scala-ts-mode))
-  :hook ((scala-ts-mode . lsp-deferred)))
+  :hook ((scala-ts-mode . lsp-deferred)
+         (elixir-mode . lsp-deferred)))
 
 (use-package sbt-mode :defer
   :commands sbt-start sbt-command

@@ -25,6 +25,6 @@ rec {
 
   modules.programs.emacs = {
     enable = true;
-    emacsPackage = pkgs.emacs-macport;
+    emacsPackage = pkgs.emacs-git;
   };
 }
