@@ -26,6 +26,11 @@
 
   home.username = "schneider";
 
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    ALTERNATE_EDITOR = "vim";
+  };
+
   home.packages = with pkgs; [
     nixVersions.latest
 
@@ -69,12 +74,20 @@
       nix-direnv.enable = true;
     };
 
+    vscode = {
+      enable = true;
+      package = pkgs.vscodium;
+    };
+
     git = {
       enable = true;
       userName = "Marco Schneider";
       userEmail = "marco.schneider@active-group.de";
       delta.enable = true;
       extraConfig = {
+        core = {
+          editor = "nvim";
+        };
         commit = {
           gpgsign = "true";
         };

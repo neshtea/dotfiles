@@ -3,18 +3,19 @@ local config = {}
 
 -- https://wezterm.org/config/lua/wezterm.gui/get_appearance.html
 local function get_appearance()
-  if wezterm.gui then
-    return wezterm.gui.get_appearance()
-  end
-  return 'Dark'
+    if wezterm.gui then
+        return wezterm.gui.get_appearance()
+    end
+    return 'Dark'
 end
 
 local function scheme_for_appearance(appearance)
-  if appearance:find 'Dark' then
-    return 'Catppuccin Macchiato'
-  else
-    return 'Catppuccin Latte'
-  end
+    if appearance:find 'Dark' then
+        return 'Gruvbox Material (Gogh)'
+    else
+        -- HAHA
+        return 'Gruvbox Material (Gogh)'
+    end
 end
 
 if wezterm.config_builder then
