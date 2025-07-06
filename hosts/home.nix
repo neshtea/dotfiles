@@ -41,6 +41,7 @@
     clojure-lsp
     lua-language-server
     nixd
+    nil
     leiningen
     neovim
 
