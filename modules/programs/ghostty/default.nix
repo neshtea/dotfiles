@@ -1,7 +1,8 @@
 {
   config,
+  # pkgs,
   lib,
-  inputs,
+  # inputs,
   ...
 }:
 
@@ -23,7 +24,8 @@ in
           fi
         '';
       };
-      packages = [ inputs.ghostty ];
+      # NOTE: Not actually available via nix.
+      packages = [ ]; # [ inputs.ghostty.packages.${pkgs.stdenv.system}.default ];
     };
   };
 }
