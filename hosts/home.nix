@@ -75,11 +75,6 @@
       nix-direnv.enable = true;
     };
 
-    vscode = {
-      enable = true;
-      package = pkgs.vscodium;
-    };
-
     git = {
       enable = true;
       userName = "Marco Schneider";
@@ -162,6 +157,7 @@
   modules.shell.fzf.enable = true;
   modules.shell.tmux.enable = true;
   modules.shell.zsh.enable = true;
+  modules.programs.ghostty.enable = true;
 
   xdg.enable = true;
 

@@ -16,9 +16,8 @@
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
-      inputs.nixpkgs.follows = "nixpkgs";
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
     };
   };
 
@@ -42,7 +41,6 @@
             inherit system;
             overlays = [
               inputs.emacs-overlay.overlays.default
-              inputs.nix-vscode-extensions.overlays.default
             ];
             # Use this flake.nix's nixpkgs for stuff like `nix shell nixpkgs#<foo>`.
             nix.registry = {
