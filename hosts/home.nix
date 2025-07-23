@@ -43,6 +43,7 @@
     nixd
     nil
     leiningen
+    lazygit
 
     docker-client
     gnumake
