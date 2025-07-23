@@ -16,7 +16,7 @@ in
   config = lib.mkIf cfg.enable {
     home = {
       activation = {
-        symlinkEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        symlinkNeovim = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           if [ ! -e $XDG_CONFIG_HOME/nvim ]; then
             $DRY_RUN_CMD ln -snf $HOME/dotfiles/modules/programs/neovim/nvim $XDG_CONFIG_HOME/nvim
           fi

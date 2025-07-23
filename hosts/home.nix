@@ -43,7 +43,6 @@
     nixd
     nil
     leiningen
-    neovim
 
     docker-client
     gnumake
@@ -55,6 +54,8 @@
     yt-dlp
     wget
     jq
+    hledger
+    hledger-web
 
     subversion
 
@@ -158,6 +159,8 @@
   modules.shell.tmux.enable = true;
   modules.shell.zsh.enable = true;
   modules.programs.ghostty.enable = true;
+  modules.programs.neovim.enable = true;
+  modules.programs.emacs.enable = true;
 
   xdg.enable = true;
 
