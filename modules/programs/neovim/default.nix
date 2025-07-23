@@ -15,6 +15,14 @@ in
   # make config only if someone set enable = true
   config = lib.mkIf cfg.enable {
     home = {
+      activation = {
+        symlinkEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          if [ ! -e $XDG_CONFIG_HOME/nvim ]; then
+            $DRY_RUN_CMD ln -snf $HOME/dotfiles/modules/programs/neovim/nvim $XDG_CONFIG_HOME/nvim
+          fi
+        '';
+      };
+
       packages = with pkgs; [
         neovim
         nodejs
@@ -22,7 +30,7 @@ in
         stylua
         jq # Formatter for json
         python310Packages.mdformat # Formatter for markdown
-        cargo
+        cargo # for parinfer
       ];
     };
   };
