@@ -38,8 +38,6 @@
     coreutils
     tree-sitter
     clojure
-    clojure-lsp
-    lua-language-server
     nixd
     nil
     leiningen

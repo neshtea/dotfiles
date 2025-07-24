@@ -28,9 +28,14 @@ in
         nodejs
         lua
         stylua
-        jq # Formatter for json
         python313Packages.mdformat # Formatter for markdown
         cargo # for parinfer
+        jq # Formatter for json
+
+        # Fallback language servers
+        clojure-lsp
+        lua-language-server
+        typescript-language-server
       ];
     };
   };
