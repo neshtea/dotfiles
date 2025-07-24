@@ -70,9 +70,20 @@
   programs = {
     direnv = {
       enable = true;
-      enableZshIntegration = true;
       # Makes nix-shells a LOT faster
       nix-direnv.enable = true;
+    };
+
+    fish = {
+      enable = true;
+      interactiveShellInit = ''
+          set fish_greeting
+          source ~/.nix-profile/etc/profile.d/nix.fish
+      '';
+      shellInit = ''
+        fish_add_path --path "$HOME/bin:$PATH"
+        export TEXINPUTS="$HOME/repos/ag/howto/tex:$TEXINPUTS"
+      '';
     };
 
     git = {
@@ -156,7 +167,7 @@
   # Shells and shell tools
   modules.shell.fzf.enable = true;
   modules.shell.tmux.enable = true;
-  modules.shell.zsh.enable = true;
+  modules.shell.zsh.enable = false;
   modules.programs.ghostty.enable = true;
   modules.programs.neovim.enable = true;
   modules.programs.emacs.enable = true;

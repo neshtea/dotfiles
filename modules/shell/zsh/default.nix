@@ -14,10 +14,6 @@ in
   };
   config = lib.mkIf cfg.enable {
     programs = {
-      starship = {
-        enable = true;
-        enableZshIntegration = true;
-      };
       zsh = {
         enable = true;
         enableCompletion = true;
@@ -44,13 +40,11 @@ in
           if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
             . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
           fi
-          eval "$(starship init zsh)"
         '';
         oh-my-zsh = {
           enable = true;
           plugins = [
             "git"
-            "brew"
             "common-aliases"
             "direnv"
             "docker"
