@@ -48,3 +48,12 @@ vim.diagnostic.config({
 
 vim.o.background = "dark"
 vim.cmd("colorscheme gruvbox-material")
+
+vim.lsp.enable({
+    'clojure',
+    'elixir',
+    'haskell',
+    'lua',
+    'nix',
+    'typescript',
+})
