@@ -45,3 +45,6 @@ vim.diagnostic.config({
     -- virtual_lines = true,
     virtual_text = true,
 })
+
+vim.o.background = "dark"
+vim.cmd("colorscheme gruvbox-material")

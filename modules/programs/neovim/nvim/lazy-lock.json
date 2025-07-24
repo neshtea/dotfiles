@@ -1,11 +1,10 @@
 {
-  "auto-dark-mode.nvim": { "branch": "master", "commit": "97a86c9402c784a254e5465ca2c51481eea310e3" },
   "conform.nvim": { "branch": "master", "commit": "a6f5bdb78caa305496357d17e962bbc4c0b392e2" },
   "conjure": { "branch": "master", "commit": "ee0ba18a8ad6d55e2e5f84bf94e4906e348f23b7" },
   "gruvbox-material": { "branch": "master", "commit": "66cfeb7050e081a746a62dd0400446433e802368" },
   "gruvbox.nvim": { "branch": "main", "commit": "58a2cda2e953a99e2f87c12b7fb4602da4e0709c" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
-  "nvim-lspconfig": { "branch": "master", "commit": "f47cd681d7cb6048876a2e908b6d8ba1e530d152" },
+  "nvim-lspconfig": { "branch": "master", "commit": "169745f176f58becad80363c3f8f2315ed6bb365" },
   "nvim-treesitter": { "branch": "master", "commit": "42fc28ba918343ebfd5565147a42a26580579482" },
   "parinfer-rust": { "branch": "master", "commit": "20da74333d7234207da2dff00fca6e14f15f44e0" },
   "plenary.nvim": { "branch": "master", "commit": "857c5ac632080dba10aae49dba902ce3abf91b35" },

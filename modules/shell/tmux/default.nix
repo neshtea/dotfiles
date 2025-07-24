@@ -27,6 +27,9 @@ in
         set -gu default-command
         set -g default-shell "${config.programs.zsh.package}/bin/zsh"
       '';
+      plugins = with pkgs; [
+        tmuxPlugins.gruvbox
+      ];
       historyLimit = 9999;
       keyMode = "emacs";
       mouse = true;
