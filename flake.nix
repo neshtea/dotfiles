@@ -20,10 +20,6 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    parinfer-rust = {
-      url = "github:eraserhd/parinfer-rust/tree/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
