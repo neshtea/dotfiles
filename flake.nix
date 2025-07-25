@@ -16,6 +16,14 @@
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    parinfer-rust = {
+      url = "github:eraserhd/parinfer-rust/tree/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -38,6 +46,7 @@
             inherit system;
             overlays = [
               inputs.emacs-overlay.overlays.default
+              inputs.neovim-nightly-overlay.overlays.default
             ];
             # Use this flake.nix's nixpkgs for stuff like `nix shell nixpkgs#<foo>`.
             nix.registry = {
