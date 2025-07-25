@@ -65,8 +65,8 @@
 	(sf-mono . (:family
 		    "SF Mono"
 		    :width
-		    'condensed))
-	))
+		    
+	))))
 
 (setq neshtea/current-font 'sf-mono)
 
