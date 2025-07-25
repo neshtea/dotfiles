@@ -77,8 +77,8 @@
     fish = {
       enable = true;
       interactiveShellInit = ''
-          set fish_greeting
-          source ~/.nix-profile/etc/profile.d/nix.fish
+        set fish_greeting
+        source ~/.nix-profile/etc/profile.d/nix.fish
       '';
       shellInit = ''
         fish_add_path --path "$HOME/bin:$PATH"
