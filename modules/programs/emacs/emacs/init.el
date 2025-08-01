@@ -369,13 +369,5 @@ the separator."
 
 (use-package adoc-mode :defer)
 
-(use-package windmove :defer
-  :bind (("C-c <left>" . #'windmove-left)
-	 ("C-c <right>" . #'windmove-right)
-	 ("C-c <down>" . #'windmove-down)
-	 ("C-c <up>" . #'windmove-up)))
-
-(use-package golden-ratio :defer)
-
 (provide 'init)
 ;;; init.el ends here
