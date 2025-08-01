@@ -68,7 +68,7 @@
 		    
 	))))
 
-(setq neshtea/current-font 'sf-mono)
+(setq neshtea/current-font 'jetbrains-mono)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -216,9 +216,6 @@ it. Optionally, you can supply a list of themes to select from."
   :hook (company-mode . company-box-mode)
   :diminish company-box-mode)
 
-(use-package company-lsp :defer
-  :after lsp-mode)
-
 (use-package zoom :defer
   :config (setq zoom-size '(0.618 . 0.618)))
 
@@ -253,8 +250,7 @@ it. Optionally, you can supply a list of themes to select from."
 (use-package merlin-company :defer)
 (add-to-list 'auto-mode-alist '("\\.mlx\\'" . tuareg-mode))
 (use-package tuareg :defer
-  :hook ((tuareg-mode . lsp-deferred)
-	 (tuareg-mode . ocaml-format-on-save-mode)))
+  :hook ((tuareg-mode . ocaml-format-on-save-mode)))
 (use-package reason-mode :defer
   :straight (:host github :github "reasonml-editor/reason-mode"))
 
@@ -288,37 +284,11 @@ it. Optionally, you can supply a list of themes to select from."
   :bind (:map haskell-mode-map
 	      ("C-. i i" . haskell-navigate-imports-go)
 	      ("C-. i r" . haskell-navigate-imports-return))
-  :hook ((haskell-mode . interactive-haskell-mode)
-	 (haskell-mode . lsp)))
+  :hook ((haskell-mode . interactive-haskell-mode)))
 
 (use-package yasnippet :defer
   :config
   (yas-global-mode 1))
-
-(use-package lsp-haskell :defer
-  :custom
-  (lsp-haskell-formatting-provider "fourmolu"))
-
-(use-package lsp-mode :defer
-  :init
-  (setq lsp-keymap-prefix "C-c l")
-  :hook
-  (clojure-mode . lsp)
-  (lsp-mode . lsp-lens-mode)
-  :config
-  (setq lsp-ui-doc-enable t)
-  (setq lsp-diagnostics-provider :flycheck)
-  (add-to-list 'lsp-language-id-configuration '(".*\\.mlx$" . "ocaml"))
-  (setq lsp-elixir-server-command '("elixir-ls"))
-  :commands lsp)
-
-(use-package lsp-ui :defer :commands lsp-ui-mode)
-
-(use-package consult-lsp :defer
-  :after lsp-mode)
-
-(use-package flycheck :defer
-  :after lsp-mode)
 
 (use-package sly :defer
   :config (setq inferior-lisp-program "sbcl"))
@@ -377,24 +347,6 @@ the separator."
 	 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package scala-ts-mode :defer
-  :mode (("\\.scala\\'" . scala-ts-mode)
-	 ("\\.sbt\\'" . scala-ts-mode))
-  :hook ((scala-ts-mode . lsp-deferred)
-         (elixir-mode . lsp-deferred)))
-
-(use-package sbt-mode :defer
-  :commands sbt-start sbt-command
-  :config
-  (setq sbt:program-options '("-Dsbt.supershell=false")))
-
-(setq major-mode-remap-alist
-      '((scala-mode . scala-ts-mode)))
-
-;; https://emacs-lsp.github.io/lsp-metals/
-(use-package lsp-metals :defer
-  :custom (lsp-metals-enable-semantic-highlighting t))
-
 (use-package org :defer
   :hook ((org-mode . org-indent-mode)))
 
@@ -422,12 +374,6 @@ the separator."
 	 ("C-c <right>" . #'windmove-right)
 	 ("C-c <down>" . #'windmove-down)
 	 ("C-c <up>" . #'windmove-up)))
-
-(use-package lsp-pyright :defer
-  :custom (lsp-pyright-langserver-command "pyright")
-  :hook (python-mode . (lambda ()
-			 (require 'lsp-pyright)
-			 (lsp))))
 
 (use-package golden-ratio :defer)
 
