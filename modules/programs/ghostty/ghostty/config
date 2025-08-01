@@ -1,5 +1,5 @@
 command = ~/.nix-profile/bin/fish
-font-family = SF Mono
-font-size = 12
+font-family = JetBrains Mono
+font-size = 13
 term = xterm-256color
 theme = GruvboxDark
