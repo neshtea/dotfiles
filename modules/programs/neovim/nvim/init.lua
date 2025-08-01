@@ -25,16 +25,15 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
+-- Completion
+vim.opt.completeopt = {
+    'menuone',  -- always show menu even if there's only one entry
+    'noselect', -- don't preselect anything
+    'popup'     -- always show extra info if available
+}
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
-
-vim.filetype.add({
-    pattern = {
-        [".*.mlx"] = "ocaml",
-    },
-})
-
--- require("config.lazy")
 
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "<leader>x", ":.lua<CR>")
@@ -48,53 +47,21 @@ vim.diagnostic.config({
 
 -- LSP
 --
-vim.lsp.enable({
-    'clojure',
-    'elixir',
-    'haskell',
-    'lua',
-    'nix',
-    'typescript',
-})
+vim.lsp.enable({ 'clojure', 'elixir', 'haskell', 'lua', 'nix', 'ocaml', 'typescript', })
 
 -- PACKAGES
 vim.pack.add({
     'https://github.com/sainnhe/gruvbox-material',
-    {
-        src = 'https://github.com/stevearc/conform.nvim',
-        version = 'v9.0.0',
-    },
-    {
-        src = 'https://github.com/Olical/conjure',
-        version = 'v4.55.0',
-    },
-    {
-        src = 'https://github.com/tpope/vim-fugitive',
-        version = 'v3.7',
-    },
-    {
-        src = 'https://github.com/eraserhd/parinfer-rust',
-        version = 'v0.5.0',
-    },
-    {
-        src = 'https://github.com/nvim-telescope/telescope.nvim',
-        version = '0.1.8',
-    },
+    { src = 'https://github.com/stevearc/conform.nvim',         version = 'v9.0.0', },
+    { src = 'https://github.com/Olical/conjure',                version = 'v4.55.0', },
+    { src = 'https://github.com/tpope/vim-fugitive',            version = 'v3.7', },
+    { src = 'https://github.com/eraserhd/parinfer-rust',        version = 'v0.5.0', },
+    { src = 'https://github.com/nvim-telescope/telescope.nvim', version = '0.1.8', },
     'https://github.com/nvim-lua/plenary.nvim',
     'https://github.com/nvim-telescope/telescope-fzf-native.nvim',
-    {
-        src = 'https://github.com/nvim-treesitter/nvim-treesitter',
-        version = 'v0.10.0',
-    },
-    {
-        src = 'https://github.com/mbbill/undotree',
-        version = 'rel_6.1',
-
-    },
-    {
-        src = 'https://github.com/folke/which-key.nvim',
-        tag = 'v3.17.0',
-    },
+    { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'v0.10.0', },
+    { src = 'https://github.com/mbbill/undotree',                 version = 'rel_6.1', },
+    { src = 'https://github.com/folke/which-key.nvim',            tag = 'v3.17.0', },
 })
 
 -- COLORSCHEME
