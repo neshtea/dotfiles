@@ -206,19 +206,6 @@ it. Optionally, you can supply a list of themes to select from."
 (use-package projectile :defer
   :init (projectile-mode +1))
 
-(use-package company :defer
-  :hook
-  (after-init . global-company-mode)
-  :diminish company-mode)
-
-(use-package company-box :defer
-  :after company
-  :hook (company-mode . company-box-mode)
-  :diminish company-box-mode)
-
-(use-package zoom :defer
-  :config (setq zoom-size '(0.618 . 0.618)))
-
 (use-package helpful :defer
   :bind (("C-h f" . helpful-callable)
 	 ("C-h v" . helpful-variable)
@@ -327,13 +314,7 @@ the separator."
 (use-package lua-mode :defer)
 (use-package elixir-mode :defer)
 (use-package erlang :defer)
-(use-package gleam-ts-mode :defer
-  :mode (rx ".gleam" eos))
 (use-package sly-quicklisp :defer)
-(use-package racket-mode :defer)
-(use-package geiser :defer)
-(use-package geiser-guile :defer)
-(use-package geiser-chicken :defer)
 (use-package envrc :init (envrc-global-mode))
 (use-package clj-refactor :defer)
 (use-package clojure-mode :defer)
@@ -358,10 +339,8 @@ the separator."
 	org-fold-catch-invisible-edits 'show-and-error
 	org-special-ctrl-a/e t
 	org-insert-heading-respect-content t
-
 	org-hide-emphasis-markers t
 	org-pretty-entities t
-
 	org-ellipsis "…")
   (set-face-attribute 'org-ellipsis nil :inherit 'default :box nil))
 
