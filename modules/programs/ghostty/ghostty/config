@@ -1,4 +1,4 @@
-command = ~/.nix-profile/bin/fish
+command = ~/.nix-profile/bin/zsh
 font-family = JetBrains Mono
 font-size = 13
 term = xterm-256color
