@@ -1,5 +1,5 @@
-command = ~/.nix-profile/bin/zsh
-font-family = JetBrains Mono
+command = ~/.nix-profile/bin/fish
+font-family = Iosevka
 font-size = 13
 term = xterm-256color
 theme = GruvboxDark

@@ -110,12 +110,12 @@ the face-font."
 ;; Especially on MacOS, the exec path is always wrong.  This package
 ;; tries to fix that.
 ;; SEE https://github.com/purcell/exec-path-from-shell#usage
-(use-package exec-path-from-shell)
-
-(dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
-  (add-to-list 'exec-path-from-shell-variables var))
-
-(when (memq window-system '(mac ns x))
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns x))
+  :config
+  (setq exec-path-from-shell-shell-name "zsh")
+  (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
+    (add-to-list 'exec-path-from-shell-variables var))
   (exec-path-from-shell-initialize))
 
 (use-package which-key :defer t
@@ -170,6 +170,12 @@ it. Optionally, you can supply a list of themes to select from."
 (use-package savehist :defer
   :init (savehist-mode))
 
+(use-package company :defer)
+(use-package company-lsp :defer
+  :after lsp-mode)
+(use-package company-box :defer
+  :hook (company-mode . company-box-mode))
+
 (use-package orderless
   :init
   (setq completion-styles '(orderless basic)
@@ -221,6 +227,20 @@ it. Optionally, you can supply a list of themes to select from."
 	      ("C-. h h" . cider-doc)
 	      ("C-. t t" . cider-test-run-test)
 	      ("C-. t a" . cider-test-run-ns-test)))
+
+(use-package lsp-mode :defer
+  :init (setq lsp-keymap-prefix "C-c l")
+  :hook ((clojure-mode . lsp-deferred)
+         (lsp-mode . lsp-lens-mode))
+  :config
+  (setq lsp-ui-doc-enable t)
+  (setq lsp-diagnostics-provider :flycheck)
+  (setq lsp-elixir-server-command '("elixir-ls"))
+  :commands lsp)
+
+(use-package lsp-ui :defer :commands lsp-ui-mode)
+
+(use-package flycheck)
 
 (use-package nix-mode
   :defer t
@@ -345,8 +365,10 @@ the separator."
   (set-face-attribute 'org-ellipsis nil :inherit 'default :box nil))
 
 (use-package go-mode :defer)
-
 (use-package adoc-mode :defer)
+(use-package hledger-mode :defer
+  :config
+  (setq hledger-jfile "~/.hledger.journal"))
 
 (provide 'init)
 ;;; init.el ends here

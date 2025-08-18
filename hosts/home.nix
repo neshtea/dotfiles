@@ -42,6 +42,7 @@
     nil
     leiningen
     lazygit
+    iosevka
 
     docker-client
     gnumake
@@ -68,6 +69,17 @@
   ];
 
   programs = {
+    fish = {
+      enable = true;
+      interactiveShellInit = ''
+        set fish_greeting
+        source ~/.nix-profile/etc/profile.d/nix.fish
+      '';
+      shellInit = ''
+        fish_add_path --path "$HOME/bin:$PATH"
+        export TEXINPUTS="$HOME/repos/ag/howto/tex:$TEXINPUTS"
+      '';
+    };
     direnv = {
       enable = true;
       enableZshIntegration = true;

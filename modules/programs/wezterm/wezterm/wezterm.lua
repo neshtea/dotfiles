@@ -22,13 +22,16 @@ if wezterm.config_builder then
     config = wezterm.config_builder()
 end
 
+-- https://wezterm.org/config/launch.html#changing-the-default-program
+-- Spawn a fish shell in login mode
+config.default_prog = { '/Users/schneider/.nix-profile/bin/fish', '-l' }
+
 -- tab bar
 config.enable_tab_bar = false
 
 config.color_scheme = scheme_for_appearance(get_appearance()) -- 'Gruvbox Material (Gogh)'
--- config.font = wezterm.font("JetBrains Mono")
-config.font = wezterm.font("Menlo")
-config.font_size = 12.0
+config.font = wezterm.font("Iosevka")
+config.font_size = 14.0
 config.adjust_window_size_when_changing_font_size = false
 config.audible_bell = "Disabled"
 

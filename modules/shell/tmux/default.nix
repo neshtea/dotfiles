@@ -24,14 +24,14 @@ in
         # Fixes tmux-sensible always picking /bin/sh as it's shell
         # See https://github.com/nix-community/home-manager/issues/5952#issuecomment-2409056750
         set -gu default-command
-        set -g default-shell "${lib.getExe config.programs.zsh.package}"
+        set -g default-shell "${lib.getExe config.programs.fish.package}"
       '';
       historyLimit = 9999;
       keyMode = "emacs";
       mouse = true;
       newSession = true;
       prefix = "C-Space";
-      shell = "${lib.getExe config.programs.zsh.package}";
+      shell = "${lib.getExe config.programs.fish.package}";
       terminal = "screen-256color";
     };
   };
