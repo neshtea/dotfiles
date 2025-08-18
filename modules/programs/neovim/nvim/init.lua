@@ -1,36 +1,31 @@
-vim.opt.nu = true
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-vim.opt.smartindent = true
-
-vim.opt.wrap = false
-
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
-vim.opt.undofile = false
-
-vim.opt.hlsearch = true
-vim.opt.incsearch = true
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-
-vim.opt.termguicolors = true
-
-vim.opt.scrolloff = 8
-vim.opt.signcolumn = "yes"
-vim.opt.isfname:append("@-@")
-
-vim.opt.updatetime = 50
-
+local opt = vim.opt
+opt.nu = true
+opt.tabstop = 4
+opt.softtabstop = 4
+opt.shiftwidth = 4
+opt.expandtab = true
+opt.smartindent = true
+opt.wrap = false
+opt.swapfile = false
+opt.backup = false
+opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+opt.undofile = false
+opt.hlsearch = true
+opt.incsearch = true
+opt.ignorecase = true
+opt.smartcase = true
+opt.termguicolors = true
+opt.scrolloff = 8
+opt.signcolumn = "yes"
+opt.isfname:append("@-@")
+opt.updatetime = 50
 -- Completion
-vim.opt.completeopt = {
+opt.completeopt = {
     'menuone',  -- always show menu even if there's only one entry
     'noselect', -- don't preselect anything
     'popup'     -- always show extra info if available
 }
+opt.cmdheight = 0
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
@@ -41,8 +36,8 @@ vim.keymap.set("v", "<leader>x", ":lua<CR>")
 
 vim.diagnostic.enable()
 vim.diagnostic.config({
-    -- virtual_lines = true,
-    virtual_text = true,
+    virtual_lines = true,
+    -- virtual_text = true,
 })
 
 -- LSP
