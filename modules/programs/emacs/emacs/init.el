@@ -64,9 +64,7 @@
 	(iosevka . (:family "Iosevka"))
 	(sf-mono . (:family
 		    "SF Mono"
-		    :width
-		    
-	))))
+		    :width))))
 
 (setq neshtea/current-font 'jetbrains-mono)
 
@@ -84,7 +82,7 @@ the face-font."
     (set-face-attribute 'default nil
 			:family family
 			:height (or height
-				    140)
+				    120)
 			:width (or width
 				   'normal))))
 
@@ -153,9 +151,6 @@ it. Optionally, you can supply a list of themes to select from."
 
 (use-package base16-theme :defer)
 (use-package doom-themes :defer)
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1))
 (use-package nerd-icons :defer)
 
 (neshtea/switch-theme 'base16-gruvbox-material-dark-medium)
@@ -171,8 +166,6 @@ it. Optionally, you can supply a list of themes to select from."
   :init (savehist-mode))
 
 (use-package company :defer)
-(use-package company-lsp :defer
-  :after lsp-mode)
 (use-package company-box :defer
   :hook (company-mode . company-box-mode))
 
@@ -185,13 +178,11 @@ it. Optionally, you can supply a list of themes to select from."
 (use-package project)
 
 ;; consult provides a huge array of cap based searches.
-(use-package consult
-  :defer t
+(use-package consult :defer t
   :init
   (setq register-preview-delay 0
 	register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
-
   :bind
   (("C-c c m" . consult-mode-command)
    ("C-c c h" . consult-history)
@@ -200,17 +191,10 @@ it. Optionally, you can supply a list of themes to select from."
    ("C-c c o" . consult-outline)
    ("C-c c b" . consult-buffer)
    ("C-c c r" . consult-ripgrep))
-  
-  :hook (completion-list-mode . consult-preview-at-point-mode)
-
-  :config
-  (autoload 'projectile-project-root "projectile")
-  (setq consult-project-root-function #'projectile-project-root))
+  :hook (completion-list-mode . consult-preview-at-point-mode))
 
 (use-package marginalia :defer
   :init (marginalia-mode))
-(use-package projectile :defer
-  :init (projectile-mode +1))
 
 (use-package helpful :defer
   :bind (("C-h f" . helpful-callable)
@@ -228,19 +212,14 @@ it. Optionally, you can supply a list of themes to select from."
 	      ("C-. t t" . cider-test-run-test)
 	      ("C-. t a" . cider-test-run-ns-test)))
 
-(use-package lsp-mode :defer
-  :init (setq lsp-keymap-prefix "C-c l")
-  :hook ((clojure-mode . lsp-deferred)
-         (lsp-mode . lsp-lens-mode))
-  :config
-  (setq lsp-ui-doc-enable t)
-  (setq lsp-diagnostics-provider :flycheck)
-  (setq lsp-elixir-server-command '("elixir-ls"))
-  :commands lsp)
+(use-package eglot
+  :ensure t
+  :hook (((clojure-mode clojurescript-mode typescript-ts-mode nix-mode) . eglot-ensure))
+  :custom
+  (eglot-code-action-indications '(eldoc-hint)))
 
-(use-package lsp-ui :defer :commands lsp-ui-mode)
-
-(use-package flycheck)
+(use-package eldoc)
+(use-package flymake)
 
 (use-package nix-mode
   :defer t
@@ -278,6 +257,15 @@ it. Optionally, you can supply a list of themes to select from."
   :program "dune"
   :args '("format-dune-file")
   :lighter " DuneFmt")
+
+(reformatter-define prettier-format
+  :program "npx"
+  :args (list "prettier" "--stdin-filepath" (buffer-file-name))
+  :lighter " Prettier")
+
+(use-package typescript-ts-mode :defer
+  :hook ((typescript-ts-mode . prettier-format-on-save-mode)
+         (tsx-ts-mode . prettier-format-on-save-mode)))
 
 ;;;; Haskell language support.
 (use-package haskell-mode :defer
@@ -339,7 +327,6 @@ the separator."
 (use-package clj-refactor :defer)
 (use-package clojure-mode :defer)
 (use-package magit :defer)
-(use-package diminish)
 
 (use-package markdown-mode :defer
   :commands (markdown-mode gfm-mode)
