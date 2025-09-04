@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}:
+{ pkgs, inputs, ... }:
 {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -20,9 +15,7 @@
 
   imports = [ ../modules ];
 
-  nix.registry = {
-    this.flake = inputs.nixpkgs;
-  };
+  nix.registry.this.flake = inputs.nixpkgs;
 
   home.username = "schneider";
 
@@ -32,43 +25,27 @@
   };
 
   home.packages = with pkgs; [
-    nixVersions.latest
-
     cacert
-    coreutils
-    tree-sitter
     clojure
-    nixd
-    nil
-    leiningen
-    lazygit
-    iosevka
-
+    coreutils
     docker-client
     gnumake
-    # Some system stuff that is independent of coding/projects
-    ffmpeg
-    imagemagick
-    rlwrap
-    tree
-    yt-dlp
-    wget
+    iosevka
     jq
-    hledger
-    hledger-web
-
-    subversion
-
-    # Required for some modules and nice utilities to have
-    nixfmt-rfc-style
     multimarkdown
-    ripgrep
-    fd
+    nil
+    nixVersions.latest
+    nixd
+    nixfmt-rfc-style
     nodejs
-    zulu23
+    ripgrep
+    subversion
+    tree-sitter
+    wget
   ];
 
   programs = {
+
     fish = {
       enable = true;
       interactiveShellInit = ''
@@ -80,6 +57,7 @@
         export TEXINPUTS="$HOME/repos/ag/howto/tex:$TEXINPUTS"
       '';
     };
+
     direnv = {
       enable = true;
       enableZshIntegration = true;
@@ -88,20 +66,11 @@
     };
 
     git = {
-      enable = true;
-      userName = "Marco Schneider";
-      userEmail = "marco.schneider@active-group.de";
       delta.enable = true;
+      enable = true;
       extraConfig = {
-        core = {
-          editor = "nvim";
-        };
-        commit = {
-          gpgsign = "true";
-        };
-        tag = {
-          gpgsign = "true";
-        };
+        commit.gpgsign = "true";
+        core.editor = "nvim";
         gpg = {
           format = "ssh";
           ssh.allowedSignersFile = "~/.ssh/allowed_signers";
@@ -110,52 +79,33 @@
         merge.conflicstyle = "diff3";
         pull.rebase = "true";
         push.autoSetupRemote = "true";
-        url = {
-          # kenranunderscore forces me to use this as well... :D
-          "https://github.com/" = {
-            insteadOf = "gh:";
-          };
-          "ssh://git@gitlab.active-group.de:1022/ag/" = {
-            insteadOf = "ag:";
-          };
-        };
+        tag.gpgsign = "true";
       };
       ignores = [
-        # (n)vim
         "*.swp"
         ".exrc"
         ".nvimrc"
-
-        # Direnv
         ".direnv/"
         ".envrc"
-
-        # macOS
         ".DS_Store"
-
-        # Emacs: backup, auto-save, lock files, directory-local
-        # variables
         "*~"
         "\\#*\\#"
         ".\\#*"
         ".dir-locals.el"
-
-        # Clojure, LSP, ...
         ".clj-kondo/"
         ".lsp/"
         ".calva/"
         ".shadow-cljs/"
         ".cpcache/"
-
         ".vscode/"
-
-        # JavaScript
         "node_modules/"
       ];
       signing = {
         signByDefault = true;
         key = "~/.ssh/id_rsa.pub";
       };
+      userEmail = "marco.schneider@active-group.de";
+      userName = "Marco Schneider";
     };
 
     mercurial = {
@@ -166,14 +116,16 @@
   };
 
   # Shells and shell tools
-  modules.shell.fzf.enable = true;
+  modules.shell.fzf.enable = false;
   modules.shell.tmux.enable = true;
   modules.shell.zsh.enable = true;
-  modules.programs.ghostty.enable = true;
   modules.programs.neovim.enable = true;
-  modules.programs.emacs.enable = true;
+  modules.programs.emacs = {
+    enable = true;
+    emacsPackage = pkgs.emacs-git;
+  };
+  modules.programs.wezterm.enable = true;
 
   xdg.enable = true;
-
   xdg.configFile."nixpkgs/config.nix".source = ../xdg/config.nix;
 }
