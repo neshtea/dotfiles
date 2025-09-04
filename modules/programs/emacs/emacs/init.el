@@ -1,63 +1,42 @@
 ;; -*- lexical-binding: t; -*-
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name
-        "straight/repos/straight.el/bootstrap.el"
-        (or (bound-and-true-p straight-base-dir)
-            user-emacs-directory)))
-      (bootstrap-version 7))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+(defun neshtea/report-startup-time ()
+  (message
+   "Emacs startup took %s with %d garbage collections"
+   (format
+    "%.2f seconds"
+    (float-time (time-subtract after-init-time before-init-time)))
+   gcs-done))
 
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
-
-(add-hook
- 'emacs-startup-hook
- (lambda ()
-   (message
-    "Emacs startup took %s with %d garbage collections"
-    (format
-     "%.2f seconds"
-     (float-time (time-subtract after-init-time before-init-time)))
-    gcs-done)))
-
-;;;; GENERAL
-(setq
- inhibit-splash-screen t  ; Don't show the standart Emacs startup screen.
- make-backup-files nil  ; Don't make backup files the first time it is saved.
- custom-file (expand-file-name "~/.config/emacs/custom.el"); Don't clutter init.el with custom but instead write it to  ~/.emacs.d/custom.el.
- ;; Remap some mac-specific keys.
- ns-alternate-modifier 'none
- ns-command-modifier 'meta
- ns-function-modifier 'super
- ring-bell-function 'ignore  ; Turn off all alarms completely. See https://www.emacswiki.org/emacs/AlarmBell.
- load-prefer-newer t  ; Always prefer the "newer" version of a file.
- max-lisp-eval-depth 5000
- ;; isearch
- isearch-allow-scroll t  ; don't cancel isearch on scroll
- isearch-lazy-count t  ; show number of matches
- )
-
-;; MacOS
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-(add-to-list 'default-frame-alist '(ns-appearance . dark))
-
-(setq-default cursor-type 'hbar)
-(setq-default indent-tabs-mode nil)
-
-;; "When you visit a file, point goes to the last place where it was when you
-;; previously visited the same file."  https://www.emacswiki.org/emacs/SavePlace
-(save-place-mode 1)
-(toggle-frame-maximized)  ; Startup with a maximized window
-(setq-default fill-column 80)  ; Set a more sensible default for the maximum width of a column.
-(load custom-file 'no-error)  ; Don't show errors when loading the custom file.
+(use-package emacs
+  :hook (emacs-startup-hook . (lambda ()
+                                (toggle-frame-maximized)
+                                (neshtea/report-startup-time)))
+  :custom
+  (save-place-mode 1)
+  :init
+  (menu-bar-mode -1)
+  (toggle-scroll-bar -1)
+  (tool-bar-mode -1)
+  :config
+  (setq inhibit-splash-screen t
+        custom-file (expand-file-name "~/.config/emacs/custom.el")
+        ;; Remap some mac-specific keys.
+        ns-alternate-modifier 'none
+        ns-command-modifier 'meta
+        ns-function-modifier 'super
+        ring-bell-function 'ignore
+        load-prefer-newer t
+        max-lisp-eval-depth 5000
+        ;; isearch
+        isearch-allow-scroll t
+        isearch-lazy-count t)
+  ;; MacOS
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . dark))
+  (setq-default cursor-type 'hbar)
+  (setq-default indent-tabs-mode nil)
+  (setq-default fill-column 80)
+  (load custom-file 'no-error))
 
 (setq neshtea/font-alist  ; TODO copy the latest version from kenranunderscore
       '((jetbrains-mono . (:family "JetBrains Mono"))
@@ -93,17 +72,12 @@ the face-font."
 (global-set-key (kbd "C-. s t") #'neshtea/switch-theme)
 
 ;; Disable menubar/scrollbar/toolbar.
-(menu-bar-mode -1)
-(toggle-scroll-bar -1)
-(tool-bar-mode -1)
 
 ;; Answer y or n to yes-or-no questions.
 ;; http://pragmaticemacs.com/emacs/make-all-prompts-y-or-n/
 (fset 'yes-or-no-p 'y-or-n-p)
 (show-paren-mode 1)  ; Alwas show matching parens.
 (setq display-line-numbers-type 't)  ; regular line numbers by default.
-
-(use-package ibuffer :defer t)
 
 ;; Especially on MacOS, the exec path is always wrong.  This package
 ;; tries to fix that.
@@ -116,7 +90,7 @@ the face-font."
     (add-to-list 'exec-path-from-shell-variables var))
   (exec-path-from-shell-initialize))
 
-(use-package which-key :defer t
+(use-package which-key
   :custom
   (which-key-idle-delay 0.3)
   :init
@@ -149,25 +123,22 @@ it. Optionally, you can supply a list of themes to select from."
     (message "Selected theme %s." next-theme)
     (neshtea/switch-theme next-theme)))
 
-(use-package base16-theme :defer)
-(use-package doom-themes :defer)
-(use-package nerd-icons :defer)
+(use-package base16-theme)
+(use-package doom-themes)
 
 (neshtea/switch-theme 'base16-gruvbox-material-dark-medium)
 
 (use-package vertico
-  :init
-  (vertico-mode)
+  :hook (after-init-hook . vertico-mode)
   :custom
   (vertico-cycle t)
   (vertico-resize t))
 
-(use-package savehist :defer
-  :init (savehist-mode))
+(use-package savehist
+  :hook (after-init-hook . savehist-mode))
 
-(use-package company :defer)
-(use-package company-box :defer
-  :hook (company-mode . company-box-mode))
+(use-package company
+  :hook (after-init-hook . global-company-mode))
 
 (use-package orderless
   :init
@@ -175,10 +146,8 @@ it. Optionally, you can supply a list of themes to select from."
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
 
-(use-package project)
-
 ;; consult provides a huge array of cap based searches.
-(use-package consult :defer t
+(use-package consult
   :init
   (setq register-preview-delay 0
 	register-preview-function #'consult-register-format)
@@ -193,17 +162,16 @@ it. Optionally, you can supply a list of themes to select from."
    ("C-c c r" . consult-ripgrep))
   :hook (completion-list-mode . consult-preview-at-point-mode))
 
-(use-package marginalia :defer
-  :init (marginalia-mode))
+(use-package marginalia
+  :hook (after-init-hook . marginalia-mode))
 
-(use-package helpful :defer
+(use-package helpful
   :bind (("C-h f" . helpful-callable)
 	 ("C-h v" . helpful-variable)
 	 ("C-h k" . helpful-key)
 	 ("C-h p" . helpful-at-point)))
 
 (use-package cider
-  :defer t
   :custom
   (cider-repl-display-help-banner nil)
   :bind (:map clojure-mode-map
@@ -214,61 +182,37 @@ it. Optionally, you can supply a list of themes to select from."
 
 (use-package eglot
   :ensure t
-  :hook (((clojure-mode clojurescript-mode typescript-ts-mode nix-mode) . eglot-ensure))
+  :hook (((clojure-mode
+           clojurescript-mode
+           typescript-ts-mode
+           tsx-ts-mode
+           nix-mode) . eglot-ensure))
   :custom
   (eglot-code-action-indications '(eldoc-hint)))
 
-(use-package eldoc)
-(use-package flymake)
-
 (use-package nix-mode
-  :defer t
   :mode "\\.nix\\'"
   :hook (before-save . nix-format-before-save))
 
-(use-package merlin
-  :defer t
-  :hook ((tuareg-mode . merlin-mode)
-	 (caml-mode . merlin-mode))
-  :custom
-  (merlin-command "ocamlmerlin"))
-
-(use-package merlin-company :defer)
-(add-to-list 'auto-mode-alist '("\\.mlx\\'" . tuareg-mode))
-(use-package tuareg :defer
-  :hook ((tuareg-mode . ocaml-format-on-save-mode)))
-(use-package reason-mode :defer
-  :straight (:host github :github "reasonml-editor/reason-mode"))
-
-(use-package dune :defer
-  :hook ((dune-mode . dune-format-on-save-mode)))
-
-(use-package reformatter :defer)
-
-(reformatter-define ocaml-format
-  :program "ocamlformat"
-  :args (list "--name" (buffer-file-name) "-"))
-
-(reformatter-define ocaml-mlx-format
-  :program "ocamlformat-mlx"
-  :args (list "--name" (buffer-file-name) "--impl" "-"))
-
-(reformatter-define dune-format
-  :program "dune"
-  :args '("format-dune-file")
-  :lighter " DuneFmt")
+(use-package reformatter)
 
 (reformatter-define prettier-format
   :program "npx"
   :args (list "prettier" "--stdin-filepath" (buffer-file-name))
   :lighter " Prettier")
 
-(use-package typescript-ts-mode :defer
-  :hook ((typescript-ts-mode . prettier-format-on-save-mode)
-         (tsx-ts-mode . prettier-format-on-save-mode)))
+(defun neshtea/typescript-mode-hook ()
+  (prettier-format-on-save-mode))
+
+(use-package typescript-ts-mode
+  :hook ((typescript-ts-mode . neshtea/typescript-mode-hook)
+         (tsx-ts-mode . neshtea/typescript-mode-hook)))
+
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
 
 ;;;; Haskell language support.
-(use-package haskell-mode :defer
+(use-package haskell-mode
   :custom
   (haskell-process-type 'cabal-repl)
   (haskell-interactive-popup-errors nil)
@@ -281,17 +225,9 @@ it. Optionally, you can supply a list of themes to select from."
 	      ("C-. i r" . haskell-navigate-imports-return))
   :hook ((haskell-mode . interactive-haskell-mode)))
 
-(use-package yasnippet :defer
-  :config
-  (yas-global-mode 1))
-
-(use-package sly :defer
-  :config (setq inferior-lisp-program "sbcl"))
-
 ;; A list of all modes I want lispy modes hooked to.  Add to this list
 ;; if new modes join the lispy gang.
 (setq neshtea/lispy-modes '(emacs-lisp-mode
-			    eval-expression-minibuffer-setup
 			    clojure-mode
 			    ielm-mode
 			    lisp-interaction-mode
@@ -314,48 +250,30 @@ the separator."
   (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
   (mapcar #'neshtea/hook-lispy-modes neshtea/lispy-modes))
 
-(use-package docker :defer)
-(use-package dockerfile-mode :defer)
-(use-package yaml-mode :defer)
-(use-package markdown-toc :defer)
-(use-package rustic :defer)
-(use-package lua-mode :defer)
-(use-package elixir-mode :defer)
-(use-package erlang :defer)
-(use-package sly-quicklisp :defer)
-(use-package envrc :init (envrc-global-mode))
-(use-package clj-refactor :defer)
-(use-package clojure-mode :defer)
-(use-package magit :defer)
+(use-package docker
+  :bind ("C-c d" . docker))
+(use-package yaml-mode)
+(use-package lua-mode)
+(use-package envrc
+  :hook (after-init-mode . envrc-global-mode))
+(use-package clj-refactor)
+(use-package clojure-mode)
+(use-package magit)
 
-(use-package markdown-mode :defer
+(use-package markdown-mode
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
 	 ("\\.md\\'" . markdown-mode)
 	 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package org :defer
+(use-package org
   :hook ((org-mode . org-indent-mode)))
 
-(use-package org-modern :defer
-  :hook ((org-mode . org-modern-mode))
-  :config
-  (setq org-auto-align-tags nil
-	org-tags-column 0
-	org-fold-catch-invisible-edits 'show-and-error
-	org-special-ctrl-a/e t
-	org-insert-heading-respect-content t
-	org-hide-emphasis-markers t
-	org-pretty-entities t
-	org-ellipsis "…")
-  (set-face-attribute 'org-ellipsis nil :inherit 'default :box nil))
-
-(use-package go-mode :defer)
-(use-package adoc-mode :defer)
-(use-package hledger-mode :defer
-  :config
-  (setq hledger-jfile "~/.hledger.journal"))
+(use-package adoc-mode)
+(use-package eat
+  ;; https://jeffkreeftmeijer.com/emacs-configuration/#terminal-emulation
+  :hook eat-compile-terminfo)
 
 (provide 'init)
 ;;; init.el ends here
