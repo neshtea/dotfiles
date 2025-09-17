@@ -1,4 +1,6 @@
 ;; -*- lexical-binding: t; -*-
+(setq use-package-always-ensure t)
+
 (defun neshtea/report-startup-time ()
   (message
    "Emacs startup took %s with %d garbage collections"
@@ -11,34 +13,44 @@
   :hook (emacs-startup-hook . (lambda ()
                                 (toggle-frame-maximized)
                                 (neshtea/report-startup-time)))
-  :custom
-  (save-place-mode 1)
-  :init
+  :config
+  ;; UI stuff.
   (menu-bar-mode -1)
   (toggle-scroll-bar -1)
   (tool-bar-mode -1)
-  :config
-  (setq inhibit-splash-screen t
-        custom-file (expand-file-name "~/.config/emacs/custom.el")
-        ;; Remap some mac-specific keys.
-        ns-alternate-modifier 'none
-        ns-command-modifier 'meta
-        ns-function-modifier 'super
-        ring-bell-function 'ignore
-        load-prefer-newer t
-        max-lisp-eval-depth 5000
-        ;; isearch
-        isearch-allow-scroll t
-        isearch-lazy-count t)
-  ;; MacOS
+  (setq inhibit-splash-screen t)
+  (setq ring-bell-function 'ignore)
+  
+  ;; Where to write stuff.
+  (setq custom-file (expand-file-name "~/.config/emacs/custom.el"))
+  (setq user-emacs-directory
+        (expand-file-name "emacs/" (or (getenv "XDG_CACHE_HOME") "~/.cache/")))
+
+  ;; Remap some mac-specific keys.
+  (setq ns-alternate-modifier 'none)
+  (setq ns-command-modifier 'meta)
+  (setq ns-function-modifier 'super)
+  
+  (setq load-prefer-newer t)
+  (setq max-lisp-eval-depth 5000)
+  ;; isearch
+  (setq isearch-allow-scroll t)
+  (setq isearch-lazy-count t)
+  (save-place-mode 1)
+  ;; MacOS (disable menubar/scrollbar/toolbar).
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
   (setq-default cursor-type 'hbar)
   (setq-default indent-tabs-mode nil)
   (setq-default fill-column 80)
-  (load custom-file 'no-error))
+  (load custom-file 'no-error)
 
-(setq neshtea/font-alist  ; TODO copy the latest version from kenranunderscore
+  ;; Answer y or n to yes-or-no questions.
+  ;; http://pragmaticemacs.com/emacs/make-all-prompts-y-or-n/
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (show-paren-mode 1))
+
+(setq neshtea/font-alist    ; TODO copy the latest version from kenranunderscore
       '((jetbrains-mono . (:family "JetBrains Mono"))
 	(iosevka . (:family "Iosevka"))
 	(sf-mono . (:family
@@ -70,14 +82,6 @@ the face-font."
 
 (global-set-key (kbd "C-. s f") #'neshtea/switch-font)
 (global-set-key (kbd "C-. s t") #'neshtea/switch-theme)
-
-;; Disable menubar/scrollbar/toolbar.
-
-;; Answer y or n to yes-or-no questions.
-;; http://pragmaticemacs.com/emacs/make-all-prompts-y-or-n/
-(fset 'yes-or-no-p 'y-or-n-p)
-(show-paren-mode 1)  ; Alwas show matching parens.
-(setq display-line-numbers-type 't)  ; regular line numbers by default.
 
 ;; Especially on MacOS, the exec path is always wrong.  This package
 ;; tries to fix that.
@@ -129,28 +133,30 @@ it. Optionally, you can supply a list of themes to select from."
 (neshtea/switch-theme 'base16-gruvbox-material-dark-medium)
 
 (use-package vertico
-  :hook (after-init-hook . vertico-mode)
-  :custom
-  (vertico-cycle t)
-  (vertico-resize t))
+  :init (vertico-mode)
+  :config
+  (setq vertico-cycle t)
+  (setq vertico-resize t))
 
 (use-package savehist
-  :hook (after-init-hook . savehist-mode))
+  :init (savehist-mode 1)
+  :config
+  (setq savehist-file (expand-file-name "history" user-emacs-directory)))
 
 (use-package company
-  :hook (after-init-hook . global-company-mode))
+  :init (global-company-mode))
 
 (use-package orderless
-  :init
-  (setq completion-styles '(orderless basic)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles partial-completion)))))
+  :config
+  (setq completion-styles '(orderless basic))
+  (setq completion-category-defaults nil)
+  (setq completion-category-overrides '((file (styles partial-completion)))))
 
 ;; consult provides a huge array of cap based searches.
 (use-package consult
-  :init
-  (setq register-preview-delay 0
-	register-preview-function #'consult-register-format)
+  :config
+  (setq register-preview-delay 0)
+  (setq register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
   :bind
   (("C-c c m" . consult-mode-command)
@@ -163,7 +169,7 @@ it. Optionally, you can supply a list of themes to select from."
   :hook (completion-list-mode . consult-preview-at-point-mode))
 
 (use-package marginalia
-  :hook (after-init-hook . marginalia-mode))
+  :config (marginalia-mode))
 
 (use-package helpful
   :bind (("C-h f" . helpful-callable)
@@ -172,23 +178,23 @@ it. Optionally, you can supply a list of themes to select from."
 	 ("C-h p" . helpful-at-point)))
 
 (use-package cider
-  :custom
-  (cider-repl-display-help-banner nil)
   :bind (:map clojure-mode-map
 	      ("C-. h d" . cider-clojure-docs)
 	      ("C-. h h" . cider-doc)
 	      ("C-. t t" . cider-test-run-test)
-	      ("C-. t a" . cider-test-run-ns-test)))
+	      ("C-. t a" . cider-test-run-ns-test))
+  :config
+  (setq cider-repl-display-help-banner nil))
 
 (use-package eglot
-  :ensure t
   :hook (((clojure-mode
            clojurescript-mode
            typescript-ts-mode
            tsx-ts-mode
            nix-mode) . eglot-ensure))
-  :custom
-  (eglot-code-action-indications '(eldoc-hint)))
+  :config
+  (setq eglot-code-action-indications '(eldoc-hint))
+  (setq eglot-connect-timeout 120))
 
 (use-package nix-mode
   :mode "\\.nix\\'"
@@ -213,17 +219,16 @@ it. Optionally, you can supply a list of themes to select from."
 
 ;;;; Haskell language support.
 (use-package haskell-mode
-  :custom
-  (haskell-process-type 'cabal-repl)
-  (haskell-interactive-popup-errors nil)
-  :config
-  (setq haskell-indentation-left-offset 4
-	haskell-indentation-layout-offset 4
-	haskell-indentation-starter-offset 4)
+  :hook (haskell-mode . interactive-haskell-mode)
   :bind (:map haskell-mode-map
 	      ("C-. i i" . haskell-navigate-imports-go)
 	      ("C-. i r" . haskell-navigate-imports-return))
-  :hook ((haskell-mode . interactive-haskell-mode)))
+  :config
+  (setq haskell-indentation-left-offset 4)
+  (setq haskell-indentation-layout-offset 4)
+  (setq haskell-indentation-starter-offset 4)
+  (setq haskell-process-type 'cabal-repl)
+  (setq haskell-interactive-popup-errors nil))
 
 ;; A list of all modes I want lispy modes hooked to.  Add to this list
 ;; if new modes join the lispy gang.
@@ -255,9 +260,17 @@ the separator."
 (use-package yaml-mode)
 (use-package lua-mode)
 (use-package envrc
-  :hook (after-init-mode . envrc-global-mode))
+  :config (envrc-global-mode))
 (use-package clj-refactor)
 (use-package clojure-mode)
+
+;; More info on why I (have to) do this:
+;; https://andreyor.st/posts/2023-09-09-migrating-from-lsp-mode-to-eglot/
+(use-package jarchive
+  :after eglot
+  :config
+  (jarchive-setup))
+
 (use-package magit)
 
 (use-package markdown-mode
@@ -265,15 +278,28 @@ the separator."
   :mode (("README\\.md\\'" . gfm-mode)
 	 ("\\.md\\'" . markdown-mode)
 	 ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
+  :config
+  (setq markdown-command "multimarkdown"))
 
 (use-package org
-  :hook ((org-mode . org-indent-mode)))
+  :hook (org-mode . org-indent-mode))
 
 (use-package adoc-mode)
-(use-package eat
-  ;; https://jeffkreeftmeijer.com/emacs-configuration/#terminal-emulation
-  :hook eat-compile-terminfo)
+(use-package eat)
+
+;; (defun neshtea/emux/phoenix-ng ()
+;;   (interactive)
+;;   (delete-other-windows)
+;;   (let* ((root-window (selected-window))
+;;          (right-window (split-window-right)))
+;;     (select-window right-window)    
+;;     (let ((bottom-right-window (split-window-below)))
+;;       (eat-project)
+;;       (rename-buffer "phoenix-ng-client")
+;;       (select-window bottom-right-window)
+;;       (eat-project)
+;;       (rename-buffer "phoenix-ng-server")
+;;       (select-window root-window))))
 
 (provide 'init)
 ;;; init.el ends here
