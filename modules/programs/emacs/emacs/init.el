@@ -9,46 +9,44 @@
     (float-time (time-subtract after-init-time before-init-time)))
    gcs-done))
 
-(use-package emacs
-  :hook (emacs-startup-hook . (lambda ()
-                                (toggle-frame-maximized)
-                                (neshtea/report-startup-time)))
-  :config
-  ;; UI stuff.
-  (menu-bar-mode -1)
-  (toggle-scroll-bar -1)
-  (tool-bar-mode -1)
-  (setq inhibit-splash-screen t)
-  (setq ring-bell-function 'ignore)
-  
-  ;; Where to write stuff.
-  (setq custom-file (expand-file-name "~/.config/emacs/custom.el"))
-  (setq user-emacs-directory
-        (expand-file-name "emacs/" (or (getenv "XDG_CACHE_HOME") "~/.cache/")))
+(add-hook 'emacs-startup-hook #'neshtea/report-startup-time)
 
-  ;; Remap some mac-specific keys.
-  (setq ns-alternate-modifier 'none)
-  (setq ns-command-modifier 'meta)
-  (setq ns-function-modifier 'super)
-  
-  (setq load-prefer-newer t)
-  (setq max-lisp-eval-depth 5000)
-  ;; isearch
-  (setq isearch-allow-scroll t)
-  (setq isearch-lazy-count t)
-  (save-place-mode 1)
-  ;; MacOS (disable menubar/scrollbar/toolbar).
-  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-  (add-to-list 'default-frame-alist '(ns-appearance . dark))
-  (setq-default cursor-type 'hbar)
-  (setq-default indent-tabs-mode nil)
-  (setq-default fill-column 80)
-  (load custom-file 'no-error)
+;; UI stuff.
+(menu-bar-mode -1)
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
+(setq inhibit-splash-screen t)
+(setq ring-bell-function 'ignore)
 
-  ;; Answer y or n to yes-or-no questions.
-  ;; http://pragmaticemacs.com/emacs/make-all-prompts-y-or-n/
-  (fset 'yes-or-no-p 'y-or-n-p)
-  (show-paren-mode 1))
+;; Where to write stuff.
+(setq custom-file (expand-file-name "~/.config/emacs/custom.el"))
+(setq user-emacs-directory
+      (expand-file-name "emacs/" (or (getenv "XDG_CACHE_HOME") "~/.cache/")))
+(setq backup-directory-alist `(("." . "~/.saves")))
+
+;; Remap some mac-specific keys.
+(setq ns-alternate-modifier 'none)
+(setq ns-command-modifier 'meta)
+(setq ns-function-modifier 'super)
+
+(setq load-prefer-newer t)
+(setq max-lisp-eval-depth 5000)
+;; isearch
+(setq isearch-allow-scroll t)
+(setq isearch-lazy-count t)
+(save-place-mode 1)
+;; MacOS (disable menubar/scrollbar/toolbar).
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+(setq-default cursor-type 'hbar)
+(setq-default indent-tabs-mode nil)
+(setq-default fill-column 80)
+(load custom-file 'no-error)
+
+;; Answer y or n to yes-or-no questions.
+;; http://pragmaticemacs.com/emacs/make-all-prompts-y-or-n/
+(fset 'yes-or-no-p 'y-or-n-p)
+(show-paren-mode 1)
 
 (setq neshtea/font-alist    ; TODO copy the latest version from kenranunderscore
       '((jetbrains-mono . (:family "JetBrains Mono"))
