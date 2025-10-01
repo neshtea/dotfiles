@@ -55,7 +55,7 @@
 		    "SF Mono"
 		    :width))))
 
-(setq neshtea/current-font 'jetbrains-mono)
+(setq neshtea/current-font 'iosevka)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -163,7 +163,9 @@ it. Optionally, you can supply a list of themes to select from."
    ("C-c c l" . consult-line)
    ("C-c c o" . consult-outline)
    ("C-c c b" . consult-buffer)
-   ("C-c c r" . consult-ripgrep))
+   ("C-c c r" . consult-ripgrep)
+   ;; Use consult-buffer instead of default buffer switcher.
+   ("C-x b" . consult-buffer))
   :hook (completion-list-mode . consult-preview-at-point-mode))
 
 (use-package marginalia
