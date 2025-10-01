@@ -42,6 +42,7 @@
     subversion
     tree-sitter
     wget
+    lazygit
   ];
 
   programs = {
@@ -124,7 +125,7 @@
     enable = true;
     emacsPackage = pkgs.emacs-git;
   };
-  modules.programs.wezterm.enable = true;
+  modules.programs.wezterm.enable = false;
 
   xdg.enable = true;
   xdg.configFile."nixpkgs/config.nix".source = ../xdg/config.nix;
