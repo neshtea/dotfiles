@@ -125,7 +125,7 @@
     enable = true;
     emacsPackage = pkgs.emacs-git;
   };
-  modules.programs.wezterm.enable = false;
+  modules.programs.wezterm.enable = true;
 
   xdg.enable = true;
   xdg.configFile."nixpkgs/config.nix".source = ../xdg/config.nix;
