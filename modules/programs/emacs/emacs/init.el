@@ -287,19 +287,7 @@ the separator."
 (use-package adoc-mode)
 (use-package eat)
 
-;; (defun neshtea/emux/phoenix-ng ()
-;;   (interactive)
-;;   (delete-other-windows)
-;;   (let* ((root-window (selected-window))
-;;          (right-window (split-window-right)))
-;;     (select-window right-window)    
-;;     (let ((bottom-right-window (split-window-below)))
-;;       (eat-project)
-;;       (rename-buffer "phoenix-ng-client")
-;;       (select-window bottom-right-window)
-;;       (eat-project)
-;;       (rename-buffer "phoenix-ng-server")
-;;       (select-window root-window))))
+(use-package tuareg)
 
 (provide 'init)
 ;;; init.el ends here
