@@ -1,0 +1,29 @@
+{
+  "plugins": {
+    "conform.nvim": {
+      "version": "'v9.0.0'"
+    },
+    "conjure": {
+      "version": "'v4.55.0'"
+    },
+    "gruvbox-material": [],
+    "nvim-treesitter": {
+      "version": "'v0.10.0'"
+    },
+    "parinfer-rust": {
+      "version": "'v0.5.0'"
+    },
+    "plenary.nvim": [],
+    "telescope-fzf-native.nvim": [],
+    "telescope.nvim": {
+      "version": "'0.1.8'"
+    },
+    "undotree": {
+      "version": "'rel_6.1'"
+    },
+    "vim-fugitive": {
+      "version": "'v3.7'"
+    },
+    "which-key.nvim": []
+  }
+}
