@@ -65,11 +65,15 @@
       # Makes nix-shells a LOT faster
       nix-direnv.enable = true;
     };
-
-    git = {
-      delta.enable = true;
+    
+    delta =  {
       enable = true;
-      extraConfig = {
+      enableGitIntegration = true;
+    };
+    
+    git = {  
+      enable = true;
+      settings = {
         commit.gpgsign = "true";
         core.editor = "nvim";
         gpg = {
@@ -105,8 +109,12 @@
         signByDefault = true;
         key = "~/.ssh/id_rsa.pub";
       };
-      userEmail = "marco.schneider@active-group.de";
-      userName = "Marco Schneider";
+      settings = {
+        user = {
+          email = "marco.schneider@active-group.de";
+          name = "Marco Schneider";
+        };
+      };
     };
 
     mercurial = {
