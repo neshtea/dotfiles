@@ -29,13 +29,9 @@
       # configuration further down the configuration (for example in
       # hm modules).
       specialArgs = { inherit inputs; };
-    in
-    {
-      # This only concerns systems that use home-manager directly (in
-      # my case, darwin machines).
-      homeConfigurations.${username} =
+      makeConfiguration =
+        system: homeModule:
         let
-          system = "aarch64-darwin"; # Only relevant for darwin.
           pkgs = import nixpkgs {
             config.allowUnfree = true; # Sorry rms
             inherit system;
@@ -53,15 +49,24 @@
           inherit pkgs;
           extraSpecialArgs = specialArgs;
           modules = [
-            ./hosts/wayfarer/home.nix
+            homeModule
             {
               home = {
                 inherit username;
-                homeDirectory = "/Users/schneider";
+                homeDirectory =
+                  if pkgs.lib.hasSuffix system "linux" then "/home/${username}" else "/Users/${username}";
                 stateVersion = "22.05";
               };
             }
           ];
         };
+
+    in
+    {
+      homeConfigurations."${username}@wayfarer" =
+        makeConfiguration "aarch64-darwin" ./hosts/wayfarer/home.nix;
+
+      homeConfigurations."${username}@oxomoco" =
+        makeConfiguration "x86_64-linux" ./hosts/oxomoco/home.nix;
     };
 }

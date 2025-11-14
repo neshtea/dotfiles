@@ -1,1 +1,7 @@
-{ ... }: { imports = [ ./desktop ./programs ./shell ]; }
+{ ... }:
+{
+  imports = [
+    ./desktop
+    ./programs
+  ];
+}

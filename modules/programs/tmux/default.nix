@@ -4,10 +4,10 @@
   ...
 }:
 let
-  cfg = config.modules.shell.tmux;
+  cfg = config.modules.programs.tmux;
 in
 {
-  options.modules.shell.tmux = {
+  options.modules.programs.tmux = {
     enable = lib.mkEnableOption "tmux";
   };
   config = lib.mkIf cfg.enable {
