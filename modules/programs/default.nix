@@ -8,5 +8,7 @@
     ./kitty
     ./neovim
     ./wezterm
+    ./tmux
+    ./zsh
   ];
 }
