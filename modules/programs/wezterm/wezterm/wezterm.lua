@@ -24,7 +24,7 @@ end
 
 -- https://wezterm.org/config/launch.html#changing-the-default-program
 -- Spawn a fish shell in login mode
-config.default_prog = { '/Users/schneider/.nix-profile/bin/fish', '-l' }
+config.default_prog = { '/$HOME/.nix-profile/bin/fish', '-l' }
 
 -- tab bar
 config.enable_tab_bar = false

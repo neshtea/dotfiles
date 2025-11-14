@@ -134,10 +134,6 @@
   modules.programs.tmux.enable = true;
   modules.programs.zsh.enable = false;
   modules.programs.neovim.enable = true;
-  modules.programs.emacs = {
-    enable = true;
-    emacsPackage = pkgs.emacs-git;
-  };
   modules.programs.wezterm.enable = false;
   modules.programs.ghostty.enable = true;
 
