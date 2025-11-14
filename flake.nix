@@ -20,6 +20,7 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs =
@@ -59,6 +60,14 @@
                 stateVersion = "22.05";
               };
             }
+            {
+              wayland.windowManager.hyprland = {
+                enable = true;
+                package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+                portalPackage =
+                  inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xgd-desktop-portal-hyprland;
+              };
+            }
           ];
         };
       nixosConfigurations.oxomoco =
@@ -69,6 +78,7 @@
             inherit system;
             overlays = [
               inputs.emacs-overlay.overlays.default
+              inputs.neovim-nightly-overlay.overlays.default
             ];
           };
         in

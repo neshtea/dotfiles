@@ -15,6 +15,13 @@
   };
 
   security.polkit.enable = true;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
@@ -106,6 +113,8 @@
       # Not officially in the specification
       XDG_BIN_HOME = "$HOME/.local/bin";
       PATH = [ "${XDG_BIN_HOME}" ];
+      # Optional, hint electron apps to use wayland:
+      NIXOS_OZONE_WL = "1";
     };
   };
 
@@ -116,7 +125,7 @@
       enable = true;
       enableSSHSupport = true;
     };
-
+    hyprland.enable = true;
   };
 
   powerManagement = {
