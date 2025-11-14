@@ -1,5 +1,8 @@
 { ... }:
 
 {
-  imports = [ ./fzf.nix ./tmux ./zsh ];
+  imports = [
+    ./tmux
+    ./zsh
+  ];
 }

@@ -43,6 +43,8 @@
     tree-sitter
     wget
     lazygit
+    # Finding files, ...
+    fzf
   ];
 
   programs = {
@@ -125,7 +127,6 @@
   };
 
   # Shells and shell tools
-  modules.shell.fzf.enable = false;
   modules.shell.tmux.enable = true;
   modules.shell.zsh.enable = true;
   modules.programs.neovim.enable = true;
