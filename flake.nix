@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,12 +30,13 @@
       # configuration further down the configuration (for example in
       # hm modules).
       specialArgs = { inherit inputs; };
-      makeConfiguration =
-        system: homeModule:
+    in
+    {
+      homeConfigurations."${username}@wayfarer" =
         let
           pkgs = import nixpkgs {
             config.allowUnfree = true; # Sorry rms
-            inherit system;
+            system = "aarch64-darwin";
             overlays = [
               inputs.emacs-overlay.overlays.default
               inputs.neovim-nightly-overlay.overlays.default
@@ -49,7 +51,7 @@
           inherit pkgs;
           extraSpecialArgs = specialArgs;
           modules = [
-            homeModule
+            ./hosts/wayfarer/home.nix
             {
               home = {
                 inherit username;
@@ -59,13 +61,32 @@
             }
           ];
         };
-
-    in
-    {
-      homeConfigurations."${username}@wayfarer" =
-        makeConfiguration "aarch64-darwin" ./hosts/wayfarer/home.nix;
-
-      homeConfigurations."${username}@oxomoco" =
-        makeConfiguration "x86_64-linux" ./hosts/oxomoco/home.nix;
+      nixosConfigurations.oxomoco =
+        let
+          system = "x86_64-linux";
+          pkgs = import nixpkgs {
+            config.allowUnfree = true; # sorry rms
+            inherit system;
+            overlays = [
+              inputs.emacs-overlay.overlays.default
+            ];
+          };
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit pkgs system specialArgs;
+          modules = [
+            ./hosts/oxomoco/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                users.${username} = import ./hosts/oxomoco/home.nix;
+                useGlobalPkgs = true;
+                useUserPackages = false;
+                extraSpecialArgs = specialArgs;
+              };
+            }
+            inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t490
+          ];
+        };
     };
 }

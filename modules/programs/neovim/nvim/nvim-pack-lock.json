@@ -1,33 +1,54 @@
 {
   "plugins": {
     "conform.nvim": {
+      "rev": "a6f5bdb",
+      "src": "https://github.com/stevearc/conform.nvim",
       "version": "'v9.0.0'"
     },
     "conjure": {
+      "rev": "ee0ba18a",
+      "src": "https://github.com/Olical/conjure",
       "version": "'v4.55.0'"
     },
     "fzf-lua": {
       "rev": "ce40b36",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
-    "gruvbox-material": [],
+    "gruvbox-material": {
+      "rev": "4bfc698",
+      "src": "https://github.com/sainnhe/gruvbox-material"
+    },
     "nvim-treesitter": {
+      "rev": "42fc28ba",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'v0.10.0'"
     },
     "parinfer-rust": {
+      "rev": "20da743",
+      "src": "https://github.com/eraserhd/parinfer-rust",
       "version": "'v0.5.0'"
     },
-    "plenary.nvim": [],
+    "plenary.nvim": {
+      "rev": "b9fd522",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
     "telescope-fzf-native.nvim": [],
     "telescope.nvim": {
       "version": "'0.1.8'"
     },
     "undotree": {
+      "rev": "be23eac",
+      "src": "https://github.com/mbbill/undotree",
       "version": "'rel_6.1'"
     },
     "vim-fugitive": {
+      "rev": "96c1009",
+      "src": "https://github.com/tpope/vim-fugitive",
       "version": "'v3.7'"
     },
-    "which-key.nvim": []
+    "which-key.nvim": {
+      "rev": "3aab214",
+      "src": "https://github.com/folke/which-key.nvim"
+    }
   }
 }
