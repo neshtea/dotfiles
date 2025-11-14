@@ -6,6 +6,10 @@
     "conjure": {
       "version": "'v4.55.0'"
     },
+    "fzf-lua": {
+      "rev": "ce40b36",
+      "src": "https://github.com/ibhagwan/fzf-lua"
+    },
     "gruvbox-material": [],
     "nvim-treesitter": {
       "version": "'v0.10.0'"
