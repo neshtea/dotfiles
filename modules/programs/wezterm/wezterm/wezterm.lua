@@ -30,8 +30,9 @@ config.default_prog = { '/Users/schneider/.nix-profile/bin/fish', '-l' }
 config.enable_tab_bar = false
 
 config.color_scheme = scheme_for_appearance(get_appearance()) -- 'Gruvbox Material (Gogh)'
-config.font = wezterm.font("Iosevka")
-config.font_size = 12.0
+-- config.font = wezterm.font("Iosevka")
+config.font = wezterm.font("JetBrains Mono")
+config.font_size = 11.0
 config.adjust_window_size_when_changing_font_size = false
 config.audible_bell = "Disabled"
 

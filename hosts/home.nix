@@ -65,13 +65,13 @@
       # Makes nix-shells a LOT faster
       nix-direnv.enable = true;
     };
-    
-    delta =  {
+
+    delta = {
       enable = true;
       enableGitIntegration = true;
     };
-    
-    git = {  
+
+    git = {
       enable = true;
       settings = {
         commit.gpgsign = "true";
@@ -134,6 +134,7 @@
     emacsPackage = pkgs.emacs-git;
   };
   modules.programs.wezterm.enable = true;
+  modules.programs.ghostty.enable = true;
 
   xdg.enable = true;
   xdg.configFile."nixpkgs/config.nix".source = ../xdg/config.nix;
