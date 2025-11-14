@@ -45,6 +45,9 @@
     lazygit
     # Finding files, ...
     fzf
+    ripgrep
+    bat
+    delta
   ];
 
   programs = {
