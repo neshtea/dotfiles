@@ -39,7 +39,6 @@
       enp3s0.useDHCP = true;
       wlp4s0.useDHCP = true;
     };
-
     networkmanager.enable = true;
     useDHCP = false;
   };
@@ -62,18 +61,7 @@
       defaultShared = true;
       openFirewall = true;
     };
-    xserver = {
-      enable = true;
-      desktopManager.gnome.enable = true;
-      xkbOptions = "ctrl:swapcaps";
-      displayManager.gdm.enable = true;
-    };
     tailscale.enable = true;
-    plex = {
-      enable = true;
-      openFirewall = true;
-      user = "schneider";
-    };
   };
 
   hardware.bluetooth = {
@@ -101,7 +89,6 @@
       vim
       wget
       wireplumber
-      gnomeExtensions.pop-shell
     ];
     pathsToLink = [ "/share/zsh" ];
     sessionVariables = rec {
@@ -125,7 +112,6 @@
       enable = true;
       enableSSHSupport = true;
     };
-    hyprland.enable = true;
   };
 
   powerManagement = {

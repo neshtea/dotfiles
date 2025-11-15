@@ -19,6 +19,7 @@ in
         # We assume hyprland is configured in configuration.nix of the caller
         pkgs.hyprpaper
         pkgs.ashell
+        pkgs.dolphin
       ];
     };
     programs = {
@@ -29,6 +30,20 @@ in
           main = {
             terminal = "${pkgs.ghostty}/bin/ghostty";
             layer = "overlay";
+            font = "JetBrains Mono:size=10";
+          };
+          colors = {
+            background = "282828ff";
+            text = "ebdbb2ff";
+            prompt = "a89984ff";
+            placeholder = "928374ff";
+            input = "ebdbb2ff";
+            match = "fabd2fef";
+            selection = "665c54ff";
+            selection-text = "ebdbb2ff";
+            selection-match = "fabd2fef";
+            counter = "928374ff";
+            border = "fe8019ff";
           };
         };
       };
