@@ -1,14 +1,21 @@
 { pkgs, ... }:
 {
-  imports = [ ../home.nix ];
-
-  home.packages = [
-    pkgs.firefox
-    pkgs.jetbrains-mono
-    pkgs.gcc
-    pkgs.mattermost-desktop
-    pkgs.thunderbird
+  imports = [
+    ../common.nix
   ];
+
+  home.packages =
+    let
+      desktopPackages = import ../desktop.nix { inherit pkgs; };
+    in
+    desktopPackages
+    ++ [
+      pkgs.firefox
+      pkgs.jetbrains-mono
+      pkgs.gcc
+      pkgs.mattermost-desktop
+      pkgs.thunderbird
+    ];
 
   programs = {
     foot = {

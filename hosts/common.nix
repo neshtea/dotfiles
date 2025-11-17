@@ -1,3 +1,4 @@
+# Base configuration for all systems.
 { pkgs, inputs, ... }:
 {
   # Let Home Manager install and manage itself.
@@ -26,25 +27,11 @@
 
   home.packages = with pkgs; [
     cacert
-    clojure
     coreutils
-    docker-client
     gnumake
-    iosevka
-    jq
-    multimarkdown
-    nil
     nixVersions.latest
-    nixd
-    nixfmt-rfc-style
-    nodejs
     ripgrep
-    subversion
-    tree-sitter
     wget
-    lazygit
-    lazydocker
-    # Finding files, ...
     fzf
     ripgrep
     bat
@@ -132,10 +119,7 @@
 
   # Shells and shell tools
   modules.programs.tmux.enable = true;
-  modules.programs.zsh.enable = false;
   modules.programs.neovim.enable = true;
-  modules.programs.wezterm.enable = false;
-  modules.programs.ghostty.enable = true;
 
   xdg.enable = true;
   xdg.configFile."nixpkgs/config.nix".source = ../xdg/config.nix;
