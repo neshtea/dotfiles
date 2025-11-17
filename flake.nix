@@ -88,14 +88,6 @@
               };
             }
             inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t490
-            {
-              wayland.windowManager.hyprland = {
-                enable = true;
-                package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-                portalPackage =
-                  inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xgd-desktop-portal-hyprland;
-              };
-            }
           ];
         };
     };

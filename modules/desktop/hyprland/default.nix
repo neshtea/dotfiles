@@ -1,8 +1,8 @@
-# Only contain "additional" configuration for hyprland. Hyprland itself is installed as a nixos module in /flake.nix.
 {
   config,
-  pkgs,
+  inputs,
   lib,
+  pkgs,
   ...
 }:
 
@@ -26,7 +26,6 @@ in
       };
 
       packages = [
-        # We assume hyprland is configured in configuration.nix of the caller
         pkgs.hyprpaper
         pkgs.ashell
         pkgs.kdePackages.dolphin # graphical file browser
