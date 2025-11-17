@@ -7,6 +7,8 @@
     pkgs.ghostty
     pkgs.jetbrains-mono
     pkgs.gcc
+    pkgs.mattermost-desktop
+    pkgs.thunderbird
   ];
 
   modules.programs.emacs.enable = false;
