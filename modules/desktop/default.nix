@@ -1,4 +1,6 @@
-{ ... }: {
-  imports =
-    [ ./herbstluftwm ./rofi ./xmonad ./polybar ./waybar ./wofi ./hyprland ];
+{ ... }:
+{
+  imports = [
+    ./hyprland
+  ];
 }

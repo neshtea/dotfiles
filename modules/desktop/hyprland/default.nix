@@ -13,15 +13,28 @@ in
   options.modules.desktop.hyprland = {
     enable = lib.mkEnableOption "hyprland";
   };
+
   config = lib.mkIf cfg.enable {
     home = {
       packages = [
         # We assume hyprland is configured in configuration.nix of the caller
         pkgs.hyprpaper
         pkgs.ashell
-        pkgs.dolphin
+        pkgs.kdePackages.dolphin # graphical file browser
+        pkgs.kdePackages.gwenview # image viewer
+        pkgs.kdePackages.okular # pdf viewer
       ];
     };
+
+    # xdg.mimeApps = {
+    #   enable = true;
+    #   defaultApplications = {
+    #     "application/pdf" = "${pkgs.kdePackages.okular}/bin/okular";
+    #     "application/jpeg" = "${pkgs.kdePackages.gwenview}/bin/gwenview";
+    #     "application/png" = "${pkgs.kdePackages.gwenview}/bin/gwenview";
+    #   };
+    # };
+
     programs = {
       hyprlock.enable = true;
       fuzzel = {
@@ -48,6 +61,7 @@ in
         };
       };
     };
+
     services = {
       dunst.enable = true;
       hypridle = {
