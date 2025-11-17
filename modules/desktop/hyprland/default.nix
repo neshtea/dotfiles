@@ -16,6 +16,15 @@ in
 
   config = lib.mkIf cfg.enable {
     home = {
+
+      activation = {
+        symlinkHyprland = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          if [ ! -e $XDG_CONFIG_HOME/hypr/hyprland.conf ]; then
+            $DRY_RUN_CMD ln -snf $HOME/dotfiles/modules/desktop/hyprland/hypr/hyprland.conf $XDG_CONFIG_HOME/hypr/hyprland.conf
+          fi
+        '';
+      };
+
       packages = [
         # We assume hyprland is configured in configuration.nix of the caller
         pkgs.hyprpaper
