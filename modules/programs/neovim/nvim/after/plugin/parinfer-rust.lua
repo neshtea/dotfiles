@@ -35,4 +35,4 @@ local function init_parinfer_rust()
     vim.cmd('cd ' .. cwd)
 end
 
--- init_parinfer_rust()
+init_parinfer_rust()
