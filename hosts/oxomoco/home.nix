@@ -12,7 +12,6 @@
   modules.programs.emacs.enable = false;
   modules.desktop = {
     hyprland.enable = true;
-    rofi.enable = true;
   };
   dconf.enable = true;
 }
