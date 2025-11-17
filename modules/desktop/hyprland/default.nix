@@ -38,14 +38,14 @@ in
       ];
     };
 
-    # xdg.mimeApps = {
-    #   enable = true;
-    #   defaultApplications = {
-    #     "application/pdf" = "${pkgs.kdePackages.okular}/bin/okular";
-    #     "application/jpeg" = "${pkgs.kdePackages.gwenview}/bin/gwenview";
-    #     "application/png" = "${pkgs.kdePackages.gwenview}/bin/gwenview";
-    #   };
-    # };
+    xdg.mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "application/pdf" = "${pkgs.kdePackages.okular}/bin/okular";
+        "image/jpeg" = "${pkgs.kdePackages.gwenview}/bin/gwenview";
+        "image/png" = "${pkgs.kdePackages.gwenview}/bin/gwenview";
+      };
+    };
 
     programs = {
       hyprlock.enable = true;
