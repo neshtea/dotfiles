@@ -27,6 +27,7 @@ in
 
       packages = [
         pkgs.hyprpaper
+        pkgs.hypridle
         pkgs.ashell
         pkgs.kdePackages.dolphin # graphical file browser
         pkgs.kdePackages.gwenview # image viewer
