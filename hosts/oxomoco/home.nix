@@ -11,6 +11,7 @@
     desktopPackages
     ++ [
       pkgs.firefox
+      pkgs.signal-desktop
       pkgs.jetbrains-mono
       pkgs.gcc
       pkgs.mattermost-desktop
