@@ -1,5 +1,21 @@
 ;; -*- lexical-binding: t; -*-
-(setq use-package-always-ensure t)
+
+;; Init straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+      (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+        "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+        'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 (defun neshtea/report-startup-time ()
   (message
@@ -20,9 +36,10 @@
 
 ;; Where to write stuff.
 (setq custom-file (expand-file-name "~/.config/emacs/custom.el"))
-(setq user-emacs-directory
-      (expand-file-name "emacs/" (or (getenv "XDG_CACHE_HOME") "~/.cache/")))
+(setq user-emacs-directory (expand-file-name "emacs/" (or (getenv "XDG_CACHE_HOME") "~/.cache/")))
 (setq backup-directory-alist `(("." . "~/.saves")))
+(savehist-mode)
+(setq savehist-file (expand-file-name "history" user-emacs-directory))
 
 ;; Remap some mac-specific keys.
 (setq ns-alternate-modifier 'none)
@@ -55,7 +72,7 @@
 		    "SF Mono"
 		    :width))))
 
-(setq neshtea/current-font 'iosevka)
+(setq neshtea/current-font 'jetbrains-mono)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -135,11 +152,6 @@ it. Optionally, you can supply a list of themes to select from."
   :config
   (setq vertico-cycle t)
   (setq vertico-resize t))
-
-(use-package savehist
-  :init (savehist-mode 1)
-  :config
-  (setq savehist-file (expand-file-name "history" user-emacs-directory)))
 
 (use-package company
   :init (global-company-mode))
