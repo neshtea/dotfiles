@@ -20,30 +20,22 @@ in
 
   config = lib.mkIf cfg.enable {
     home = {
+      activation = {
+        symlinkEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          if [ ! -e $XDG_CONFIG_HOME/emacs ]; then
+            $DRY_RUN_CMD ln -snf $HOME/dotfiles/modules/programs/emacs/emacs $XDG_CONFIG_HOME/emacs
+          fi
+        '';
+      };
       packages =
         let
-          myEmacs = pkgs.emacsWithPackagesFromUsePackage {
-            config = ./emacs/init.el;
-            alwaysEnsure = true;
-            defaultInitFile = true;
-            package = pkgs.emacs-unstable;
-            # https://discourse.nixos.org/t/tree-sitter-grammars-collide-with-each-other/41805/7
-            extraEmacsPackages = epkgs: [
-              epkgs.tree-sitter
-              epkgs.tree-sitter-langs
-              (epkgs.treesit-grammars.with-grammars (
-                grammars: with grammars; [
-                  tree-sitter-html
-                  tree-sitter-javascript
-                  tree-sitter-tsx
-                  tree-sitter-typescript
-                ]
-              ))
-            ];
-
-          };
+          emacsWithPackages = (pkgs.emacsPackagesFor cfg.emacsPackage).emacsWithPackages (p: [
+            p.vterm
+            p.treesit-grammars.with-all-grammars
+            p.erlang
+          ]);
         in
-        [ myEmacs ];
+        [ emacsWithPackages ];
     };
   };
 }

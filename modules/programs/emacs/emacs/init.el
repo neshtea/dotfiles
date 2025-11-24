@@ -104,7 +104,7 @@ the face-font."
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns x))
   :config
-  (setq exec-path-from-shell-shell-name "zsh")
+  (setq exec-path-from-shell-shell-name "~/.nix-profile/bin/fish")
   (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
     (add-to-list 'exec-path-from-shell-variables var))
   (exec-path-from-shell-initialize))
@@ -190,6 +190,9 @@ it. Optionally, you can supply a list of themes to select from."
 	 ("C-h p" . helpful-at-point)))
 
 (use-package cider
+  :straight (:host github
+                   :repo "clojure-emacs/cider"
+                   :tag "v1.20.0")
   :bind (:map clojure-mode-map
 	      ("C-. h d" . cider-clojure-docs)
 	      ("C-. h h" . cider-doc)
@@ -199,11 +202,11 @@ it. Optionally, you can supply a list of themes to select from."
   (setq cider-repl-display-help-banner nil))
 
 (use-package eglot
-  :hook (((clojure-mode
-           clojurescript-mode
-           typescript-ts-mode
-           tsx-ts-mode
-           nix-mode) . eglot-ensure))
+  :hook ((clojure-mode
+          clojurescript-mode
+          typescript-ts-mode
+          tsx-ts-mode
+          nix-mode) . eglot-ensure)
   :config
   (setq eglot-code-action-indications '(eldoc-hint))
   (setq eglot-connect-timeout 120))
@@ -293,8 +296,23 @@ the separator."
   :config
   (setq markdown-command "multimarkdown"))
 
+(setq neshtea/org-agenda-file "~/org/tasks.org")
+
+(defun neshtea/open-gtd-file ()
+  "Opens the file that contains my tasks. Replaces the current buffer."'
+  (interactive)
+  (find-file neshtea/org-agenda-file))
+
 (use-package org
-  :hook (org-mode . org-indent-mode))
+  :hook (org-mode . org-indent-mode)
+  :bind (("C-c o a" . org-agenda)
+         ("C-c o f" . #'neshtea/open-gtd-file))
+  :config
+  (setq org-agenda-files '("~/org"))
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline "~/org/tasks.org" "INBOX")
+           "* TODO %?\n:PROPERTIES:\n:Captured: %T\n:END:"
+           :prepend t))))
 
 (use-package adoc-mode)
 (use-package eat)
@@ -303,3 +321,4 @@ the separator."
 
 (provide 'init)
 ;;; init.el ends here
+
