@@ -1,8 +1,7 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }:
 {
   imports = [
     ../common.nix
-    inputs.mac-app-util.homeManagerModules.default
   ];
   home.packages =
     let
@@ -12,7 +11,7 @@
   modules.programs = {
     emacs = {
       enable = true;
-      emacsPackage = pkgs.emacs-git;
+      emacsPackage = pkgs.emacs-unstable;
     };
     ghostty.enable = true;
   };
