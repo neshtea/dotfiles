@@ -42,7 +42,7 @@ vim.diagnostic.config({
 
 -- LSP
 --
-vim.lsp.enable({ 'clojure', 'elixir', 'haskell', 'lua', 'nix', 'ocaml', 'typescript', 'ocaml' })
+vim.lsp.enable({ 'clojure', 'elixir', 'haskell', 'lua', 'nix', 'ocaml', 'typescript', 'ocaml', 'rust' })
 
 -- PACKAGES
 vim.pack.add({
@@ -55,7 +55,8 @@ vim.pack.add({
     { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'v0.10.0', },
     { src = 'https://github.com/mbbill/undotree',                 version = 'rel_6.1', },
     { src = 'https://github.com/folke/which-key.nvim',            tag = 'v3.17.0', },
-    'https://github.com/ibhagwan/fzf-lua'
+    'https://github.com/ibhagwan/fzf-lua',
+    'https://github.com/rust-lang/rust.vim',
 })
 
 -- COLORSCHEME

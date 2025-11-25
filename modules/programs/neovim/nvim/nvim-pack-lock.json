@@ -32,6 +32,10 @@
       "rev": "b9fd522",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "rust.vim": {
+      "rev": "889b9a7",
+      "src": "https://github.com/rust-lang/rust.vim"
+    },
     "telescope-fzf-native.nvim": [],
     "telescope.nvim": {
       "version": "'0.1.8'"
