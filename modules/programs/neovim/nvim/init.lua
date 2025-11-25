@@ -59,6 +59,8 @@ vim.pack.add({
     'https://github.com/rust-lang/rust.vim',
 })
 
+vim.g["conjure#filetypes"] = { "clojure" }
+
 -- COLORSCHEME
 vim.o.background = "dark"
 vim.cmd("colorscheme gruvbox-material")
