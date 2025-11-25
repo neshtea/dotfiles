@@ -13,6 +13,7 @@
       enable = true;
       emacsPackage = pkgs.emacs-unstable;
     };
+    lazygit.enable = true;
     ghostty.enable = true;
   };
 }

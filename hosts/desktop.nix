@@ -14,6 +14,4 @@ with pkgs;
   subversion
   tree-sitter
   wget
-  lazygit
-  lazydocker
 ]

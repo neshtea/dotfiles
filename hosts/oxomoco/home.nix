@@ -10,7 +10,6 @@
     in
     desktopPackages
     ++ [
-      pkgs.firefox
       pkgs.signal-desktop
       pkgs.jetbrains-mono
       pkgs.gcc
@@ -19,6 +18,8 @@
     ];
 
   programs = {
+    firefox.enable = true;
+    lazygit.enable = true;
     foot = {
       enable = true;
       settings = {
