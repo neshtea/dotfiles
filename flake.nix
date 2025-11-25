@@ -29,35 +29,62 @@
       specialArgs = { inherit inputs; };
     in
     {
-      homeConfigurations."${username}@wayfarer" =
-        let
-          pkgs = import nixpkgs {
-            config.allowUnfree = true; # Sorry rms
-            system = "aarch64-darwin";
-            overlays = [
-              inputs.emacs-overlay.overlays.default
-              inputs.neovim-nightly-overlay.overlays.default
-            ];
-            # Use this flake.nix's nixpkgs for stuff like `nix shell nixpkgs#<foo>`.
-            nix.registry = {
-              this.flake = inputs.nixpkgs;
-            };
-          };
-        in
-        home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = specialArgs;
-          modules = [
-            ./hosts/wayfarer/home.nix
-            {
-              home = {
-                inherit username;
-                homeDirectory = "/Users/${username}";
-                stateVersion = "22.05";
+      homeConfigurations = {
+        "${username}@wayfarer" =
+          let
+            pkgs = import nixpkgs {
+              config.allowUnfree = true; # Sorry rms
+              system = "aarch64-darwin";
+              overlays = [
+                inputs.emacs-overlay.overlays.default
+                inputs.neovim-nightly-overlay.overlays.default
+              ];
+              # Use this flake.nix's nixpkgs for stuff like `nix shell nixpkgs#<foo>`.
+              nix.registry = {
+                this.flake = inputs.nixpkgs;
               };
-            }
-          ];
-        };
+            };
+          in
+          home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = specialArgs;
+            modules = [
+              ./hosts/wayfarer/home.nix
+              {
+                home = {
+                  inherit username;
+                  homeDirectory = "/Users/${username}";
+                  stateVersion = "22.05";
+                };
+              }
+            ];
+          };
+
+        "pi@marvin" =
+          let
+            pkgs = import nixpkgs {
+              config.allowUnfree = true;
+              system = "aarch64-linux";
+              nix.registry = {
+                this.flake = inputs.nixpkgs;
+              };
+            };
+          in
+          home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = specialArgs;
+            modules = [
+              ./hosts/marvin/home.nix
+              {
+                home = {
+                  username = "pi";
+                  homeDirectory = "/home/pi";
+                  stateVersion = "22.05";
+                };
+              }
+            ];
+          };
+      };
       nixosConfigurations.oxomoco =
         let
           system = "x86_64-linux";
