@@ -18,8 +18,6 @@
 
   nix.registry.this.flake = inputs.nixpkgs;
 
-  home.username = "schneider";
-
   home.sessionVariables = {
     EDITOR = "nvim";
     ALTERNATE_EDITOR = "vim";
