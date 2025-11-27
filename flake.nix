@@ -17,6 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland";
+    nix-starter-kit.url = "github:active-group/nix-starter-kit";
   };
 
   outputs =
