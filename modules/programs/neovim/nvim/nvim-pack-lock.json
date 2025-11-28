@@ -10,6 +10,10 @@
       "src": "https://github.com/Olical/conjure",
       "version": "'v4.55.0'"
     },
+    "everforest-nvim": {
+      "rev": "2eb7c348f880ba93de4d98cae049c9441f5d4d49",
+      "src": "https://github.com/neanias/everforest-nvim"
+    },
     "fzf-lua": {
       "rev": "ce40b36",
       "src": "https://github.com/ibhagwan/fzf-lua"
@@ -32,12 +36,21 @@
       "rev": "b9fd522",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "rose-pine": {
+      "rev": "72befaffeac38db7bdd49e0549eaa2c4806dd878",
+      "src": "https://github.com/rose-pine/neovim"
+    },
     "rust.vim": {
       "rev": "889b9a7",
       "src": "https://github.com/rust-lang/rust.vim"
     },
-    "telescope-fzf-native.nvim": [],
+    "telescope-fzf-native.nvim": {
+      "rev": "1f08ed60cafc8f6168b72b80be2b2ea149813e55",
+      "src": "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
+    },
     "telescope.nvim": {
+      "rev": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026",
+      "src": "https://github.com/nvim-telescope/telescope.nvim",
       "version": "'0.1.8'"
     },
     "undotree": {
@@ -49,6 +62,10 @@
       "rev": "96c1009",
       "src": "https://github.com/tpope/vim-fugitive",
       "version": "'v3.7'"
+    },
+    "vim-rescript": {
+      "rev": "aea571554254ab9da4f997b20d2ebca2fd099c52",
+      "src": "https://github.com/rescript-lang/vim-rescript"
     },
     "which-key.nvim": {
       "rev": "3aab214",
