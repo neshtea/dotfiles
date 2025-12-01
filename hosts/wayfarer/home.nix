@@ -2,7 +2,7 @@
 {
   imports = [
     ../common.nix
-    inputs.nix-starter-kit.nixosModules.timetracking
+    inputs.nix-starter-kit.homeModules.timetracking
   ];
   home.packages =
     let
