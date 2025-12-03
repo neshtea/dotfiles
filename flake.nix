@@ -16,8 +16,14 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland.url = "github:hyprwm/Hyprland";
-    nix-starter-kit.url = "github:active-group/nix-starter-kit";
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-starter-kit = {
+      url = "github:active-group/nix-starter-kit";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
