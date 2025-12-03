@@ -30,7 +30,6 @@ in
       keyMode = "emacs";
       mouse = true;
       newSession = true;
-      prefix = "C-Space";
       shell = "${lib.getExe config.programs.fish.package}";
       terminal = "screen-256color";
     };
