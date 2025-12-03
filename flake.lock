@@ -1128,11 +1128,11 @@
         "nixpkgs": "nixpkgs_9"
       },
       "locked": {
-        "lastModified": 1764570623,
-        "narHash": "sha256-LHvBnVW1CTrec0a9Uq2rFhH4jLL/ef8/l2Pzq1/8+Ik=",
+        "lastModified": 1764609355,
+        "narHash": "sha256-xWx7j61yQDKKLmOsHkHsX9adpxkvwVLMKAUqujd/jcY=",
         "owner": "active-group",
         "repo": "nix-starter-kit",
-        "rev": "a23af3a238aa9c3dfbed230ab9e7874ac5b03f69",
+        "rev": "b3a9685dfe8f38fccbeac070a01b749d6bbf313d",
         "type": "github"
       },
       "original": {
