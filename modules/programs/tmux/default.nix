@@ -27,7 +27,7 @@ in
         set -g default-shell "${lib.getExe config.programs.fish.package}"
       '';
       historyLimit = 9999;
-      keyMode = "emacs";
+      keyMode = "vi";
       mouse = true;
       newSession = true;
       shell = "${lib.getExe config.programs.fish.package}";
