@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   lib,
   ...
 }:
@@ -32,6 +33,22 @@ in
       newSession = true;
       shell = "${lib.getExe config.programs.fish.package}";
       terminal = "screen-256color";
+      plugins = [
+        pkgs.tmuxPlugins.dotbar
+        {
+          plugin = pkgs.tmuxPlugins.dotbar;
+          extraConfig = ''
+            set -g @tmux-dotbar-bg "#272E33"
+            set -g @tmux-dotbar-fg "#D3C6AA"
+            set -g @tmux-dotbar-fg-current "#E68082"
+            set -g @tmux-dotbar-fg-session "#E68082"
+            set -g @tmux-dotbar-fg-prefix "#E68082"
+          '';
+
+        }
+      ];
     };
   };
 }
+
+# 230 128 130

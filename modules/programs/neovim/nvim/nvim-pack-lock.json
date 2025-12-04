@@ -10,6 +10,10 @@
       "src": "https://github.com/Olical/conjure",
       "version": "'v4.55.0'"
     },
+    "everforest": {
+      "rev": "484dd560dccb2d2842685c441ad2b54a54ffef1b",
+      "src": "https://github.com/sainnhe/everforest"
+    },
     "everforest-nvim": {
       "rev": "2eb7c348f880ba93de4d98cae049c9441f5d4d49",
       "src": "https://github.com/neanias/everforest-nvim"
