@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   imports = [
     ../common.nix
@@ -15,23 +15,15 @@
       pkgs.gcc
       pkgs.mattermost-desktop
       pkgs.thunderbird
+      inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
     ];
 
   programs = {
     firefox.enable = true;
     lazygit.enable = true;
-    foot = {
-      enable = true;
-      settings = {
-        main = {
-          term = "xterm-256color";
-          font = "JetBrains Mono:size=11";
-          shell = "fish";
-        };
-      };
-    };
   };
 
+  modules.programs.ghostty.enable = true;
   modules.programs.emacs.enable = false;
   modules.desktop = {
     hyprland.enable = true;

@@ -1,6 +1,6 @@
 {
   config,
-  # pkgs,
+  pkgs,
   lib,
   # inputs,
   ...
@@ -24,8 +24,13 @@ in
           fi
         '';
       };
-      # NOTE: Not actually available via nix.
-      packages = [ ]; # [ inputs.ghostty.packages.${pkgs.stdenv.system}.default ];
+    };
+    programs = {
+      ghostty = {
+        enable = true;
+        enableFishIntegration = true;
+        package = if pkgs.stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
+      };
     };
   };
 }

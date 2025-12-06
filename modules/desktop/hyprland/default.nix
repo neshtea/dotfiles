@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
@@ -16,7 +15,6 @@ in
 
   config = lib.mkIf cfg.enable {
     home = {
-
       activation = {
         symlinkHyprland = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           if [ ! -e $XDG_CONFIG_HOME/hypr/hyprland.conf ]; then
@@ -26,15 +24,19 @@ in
       };
 
       packages = [
+        pkgs.bc
         pkgs.hyprpaper
         pkgs.hypridle
-        pkgs.ashell
+        pkgs.brightnessctl
         pkgs.kdePackages.dolphin # graphical file browser
         pkgs.kdePackages.gwenview # image viewer
         pkgs.kdePackages.okular # pdf viewer
         pkgs.pavucontrol
         pkgs.networkmanager
         pkgs.networkmanagerapplet
+        (import ./brightness.nix { inherit pkgs; })
+        pkgs.pactl
+        pkgs.playerctl
       ];
     };
 
@@ -297,6 +299,9 @@ in
 
     services = {
       dunst.enable = true;
+      # hyprlauncher = {
+      #   enable = true;
+      # };
       hypridle = {
         enable = true;
         # Settings taken from https://wiki.hypr.land/Hypr-Ecosystem/hypridle/
