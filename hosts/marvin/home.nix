@@ -10,4 +10,6 @@
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_STATE_HOME = "$HOME/.local/state";
   };
+
+  modules.programs.neovim.enable = true;
 }
