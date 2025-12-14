@@ -35,7 +35,7 @@ in
         pkgs.networkmanager
         pkgs.networkmanagerapplet
         (import ./brightness.nix { inherit pkgs; })
-        pkgs.pactl
+        # pkgs.pactl
         pkgs.playerctl
       ];
     };
