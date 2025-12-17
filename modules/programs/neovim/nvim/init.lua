@@ -36,8 +36,8 @@ vim.keymap.set("v", "<leader>x", ":lua<CR>")
 
 vim.diagnostic.enable()
 vim.diagnostic.config({
-    virtual_lines = true,
-    -- virtual_text = true,
+    -- virtual_lines = true,
+    virtual_text = true,
 })
 
 -- LSP
