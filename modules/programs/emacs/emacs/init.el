@@ -98,6 +98,16 @@ the face-font."
 (global-set-key (kbd "C-. s f") #'neshtea/switch-font)
 (global-set-key (kbd "C-. s t") #'neshtea/switch-theme)
 
+;; Some packages where I specifically want to built-in version.
+(use-package eldoc
+  :straight (:type built-in))
+
+(use-package project
+  :straight (:type built-in))
+
+(use-package flymake
+  :straight (:type built-in))
+
 ;; Especially on MacOS, the exec path is always wrong.  This package
 ;; tries to fix that.
 ;; SEE https://github.com/purcell/exec-path-from-shell#usage
