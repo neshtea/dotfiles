@@ -332,6 +332,10 @@ the separator."
 
 (use-package tuareg)
 
+;; Elixir language support.
+(use-package elixir-mode)
+
+(use-package po-mode)
+
 (provide 'init)
 ;;; init.el ends here
-
