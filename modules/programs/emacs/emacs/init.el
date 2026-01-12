@@ -108,6 +108,9 @@ the face-font."
 (use-package flymake
   :straight (:type built-in))
 
+(use-package xref
+  :straight (:type built-in))
+
 ;; Especially on MacOS, the exec path is always wrong.  This package
 ;; tries to fix that.
 ;; SEE https://github.com/purcell/exec-path-from-shell#usage
