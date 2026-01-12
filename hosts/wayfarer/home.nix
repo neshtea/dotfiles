@@ -2,6 +2,7 @@
 {
   imports = [
     ../common.nix
+    inputs.nix-starter-kit.homeModules.khard
     inputs.nix-starter-kit.homeModules.timetracking
   ];
   home.packages =
@@ -12,11 +13,17 @@
     ++ [
       pkgs.lazygit
     ];
-  active-group.timetracking = {
-    enable = true;
-    timetracking-token = "/Users/schneider/.timetracking/timetracking.key";
-    arbeitszeiten-token = "/Users/schneider/.timetracking/arbeitszeiten.key";
-    abrechenbare-zeiten-token = "/Users/schneider/.timetracking/abrechenbare-zeiten.key";
+  active-group = {
+    timetracking = {
+      enable = true;
+      timetracking-token = "/Users/schneider/.timetracking/timetracking.key";
+      arbeitszeiten-token = "/Users/schneider/.timetracking/arbeitszeiten.key";
+      abrechenbare-zeiten-token = "/Users/schneider/.timetracking/abrechenbare-zeiten.key";
+    };
+    khard = {
+      enable = true;
+      storagePath = "/Users/schneider/repo/active-group/addresses/vcf";
+    };
   };
   modules.programs = {
     emacs = {
