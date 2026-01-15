@@ -46,19 +46,20 @@ vim.lsp.enable({ 'clojure', 'elixir', 'haskell', 'lua', 'nix', 'ocaml', 'typescr
 
 -- PACKAGES
 vim.pack.add({
-    { src = 'https://github.com/sainnhe/gruvbox-material', tag = 'v1.2.5' },
-    { src = 'https://github.com/sainnhe/everforest', tag = 'v0.3.0' },
-    { src = 'https://github.com/stevearc/conform.nvim',  version = 'v9.0.0', },
-    { src = 'https://github.com/Olical/conjure',         version = 'v4.55.0', },
-    { src = 'https://github.com/tpope/vim-fugitive',     version = 'v3.7', },
-    { src = 'https://github.com/eraserhd/parinfer-rust', version = 'v0.5.0', },
-    { src = 'https://github.com/nvim-lua/plenary.nvim', tag = 'v0.1.4' },
+    { src = 'https://github.com/sainnhe/gruvbox-material',        tag = 'v1.2.5' },
+    { src = 'https://github.com/sainnhe/everforest',              tag = 'v0.3.0' },
+    { src = 'https://github.com/stevearc/conform.nvim',           version = 'v9.0.0', },
+    { src = 'https://github.com/Olical/conjure',                  version = 'v4.55.0', },
+    { src = 'https://github.com/tpope/vim-fugitive',              version = 'v3.7', },
+    { src = 'https://github.com/eraserhd/parinfer-rust',          version = 'v0.5.0', },
+    { src = 'https://github.com/nvim-lua/plenary.nvim',           tag = 'v0.1.4' },
     { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'v0.10.0', },
     { src = 'https://github.com/mbbill/undotree',                 version = 'rel_6.1', },
     { src = 'https://github.com/folke/which-key.nvim',            tag = 'v3.17.0', },
-    { src = 'https://github.com/ibhagwan/fzf-lua', version = 'main' },
-    { src = 'https://github.com/rust-lang/rust.vim', version = 'master' },
-    { src = 'https://github.com/nvim-neorg/neorg', tag = 'v9.3.0' },
+    { src = 'https://github.com/ibhagwan/fzf-lua',                version = 'main' },
+    { src = 'https://github.com/rust-lang/rust.vim',              version = 'master' },
+    { src = 'https://github.com/nvim-neorg/neorg',                tag = 'v9.3.0' },
+    'https://github.com/rebelot/kanagawa.nvim',
 })
 
 vim.g["conjure#filetypes"] = { "clojure" }
@@ -67,9 +68,11 @@ vim.g["conjure#filetypes"] = { "clojure" }
 vim.o.background = "dark"
 -- vim.cmd("colorscheme gruvbox-material")
 
-vim.g['everforest_better_performance'] = 1
-vim.g['everforest_background'] = 'hard'
-vim.cmd("colorscheme everforest")
+-- vim.g['everforest_better_performance'] = 1
+-- vim.g['everforest_background'] = 'hard'
+-- vim.cmd("colorscheme everforest")
+
+vim.cmd('colorscheme kanagawa-dragon')
 
 local function toggle_background()
     if vim.o.background == "dark" then
