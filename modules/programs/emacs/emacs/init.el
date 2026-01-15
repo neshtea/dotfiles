@@ -66,13 +66,17 @@
 (show-paren-mode 1)
 
 (setq neshtea/font-alist    ; TODO copy the latest version from kenranunderscore
-      '((jetbrains-mono . (:family "JetBrains Mono"))
-	(iosevka . (:family "Iosevka"))
+      '((jetbrains-mono . (:family "JetBrains Mono"
+                                   :height 120))
+	(iosevka-fixed . (:family "Iosevka Fixed"))
 	(sf-mono . (:family
 		    "SF Mono"
-		    :width))))
+		    :width))
+        (comic-mono . (:family "Comic Mono"))
+        (victor-mono . (:family
+                        "Victor Mono"))))
 
-(setq neshtea/current-font 'jetbrains-mono)
+(setq neshtea/current-font 'iosevka-fixed)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -155,10 +159,20 @@ it. Optionally, you can supply a list of themes to select from."
     (message "Selected theme %s." next-theme)
     (neshtea/switch-theme next-theme)))
 
+;; Collection of themes.
 (use-package base16-theme)
 (use-package doom-themes)
+(use-package everforest
+  :straight (:type git :repo "https://github.com/Theory-of-Everything/everforest-emacs.git"))
+(use-package kanagawa-themes
+  :config
+  (setq kanagawa-themes-comment-italic nil)
+  (setq kanagawa-themes-keyword-italic nil))
+(use-package gruvbox-theme)
 
-(neshtea/switch-theme 'base16-gruvbox-material-dark-medium)
+;; (neshtea/switch-theme 'base16-gruvbox-material-dark-medium)
+;; (neshtea/switch-theme 'base16-everforest-dark-hard)
+(neshtea/switch-theme 'kanagawa-dragon)
 
 (use-package vertico
   :init (vertico-mode)
@@ -334,8 +348,6 @@ the separator."
 
 ;; Elixir language support.
 (use-package elixir-mode)
-
-(use-package po-mode)
 
 (provide 'init)
 ;;; init.el ends here
