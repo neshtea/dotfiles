@@ -76,6 +76,9 @@
             pkgs = import nixpkgs {
               config.allowUnfree = true;
               system = "x86_64-linux";
+              overlays = [
+                inputs.neovim-nightly-overlay.overlays.default
+              ];
               nix.registry = {
                 this.flake = inputs.nixpkgs;
               };
