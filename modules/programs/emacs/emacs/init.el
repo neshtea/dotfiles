@@ -162,17 +162,13 @@ it. Optionally, you can supply a list of themes to select from."
 ;; Collection of themes.
 (use-package base16-theme)
 (use-package doom-themes)
-(use-package everforest
-  :straight (:type git :repo "https://github.com/Theory-of-Everything/everforest-emacs.git"))
 (use-package kanagawa-themes
   :config
   (setq kanagawa-themes-comment-italic nil)
   (setq kanagawa-themes-keyword-italic nil))
 (use-package gruvbox-theme)
 
-;; (neshtea/switch-theme 'base16-gruvbox-material-dark-medium)
-;; (neshtea/switch-theme 'base16-everforest-dark-hard)
-(neshtea/switch-theme 'kanagawa-dragon)
+(neshtea/switch-theme 'base16-gruvbox-material-dark-medium)
 
 (use-package vertico
   :init (vertico-mode)
@@ -217,9 +213,6 @@ it. Optionally, you can supply a list of themes to select from."
 	 ("C-h p" . helpful-at-point)))
 
 (use-package cider
-  :straight (:host github
-                   :repo "clojure-emacs/cider"
-                   :tag "v1.20.0")
   :bind (:map clojure-mode-map
 	      ("C-. h d" . cider-clojure-docs)
 	      ("C-. h h" . cider-doc)
