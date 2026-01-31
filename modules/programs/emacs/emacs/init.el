@@ -36,7 +36,6 @@
 
 ;; Where to write stuff.
 (setq custom-file (expand-file-name "~/.config/emacs/custom.el"))
-(setq user-emacs-directory (expand-file-name "emacs/" (or (getenv "XDG_CACHE_HOME") "~/.cache/")))
 (setq backup-directory-alist `(("." . "~/.saves")))
 (savehist-mode)
 (setq savehist-file (expand-file-name "history" user-emacs-directory))
