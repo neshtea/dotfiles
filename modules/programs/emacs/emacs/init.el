@@ -102,17 +102,10 @@ the face-font."
 (global-set-key (kbd "C-. s t") #'neshtea/switch-theme)
 
 ;; Some packages where I specifically want to built-in version.
-(use-package eldoc
-  :straight (:type built-in))
-
-(use-package project
-  :straight (:type built-in))
-
-(use-package flymake
-  :straight (:type built-in))
-
-(use-package xref
-  :straight (:type built-in))
+(use-package eldoc :straight (:type built-in))
+(use-package project :straight (:type built-in))
+(use-package flymake :straight (:type built-in))
+(use-package xref :straight (:type built-in))
 
 ;; Especially on MacOS, the exec path is always wrong.  This package
 ;; tries to fix that.
@@ -142,8 +135,7 @@ disables all other enabled themes."
 					  (seq-difference (custom-available-themes)
 							  custom-enabled-themes))))))
   (progn
-    (mapcar #'disable-theme
-            custom-enabled-themes)
+    (mapcar #'disable-theme custom-enabled-themes)
     (load-theme name t)))
 
 (defun neshtea/random-theme (&optional themes)
@@ -151,10 +143,8 @@ disables all other enabled themes."
 it. Optionally, you can supply a list of themes to select from."
   (interactive)
   (let* ((themes (or themes (custom-available-themes)))
-	 (but-active-themes (seq-difference themes
-					    custom-enabled-themes))
-	 (next-theme (nth (random (length but-active-themes))
-			  but-active-themes)))
+	 (but-active-themes (seq-difference themes custom-enabled-themes))
+	 (next-theme (nth (random (length but-active-themes)) but-active-themes)))
     (message "Selected theme %s." next-theme)
     (neshtea/switch-theme next-theme)))
 
@@ -175,8 +165,7 @@ it. Optionally, you can supply a list of themes to select from."
   (setq vertico-cycle t)
   (setq vertico-resize t))
 
-(use-package company
-  :init (global-company-mode))
+(use-package company :init (global-company-mode))
 
 (use-package orderless
   :config
@@ -202,8 +191,7 @@ it. Optionally, you can supply a list of themes to select from."
    ("C-x b" . consult-buffer))
   :hook (completion-list-mode . consult-preview-at-point-mode))
 
-(use-package marginalia
-  :config (marginalia-mode))
+(use-package marginalia :config (marginalia-mode))
 
 (use-package helpful
   :bind (("C-h f" . helpful-callable)
@@ -221,6 +209,7 @@ it. Optionally, you can supply a list of themes to select from."
   (setq cider-repl-display-help-banner nil))
 
 (use-package eglot
+  :straight (:type built-in)
   :hook ((clojure-mode
           clojurescript-mode
           typescript-ts-mode
