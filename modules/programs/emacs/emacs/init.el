@@ -304,17 +304,15 @@ the separator."
   :config
   (setq markdown-command "multimarkdown"))
 
-(setq neshtea/org-agenda-file "~/org/tasks.org")
-
-(defun neshtea/open-gtd-file ()
-  "Opens the file that contains my tasks. Replaces the current buffer."'
-  (interactive)
-  (find-file neshtea/org-agenda-file))
-
 (use-package org
+  :preface
+  (setq neshtea/org-agenda-file "~/org/tasks.org")
+  (defun neshtea/open-gtd-file ()
+    (interactive)
+    (find-file neshtea/org-agenda-file))
   :hook (org-mode . org-indent-mode)
   :bind (("C-c o a" . org-agenda)
-         ("C-c o f" . #'neshtea/open-gtd-file))
+         ("C-c o f" . neshtea/open-gtd-file))
   :config
   (setq org-agenda-files '("~/org"))
   (setq org-capture-templates
