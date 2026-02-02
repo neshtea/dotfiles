@@ -330,5 +330,9 @@ the separator."
 ;; Elixir language support.
 (use-package elixir-mode)
 
+(use-package csv-mode
+  ;; https://www.emacswiki.org/emacs/CsvMode
+  :hook (csv-mode . csv-align-mode))
+
 (provide 'init)
 ;;; init.el ends here
