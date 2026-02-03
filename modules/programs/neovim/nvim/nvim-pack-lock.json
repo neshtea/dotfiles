@@ -14,6 +14,10 @@
       "rev": "b90025cc84dbb9c46df5a2ae540d3f01cf85af74",
       "src": "https://github.com/sainnhe/everforest"
     },
+    "everforest-nvim": {
+      "rev": "2eb7c348f880ba93de4d98cae049c9441f5d4d49",
+      "src": "https://github.com/neanias/everforest-nvim"
+    },
     "fzf-lua": {
       "rev": "b1d2b0dc146cb9260209da4d7ab754adb0a2653d",
       "src": "https://github.com/ibhagwan/fzf-lua",
@@ -45,10 +49,22 @@
       "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "rose-pine": {
+      "rev": "72befaffeac38db7bdd49e0549eaa2c4806dd878",
+      "src": "https://github.com/rose-pine/neovim"
+    },
     "rust.vim": {
       "rev": "889b9a7515db477f4cb6808bef1769e53493c578",
       "src": "https://github.com/rust-lang/rust.vim",
       "version": "'master'"
+    },
+    "telescope-fzf-native.nvim": {
+      "rev": "1f08ed60cafc8f6168b72b80be2b2ea149813e55",
+      "src": "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
+    },
+    "telescope.nvim": {
+      "rev": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026",
+      "src": "https://github.com/nvim-telescope/telescope.nvim"
     },
     "undotree": {
       "rev": "be23eacb2a63380bd79e207a738c728214ecc9d3",
@@ -59,6 +75,10 @@
       "rev": "96c1009fcf8ce60161cc938d149dd5a66d570756",
       "src": "https://github.com/tpope/vim-fugitive",
       "version": "'v3.7'"
+    },
+    "vim-rescript": {
+      "rev": "aea571554254ab9da4f997b20d2ebca2fd099c52",
+      "src": "https://github.com/rescript-lang/vim-rescript"
     },
     "which-key.nvim": {
       "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",

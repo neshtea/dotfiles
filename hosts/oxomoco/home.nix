@@ -16,6 +16,7 @@
       pkgs.mattermost-desktop
       pkgs.thunderbird
       inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
       pkgs.bitwarden-desktop
     ];
 
@@ -24,10 +25,17 @@
     lazygit.enable = true;
   };
 
-  modules.programs.ghostty.enable = true;
-  modules.programs.emacs.enable = false;
-  modules.desktop = {
-    hyprland.enable = true;
+  modules = {
+    programs = {
+      ghostty.enable = true;
+      emacs = {
+        enable = false;
+        emacsPackage = pkgs.emacs-unstable;
+      };
+    };
+    desktop = {
+      hyprland.enable = true;
+    };
   };
   dconf.enable = true;
 }
