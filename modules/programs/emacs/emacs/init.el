@@ -159,6 +159,10 @@ it. Optionally, you can supply a list of themes to select from."
 
 (neshtea/switch-theme 'base16-gruvbox-material-dark-medium)
 
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+
 (use-package vertico
   :init (vertico-mode)
   :config
