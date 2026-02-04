@@ -314,15 +314,46 @@ the separator."
   (defun neshtea/open-gtd-file ()
     (interactive)
     (find-file neshtea/org-agenda-file))
-  :hook (org-mode . org-indent-mode)
   :bind (("C-c o a" . org-agenda)
-         ("C-c o f" . neshtea/open-gtd-file))
+         ("C-c o f" . neshtea/open-gtd-file)
+         ("C-c o c" . org-capture))
   :config
   (setq org-agenda-files '("~/org"))
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/org/tasks.org" "INBOX")
-           "* TODO %?\n:PROPERTIES:\n:Captured: %T\n:END:"
-           :prepend t))))
+        '(("c" "Capture Todo" entry (file+headline "~/org/tasks.org" "INBOX")
+           "* TODO %?\n  CAPTURED: %U"
+           :prepend t)))
+  (setq org-refile-targets '((org-agenda-files :maxlevel 2)))
+  (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)")))
+  (setq org-agenda-custom-commands
+        '(("z" "Zen Daily View"
+           ((tags-todo "PRIORITY=\"A\""
+                       ((org-agenda-overriding-header "Big Rocks")))
+            (agenda "" ((org-agenda-span 'day)
+                        (org-agenda-start-day "+0d")
+                        (org-deadline-warning-days 7)))
+            (todo "NEXT"
+                  ((org-agenda-overriding-header "Next Actions")))
+            (todo "TODO"
+                  ((org-agenda-overriding-header "Inbox/Unprocessed")
+                   (org-agenda-skip-function
+                    '(org-agenda-skip-entry-if 'scheduled 'deadline)))))))))
+
+(use-package org-modern
+  :after org
+  :config
+  (setq org-auto-align-tags nil)
+  (setq org-tags-column 0)
+  (setq org-catch-invisible-edits 'show-and-error)
+  (setq org-catch-invisible-edits 'show-and-error)
+  (setq org-special-ctrl-a/e t)
+  (setq org-insert-heading-respect-content t)
+
+ ;; Org styling, hide markup etc.
+  (setq org-hide-emphasis-markers t)
+  (setq org-pretty-entities t)
+  (setq org-agenda-tags-column 0)
+  (global-org-modern-mode))
 
 (use-package adoc-mode)
 (use-package eat)
