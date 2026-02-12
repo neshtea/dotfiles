@@ -221,7 +221,8 @@ it. Optionally, you can supply a list of themes to select from."
           nix-mode) . eglot-ensure)
   :config
   (setq eglot-code-action-indications '(eldoc-hint))
-  (setq eglot-connect-timeout 120))
+  (setq eglot-connect-timeout 120)
+  (add-to-list 'eglot-server-programs '(erlang-mode . ("elp" "server"))))
 
 (use-package nix-mode
   :mode "\\.nix\\'"
@@ -317,6 +318,7 @@ the separator."
   :bind (("C-c o a" . org-agenda)
          ("C-c o f" . neshtea/open-gtd-file)
          ("C-c o c" . org-capture))
+  :hook (org-mode . org-indent-mode)
   :config
   (setq org-agenda-files '("~/org"))
   (setq org-capture-templates
@@ -339,22 +341,6 @@ the separator."
                    (org-agenda-skip-function
                     '(org-agenda-skip-entry-if 'scheduled 'deadline)))))))))
 
-(use-package org-modern
-  :after org
-  :config
-  (setq org-auto-align-tags nil)
-  (setq org-tags-column 0)
-  (setq org-catch-invisible-edits 'show-and-error)
-  (setq org-catch-invisible-edits 'show-and-error)
-  (setq org-special-ctrl-a/e t)
-  (setq org-insert-heading-respect-content t)
-
- ;; Org styling, hide markup etc.
-  (setq org-hide-emphasis-markers t)
-  (setq org-pretty-entities t)
-  (setq org-agenda-tags-column 0)
-  (global-org-modern-mode))
-
 (use-package adoc-mode)
 (use-package eat)
 
@@ -366,6 +352,13 @@ the separator."
 (use-package csv-mode
   ;; https://www.emacswiki.org/emacs/CsvMode
   :hook (csv-mode . csv-align-mode))
+
+;; https://wmealing.github.io/erlang-emacs-2025.html
+(use-package erlang
+  :config
+  (setq inferior-erlang-machine "rebar3")
+  (setq inferior-erlang-machine-options '("shell"))
+  (setq inferior-erlang-shell-type nil))
 
 (provide 'init)
 ;;; init.el ends here

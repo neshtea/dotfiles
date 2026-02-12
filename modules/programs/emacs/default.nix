@@ -31,6 +31,7 @@ in
         let
           emacsWithPackages = (pkgs.emacsPackagesFor cfg.emacsPackage).emacsWithPackages (p: [
             p.treesit-grammars.with-all-grammars
+            p.erlang
           ]);
         in
         [ emacsWithPackages ];
