@@ -2,4 +2,5 @@ command = ~/.nix-profile/bin/fish
 font-family = Iosevka Term
 font-size = 12
 term = xterm-256color
-theme = Gruvbox Material Dark
+# theme = Gruvbox Material Dark
+theme = everforest-dark-hard
