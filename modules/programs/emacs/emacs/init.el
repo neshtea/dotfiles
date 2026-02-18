@@ -222,7 +222,52 @@ it. Optionally, you can supply a list of themes to select from."
   :config
   (setq eglot-code-action-indications '(eldoc-hint))
   (setq eglot-connect-timeout 120)
-  (add-to-list 'eglot-server-programs '(erlang-mode . ("elp" "server"))))
+  ;; https://whatsapp.github.io/erlang-language-platform/docs/get-started/editors/emacs/
+  (add-to-list 'eglot-server-programs '(erlang-mode . ("elp" "server")))
+  (setq-default eglot-workspace-configuration
+                ;; Run `elp config` to see that options can be used here
+                ;; Use `eglot-show-workspace-configuration` to see what is sent
+                '(:elp (:highlightDynamic (:enable t)
+                                          :typesOnHover (:enable t) ))
+
+                eglot-semantic-token-modifiers
+                '("bound" "exported_function" "exported_type" "deprecated_function" "type_dynamic"))
+
+  ;; Each face name arises as a template from the modifiers as
+  ;; "eglot-semantic-%s-face"
+  (defface eglot-semantic-bound-face
+    '((t :underline t))
+    "The face modification to use for bound variables in patterns."
+    :group 'eglot-semantic-semantic-tokens)
+
+  (defface eglot-semantic-exported_function-face
+    '((t :underline t))
+    "The face modification to use for exported functions."
+    :group 'eglot-semantic-semantic-tokens)
+
+  (defface eglot-semantic-exported_type-face
+    '((t :underline t))
+    "The face modification to use for exported types."
+    :group 'eglot-semantic-semantic-tokens)
+
+  (defface eglot-semantic-deprecated_function-face
+    '((t :strike-through t))
+    "The face modification to use for deprecated functions."
+    :group 'eglot-semantic-semantic-tokens)
+
+  (defface eglot-semantic-type_dynamic-face
+    '((t (:weight bold)))
+    "The face modification to use for dynamic types."
+    :group 'eglot-semantic-semantic-tokens)
+
+  ;; Bare eglot makes the refresh a no-op. Provide our own version for
+  ;; when Eqwalizer gets its results.
+  (cl-defmethod eglot-handle-request
+    (server (_method (eql workspace/semanticTokens/refresh)) &rest args)
+    "Handle workspace/semanticTokens/refresh by refreshing font-lock."
+    (dolist (buffer (eglot--managed-buffers server))
+      (eglot--when-live-buffer buffer
+                               (eglot--widening (font-lock-flush))))))
 
 (use-package nix-mode
   :mode "\\.nix\\'"
@@ -355,10 +400,16 @@ the separator."
 
 ;; https://wmealing.github.io/erlang-emacs-2025.html
 (use-package erlang
+  :hook (erlang-mode . erlang-format-on-save-mode)
   :config
   (setq inferior-erlang-machine "rebar3")
   (setq inferior-erlang-machine-options '("shell"))
   (setq inferior-erlang-shell-type nil))
+
+(reformatter-define erlang-format
+  :program "erlfmt"
+  :args (list "-")
+  :lighter " erlfmt")
 
 (provide 'init)
 ;;; init.el ends here
