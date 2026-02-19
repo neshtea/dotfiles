@@ -34,7 +34,11 @@ in
             p.erlang
           ]);
         in
-        [ emacsWithPackages ];
+        [
+          emacsWithPackages
+          pkgs.claude-code
+          pkgs.claude-code-acp
+        ];
     };
   };
 }

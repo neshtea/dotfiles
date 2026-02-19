@@ -156,8 +156,8 @@ it. Optionally, you can supply a list of themes to select from."
   (setq kanagawa-themes-comment-italic nil)
   (setq kanagawa-themes-keyword-italic nil))
 (use-package gruvbox-theme)
-
-(neshtea/switch-theme 'base16-gruvbox-material-dark-medium)
+;; (neshtea/switch-theme 'base16-gruvbox-material-dark-medium)
+(neshtea/switch-theme 'base16-everforest-dark-hard)
 
 (use-package doom-modeline
   :ensure t
@@ -410,6 +410,12 @@ the separator."
   :program "erlfmt"
   :args (list "-")
   :lighter " erlfmt")
+
+(use-package agent-shell
+  :config
+  (setq agent-shell-anthropic-claude-environment
+        (agent-shell-make-environment-variables
+         :load-env "~/.env")))
 
 (provide 'init)
 ;;; init.el ends here
