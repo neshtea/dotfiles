@@ -78,6 +78,7 @@
         tag.gpgsign = "true";
       };
       ignores = [
+        ".agent-shell"
         "*.swp"
         ".exrc"
         ".nvimrc"
