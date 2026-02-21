@@ -433,7 +433,12 @@ the separator."
                     '(org-agenda-skip-entry-if 'scheduled 'deadline)))))))))
 
 (use-package adoc-mode)
-(use-package eat)
+(use-package eat
+  :config
+  (setq eat-term-name "xterm-256color")
+  (add-to-list 'tramp-connection-properties
+               (list (regexp-quote "/ssh:")
+                     "remote-shell" "/bin/sh")))
 
 (use-package tuareg)
 
