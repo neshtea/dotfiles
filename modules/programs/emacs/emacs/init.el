@@ -463,5 +463,22 @@ the separator."
         (agent-shell-make-environment-variables
          :load-env "~/.env")))
 
+(use-package tramp
+  :config
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+  ;; https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./#getting-started
+  (setq remote-file-name-inhibit-locks t
+        tramp-use-scp-direct-remote-copying t
+        remote-file-name-inhibit-auto-save-visited t)
+  (setq tramp-copy-size-limit (* 1024 1024) ;; 1MB
+        tramp-verbose 2)
+  (connection-local-set-profile-variables
+   'remote-direct-async-process
+   '((tramp-direct-async-process . t)))
+
+  (connection-local-set-profiles
+   '(:application tramp :protocol "scp")
+   'remote-direct-async-process))
+
 (provide 'init)
 ;;; init.el ends here

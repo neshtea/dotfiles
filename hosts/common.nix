@@ -38,6 +38,16 @@
 
   programs = {
 
+    bash = {
+      enable = true;
+      initExtra = ''
+        # If we're in an Emacs TRAMP/Eshell/Eat session, stop here!
+          if [[ "$TERM" == "dumb" || -n "$INSIDE_EMACS" ]]; then
+            return
+          fi
+      '';
+    };
+
     fish = {
       enable = true;
       interactiveShellInit = ''
