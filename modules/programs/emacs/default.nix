@@ -38,6 +38,7 @@ in
           emacsWithPackages
           pkgs.claude-code
           pkgs.claude-code-acp
+          pkgs.typescript
         ];
     };
   };

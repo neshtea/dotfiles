@@ -307,7 +307,14 @@ it. Optionally, you can supply a list of themes to select from."
     "Handle workspace/semanticTokens/refresh by refreshing font-lock."
     (dolist (buffer (eglot--managed-buffers server))
       (eglot--when-live-buffer buffer
-                               (eglot--widening (font-lock-flush))))))
+                               (eglot--widening (font-lock-flush)))))
+
+  ;; Astro stuff
+  ;; https://medium.com/@jrmjrm/configuring-emacs-and-eglot-to-work-with-astro-language-server-9408eb709ab0
+  (add-to-list 'eglot-server-programs
+               `(astro-mode . ("astro-ls" "--stdio"
+                               :initializationOptions
+                               (:typescript (:tsdk ,(expand-file-name "~/.nix-profile/lib/node_modules/typescript/lib")))))))
 
 (use-package nix-mode
   :mode "\\.nix\\'"
@@ -484,6 +491,12 @@ the separator."
   (connection-local-set-profiles
    '(:application tramp :protocol "scp")
    'remote-direct-async-process))
+
+(use-package web-mode)
+(define-derived-mode astro-mode web-mode "astro")
+(setq auto-mode-alist
+      (append '((".*\\.astro\\'" . astro-mode)
+                auto-mode-alist)))
 
 (provide 'init)
 ;;; init.el ends here
