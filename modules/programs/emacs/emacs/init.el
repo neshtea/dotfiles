@@ -1,11 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 
-;; Performance optimizations during startup
-(defvar neshtea/file-name-handler-alist file-name-handler-alist)
-(setq file-name-handler-alist nil)
-(setq gc-cons-threshold most-positive-fixnum)
-(setq gc-cons-percentage 0.6)
-
 ;; Init straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -31,22 +25,11 @@
     (float-time (time-subtract after-init-time before-init-time)))
    gcs-done))
 
-(defun neshtea/restore-post-init-settings ()
-  "Reset GC and file handlers after startup for better runtime performance."
-  (setq file-name-handler-alist neshtea/file-name-handler-alist)
-  (setq gc-cons-threshold (* 2 1000 1000))
-  (setq gc-cons-percentage 0.1)
-  (neshtea/report-startup-time))
+(add-hook 'emacs-startup-hook #'neshtea/report-startup-time)
 
-(add-hook 'emacs-startup-hook #'neshtea/restore-post-init-settings)
-
-;; UI stuff - disable early to prevent flashing
-(push '(menu-bar-lines . 0) default-frame-alist)
-(push '(tool-bar-lines . 0) default-frame-alist)
-(push '(vertical-scroll-bars) default-frame-alist)
+;; UI stuff.
 (menu-bar-mode -1)
-(when (fboundp 'toggle-scroll-bar)
-  (toggle-scroll-bar -1))
+(toggle-scroll-bar -1)
 (tool-bar-mode -1)
 (setq inhibit-splash-screen t)
 (setq ring-bell-function 'ignore)
@@ -136,11 +119,10 @@ the face-font."
   (exec-path-from-shell-initialize))
 
 (use-package which-key
-  :defer 1
   :custom
   (which-key-idle-delay 0.3)
-  :config
-  (which-key-mode))
+  :init
+  (add-hook 'after-init-hook #'which-key-mode))
 
 ;; Taken from Johannes init.el
 ;; https://github.com/kenranunderscore/dotfiles/blob/main/modules/programs/emacs/emacs.d/init.el#L80
@@ -178,14 +160,8 @@ it. Optionally, you can supply a list of themes to select from."
 (neshtea/switch-theme 'base16-everforest-dark-hard)
 
 (use-package doom-modeline
-  :defer 0.1
-  :config
-  (doom-modeline-mode 1)
-  :custom
-  (doom-modeline-height 25)
-  (doom-modeline-bar-width 3)
-  (doom-modeline-buffer-file-name-style 'relative-to-project)
-  (doom-modeline-minor-modes nil))
+  :ensure t
+  :init (doom-modeline-mode 1))
 
 (use-package vertico
   :init (vertico-mode)
@@ -193,17 +169,7 @@ it. Optionally, you can supply a list of themes to select from."
   (setq vertico-cycle t)
   (setq vertico-resize t))
 
-(use-package company
-  :defer 2
-  :bind (:map company-active-map
-              ("C-n" . company-select-next)
-              ("C-p" . company-select-previous))
-  :custom
-  (company-idle-delay 0.2)
-  (company-minimum-prefix-length 2)
-  (company-tooltip-align-annotations t)
-  :config
-  (global-company-mode))
+(use-package company :init (global-company-mode))
 
 (use-package orderless
   :config
@@ -229,10 +195,7 @@ it. Optionally, you can supply a list of themes to select from."
    ("C-x b" . consult-buffer))
   :hook (completion-list-mode . consult-preview-at-point-mode))
 
-(use-package marginalia
-  :defer 0.5
-  :config
-  (marginalia-mode))
+(use-package marginalia :config (marginalia-mode))
 
 (use-package helpful
   :bind (("C-h f" . helpful-callable)
@@ -256,9 +219,6 @@ it. Optionally, you can supply a list of themes to select from."
           typescript-ts-mode
           tsx-ts-mode
           nix-mode) . eglot-ensure)
-  :custom
-  (eglot-events-buffer-size 0) ;; Disable event logging for performance
-  (eglot-sync-connect nil) ;; Don't block on LSP connection
   :config
   (setq eglot-code-action-indications '(eldoc-hint))
   (setq eglot-connect-timeout 120)
@@ -380,9 +340,7 @@ the separator."
 (use-package yaml-mode)
 (use-package lua-mode)
 (use-package envrc
-  :defer 1
-  :config
-  (envrc-global-mode))
+  :config (envrc-global-mode))
 (use-package clj-refactor)
 (use-package clojure-mode)
 
@@ -393,11 +351,7 @@ the separator."
   :config
   (jarchive-setup))
 
-(use-package magit
-  :defer t
-  :custom
-  (magit-diff-refine-hunk 'all)
-  (magit-save-repository-buffers 'dontask))
+(use-package magit)
 
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)
