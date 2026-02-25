@@ -264,6 +264,8 @@ it. Optionally, you can supply a list of themes to select from."
   (setq eglot-connect-timeout 120)
   ;; https://whatsapp.github.io/erlang-language-platform/docs/get-started/editors/emacs/
   (add-to-list 'eglot-server-programs '(erlang-mode . ("elp" "server")))
+  (add-to-list 'eglot-server-programs
+               '((elixir-mode heex-mode elixir-ts-mode) . ("elixir-ls")))
   (setq-default eglot-workspace-configuration
                 ;; Run `elp config` to see that options can be used here
                 ;; Use `eglot-show-workspace-configuration` to see what is sent
