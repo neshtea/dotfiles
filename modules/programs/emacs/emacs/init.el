@@ -118,6 +118,8 @@ the face-font."
 (global-set-key (kbd "C-. s f") #'neshtea/switch-font)
 (global-set-key (kbd "C-. s t") #'neshtea/switch-theme)
 
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
 ;; Some packages where I specifically want to built-in version.
 (use-package eldoc :straight (:type built-in))
 (use-package project :straight (:type built-in))
