@@ -92,7 +92,7 @@
         (victor-mono . (:family
                         "Victor Mono"))))
 
-(setq neshtea/current-font 'iosevka-fixed)
+(setq neshtea/current-font 'jetbrains-mono)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
