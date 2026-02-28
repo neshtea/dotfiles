@@ -176,8 +176,10 @@ it. Optionally, you can supply a list of themes to select from."
   (setq kanagawa-themes-comment-italic nil)
   (setq kanagawa-themes-keyword-italic nil))
 (use-package gruvbox-theme)
+(use-package everforest
+  :straight (:type git :repo "https://github.com/Theory-of-Everything/everforest-emacs.git"))
 ;; (neshtea/switch-theme 'base16-gruvbox-material-dark-medium)
-(neshtea/switch-theme 'base16-everforest-dark-hard)
+(neshtea/switch-theme 'everforest-hard-dark)
 
 (use-package doom-modeline
   :defer 0.1
