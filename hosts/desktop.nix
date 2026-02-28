@@ -8,7 +8,7 @@ with pkgs;
   jq
   nil
   nixd
-  nixfmt-rfc-style
+  nixfmt
   nodejs
   ripgrep
   subversion
