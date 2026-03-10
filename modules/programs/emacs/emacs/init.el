@@ -9,13 +9,13 @@
 ;; Init straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
-      (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
         (url-retrieve-synchronously
-        "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-        'silent 'inhibit-cookies)
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
@@ -84,10 +84,10 @@
 (setq neshtea/font-alist    ; TODO copy the latest version from kenranunderscore
       '((jetbrains-mono . (:family "JetBrains Mono"
                                    :height 120))
-	(iosevka-fixed . (:family "Iosevka Fixed"))
-	(sf-mono . (:family
-		    "SF Mono"
-		    :width))
+        (iosevka-fixed . (:family "Iosevka Fixed"))
+        (sf-mono . (:family
+                    "SF Mono"
+                    :width))
         (comic-mono . (:family "Comic Mono"))
         (victor-mono . (:family
                         "Victor Mono"))))
@@ -101,16 +101,16 @@ the face-font."
    (list (intern (completing-read "Font: " (mapcar #'car (copy-alist neshtea/font-alist))))))
   ;; If the selected font is not the currently active font, switch.
   (let* ((attrs (alist-get font neshtea/font-alist))
-	 (family (plist-get attrs :family))
-	 (height (plist-get attrs :height))
-	 (width (plist-get attrs :width)))
+         (family (plist-get attrs :family))
+         (height (plist-get attrs :height))
+         (width (plist-get attrs :width)))
     (setq neshtea/current-font family)
     (set-face-attribute 'default nil
-			:family family
-			:height (or height
-				    120)
-			:width (or width
-				   'normal))))
+                        :family family
+                        :height (or height
+                                    120)
+                        :width (or width
+                                   'normal))))
 
 ;; Set the font to the default.
 (neshtea/switch-font neshtea/current-font)
@@ -151,9 +151,9 @@ the face-font."
 disables all other enabled themes."
   (interactive
    (list (intern (completing-read "Theme: "
-				  (mapcar #'symbol-name
-					  (seq-difference (custom-available-themes)
-							  custom-enabled-themes))))))
+                                  (mapcar #'symbol-name
+                                          (seq-difference (custom-available-themes)
+                                                          custom-enabled-themes))))))
   (progn
     (mapcar #'disable-theme custom-enabled-themes)
     (load-theme name t)))
@@ -163,8 +163,8 @@ disables all other enabled themes."
 it. Optionally, you can supply a list of themes to select from."
   (interactive)
   (let* ((themes (or themes (custom-available-themes)))
-	 (but-active-themes (seq-difference themes custom-enabled-themes))
-	 (next-theme (nth (random (length but-active-themes)) but-active-themes)))
+         (but-active-themes (seq-difference themes custom-enabled-themes))
+         (next-theme (nth (random (length but-active-themes)) but-active-themes)))
     (message "Selected theme %s." next-theme)
     (neshtea/switch-theme next-theme)))
 
@@ -240,16 +240,16 @@ it. Optionally, you can supply a list of themes to select from."
 
 (use-package helpful
   :bind (("C-h f" . helpful-callable)
-	 ("C-h v" . helpful-variable)
-	 ("C-h k" . helpful-key)
-	 ("C-h p" . helpful-at-point)))
+         ("C-h v" . helpful-variable)
+         ("C-h k" . helpful-key)
+         ("C-h p" . helpful-at-point)))
 
 (use-package cider
   :bind (:map clojure-mode-map
-	      ("C-. h d" . cider-clojure-docs)
-	      ("C-. h h" . cider-doc)
-	      ("C-. t t" . cider-test-run-test)
-	      ("C-. t a" . cider-test-run-ns-test))
+              ("C-. h d" . cider-clojure-docs)
+              ("C-. h h" . cider-doc)
+              ("C-. t t" . cider-test-run-test)
+              ("C-. t a" . cider-test-run-ns-test))
   :config
   (setq cider-repl-display-help-banner nil))
 
@@ -274,7 +274,7 @@ it. Optionally, you can supply a list of themes to select from."
                 ;; Run `elp config` to see that options can be used here
                 ;; Use `eglot-show-workspace-configuration` to see what is sent
                 '(:elp (:highlightDynamic (:enable t)
-                                          :typesOnHover (:enable t) ))
+                                          :typesOnHover (:enable t)))
 
                 eglot-semantic-token-modifiers
                 '("bound" "exported_function" "exported_type" "deprecated_function" "type_dynamic"))
@@ -313,7 +313,7 @@ it. Optionally, you can supply a list of themes to select from."
     "Handle workspace/semanticTokens/refresh by refreshing font-lock."
     (dolist (buffer (eglot--managed-buffers server))
       (eglot--when-live-buffer buffer
-                               (eglot--widening (font-lock-flush)))))
+        (eglot--widening (font-lock-flush)))))
 
   ;; Astro stuff
   ;; https://medium.com/@jrmjrm/configuring-emacs-and-eglot-to-work-with-astro-language-server-9408eb709ab0
@@ -347,8 +347,8 @@ it. Optionally, you can supply a list of themes to select from."
 (use-package haskell-mode
   :hook (haskell-mode . interactive-haskell-mode)
   :bind (:map haskell-mode-map
-	      ("C-. i i" . haskell-navigate-imports-go)
-	      ("C-. i r" . haskell-navigate-imports-return))
+              ("C-. i i" . haskell-navigate-imports-go)
+              ("C-. i r" . haskell-navigate-imports-return))
   :config
   (setq haskell-indentation-left-offset 4)
   (setq haskell-indentation-layout-offset 4)
@@ -359,17 +359,17 @@ it. Optionally, you can supply a list of themes to select from."
 ;; A list of all modes I want lispy modes hooked to.  Add to this list
 ;; if new modes join the lispy gang.
 (setq neshtea/lispy-modes '(emacs-lisp-mode
-			    clojure-mode
-			    ielm-mode
-			    lisp-interaction-mode
-			    lisp-mode
-			    scheme-mode
-			    racket-mode))
+                            clojure-mode
+                            ielm-mode
+                            lisp-interaction-mode
+                            lisp-mode
+                            scheme-mode
+                            racket-mode))
 
 (defun neshtea/symbol-join (symbols sep)
   "Similar to 'string-join' but joins 'symbols' using 'sep' as
 the separator."
- (intern (string-join (mapcar #'symbol-name symbols) sep)))
+  (intern (string-join (mapcar #'symbol-name symbols) sep)))
 
 (defun neshtea/hook-lispy-modes (mode-name)
   "Add paredit-mode to 'mode-name'."
@@ -408,8 +408,8 @@ the separator."
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
-	 ("\\.md\\'" . markdown-mode)
-	 ("\\.markdown\\'" . markdown-mode))
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
   :config
   (setq markdown-command "multimarkdown"))
 
@@ -444,6 +444,8 @@ the separator."
                   ((org-agenda-overriding-header "Inbox/Unprocessed")
                    (org-agenda-skip-function
                     '(org-agenda-skip-entry-if 'scheduled 'deadline)))))))))
+
+(use-package org-modern)
 
 (use-package adoc-mode)
 (use-package eat
