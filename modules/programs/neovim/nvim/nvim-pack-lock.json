@@ -11,11 +11,7 @@
       "version": "'v4.55.0'"
     },
     "everforest": {
-      "rev": "b90025cc84dbb9c46df5a2ae540d3f01cf85af74",
-      "src": "https://github.com/sainnhe/everforest"
-    },
-    "everforest-nvim": {
-      "rev": "2eb7c348f880ba93de4d98cae049c9441f5d4d49",
+      "rev": "323e7633034a8068636a11597cec03bca5465c50",
       "src": "https://github.com/neanias/everforest-nvim"
     },
     "fzf-lua": {

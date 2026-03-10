@@ -48,7 +48,7 @@ vim.lsp.enable({ 'clojure', 'elixir', 'haskell', 'lua', 'nix', 'ocaml', 'typescr
 vim.pack.add({
     -- Color Schemes
     { src = 'https://github.com/sainnhe/gruvbox-material', tag = 'v1.2.5' },
-    { src = 'https://github.com/sainnhe/everforest',       tag = 'v0.3.0' },
+    { src = 'https://github.com/neanias/everforest-nvim',  name = "everforest" },
     'https://github.com/rebelot/kanagawa.nvim',
 
     { src = 'https://github.com/stevearc/conform.nvim',           version = 'v9.0.0', },
@@ -67,7 +67,11 @@ vim.g["conjure#filetypes"] = { "clojure" }
 
 -- COLORSCHEME
 vim.o.background = "dark"
-vim.cmd("colorscheme gruvbox-material")
+-- vim.cmd("colorscheme gruvbox-material")
+require("everforest").setup({
+    background = "hard"
+})
+vim.cmd("colorscheme everforest")
 
 local function toggle_background()
     if vim.o.background == "dark" then
