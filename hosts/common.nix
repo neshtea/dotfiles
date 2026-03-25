@@ -1,5 +1,10 @@
 # Base configuration for all systems.
-{ pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -58,6 +63,16 @@
         fish_add_path --path "$HOME/bin:$PATH"
         export TEXINPUTS="$HOME/repos/ag/howto/tex:$TEXINPUTS"
       '';
+    };
+
+    zsh = {
+      enable = false;
+      enableCompletion = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+      defaultKeymap = "emacs";
+      dotDir = "${config.xdg.configHome}/zsh";
+      history.size = 10000;
     };
 
     direnv = {
