@@ -37,7 +37,7 @@ in
         [
           emacsWithPackages
           pkgs.claude-code
-          pkgs.claude-code-acp
+          pkgs.claude-agent-acp
           pkgs.typescript
         ];
     };
