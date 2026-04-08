@@ -42,7 +42,7 @@ vim.diagnostic.config({
 
 -- LSP
 --
-vim.lsp.enable({ 'clojure', 'elixir', 'haskell', 'lua', 'nix', 'ocaml', 'typescript', 'ocaml', 'rust', 'erlang' })
+vim.lsp.enable({ 'clojure', 'elixir', 'haskell', 'lua', 'nix', 'ocaml', 'typescript', 'ocaml', 'rust', 'erlang', 'gleam' })
 
 -- PACKAGES
 vim.pack.add({

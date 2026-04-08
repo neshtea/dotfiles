@@ -506,5 +506,11 @@ the separator."
 ;;       (append '((".*\\.astro\\'" . astro-mode)
 ;;                 auto-mode-alist)))
 
+(use-package gleam-ts-mode
+  :mode (rx ".gleam" eos)
+  :config
+  (add-to-list 'eglot-server-programs
+               '(gleam-ts-mode . ("gleam" "lsp"))))
+
 (provide 'init)
 ;;; init.el ends here
