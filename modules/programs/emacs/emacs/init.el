@@ -68,7 +68,7 @@
 (setq isearch-allow-scroll t)
 (setq isearch-lazy-count t)
 (save-place-mode 1)
-;; MacOS (disable menubar/scrollbar/toolbar).
+;; macOS (disable menubar/scrollbar/toolbar).
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 (setq-default cursor-type 'hbar)
@@ -115,12 +115,13 @@ the face-font."
 ;; Set the font to the default.
 (neshtea/switch-font neshtea/current-font)
 
+;; TODO: Maybe replace with keymap-global-set?
 (global-set-key (kbd "C-. s f") #'neshtea/switch-font)
 (global-set-key (kbd "C-. s t") #'neshtea/switch-theme)
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
-;; Some packages where I specifically want to built-in version.
+;; Some packages where I specifically want the built-in version.
 (use-package eldoc :straight (:type built-in))
 (use-package project :straight (:type built-in))
 (use-package flymake :straight (:type built-in))
@@ -158,23 +159,7 @@ disables all other enabled themes."
     (mapcar #'disable-theme custom-enabled-themes)
     (load-theme name t)))
 
-(defun neshtea/random-theme (&optional themes)
-  "Select a random theme out of all available themes and load
-it. Optionally, you can supply a list of themes to select from."
-  (interactive)
-  (let* ((themes (or themes (custom-available-themes)))
-         (but-active-themes (seq-difference themes custom-enabled-themes))
-         (next-theme (nth (random (length but-active-themes)) but-active-themes)))
-    (message "Selected theme %s." next-theme)
-    (neshtea/switch-theme next-theme)))
-
 ;; Collection of themes.
-(use-package base16-theme)
-(use-package doom-themes)
-(use-package kanagawa-themes
-  :config
-  (setq kanagawa-themes-comment-italic nil)
-  (setq kanagawa-themes-keyword-italic nil))
 (use-package gruvbox-theme)
 (use-package everforest
   :straight (:type git :repo "https://github.com/Theory-of-Everything/everforest-emacs.git"))
@@ -279,33 +264,6 @@ it. Optionally, you can supply a list of themes to select from."
                 eglot-semantic-token-modifiers
                 '("bound" "exported_function" "exported_type" "deprecated_function" "type_dynamic"))
 
-  ;; Each face name arises as a template from the modifiers as
-  ;; "eglot-semantic-%s-face"
-  (defface eglot-semantic-bound-face
-    '((t :underline t))
-    "The face modification to use for bound variables in patterns."
-    :group 'eglot-semantic-semantic-tokens)
-
-  (defface eglot-semantic-exported_function-face
-    '((t :underline t))
-    "The face modification to use for exported functions."
-    :group 'eglot-semantic-semantic-tokens)
-
-  (defface eglot-semantic-exported_type-face
-    '((t :underline t))
-    "The face modification to use for exported types."
-    :group 'eglot-semantic-semantic-tokens)
-
-  (defface eglot-semantic-deprecated_function-face
-    '((t :strike-through t))
-    "The face modification to use for deprecated functions."
-    :group 'eglot-semantic-semantic-tokens)
-
-  (defface eglot-semantic-type_dynamic-face
-    '((t (:weight bold)))
-    "The face modification to use for dynamic types."
-    :group 'eglot-semantic-semantic-tokens)
-
   ;; Bare eglot makes the refresh a no-op. Provide our own version for
   ;; when Eqwalizer gets its results.
   (cl-defmethod eglot-handle-request
@@ -313,14 +271,7 @@ it. Optionally, you can supply a list of themes to select from."
     "Handle workspace/semanticTokens/refresh by refreshing font-lock."
     (dolist (buffer (eglot--managed-buffers server))
       (eglot--when-live-buffer buffer
-        (eglot--widening (font-lock-flush)))))
-
-  ;; Astro stuff
-  ;; https://medium.com/@jrmjrm/configuring-emacs-and-eglot-to-work-with-astro-language-server-9408eb709ab0
-  (add-to-list 'eglot-server-programs
-               `(astro-mode . ("astro-ls" "--stdio"
-                               :initializationOptions
-                               (:typescript (:tsdk ,(expand-file-name "~/.nix-profile/lib/node_modules/typescript/lib")))))))
+        (eglot--widening (font-lock-flush))))))
 
 (use-package nix-mode
   :mode "\\.nix\\'"
@@ -445,19 +396,9 @@ the separator."
                    (org-agenda-skip-function
                     '(org-agenda-skip-entry-if 'scheduled 'deadline)))))))))
 
-(use-package org-modern)
-
 (use-package adoc-mode)
-(use-package eat
-  :config
-  (setq eat-term-name "xterm-256color")
-  (add-to-list 'tramp-connection-properties
-               (list (regexp-quote "/ssh:")
-                     "remote-shell" "/bin/sh")))
-
-(use-package tuareg)
-
-;; Elixir language support.
+(use-package eat)
+(use-package tuareg)  ; OCaml
 (use-package elixir-mode)
 
 (use-package csv-mode
@@ -482,29 +423,6 @@ the separator."
   (setq agent-shell-anthropic-claude-environment
         (agent-shell-make-environment-variables
          :load-env "~/.env")))
-
-(use-package tramp
-  :config
-  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
-  ;; https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./#getting-started
-  (setq remote-file-name-inhibit-locks t
-        tramp-use-scp-direct-remote-copying t
-        remote-file-name-inhibit-auto-save-visited t)
-  (setq tramp-copy-size-limit (* 1024 1024) ;; 1MB
-        tramp-verbose 2)
-  (connection-local-set-profile-variables
-   'remote-direct-async-process
-   '((tramp-direct-async-process . t)))
-
-  (connection-local-set-profiles
-   '(:application tramp :protocol "scp")
-   'remote-direct-async-process))
-
-(use-package web-mode)
-(define-derived-mode astro-mode web-mode "astro")
-;; (setq auto-mode-alist
-;;       (append '((".*\\.astro\\'" . astro-mode)
-;;                 auto-mode-alist)))
 
 (use-package gleam-ts-mode
   :mode (rx ".gleam" eos)
