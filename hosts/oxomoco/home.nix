@@ -29,7 +29,7 @@
     programs = {
       ghostty.enable = true;
       emacs = {
-        enable = false;
+        enable = true;
         emacsPackage = pkgs.emacs-unstable;
       };
     };
@@ -38,4 +38,10 @@
     };
   };
   dconf.enable = true;
+
+  services = {
+    syncthing = {
+      enable = true;
+    };
+  };
 }
