@@ -16,7 +16,6 @@
       pkgs.mattermost-desktop
       pkgs.thunderbird
       inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
-      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
       pkgs.bitwarden-desktop
     ];
 
@@ -34,10 +33,9 @@
       };
     };
     desktop = {
-      hyprland.enable = true;
+      hyprland.enable = false;
     };
   };
-  dconf.enable = true;
 
   services = {
     syncthing = {

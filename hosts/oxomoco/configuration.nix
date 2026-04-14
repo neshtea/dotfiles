@@ -57,7 +57,7 @@
 
   services = {
     openssh.enable = true;
-    blueman.enable = true;
+    # blueman.enable = true;
     printing = {
       enable = true;
       drivers = [ pkgs.samsung-unified-linux-driver ];
@@ -108,7 +108,7 @@
       wayland-utils
       wl-clipboard
     ];
-    plasma6.excludePackages  = with pkgs; [
+    plasma6.excludePackages = with pkgs; [
       kdePackages.elisa
       kdePackages.kdepim-runtime
       kdePackages.kmahjongg
@@ -133,6 +133,7 @@
   };
 
   virtualisation.docker.enable = true;
+  virtualisation.podman.enable = true;
 
   programs = {
     gnupg.agent = {
@@ -140,7 +141,7 @@
       enableSSHSupport = true;
     };
     hyprland = {
-      enable = true;
+      enable = false;
       package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       portalPackage =
         inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
