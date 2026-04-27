@@ -15,7 +15,6 @@
       pkgs.gcc
       pkgs.mattermost-desktop
       pkgs.thunderbird
-      inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
       pkgs.bitwarden-desktop
     ];
 
