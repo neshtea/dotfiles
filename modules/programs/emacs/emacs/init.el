@@ -397,7 +397,9 @@ the separator."
                     '(org-agenda-skip-entry-if 'scheduled 'deadline)))))))))
 
 (use-package adoc-mode)
-(use-package eat)
+(use-package ghostel
+  :straight
+  (:type git :repo "https://github.com/dakra/ghostel.git"))
 (use-package tuareg)  ; OCaml
 (use-package elixir-mode)
 
