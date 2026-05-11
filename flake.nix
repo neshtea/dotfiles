@@ -8,14 +8,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    emacs-overlay = {
-      url = "github:nix-community/emacs-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     hyprland = {
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,10 +34,6 @@
             pkgs = import nixpkgs {
               config.allowUnfree = true; # Sorry rms
               system = "aarch64-darwin";
-              overlays = [
-                inputs.emacs-overlay.overlays.default
-                inputs.neovim-nightly-overlay.overlays.default
-              ];
               # Use this flake.nix's nixpkgs for stuff like `nix shell nixpkgs#<foo>`.
               nix.registry = {
                 this.flake = inputs.nixpkgs;
@@ -72,9 +60,6 @@
             pkgs = import nixpkgs {
               config.allowUnfree = true;
               system = "x86_64-linux";
-              overlays = [
-                inputs.neovim-nightly-overlay.overlays.default
-              ];
               nix.registry = {
                 this.flake = inputs.nixpkgs;
               };
@@ -127,10 +112,6 @@
           pkgs = import nixpkgs {
             config.allowUnfree = true; # sorry rms
             inherit system;
-            overlays = [
-              inputs.emacs-overlay.overlays.default
-              inputs.neovim-nightly-overlay.overlays.default
-            ];
           };
         in
         nixpkgs.lib.nixosSystem {

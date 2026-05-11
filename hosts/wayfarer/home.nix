@@ -28,7 +28,7 @@
   modules.programs = {
     emacs = {
       enable = true;
-      emacsPackage = pkgs.emacs-unstable;
+      emacsPackage = pkgs.emacs;
     };
     ghostty.enable = true;
   };
