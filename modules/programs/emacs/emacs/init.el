@@ -432,5 +432,14 @@ the separator."
   (add-to-list 'eglot-server-programs
                '(gleam-ts-mode . ("gleam" "lsp"))))
 
+(use-package elfeed :defer t)
+(use-package elfeed-org :defer t
+  :after elfeed
+  :init
+  (elfeed-org)
+  :config
+  (setq rmh-elfeed-org-files (list "~/dotfiles/modules/programs/emacs/emacs/elfeed.org")))
+
 (provide 'init)
 ;;; init.el ends here
+

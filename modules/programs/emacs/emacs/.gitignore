@@ -3,3 +3,4 @@
 # Except these
 !init.el
 !early-init.el
+!elfeed.org

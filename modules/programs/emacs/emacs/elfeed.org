@@ -1,0 +1,28 @@
+* Blogs                                                              :elfeed:
+** [[https://lexi-lambda.github.io/feeds/all.atom.xml][Alexis King]]                                                    :personal:
+** [[http://www.apple.com/pr/feeds/pr.rss][Apple Newsroom]]                                            :apple:company:
+** [[https://daily.bandcamp.com/feed][Bandcamp Updates]]                                                  :music:
+** [[http://www.bradyharanblog.com/blog?format=RSS][Brady Haran]]                                               :blog:personal:
+** [[http://feeds.feedburner.com/cgpgrey/PJyo][CGP Grey]]                                                  :blog:personal:
+** [[https://clojure.org/feed.xml][Clojure News]]
+** [[http://feeds.feedburner.com/codinghorror/][Coding Horror]]                                                  :personal:
+** [[David Smith]]                                          :ios:apple:personal:
+** [[http://dustycloud.org/blog/index.xml][Dustycloud Brainstorms (Christine Lemmer-Webber)]]               :personal:
+** [[https://fasterthanli.me/index.xml][fasterthanli.me]]                                                    :rust:
+** [[http://funktionale-programmierung.de/rss.xml][funktionale-programmierung.de]]
+** [[https://inoio.de/atom.xml][inoio GmbH]]                                                      :company:
+** [[https://blog.janestreet.com/feed.xml][Jane Street]]                                                     :company:
+** [[https://www.caseyliss.com/rss][Liss is More (Casey Liss)]]                                :apple:personal:
+** [[http://nullprogram.com/feed/][null program (Chris Wellons)]]                                   :personal:
+** [[http://www.overcoming.software/feed.xml][Overcoming Software]]                                            :personal:
+** [[http://www.phdcomics.com/gradfeed.php][PHD Comics]]                                                        :comics:
+** [[https://blog.privacyguides.org/feed_rss_created.xml][Privacyguides]]
+** [[https://serokell.io/blog.rss.xml][Serokell]]                                                        :company:
+** [[https://www.0xsid.com/blog/rss.xml][Sid's Blog]]                                                     :personal:
+** [[https://skug.at/feed/][Skug]]                                                      :music:austria:
+** [[https://stuartbreckenridge.net/rss/][Stuart Breckenridge]]                                            :personal:
+** [[https://tarides.com/feed.xml][Tarides]]                                                         :company:
+** [[http://blog.cleancoder.com/atom.xml][The Clean Code Blog (Uncle Bob)]]                                :personal:
+** [[https://www.tweag.io/rss.xml][Tweag]]                                                           :company:
+** [[http://xkcd.com/atom.xml][xkcd]]                                                             :comics:
+** [[http://feeds.feedburner.com/zenhabits][Zen Habits]]
