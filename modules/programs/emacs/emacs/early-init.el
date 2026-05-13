@@ -9,7 +9,6 @@
 ;; GC behavior.
 (setq gc-cons-threshold most-positive-fixnum)
 
-;; Users of Emacs versions >= 27 will want to add:
+;; Prevent package.el from loading packages before init.el runs;
+;; package-initialize is called explicitly in init.el after configuring archives.
 (setq package-enable-at-startup nil)
-;; to their early init-file to prevent package.el loading packages prior to
-;; their init-file loading.

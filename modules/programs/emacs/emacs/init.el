@@ -6,22 +6,12 @@
 (setq gc-cons-threshold most-positive-fixnum)
 (setq gc-cons-percentage 0.6)
 
-;; Init straight.el
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+(setq use-package-always-ensure t)
 
 (defun neshtea/report-startup-time ()
   (message
@@ -126,10 +116,10 @@ the face-font."
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 ;; Some packages where I specifically want the built-in version.
-(use-package eldoc :straight (:type built-in))
-(use-package project :straight (:type built-in))
-(use-package flymake :straight (:type built-in))
-(use-package xref :straight (:type built-in))
+(use-package eldoc)
+(use-package project)
+(use-package flymake)
+(use-package xref)
 
 ;; Especially on MacOS, the exec path is always wrong.  This package
 ;; tries to fix that.
@@ -163,22 +153,12 @@ disables all other enabled themes."
     (mapcar #'disable-theme custom-enabled-themes)
     (load-theme name t)))
 
-;; Collection of themes.
-(use-package gruvbox-theme)
-(use-package everforest
-  :straight (:type git :repo "https://github.com/Theory-of-Everything/everforest-emacs.git"))
-;; (neshtea/switch-theme 'base16-gruvbox-material-dark-medium)
-(neshtea/switch-theme 'everforest-hard-dark)
-
-(use-package doom-modeline
-  :defer 0.1
+(use-package base16-theme
+  :ensure t
   :config
-  (doom-modeline-mode 1)
-  :custom
-  (doom-modeline-height 25)
-  (doom-modeline-bar-width 3)
-  (doom-modeline-buffer-file-name-style 'relative-to-project)
-  (doom-modeline-minor-modes nil))
+  (load-theme 'base16-default-dark t))
+
+(neshtea/switch-theme 'base16-everforest-dark-hard)
 
 (use-package vertico
   :init (vertico-mode)
@@ -243,7 +223,6 @@ disables all other enabled themes."
   (setq cider-repl-display-help-banner nil))
 
 (use-package eglot
-  :straight (:type built-in)
   :hook ((clojure-mode
           clojurescript-mode
           typescript-ts-mode
@@ -402,8 +381,9 @@ the separator."
 
 (use-package adoc-mode)
 (use-package ghostel
-  :straight
-  (:type git :host github :repo "dakra/ghostel"))
+  :vc (:url "https://github.com/dakra/ghostel"
+       :lisp-dir "lisp"
+       :rev :newest))
 (use-package tuareg)  ; OCaml
 (use-package elixir-mode)
 

@@ -36,9 +36,10 @@ in
         in
         [
           emacsWithPackages
-          pkgs.claude-code
-          pkgs.claude-agent-acp
+          pkgs.claude-code # for agent-shell
+          pkgs.claude-agent-acp # for agent-shell
           pkgs.typescript
+          pkgs.zig # for ghostel
         ];
     };
   };
