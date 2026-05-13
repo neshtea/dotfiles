@@ -51,6 +51,10 @@
 (setq inhibit-splash-screen t)
 (setq ring-bell-function 'ignore)
 
+;; General info
+(setq user-full-name "Marco Schneider")
+(setq user-mail-address "marco.schneider@active-group.de")
+
 ;; Where to write stuff.
 (setq custom-file (expand-file-name "~/.config/emacs/custom.el"))
 (setq backup-directory-alist `(("." . "~/.saves")))
@@ -439,6 +443,37 @@ the separator."
   (elfeed-org)
   :config
   (setq rmh-elfeed-org-files (list "~/dotfiles/modules/programs/emacs/emacs/elfeed.org")))
+
+(use-package gnus
+  :config
+  (setq gnus-select-method '(nnnil ""))
+  (setq gnus-agent-synchronize-flags t)
+  (setq gnus-posting-styles '((".*"
+                               (address "Marco Schneider <marco.schneider@active-group.de")
+                               ("X-Message-SMTP-Method" "smtp mail.active-group.de 587 marco.schneider@active-group.de")
+                               (signature "Marco Schneider
+marco.schneider@active-group.de
++49 7071 70896 81
+
+Active Group GmbH
+Hechinger Str. 12/1
+72072 Tübingen
+Registergericht: Amtsgericht Stuttgart, HRB 224404
+Geschäftsführer: Dr. Michael Sperber"))))
+  (setq gnus-secondary-select-methods
+        '((nnimap "mail.active-group.de"
+                  (nnimap-address "mail.active-group.de")
+                  (nnimap-server-port "imaps")
+                  (nnimap-stream ssl)
+                  (nnir-search-engine imap)
+                  (nnmail-expiry-target "nnimap+active-group:Trash"))))
+  ;; sending via stmp
+  (setq message-send-mail-function 'smtpmail-send-it)
+  (setq smtpmail-smtp-server "mail.active-group.de")
+  (setq smtpmail-default-smtp-server "mail.active-group.de")
+  (setq smtpmail-smtp-service 587)
+  (setq smtpmail-local-domain "wayfarer")
+  (setq smtpmail-stream-type 'starttls))
 
 (provide 'init)
 ;;; init.el ends here
