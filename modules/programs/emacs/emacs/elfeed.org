@@ -6,6 +6,7 @@
 ** [[http://feeds.feedburner.com/cgpgrey/PJyo][CGP Grey]]                                                  :blog:personal:
 ** [[https://clojure.org/feed.xml][Clojure News]]
 ** [[http://feeds.feedburner.com/codinghorror/][Coding Horror]]                                                  :personal:
+** [[https://dannorth.net/blog/][Dan North]]                                                 :personal:blog:
 ** [[David Smith]]                                          :ios:apple:personal:
 ** [[http://dustycloud.org/blog/index.xml][Dustycloud Brainstorms (Christine Lemmer-Webber)]]               :personal:
 ** [[https://fasterthanli.me/index.xml][fasterthanli.me]]                                                    :rust:
