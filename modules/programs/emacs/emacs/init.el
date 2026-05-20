@@ -447,13 +447,17 @@ Geschäftsführer: Dr. Michael Sperber"))))
                   (nnimap-stream ssl)
                   (nnir-search-engine imap)
                   (nnmail-expiry-target "nnimap+active-group:Trash"))))
+  (setq gnus-group-line-format "%M%S%p%P [%L] %5y: %(%g%)\n")
+  (setq gnus-summary-line-format "%U%R %D | %-20,20f | %B%s\n")
   ;; sending via stmp
-  (setq message-send-mail-function 'smtpmail-send-it)
-  (setq smtpmail-smtp-server "mail.active-group.de")
-  (setq smtpmail-default-smtp-server "mail.active-group.de")
-  (setq smtpmail-smtp-service 587)
-  (setq smtpmail-local-domain "wayfarer")
-  (setq smtpmail-stream-type 'starttls))
+  (setq message-send-mail-function 'smtpmail-send-it
+        smtpmail-default-smtp-server "mail.active-group.de"
+        smtpmail-smtp-server "mail.active-group.de"
+        smtpmail-smtp-service 587
+        smtpmail-local-domain "active-group.de"
+        smtpmail-stream-type 'starttls
+        smtpmail-smtp-user "marco.schneider@active-group.de"
+        smtpmail-auth-credentials "~/.authinfo"))
 
 (provide 'init)
 ;;; init.el ends here
