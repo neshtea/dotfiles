@@ -449,6 +449,7 @@ Geschäftsführer: Dr. Michael Sperber"))))
                   (nnmail-expiry-target "nnimap+active-group:Trash"))))
   (setq gnus-group-line-format "%M%S%p%P [%L] %5y: %(%g%)\n")
   (setq gnus-summary-line-format "%U%R %D | %-20,20f | %B%s\n")
+  (setopt gnus-permanently-visible-groups ":INBOX$")
   ;; sending via stmp
   (setq message-send-mail-function 'smtpmail-send-it
         smtpmail-default-smtp-server "mail.active-group.de"
@@ -458,6 +459,19 @@ Geschäftsführer: Dr. Michael Sperber"))))
         smtpmail-stream-type 'starttls
         smtpmail-smtp-user "marco.schneider@active-group.de"
         smtpmail-auth-credentials "~/.authinfo"))
+
+(use-package bbdb
+  :ensure t
+  :config
+  (bbdb-initialize 'gnus 'message)
+  (bbdb-mua-auto-update-init 'gnus 'message)
+  (setq bbdb-mua-auto-update-p 'query)
+  (setq bbdb-message-all-addresses t)
+  (setq bbdb-north-american-phone-numbers-p nil)
+  (setq bbdb-complete-name-allow-cycling t)
+  (setq bbdb-offer-save 'auto)
+  (bbdb-insinuate-gnus)
+  (bbdb-insinuate-message))
 
 (provide 'init)
 ;;; init.el ends here
