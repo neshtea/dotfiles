@@ -158,7 +158,7 @@ disables all other enabled themes."
   :config
   (load-theme 'base16-default-dark t))
 
-(neshtea/switch-theme 'base16-everforest-dark-hard)
+(neshtea/switch-theme 'base16-gruvbox-dark-hard)
 
 (use-package vertico
   :init (vertico-mode)
