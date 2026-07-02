@@ -28,6 +28,10 @@
     ALTERNATE_EDITOR = "vim";
   };
 
+  home.sessionPath = [
+    "$HOME/.local/bin"
+  ];
+
   home.packages = with pkgs; [
     cacert
     coreutils
