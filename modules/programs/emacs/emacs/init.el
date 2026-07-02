@@ -256,11 +256,17 @@ disables all other enabled themes."
       (eglot--when-live-buffer buffer
         (eglot--widening (font-lock-flush))))))
 
-(use-package nix-mode
-  :mode "\\.nix\\'"
-  :hook (before-save . nix-format-before-save))
+;;(add-hook 'nix-mode-hook #'nix-format-on-save-mode)
 
 (use-package reformatter)
+
+(reformatter-define nix-format
+  :program "nixfmt"
+  :args '("-"))
+
+(use-package nix-mode
+  :mode "\\.nix\\'"
+  :hook (nix-mode . nix-format-on-save))
 
 (reformatter-define prettier-format
   :program "npx"
