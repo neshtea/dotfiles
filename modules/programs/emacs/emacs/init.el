@@ -412,9 +412,8 @@ the separator."
 
 (use-package agent-shell
   :config
-  (setq agent-shell-anthropic-claude-environment
-        (agent-shell-make-environment-variables
-         :load-env "~/.env")))
+  (setq agent-shell-anthropic-authentication
+      (agent-shell-anthropic-make-authentication :login t)))
 
 (use-package gleam-ts-mode
   :mode (rx ".gleam" eos)
