@@ -100,7 +100,7 @@
           ssh.allowedSignersFile = "~/.ssh/allowed_signers";
         };
         init.defaultBranch = "main";
-        merge.conflicstyle = "diff3";
+        merge.conflictstyle = "diff3";
         pull.rebase = "true";
         push.autoSetupRemote = "true";
         tag.gpgsign = "true";
