@@ -42,6 +42,9 @@
     fzf
     bat
     delta
+
+    leiningen
+    clojure
   ];
 
   programs = {
