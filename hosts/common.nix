@@ -40,7 +40,6 @@
     ripgrep
     wget
     fzf
-    ripgrep
     bat
     delta
   ];
