@@ -82,7 +82,7 @@
         (sf-mono . (:family
                     "SF Mono"
                     :width))
-        (comic-mono . (:family "Comic Mono"))
+        (comic-mono . (:family "ComicShannsMono Nerd Font"))
         (victor-mono . (:family
                         "Victor Mono"))))
 
