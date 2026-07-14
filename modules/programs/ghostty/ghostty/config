@@ -1,6 +1,0 @@
-command = ~/.nix-profile/bin/fish
-font-family = Jetbrains Mono
-font-size = 12
-term = xterm-256color
-theme = Gruvbox Dark Hard
-# theme = everforest-dark-hard
