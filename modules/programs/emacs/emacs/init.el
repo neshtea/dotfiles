@@ -69,6 +69,9 @@
 (setq-default indent-tabs-mode nil)
 (setq-default fill-column 80)
 (load custom-file 'no-error)
+(use-package menu-bar
+  :config
+  (menu-bar-mode +1))
 
 ;; Answer y or n to yes-or-no questions.
 ;; http://pragmaticemacs.com/emacs/make-all-prompts-y-or-n/
