@@ -389,7 +389,10 @@ the separator."
 (use-package ghostel
   :vc (:url "https://github.com/dakra/ghostel"
        :lisp-dir "lisp"
-       :rev :newest))
+       :rev :newest)
+  :config
+  (setq ghostel-shell "~/.nix-profile/bin/fish"))
+
 (use-package tuareg)  ; OCaml
 (use-package elixir-mode)
 
