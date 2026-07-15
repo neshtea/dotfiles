@@ -85,11 +85,12 @@
         (sf-mono . (:family
                     "SF Mono"
                     :width))
-        (comic-mono . (:family "ComicShannsMono Nerd Font"))
+        (comic-mono . (:family "ComicShannsMono Nerd Font"
+                               :height 140))
         (victor-mono . (:family
                         "Victor Mono"))))
 
-(setq neshtea/current-font 'jetbrains-mono)
+(setq neshtea/current-font 'comic-mono)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
