@@ -33,7 +33,7 @@ in
         settings = {
           command = lib.getExe config.programs.fish.package;
           font-family = "ComicShannsMono Nerd Font";
-          font-size = 12;
+          font-size = 14;
           term = "xterm-256color";
           theme = "Gruvbox Dark Hard";
         };
