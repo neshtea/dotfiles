@@ -82,9 +82,7 @@
       '((jetbrains-mono . (:family "JetBrains Mono"
                                    :height 120))
         (iosevka-fixed . (:family "Iosevka Fixed"))
-        (sf-mono . (:family
-                    "SF Mono"
-                    :width))
+        (sf-mono . (:family "SF Mono"))
         (comic-mono . (:family "ComicShannsMono Nerd Font"
                                :height 140))
         (victor-mono . (:family
