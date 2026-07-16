@@ -36,7 +36,7 @@
     cacert
     coreutils
     gnumake
-    (nixVersions.latest.overrideAttrs { doCheck = false; })
+    nixVersions.latest
     ripgrep
     wget
     fzf
