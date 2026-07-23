@@ -391,6 +391,8 @@ the separator."
   :vc (:url "https://github.com/dakra/ghostel"
        :lisp-dir "lisp"
        :rev :newest)
+  :bind (:map ghostel-semi-char-mode-map
+              ("C-s" . consult-line))
   :config
   (setq ghostel-shell "~/.nix-profile/bin/fish"))
 
