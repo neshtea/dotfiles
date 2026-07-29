@@ -16,15 +16,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # home = {
-    #   activation = {
-    #     symlinkGhostty = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    #       if [ ! -e $XDG_CONFIG_HOME/ghostty ]; then
-    #         $DRY_RUN_CMD ln -snf $HOME/dotfiles/modules/programs/ghostty/ghostty $XDG_CONFIG_HOME/ghostty
-    #       fi
-    #     '';
-    #   };
-    # };
     programs = {
       ghostty = {
         enable = true;
@@ -33,7 +24,7 @@ in
         settings = {
           command = lib.getExe config.programs.fish.package;
           font-family = "ComicShannsMono Nerd Font";
-          font-size = 14;
+          font-size = 12;
           term = "xterm-256color";
           theme = "Gruvbox Dark Hard";
         };
