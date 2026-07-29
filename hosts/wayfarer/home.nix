@@ -12,6 +12,7 @@
     desktopPackages
     ++ [
       pkgs.lazygit
+      pkgs.plantuml
     ];
   active-group = {
     timetracking = {
