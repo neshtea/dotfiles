@@ -65,7 +65,7 @@
 ;; macOS (disable menubar/scrollbar/toolbar).
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
-(setq-default cursor-type 'hbar)
+(setq-default cursor-type 'bar)
 (setq-default indent-tabs-mode nil)
 (setq-default fill-column 80)
 (load custom-file 'no-error)
