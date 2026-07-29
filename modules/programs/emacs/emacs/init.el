@@ -84,7 +84,7 @@
         (iosevka-fixed . (:family "Iosevka Fixed"))
         (sf-mono . (:family "SF Mono"))
         (comic-mono . (:family "ComicShannsMono Nerd Font"
-                               :height 140))
+                               :height 120))
         (victor-mono . (:family
                         "Victor Mono"))))
 
