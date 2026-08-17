@@ -65,7 +65,7 @@
 ;; macOS (disable menubar/scrollbar/toolbar).
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
-(setq-default cursor-type 'bar)
+(setq-default cursor-type 'hbar)
 (setq-default indent-tabs-mode nil)
 (setq-default fill-column 80)
 (load custom-file 'no-error)
@@ -88,7 +88,7 @@
         (victor-mono . (:family
                         "Victor Mono"))))
 
-(setq neshtea/current-font 'comic-mono)
+(setq neshtea/current-font 'jetbrains-mono)
 
 (defun neshtea/switch-font (font)
   "Select one of the fonts configured in 'neshtea/font-alist' as
@@ -119,7 +119,9 @@ the face-font."
 
 ;; Some packages where I specifically want the built-in version.
 (use-package eldoc)
-(use-package project)
+(use-package project
+  :config
+  (setq project-vc-extra-root-markers '("deps.edn" "shadow-cljs.edn" "package.json")))
 (use-package flymake)
 (use-package xref)
 

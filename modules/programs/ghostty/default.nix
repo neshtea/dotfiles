@@ -16,6 +16,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    home.packages = [ pkgs.jetbrains-mono ];
     programs = {
       ghostty = {
         enable = true;
@@ -23,7 +24,7 @@ in
         package = if pkgs.stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
         settings = {
           command = lib.getExe config.programs.fish.package;
-          font-family = "ComicShannsMono Nerd Font";
+          font-family = "JetBrains Mono";
           font-size = 12;
           term = "xterm-256color";
           theme = "Gruvbox Dark Hard";
