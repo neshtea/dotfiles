@@ -7,16 +7,21 @@
   home.packages =
     let
       desktopPackages = import ../desktop.nix { inherit pkgs; };
+      fonts = with pkgs.nerd-fonts; [
+        comic-shanns-mono
+        jetbrains-mono
+        victor-mono
+      ];
     in
     desktopPackages
     ++ [
       pkgs.signal-desktop
-      pkgs.jetbrains-mono
       pkgs.gcc
       pkgs.mattermost-desktop
       pkgs.thunderbird
       pkgs.bitwarden-desktop
-    ];
+    ]
+    ++ fonts;
 
   programs = {
     firefox.enable = true;
@@ -28,7 +33,7 @@
       ghostty.enable = true;
       emacs = {
         enable = true;
-        emacsPackage = pkgs.emacs-unstable;
+        emacsPackage = pkgs.emacs;
       };
     };
     desktop = {
