@@ -73,9 +73,6 @@
     ignoreregex =
   '';
 
-  # Vaultwarden needs to actually write a logfile for the jail above to read.
-  services.vaultwarden.config.LOG_FILE = "/var/lib/vaultwarden/vaultwarden.log";
-
   # Caddy access-log jail: bans IPs hammering any reverse-proxied vhost
   # with 401/403/404s (typical scanner/bruteforce behavior).
   services.caddy.logDir = "/var/log/caddy";
@@ -136,11 +133,8 @@
     path = "/run/secrets/smb-credentials";
   };
 
-  ############################################
-  # Samba mount for the music library
-  ############################################
   fileSystems."/mnt/music" = {
-    device = "//nas.local/music"; # <-- your actual share path
+    device = "//u518967.your-storagebox.de/backup";
     fsType = "cifs";
     options = [
       "credentials=/run/secrets/smb-credentials"
@@ -183,7 +177,8 @@
       DOMAIN = "https://vault.defmarco.com";
       ROCKET_ADDRESS = "127.0.0.1";
       ROCKET_PORT = 8000;
-      SIGNUPS_ALLOWED = false;
+      SIGNUPS_ALLOWED = true;
+      LOG_FILE = "/var/lib/vaultwarden/vaultwarden.log";
     };
     environmentFile = config.sops.secrets."vaultwarden/admin_token".path;
     # environmentFile must contain: ADMIN_TOKEN=...
@@ -217,9 +212,9 @@
       reverse_proxy 127.0.0.1:4533
     '';
     virtualHosts."vault.defmarco.com".extraConfig = ''
-      reverse_proxy 127.0.0.1:8000
+      reverse_proxy 127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}
     '';
-    virtualHosts."books.defmarco.com".extraConfig = ''
+    virtualHosts."calibre.defmarco.com".extraConfig = ''
       reverse_proxy 127.0.0.1:8083
     '';
   };
