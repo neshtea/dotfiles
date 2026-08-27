@@ -16,10 +16,14 @@
       url = "github:active-group/nix-starter-kit";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    inputs@{ nixpkgs, home-manager, ... }:
+    inputs@{ nixpkgs, home-manager, sops-nix, ... }:
     let
       username = "schneider"; # conveniently, this is my username on all systems.
       # Put things in `specialArgs` that we might need for
@@ -106,29 +110,53 @@
             ];
           };
       };
-      nixosConfigurations.oxomoco =
-        let
-          system = "x86_64-linux";
-          pkgs = import nixpkgs {
-            config.allowUnfree = true; # sorry rms
-            inherit system;
-          };
-        in
-        nixpkgs.lib.nixosSystem {
-          inherit pkgs system specialArgs;
-          modules = [
-            ./hosts/oxomoco/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                users.${username} = import ./hosts/oxomoco/home.nix;
-                useGlobalPkgs = true;
-                useUserPackages = false;
-                extraSpecialArgs = specialArgs;
+      nixosConfigurations = {
+        "marco@hetzner-lab" =
+          let system = "x86_64-linux";
+              pkgs = import nixpkgs {
+                inherit system;
               };
-            }
-            inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t490
-          ];
-        };
+          in
+            nixpkgs.lib.nixosSystem {
+              inherit pkgs system specialArgs;
+              modules = [
+                ./hosts/hetzner-lab/configuration.nix
+                sops-nix.nixosModules.sops
+                home-manager.nixosModules.home-manager
+                {
+                  home-manager = {
+                    users."marco" = import ./hosts/hetzner-lab/home.nix;
+                    useGlobalPkgs = true;
+                    useUserPackages = false;
+                    extraSpecialArgs = specialArgs;
+                  };
+                }
+              ];
+            };
+        oxomoco =
+          let
+            system = "x86_64-linux";
+            pkgs = import nixpkgs {
+              config.allowUnfree = true; # sorry rms
+              inherit system;
+            };
+          in
+            nixpkgs.lib.nixosSystem {
+              inherit pkgs system specialArgs;
+              modules = [
+                ./hosts/oxomoco/configuration.nix
+                home-manager.nixosModules.home-manager
+                {
+                  home-manager = {
+                    users.${username} = import ./hosts/oxomoco/home.nix;
+                    useGlobalPkgs = true;
+                    useUserPackages = false;
+                    extraSpecialArgs = specialArgs;
+                  };
+                }
+                inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t490
+              ];
+            };
+      };
     };
 }

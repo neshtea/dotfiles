@@ -1,0 +1,10 @@
+# Run once, on your workstation:
+#   age-keygen -o key.txt
+# It prints "Public key: age1..." — paste that below.
+keys:
+  - &server age1a6sp6eq7slcwllqtusdqp77l3pkr4xn44a342052wfympztygu7ql63fyw
+creation_rules:
+  - path_regex: secrets\.yaml$
+    key_groups:
+      - age:
+          - *server
