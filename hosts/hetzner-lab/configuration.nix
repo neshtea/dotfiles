@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -209,6 +209,21 @@
     # environmentFile must contain: ADMIN_TOKEN=...
   };
 
+  services.cockpit = {
+    enable = true;
+    port = 9090;
+    plugins = [
+      pkgs.cockpit-files
+      pkgs.cockpit-podman
+      pkgs.cockpit-machines
+    ];
+    settings = {
+      WebService = {
+          Origins = lib.mkForce "http://localhost:9090 https://localhost:9090";
+      };
+    };
+  };
+
   virtualisation.podman.enable = true;
   virtualisation.oci-containers.backend = "podman";
   virtualisation.oci-containers.containers.calibre-web-automated = {
@@ -241,6 +256,9 @@
     '';
     virtualHosts."calibre.defmarco.com".extraConfig = ''
       reverse_proxy 127.0.0.1:8083
+    '';
+    virtualHosts."cockpit.defmarco.com".extraConfig = ''
+      reverse_proxy 127.0.0.1:${toString config.services.cockpit.port}
     '';
   };
 
