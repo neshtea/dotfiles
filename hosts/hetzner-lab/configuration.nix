@@ -115,7 +115,7 @@
     options = "--delete-older-than 30d";
   };
 
-  users.mutableUsers = false; # user set is fully declared here, not edited by hand
+  users.mutableUsers = true;
 
   users = {
     users =
