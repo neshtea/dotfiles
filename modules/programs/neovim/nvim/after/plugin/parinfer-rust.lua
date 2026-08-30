@@ -17,22 +17,12 @@ local function get_pack_dir_of(pack_name)
     end
 end
 
--- Used to just be a `build = ...` directive with lazy.nvim. Now, we need to
--- put in a little more work but oh well... still worth it though.
-
----Initialize parinfer rust. Requires compiling some rust code. Cargo comes
----from the nix environment. Runs on every startup, but completes almost
----instantaneously, so nevermind about calling cargo every time.
-local function init_parinfer_rust()
-    local cwd = vim.fn.getcwd()
-    vim.cmd('cd ' .. get_pack_dir_of('parinfer-rust'))
-    local output = vim.fn.system('cargo build --release')
-    local ok = vim.v.shell_error == 0
-    local err = not ok and output or nil
-    if err then
-        error(err)
+-- https://github.com/eraserhd/parinfer-rust#vimpack-neovim--012
+vim.api.nvim_create_autocmd('PackChanged', {
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if name == 'parinfer-rust' and (kind == 'install' or kind == 'update') then
+      vim.system({ 'cargo', 'build', '--release' }, { cwd = ev.data.path })
     end
-    vim.cmd('cd ' .. cwd)
-end
-
-init_parinfer_rust()
+  end,
+})

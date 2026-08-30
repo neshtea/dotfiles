@@ -29,6 +29,7 @@ in
         lua
         stylua
         python313Packages.mdformat # Formatter for markdown
+        gcc
         cargo # for parinfer
         jq # Formatter for json
 
