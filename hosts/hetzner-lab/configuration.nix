@@ -234,7 +234,7 @@
     ports = [ "127.0.0.1:8083:8083" ];
     volumes = [
       "/var/lib/calibre-web-automated/config:/config"
-      "/var/lib/calibre-web-automated/library:/calibre-library"
+      "/mnt/music/Books:/calibre-library"
       "/var/lib/calibre-web-automated/ingest:/cwa-book-ingest"
     ];
     environment = {
