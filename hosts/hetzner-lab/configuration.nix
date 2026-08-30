@@ -217,9 +217,11 @@
       pkgs.cockpit-podman
       pkgs.cockpit-machines
     ];
+    allowed-origins = [ "https://cockpit.defmarco.com" ];
     settings = {
       WebService = {
-          Origins = lib.mkForce "http://localhost:9090 https://localhost:9090";
+          AllowUnencrypted = true;
+          ProtocolHeader = "X-Forwarded-Proto";
       };
     };
   };
