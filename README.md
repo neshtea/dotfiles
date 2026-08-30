@@ -67,6 +67,10 @@ Using `nixos-rebuild`:
 nixos-rebuild switch --flake <point to dotfiles> --use-remote-sudo
 ```
 
+#### Update secrets (SOPS) on `hetzner-lab`
+
+`sudo SOPS_AGE_KEY_FILE=/var/lib/sops-nix/key.txt sops secrets.yaml`
+
 ### macOS
 
 To switch to the next generation of your system/user config, run:
