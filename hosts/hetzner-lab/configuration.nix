@@ -248,6 +248,13 @@
     # environmentFile must contain: HARDCOVER_TOKEN=...
   };
 
+  services.immich = {
+    enable = true;
+    port = 2283;
+    host = "0.0.0.0";
+    mediaLocation = "/mnt/music/Photos";
+  };
+
   services.caddy = {
     enable = true;
     virtualHosts."music.defmarco.com".extraConfig = ''
@@ -261,6 +268,9 @@
     '';
     virtualHosts."cockpit.defmarco.com".extraConfig = ''
       reverse_proxy 127.0.0.1:${toString config.services.cockpit.port}
+    '';
+    virtualHosts."immich.defmarco.com".extraConfig = ''
+      reverse_proxy 127.0.0.1:${toString config.services.immich.port}
     '';
   };
 
