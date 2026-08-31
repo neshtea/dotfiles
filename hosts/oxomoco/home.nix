@@ -20,6 +20,7 @@
       pkgs.mattermost-desktop
       pkgs.thunderbird
       pkgs.bitwarden-desktop
+      pkgs.feishin
     ]
     ++ fonts;
 
