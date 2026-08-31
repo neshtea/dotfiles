@@ -42,7 +42,6 @@
     tmpfiles.rules = [
       "d /var/lib/calibre-web-automated         0750 cwa cwa -"
       "d /var/lib/calibre-web-automated/config  0750 cwa cwa -"
-      "d /var/lib/calibre-web-automated/library 0750 cwa cwa -"
       "d /var/lib/calibre-web-automated/ingest  0770 cwa cwa -"
     ];
   };
@@ -166,20 +165,19 @@
     let
       baseDevice = "//u518967.your-storagebox.de/backup";
       smbDir = dir: "${baseDevice}/${dir}";
-      credentialsFile = "credentials=/run/secrets/smb-credentials";
+      credentials = "credentials=/run/secrets/smb-credentials";
     in
     {
       "/mnt/music" = {
         device = smbDir "Music";
         fsType = "cifs";
         options = [
-          "credentials=${credentialsFile}"
-          "x-systemd.automount"
+          credentials
           "x-systemd.mount-timeout=30"
           "_netdev"
           "nofail"
-          "uid=${toString config.users.users.navidrome.uid}"
-          "gid=${toString config.users.groups.navidrome.gid}"
+          "uid=navidrome"
+          "gid=navidrome"
           "file_mode=0640"
           "dir_mode=0750"
           "ro"
@@ -190,20 +188,23 @@
         device = smbDir "Books";
         fsType = "cifs";
         options = [
-          "credentials=${credentialsFile}"
-          # NOTE: No autount here. Podman will mount when starting up. Noone else
-          # needs it.
+          credentials
           "x-systemd.mount-timeout=30"
           "_netdev"
           "nofail"
-          "uid=${toString config.users.users.cwa.uid}"
-          "gid=${toString config.users.groups.cwa.gid}"
+          "uid=cwa"
+          "gid=cwa"
           "file_mode=0660"
           "dir_mode=0770"
           "nobrl"
         ];
       };
     };
+
+  # Without these the services race the _netdev mounts: navidrome would scan
+  # an empty dir and purge its library, CWA would create a second one.
+  systemd.services.navidrome.unitConfig.RequiresMountsFor = "/mnt/music";
+  systemd.services.podman-calibre-web-automated.unitConfig.RequiresMountsFor = "/mnt/books";
 
   services.syncthing = {
     enable = true;
@@ -281,8 +282,6 @@
     environmentFiles = [ config.sops.secrets."cwa/hardcover_token".path ];
     # environmentFile must contain: HARDCOVER_TOKEN=...
   };
-
-  systemd.services.podman-calibre-web-automated.unitConfig.RequiresMountFor = "/mnt/books";
 
   services.caddy = {
     enable = true;
