@@ -40,7 +40,6 @@
       };
     };
     tmpfiles.rules = [
-      "d /var/lib/calibre-web-automated         0750 cwa cwa -"
       "d /var/lib/calibre-web-automated/config  0750 cwa cwa -"
       "d /var/lib/calibre-web-automated/ingest  0770 cwa cwa -"
     ];
