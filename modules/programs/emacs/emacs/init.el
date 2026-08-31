@@ -129,7 +129,7 @@ the face-font."
 ;; tries to fix that.
 ;; SEE https://github.com/purcell/exec-path-from-shell#usage
 (use-package exec-path-from-shell
-  :if (memq window-system '(mac ns x))
+  :if (eq system-type 'darwin)
   :config
   (setq exec-path-from-shell-shell-name "~/.nix-profile/bin/fish")
   (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
