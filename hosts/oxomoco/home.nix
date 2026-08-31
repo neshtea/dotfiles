@@ -21,6 +21,8 @@
       pkgs.thunderbird
       pkgs.bitwarden-desktop
       pkgs.feishin
+      pkgs.keepassxc
+      pkgs.dbeaver-bin
     ]
     ++ fonts;
 
