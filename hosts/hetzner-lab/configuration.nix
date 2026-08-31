@@ -1,4 +1,8 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -158,18 +162,48 @@
     path = "/run/secrets/smb-credentials";
   };
 
-  fileSystems."/mnt/music" = {
-    device = "//u518967.your-storagebox.de/backup";
-    fsType = "cifs";
-    options = [
-      "credentials=/run/secrets/smb-credentials"
-      "x-systemd.automount"
-      "x-systemd.mount-timeout=30"
-      "_netdev"
-      "uid=navidrome"
-      "ro"
-    ];
-  };
+  fileSystems =
+    let
+      baseDevice = "//u518967.your-storagebox.de/backup";
+      smbDir = dir: "${baseDevice}/${dir}";
+      credentialsFile = "credentials=/run/secrets/smb-credentials";
+    in
+    {
+      "/mnt/music" = {
+        device = smbDir "Music";
+        fsType = "cifs";
+        options = [
+          "credentials=${credentialsFile}"
+          "x-systemd.automount"
+          "x-systemd.mount-timeout=30"
+          "_netdev"
+          "nofail"
+          "uid=${config.users.users.navidrome.uid}"
+          "gid=${config.users.groups.navidrome.guid}"
+          "file_mode=0640"
+          "dir_mode=0750"
+          "ro"
+        ];
+      };
+
+      "/mnt/books" = {
+        device = smbDir "Books";
+        fsType = "cifs";
+        options = [
+          "credentials=${credentialsFile}"
+          # NOTE: No autount here. Podman will mount when starting up. Noone else
+          # needs it.
+          "x-systemd.mount-timeout=30"
+          "_netdev"
+          "nofail"
+          "uid=${config.users.users.cwa.uid}"
+          "gid=${config.users.groups.cwa.guid}"
+          "file_mode=0660"
+          "dir_mode=0770"
+          "nobrl"
+        ];
+      };
+    };
 
   services.syncthing = {
     enable = true;
@@ -220,8 +254,8 @@
     allowed-origins = [ "https://cockpit.defmarco.com" ];
     settings = {
       WebService = {
-          AllowUnencrypted = true;
-          ProtocolHeader = "X-Forwarded-Proto";
+        AllowUnencrypted = true;
+        ProtocolHeader = "X-Forwarded-Proto";
       };
     };
   };
@@ -234,26 +268,21 @@
     ports = [ "127.0.0.1:8083:8083" ];
     volumes = [
       "/var/lib/calibre-web-automated/config:/config"
-      "/mnt/music/Books:/calibre-library"
+      "/mnt/books:/calibre-library"
       "/var/lib/calibre-web-automated/ingest:/cwa-book-ingest"
     ];
     environment = {
       PUID = "3000";
       PGID = "3000";
       TZ = "Europe/Vienna";
-      NETWORK_SHARE_MODE = "false";
+      NETWORK_SHARE_MODE = "true";
       CWA_PORT_OVERRIDE = "8083";
     };
     environmentFiles = [ config.sops.secrets."cwa/hardcover_token".path ];
     # environmentFile must contain: HARDCOVER_TOKEN=...
   };
 
-  services.immich = {
-    enable = true;
-    port = 2283;
-    host = "0.0.0.0";
-    mediaLocation = "/mnt/music/Photos";
-  };
+  systemd.services.podman-calibre-web-automated.unitConfig.RequiresMountFor = "/mnt/books";
 
   services.caddy = {
     enable = true;
@@ -268,9 +297,6 @@
     '';
     virtualHosts."cockpit.defmarco.com".extraConfig = ''
       reverse_proxy 127.0.0.1:${toString config.services.cockpit.port}
-    '';
-    virtualHosts."immich.defmarco.com".extraConfig = ''
-      reverse_proxy 127.0.0.1:${toString config.services.immich.port}
     '';
   };
 
