@@ -127,6 +127,7 @@
         ".cpcache/"
         ".vscode/"
         "node_modules/"
+        ".nrepl-port"
       ];
       signing = {
         format = "ssh";
