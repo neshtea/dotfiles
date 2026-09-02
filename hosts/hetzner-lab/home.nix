@@ -5,4 +5,5 @@
   ];
   programs.fish.enable = true;
   modules.dev.nix.enable = true;
+  modules.dev.clojure.enable = true;
 }
