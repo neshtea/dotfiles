@@ -83,7 +83,7 @@
   users.users.schneider = {
     isNormalUser = true;
     home = "/home/schneider";
-    shell = "${lib.getExe pkgs.zsh}";
+    shell = "${lib.getExe pkgs.fish}";
     extraGroups = [
       "wheel"
       "networkmanager"
@@ -117,7 +117,6 @@
       kdePackages.kpat
       kdePackages.ksudoku
     ];
-    pathsToLink = [ "/share/zsh" ];
     sessionVariables = rec {
       XDG_CACHE_HOME = "$HOME/.cache";
       XDG_CONFIG_HOME = "$HOME/.config";
