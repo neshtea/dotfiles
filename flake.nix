@@ -54,30 +54,6 @@
               }
             ];
           };
-
-        "marco@hetzner-lab" =
-          let
-            pkgs = import nixpkgs {
-              config.allowUnfree = true;
-              system = "x86_64-linux";
-            };
-
-          in
-          home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
-            extraSpecialArgs = specialArgs;
-            modules = [
-              ./hosts/hetzner-lab/home.nix
-              {
-                home = {
-                  username = "marco";
-                  homeDirectory = "/home/marco";
-                  stateVersion = "22.05";
-                };
-              }
-            ];
-          };
-
         "pi@marvin" =
           let
             pkgs = import nixpkgs {
