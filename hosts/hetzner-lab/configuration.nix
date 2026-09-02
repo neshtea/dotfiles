@@ -50,10 +50,21 @@ in
     };
   };
 
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "prohibit-password";
+  services = {
+    caddy.enable = true;
+
+    openssh = {
+      enable = true;
+      settings = {
+        PermitRootLogin = "prohibit-password";
+      };
+    };
+
+    syncthing = {
+      enable = true;
+      user = "marco";
+      dataDir = "/home/marco/Sync";
+      openDefaultPorts = true;
     };
   };
 
@@ -65,9 +76,8 @@ in
     options = "--delete-older-than 30d";
   };
 
-  users.mutableUsers = true;
-
   users = {
+    mutableUsers = true;
     users =
       let
         sshPublicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDTaoFvrtVyoG1So6OKO0d7SgRzL26xQIpuT0FNfwoT+r2RvF1wlMx7HT6LV0knZKOzIxtTWupHff/YYF/Y73KtGejqRmaSvPI8+/FEcCyveM5ZmgLGuO73sVm8M0ruYuwLMUtm1IjmLnoHOGqZYVT3TcYi8SWRdFaosU9gKR4/oIQ6GONonoQr7TL89vA3aQ+veCfbgEQWc90p1YIuF/I5GsHnqv/rHolGqKNQ3Es9zxNYitxgEPRq6nHeUitzQoK8StzYfhjcSFAUWSBywFmEKH9LjRnmOrMRIjglX/a0+V085NiDuVKfQUKBeSyUQvcq8qT0lTzZDuAvz+icziD51cATYGYWwlpnC+1lKUhzK1IbjJGvangr6gBbh0UOp+lu0snQOe8EYxNLGw5OL9Sxa35724hvs6uYcBNhFRD8WeZgatXwJpBSDsXBOi2CYwBswMNLwUbrasfo7f8lulShHnJV/hvTcXryNiSac7Tt+qGP/La/N53IDnLXe1ewgwxf2vs7IhBVqNOZQCTiolpCZf6+iyz9JYK2kQHVJWMT2bt10PE5RqeW7rQ96Sf36k7ngujsv98R7TVzsTnX2DNyWKHbCy3Ddp7Ksp6xQpWJ3KUoQ1i7BfR6s2gIlxzofwSi3xpP/arUgsZ5Fi9pqOxbO7IwEIwFpT4bw/j8E7nnRQ== marco.schneider@active-group.de";
@@ -105,15 +115,5 @@ in
       path = smbCredentialsFile;
     };
   };
-
-  services.syncthing = {
-    enable = true;
-    user = "marco";
-    dataDir = "/home/marco/Sync";
-    openDefaultPorts = true;
-  };
-
-  services.caddy.enable = true;
-
   system.stateVersion = "26.05";
 }
