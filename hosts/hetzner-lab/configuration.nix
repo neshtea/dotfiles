@@ -11,7 +11,6 @@ in
     ./hardening.nix
     ./hardware-configuration.nix
     ./services/calibre-web-automated
-    ./services/cockpit
     ./services/navidrome
     ./services/vaultwarden
   ];
