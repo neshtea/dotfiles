@@ -11,6 +11,11 @@
     "nix-command"
     "flake"
   ];
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
