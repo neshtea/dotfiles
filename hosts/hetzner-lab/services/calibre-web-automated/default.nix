@@ -1,5 +1,11 @@
-{ config, ... }:
 {
+  config,
+  smbDevice,
+  smbCredentialsFile,
+  ...
+}:
+{
+  sops.secrets."cwa/hardcover_token" = { };
   systemd = {
     tmpfiles.rules = [
       "d /var/lib/calibre-web-automated/config  0750 cwa cwa -"
@@ -7,7 +13,28 @@
     ];
     services.podman-calibre-web-automated.unitConfig.RequiresMountsFor = "/mnt/books";
   };
-  virtualisation = {
+  fileSystems =
+    let
+      credentials = "credentials=${smbCredentialsFile}";
+    in
+    {
+      "/mnt/books" = {
+        device = "${smbDevice}/Books";
+        fsType = "cifs";
+        options = [
+          credentials
+          "x-systemd.mount-timeout=30"
+          "_netdev"
+          "nofail"
+          "uid=cwa"
+          "gid=cwa"
+          "file_mode=0660"
+          "dir_mode=0770"
+          "nobrl"
+        ];
+      };
+    };
+  Virtualisation = {
     podman.enable = true;
     oci-containers = {
       backend = "podman";

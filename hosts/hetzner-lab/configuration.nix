@@ -154,39 +154,15 @@ in
     vim.enable = true;
   };
 
-  sops.defaultSopsFile = ./secrets.yaml;
-  sops.age.keyFile = "/var/lib/sops-nix/key.txt";
-
-  sops.secrets."cwa/hardcover_token" = { };
-  sops.secrets."smb/credentials" = {
-    # rendered to a file on disk so the cifs mount can read it
-    path = smbCredentialsFile;
-  };
-
-  fileSystems =
-    let
-      baseDevice = "//u518967.your-storagebox.de/backup";
-      smbDir = dir: "${baseDevice}/${dir}";
-      credentials = "credentials=${smbCredentialsFile}";
-    in
-    {
-      "/mnt/books" = {
-        device = smbDir "Books";
-        fsType = "cifs";
-        options = [
-          credentials
-          "x-systemd.mount-timeout=30"
-          "_netdev"
-          "nofail"
-          "uid=cwa"
-          "gid=cwa"
-          "file_mode=0660"
-          "dir_mode=0770"
-          "nobrl"
-        ];
-      };
+  sops = {
+    defaultSopsFile = ./secrets.yaml;
+    age.keyFile = "/var/lib/sops-nix/key.txt";
+    secrets."smb/credentials" = {
+      # rendered to a file on disk so the cifs mount can read it
+      path = smbCredentialsFile;
     };
-
+  };
+  
   services.syncthing = {
     enable = true;
     user = "marco";
