@@ -4,9 +4,14 @@
   ...
 }:
 
+let
+  smbDevice = "//u518967.your-storagebox.de/backup";
+  smbCredentialsFile = "/run/secrets/smb-credentials";
+in
 {
   imports = [
     ./hardware-configuration.nix
+    (./services/navidrome { inherit config smbDevice smbCredentialsFile; })
   ];
 
   boot.loader.grub.enable = true;
@@ -151,7 +156,6 @@
   sops.defaultSopsFile = ./secrets.yaml;
   sops.age.keyFile = "/var/lib/sops-nix/key.txt";
 
-  sops.secrets."navidrome/lastfm_secret" = { };
   sops.secrets."cwa/hardcover_token" = { };
   sops.secrets."vaultwarden/admin_token" = { };
   sops.secrets."smb/credentials" = {
@@ -166,22 +170,6 @@
       credentials = "credentials=/run/secrets/smb-credentials";
     in
     {
-      "/mnt/music" = {
-        device = smbDir "Music";
-        fsType = "cifs";
-        options = [
-          credentials
-          "x-systemd.mount-timeout=30"
-          "_netdev"
-          "nofail"
-          "uid=navidrome"
-          "gid=navidrome"
-          "file_mode=0640"
-          "dir_mode=0750"
-          "ro"
-        ];
-      };
-
       "/mnt/books" = {
         device = smbDir "Books";
         fsType = "cifs";
@@ -199,9 +187,6 @@
       };
     };
 
-  # Without these the services race the _netdev mounts: navidrome would scan
-  # an empty dir and purge its library, CWA would create a second one.
-  systemd.services.navidrome.unitConfig.RequiresMountsFor = "/mnt/music";
   systemd.services.podman-calibre-web-automated.unitConfig.RequiresMountsFor = "/mnt/books";
 
   services.syncthing = {
@@ -209,23 +194,6 @@
     user = "marco";
     dataDir = "/home/marco/Sync";
     openDefaultPorts = true;
-  };
-
-  services.navidrome = {
-    enable = true;
-    settings = {
-      Address = "127.0.0.1";
-      Port = 4533;
-      MusicFolder = "/mnt/music";
-      ScanSchedule = "1h";
-      LogLevel = "info";
-      SessionTimeout = "24h";
-      BaseUrl = "https://music.defmarco.com";
-      LastFM.ApiKey = "42fc64a44dbe3fd134ab3aac391373e2"; # not secret, fine in nix store
-      EnableTranscodingConfig = true;
-    };
-    environmentFile = config.sops.secrets."navidrome/lastfm_secret".path;
-    # environmentFile must contain: ND_LASTFM_SECRET=...
   };
 
   services.vaultwarden = {
@@ -283,9 +251,6 @@
 
   services.caddy = {
     enable = true;
-    virtualHosts."music.defmarco.com".extraConfig = ''
-      reverse_proxy 127.0.0.1:4533
-    '';
     virtualHosts."vault.defmarco.com".extraConfig = ''
       reverse_proxy 127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}
     '';
