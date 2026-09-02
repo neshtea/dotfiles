@@ -32,6 +32,10 @@
   };
 
   modules = {
+    dev = {
+      clojure.enable = true;
+      nix.enable = true;
+    };
     programs = {
       ghostty.enable = true;
       emacs = {

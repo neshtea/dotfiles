@@ -29,6 +29,7 @@
   modules = {
     dev = {
       clojure.enable = true;
+      nix.enable = true;
     };
     programs = {
       emacs = {
