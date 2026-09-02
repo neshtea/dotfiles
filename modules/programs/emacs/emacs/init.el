@@ -356,11 +356,16 @@ the separator."
 (use-package org
   :preface
   (setq neshtea/org-agenda-file "~/org/tasks.org")
-  (defun neshtea/open-gtd-file ()
+  (setq neshtea/org-notes-file "~/org/notes.org")
+  (defun neshtea/open-tasks-file ()
     (interactive)
     (find-file neshtea/org-agenda-file))
+  (defun neshtea/open-notes-file ()
+    (interactive)
+    (find-file neshtea/org-notes-file))
   :bind (("C-c o a" . org-agenda)
-         ("C-c o f" . neshtea/open-gtd-file)
+         ("C-c o f" . neshtea/open-tasks-file)
+         ("C-c o n" . neshtea/open-notes-file)
          ("C-c o c" . org-capture))
   :hook (org-mode . org-indent-mode)
   :config
