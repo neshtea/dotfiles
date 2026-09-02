@@ -66,7 +66,7 @@
         source ~/.nix-profile/etc/profile.d/nix.fish
       '';
       shellInit = ''
-        fish_add_path --path "$HOME/bin:$PATH"
+        fish_add_path $HOME/bin
         export TEXINPUTS="$HOME/repos/ag/howto/tex:$TEXINPUTS"
       '';
     };
