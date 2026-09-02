@@ -11,6 +11,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
+    ./services/calibre-web-automated
     ./services/navidrome
     ./services/vaultwarden
   ];
@@ -47,10 +48,6 @@ in
         };
       };
     };
-    tmpfiles.rules = [
-      "d /var/lib/calibre-web-automated/config  0750 cwa cwa -"
-      "d /var/lib/calibre-web-automated/ingest  0770 cwa cwa -"
-    ];
   };
 
   services.openssh = {
@@ -189,8 +186,6 @@ in
       };
     };
 
-  systemd.services.podman-calibre-web-automated.unitConfig.RequiresMountsFor = "/mnt/books";
-
   services.syncthing = {
     enable = true;
     user = "marco";
@@ -215,33 +210,8 @@ in
     };
   };
 
-  virtualisation.podman.enable = true;
-  virtualisation.oci-containers.backend = "podman";
-  virtualisation.oci-containers.containers.calibre-web-automated = {
-    image = "ghcr.io/crocodilestick/calibre-web-automated:latest";
-    autoStart = true;
-    ports = [ "127.0.0.1:8083:8083" ];
-    volumes = [
-      "/var/lib/calibre-web-automated/config:/config"
-      "/mnt/books:/calibre-library"
-      "/var/lib/calibre-web-automated/ingest:/cwa-book-ingest"
-    ];
-    environment = {
-      PUID = "3000";
-      PGID = "3000";
-      TZ = "Europe/Vienna";
-      NETWORK_SHARE_MODE = "true";
-      CWA_PORT_OVERRIDE = "8083";
-    };
-    environmentFiles = [ config.sops.secrets."cwa/hardcover_token".path ];
-    # environmentFile must contain: HARDCOVER_TOKEN=...
-  };
-
   services.caddy = {
     enable = true;
-    virtualHosts."calibre.defmarco.com".extraConfig = ''
-      reverse_proxy 127.0.0.1:8083
-    '';
     virtualHosts."cockpit.defmarco.com".extraConfig = ''
       reverse_proxy 127.0.0.1:${toString config.services.cockpit.port}
     '';
