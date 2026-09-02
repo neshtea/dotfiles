@@ -16,10 +16,7 @@
       };
     };
   };
-  services.caddy = {
-    enable = true;
-    virtualHosts."cockpit.defmarco.com".extraConfig = ''
-      reverse_proxy 127.0.0.1:${toString config.services.cockpit.port}
-    '';
-  };
+  services.caddy.virtualHosts."cockpit.defmarco.com".extraConfig = ''
+    reverse_proxy 127.0.0.1:${toString config.services.cockpit.port}
+  '';
 }

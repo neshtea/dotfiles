@@ -16,10 +16,8 @@
       environmentFile = config.sops.secrets."vaultwarden/admin_token".path;
       # environmentFile must contain: ADMIN_TOKEN=...
     };
-    caddy = {
-      virtualHosts."vault.defmarco.com".extraConfig = ''
-        reverse_proxy 127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}
-      '';
-    };
+    caddy.virtualHosts."vault.defmarco.com".extraConfig = ''
+      reverse_proxy 127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}
+    '';
   };
 }

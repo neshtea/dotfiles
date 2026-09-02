@@ -59,10 +59,7 @@
       };
     };
   };
-  services.caddy = {
-    enable = true;
-    virtualHosts."calibre.defmarco.com".extraConfig = ''
-      reverse_proxy 127.0.0.1:8083
-    '';
-  };
+  services.caddy.virtualHosts."calibre.defmarco.com".extraConfig = ''
+    reverse_proxy 127.0.0.1:8083
+  '';
 }

@@ -39,11 +39,10 @@
       environmentFile = config.sops.secrets."navidrome/lastfm_secret".path;
       # environmentFile must contain: ND_LASTFM_SECRET=...
     };
-    caddy = {
-      virtualHosts."music.defmarco.com".extraConfig = ''
-        reverse_proxy 127.0.0.1:4533
-      '';
-    };
+    caddy.virtualHosts."music.defmarco.com".extraConfig = ''
+      reverse_proxy 127.0.0.1:4533
+    '';
+
   };
 
 }

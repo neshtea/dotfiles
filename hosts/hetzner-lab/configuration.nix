@@ -1,6 +1,4 @@
 {
-  config,
-  pkgs,
   ...
 }:
 
@@ -107,13 +105,15 @@ in
       path = smbCredentialsFile;
     };
   };
-  
+
   services.syncthing = {
     enable = true;
     user = "marco";
     dataDir = "/home/marco/Sync";
     openDefaultPorts = true;
   };
+
+  services.caddy.enable = true;
 
   system.stateVersion = "26.05";
 }
