@@ -26,11 +26,16 @@
       storagePath = "/Users/schneider/repo/active-group/addresses/vcf";
     };
   };
-  modules.programs = {
-    emacs = {
-      enable = true;
-      emacsPackage = pkgs.emacs;
+  modules = {
+    dev = {
+      clojure.enable = true;
     };
-    ghostty.enable = true;
+    programs = {
+      emacs = {
+        enable = true;
+        emacsPackage = pkgs.emacs;
+      };
+      ghostty.enable = true;
+    };
   };
 }

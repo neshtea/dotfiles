@@ -2,7 +2,6 @@
 { pkgs }:
 with pkgs;
 [
-  clojure
   docker-client
   multimarkdown
   jq
