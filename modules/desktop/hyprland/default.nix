@@ -15,14 +15,6 @@ in
 
   config = lib.mkIf cfg.enable {
     home = {
-      activation = {
-        symlinkHyprland = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          if [ ! -e $XDG_CONFIG_HOME/hypr/hyprland.conf ]; then
-            $DRY_RUN_CMD ln -snf $HOME/dotfiles/modules/desktop/hyprland/hypr/hyprland.conf $XDG_CONFIG_HOME/hypr/hyprland.conf
-          fi
-        '';
-      };
-
       packages = [
         pkgs.bc
         pkgs.hyprpaper
@@ -40,12 +32,17 @@ in
       ];
     };
 
-    xdg.mimeApps = {
-      enable = true;
-      defaultApplications = {
-        "application/pdf" = "${pkgs.kdePackages.okular}/bin/okular";
-        "image/jpeg" = "${pkgs.kdePackages.gwenview}/bin/gwenview";
-        "image/png" = "${pkgs.kdePackages.gwenview}/bin/gwenview";
+    xdg = {
+      configFile."hypr".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/programs/hypr";
+
+      mimeApps = {
+        enable = true;
+        defaultApplications = {
+          "application/pdf" = "${pkgs.kdePackages.okular}/bin/okular";
+          "image/jpeg" = "${pkgs.kdePackages.gwenview}/bin/gwenview";
+          "image/png" = "${pkgs.kdePackages.gwenview}/bin/gwenview";
+        };
       };
     };
 

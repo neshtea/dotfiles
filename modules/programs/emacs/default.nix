@@ -19,14 +19,14 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    xdg.configFile = {
+      # Only link what I actually need,
+      "emacs/init.el".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/programs/emacs/emacs/init.el";
+      "emacs/early-init.el".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/programs/emacs/emacs/early-init.el";
+    };
     home = {
-      activation = {
-        symlinkEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          if [ ! -e $XDG_CONFIG_HOME/emacs ]; then
-            $DRY_RUN_CMD ln -snf $HOME/dotfiles/modules/programs/emacs/emacs $XDG_CONFIG_HOME/emacs
-          fi
-        '';
-      };
       packages =
         let
           emacsWithPackages = (pkgs.emacsPackagesFor cfg.emacsPackage).emacsWithPackages (p: [
