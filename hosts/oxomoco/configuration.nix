@@ -5,13 +5,12 @@
   ...
 }:
 {
-  nix = {
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
-
   imports = [ ./hardware-configuration.nix ];
+
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flake"
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
