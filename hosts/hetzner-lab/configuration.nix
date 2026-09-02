@@ -52,13 +52,6 @@
     };
   };
 
-  ############################################
-  # fail2ban
-  # Note: with SSH already key-only, fail2ban's SSH jail mainly cuts
-  # log noise and closed connections rather than stopping a real
-  # break-in — but it also covers Caddy and Vaultwarden below, where
-  # it's doing real work (both accept password-style logins).
-  ############################################
   services.fail2ban = {
     enable = true;
     maxretry = 5;
@@ -70,15 +63,21 @@
     jails = {
       # Vaultwarden logs failed master-password attempts; this filter
       # matches its "Username or password is incorrect" log line.
-      vaultwarden = {
-        settings = {
-          enabled = true;
-          filter = "vaultwarden";
-          action = "iptables-allports[name=vaultwarden]";
-          logpath = "/var/lib/vaultwarden/vaultwarden.log";
-          maxretry = 5;
-          bantime = "1h";
-        };
+      vaultwarden.settings = {
+        enabled = true;
+        filter = "vaultwarden";
+        action = "iptables-allports[name=vaultwarden]";
+        logpath = "/var/lib/vaultwarden/vaultwarden.log";
+        maxretry = 5;
+        bantime = "1h";
+      };
+      caddy-abuse.settings = {
+        enabled = true;
+        filter = "caddy-abuse";
+        action = "iptables-allports[name=caddy]";
+        logpath = "/var/log/caddy/access-*.log";
+        maxretry = 20;
+        findtime = "10m";
       };
     };
   };
