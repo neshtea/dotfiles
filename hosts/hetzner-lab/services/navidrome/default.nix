@@ -22,7 +22,6 @@
     ];
   };
   systemd.services.navidrome.unitConfig.RequiresMountsFor = "/mnt/music";
-
   services = {
     navidrome = {
       enable = true;
@@ -41,7 +40,6 @@
       # environmentFile must contain: ND_LASTFM_SECRET=...
     };
     caddy = {
-      enable = true;
       virtualHosts."music.defmarco.com".extraConfig = ''
         reverse_proxy 127.0.0.1:4533
       '';

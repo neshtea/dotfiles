@@ -12,6 +12,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ./services/navidrome
+    ./services/vaultwarden
   ];
 
   _module.args = { inherit smbDevice smbCredentialsFile; };
@@ -159,7 +160,6 @@ in
   sops.age.keyFile = "/var/lib/sops-nix/key.txt";
 
   sops.secrets."cwa/hardcover_token" = { };
-  sops.secrets."vaultwarden/admin_token" = { };
   sops.secrets."smb/credentials" = {
     # rendered to a file on disk so the cifs mount can read it
     path = smbCredentialsFile;
@@ -196,20 +196,6 @@ in
     user = "marco";
     dataDir = "/home/marco/Sync";
     openDefaultPorts = true;
-  };
-
-  services.vaultwarden = {
-    enable = true;
-    dbBackend = "sqlite";
-    config = {
-      DOMAIN = "https://vault.defmarco.com";
-      ROCKET_ADDRESS = "127.0.0.1";
-      ROCKET_PORT = 8000;
-      SIGNUPS_ALLOWED = true;
-      LOG_FILE = "/var/lib/vaultwarden/vaultwarden.log";
-    };
-    environmentFile = config.sops.secrets."vaultwarden/admin_token".path;
-    # environmentFile must contain: ADMIN_TOKEN=...
   };
 
   services.cockpit = {
@@ -253,9 +239,6 @@ in
 
   services.caddy = {
     enable = true;
-    virtualHosts."vault.defmarco.com".extraConfig = ''
-      reverse_proxy 127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}
-    '';
     virtualHosts."calibre.defmarco.com".extraConfig = ''
       reverse_proxy 127.0.0.1:8083
     '';
