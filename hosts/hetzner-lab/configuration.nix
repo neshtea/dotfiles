@@ -12,6 +12,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ./services/calibre-web-automated
+    ./services/cockpit
     ./services/navidrome
     ./services/vaultwarden
   ];
@@ -191,30 +192,6 @@ in
     user = "marco";
     dataDir = "/home/marco/Sync";
     openDefaultPorts = true;
-  };
-
-  services.cockpit = {
-    enable = true;
-    port = 9090;
-    plugins = [
-      pkgs.cockpit-files
-      pkgs.cockpit-podman
-      pkgs.cockpit-machines
-    ];
-    allowed-origins = [ "https://cockpit.defmarco.com" ];
-    settings = {
-      WebService = {
-        AllowUnencrypted = true;
-        ProtocolHeader = "X-Forwarded-Proto";
-      };
-    };
-  };
-
-  services.caddy = {
-    enable = true;
-    virtualHosts."cockpit.defmarco.com".extraConfig = ''
-      reverse_proxy 127.0.0.1:${toString config.services.cockpit.port}
-    '';
   };
 
   system.stateVersion = "26.05";
