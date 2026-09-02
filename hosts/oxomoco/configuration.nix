@@ -9,7 +9,7 @@
 
   nix.settings.experimental-features = [
     "nix-command"
-    "flake"
+    "flakes"
   ];
   nix.gc = {
     automatic = true;
