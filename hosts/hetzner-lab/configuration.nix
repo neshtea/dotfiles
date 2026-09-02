@@ -11,8 +11,10 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    (./services/navidrome { inherit config smbDevice smbCredentialsFile; })
+    ./services/navidrome
   ];
+
+  _module.args = { inherit smbDevice smbCredentialsFile; };
 
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
@@ -103,7 +105,7 @@ in
   '';
 
   # Hardening
-  services.journald.storage = "persistent";
+  services.journald.storage = smbDevice;
   services.journald.extraConfig = "SystemMaxUse=500M";
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = false;
@@ -160,14 +162,14 @@ in
   sops.secrets."vaultwarden/admin_token" = { };
   sops.secrets."smb/credentials" = {
     # rendered to a file on disk so the cifs mount can read it
-    path = "/run/secrets/smb-credentials";
+    path = smbCredentialsFile;
   };
 
   fileSystems =
     let
       baseDevice = "//u518967.your-storagebox.de/backup";
       smbDir = dir: "${baseDevice}/${dir}";
-      credentials = "credentials=/run/secrets/smb-credentials";
+      credentials = "credentials=${smbCredentialsFile}";
     in
     {
       "/mnt/books" = {
