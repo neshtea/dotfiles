@@ -96,17 +96,17 @@
     git = {
       enable = true;
       settings = {
-        commit.gpgsign = "true";
         core.editor = "nvim";
-        gpg = {
-          format = "ssh";
-          ssh.allowedSignersFile = "~/.ssh/allowed_signers";
-        };
+        gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
         init.defaultBranch = "main";
         merge.conflictstyle = "diff3";
         pull.rebase = "true";
         push.autoSetupRemote = "true";
         tag.gpgsign = "true";
+        user = {
+          email = "marco.schneider@active-group.de";
+          name = "Marco Schneider";
+        };
       };
       ignores = [
         ".agent-shell"
@@ -129,14 +129,9 @@
         "node_modules/"
       ];
       signing = {
+        format = "ssh";
         signByDefault = true;
         key = "~/.ssh/id_rsa.pub";
-      };
-      settings = {
-        user = {
-          email = "marco.schneider@active-group.de";
-          name = "Marco Schneider";
-        };
       };
     };
 
