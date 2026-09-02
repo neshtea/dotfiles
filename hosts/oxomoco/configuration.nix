@@ -19,12 +19,17 @@
 
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
-    systemd-boot.enable = true;
+    systemd-boot.enable = true; # noop
     efi.canTouchEfiVariables = true;
   };
-
   security.polkit.enable = true;
   security.rtkit.enable = true;
+  security.sudo = {
+    wheelNeedsPassword = true;
+    execWheelOnly = true;
+  };
+  zramSwap.enable = true;
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
