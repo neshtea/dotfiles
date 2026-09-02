@@ -36,8 +36,9 @@
   # replicates the default behaviour.
   networking = {
     firewall = {
-      allowedTCPPorts = [ 17500 ];
-      allowedUDPPorts = [ 17500 ];
+      # Syncthing ports.
+      allowedTCPPorts = [ 22000 ];
+      allowedUDPPorts = [ 21027 ];
     };
     hostName = "oxomoco";
     interfaces = {
