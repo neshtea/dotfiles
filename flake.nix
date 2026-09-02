@@ -38,10 +38,6 @@
             pkgs = import nixpkgs {
               config.allowUnfree = true; # Sorry rms
               system = "aarch64-darwin";
-              # Use this flake.nix's nixpkgs for stuff like `nix shell nixpkgs#<foo>`.
-              nix.registry = {
-                this.flake = inputs.nixpkgs;
-              };
             };
           in
           home-manager.lib.homeManagerConfiguration {
@@ -64,9 +60,6 @@
             pkgs = import nixpkgs {
               config.allowUnfree = true;
               system = "x86_64-linux";
-              nix.registry = {
-                this.flake = inputs.nixpkgs;
-              };
             };
 
           in
@@ -90,9 +83,6 @@
             pkgs = import nixpkgs {
               config.allowUnfree = true;
               system = "aarch64-linux";
-              nix.registry = {
-                this.flake = inputs.nixpkgs;
-              };
             };
           in
           home-manager.lib.homeManagerConfiguration {
