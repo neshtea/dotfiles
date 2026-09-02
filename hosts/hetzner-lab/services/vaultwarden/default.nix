@@ -10,7 +10,7 @@
         DOMAIN = "https://vault.defmarco.com";
         ROCKET_ADDRESS = "127.0.0.1";
         ROCKET_PORT = 8000;
-        SIGNUPS_ALLOWED = true;
+        SIGNUPS_ALLOWED = false;
         LOG_FILE = "/var/lib/vaultwarden/vaultwarden.log";
       };
       environmentFile = config.sops.secrets."vaultwarden/admin_token".path;
