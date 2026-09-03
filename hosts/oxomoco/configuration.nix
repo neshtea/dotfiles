@@ -79,9 +79,12 @@
     tailscale.enable = true;
 
     # plasma/kde
-    desktopManager.plasma6.enable = true;
-    displayManager.sddm.enable = true;
-    displayManager.sddm.wayland.enable = true;
+    desktopManager.plasma6.enable = false;
+    displayManager.sddm.enable = false;
+    displayManager.sddm.wayland.enable = false;
+
+    desktopManager.gnome.enable = true;
+    displayManager.gdm.enable = true;
   };
 
   hardware.bluetooth = {
