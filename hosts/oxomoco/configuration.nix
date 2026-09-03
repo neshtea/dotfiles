@@ -134,12 +134,6 @@
       enable = true;
       enableSSHSupport = true;
     };
-    hyprland = {
-      enable = false;
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      portalPackage =
-        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-    };
 
     steam = {
       enable = false;

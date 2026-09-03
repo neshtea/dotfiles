@@ -43,9 +43,6 @@
         emacsPackage = pkgs.emacs;
       };
     };
-    desktop = {
-      hyprland.enable = false;
-    };
   };
 
   services = {

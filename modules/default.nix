@@ -1,7 +1,6 @@
 { ... }:
 {
   imports = [
-    ./desktop
     ./dev
     ./programs
   ];
