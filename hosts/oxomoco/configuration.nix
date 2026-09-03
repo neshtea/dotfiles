@@ -109,7 +109,7 @@
       vim
       wget
       wireplumber
-      gnome.adwaita-icon-theme
+      adwaita-icon-theme
       gnomeExtensions.appindicator
     ];
     # Optional, hint electron apps to use wayland:
