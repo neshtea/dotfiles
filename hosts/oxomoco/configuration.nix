@@ -81,6 +81,11 @@
     desktopManager.gnome.enable = true;
     displayManager.gdm.enable = true;
 
+    gnome = {
+      core-apps.enable = false;
+      games.enable = false;
+    };
+
     udev.packages = with pkgs; [ gnome-settings-daemon ];
   };
 
@@ -109,8 +114,11 @@
       vim
       wget
       wireplumber
+      # Gnome stuff
       adwaita-icon-theme
       gnomeExtensions.appindicator
+      gnome-tweaks
+      evince  # document viewer
     ];
     # Optional, hint electron apps to use wayland:
     sessionVariables.NIXOS_OZONE_WL = "1";
@@ -134,7 +142,7 @@
     };
 
     steam = {
-      enable = true;
+      enable = false;
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
