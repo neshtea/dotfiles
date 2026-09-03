@@ -78,13 +78,10 @@
     };
     tailscale.enable = true;
 
-    # plasma/kde
-    desktopManager.plasma6.enable = false;
-    displayManager.sddm.enable = false;
-    displayManager.sddm.wayland.enable = false;
-
     desktopManager.gnome.enable = true;
     displayManager.gdm.enable = true;
+
+    udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
   };
 
   hardware.bluetooth = {
@@ -112,23 +109,8 @@
       vim
       wget
       wireplumber
-
-      # plasma/kde
-      kdePackages.kclock
-      kdePackages.sddm-kcm
-      kdePackages.partitionmanager
-      hardinfo2
-      wayland-utils
-      wl-clipboard
-    ];
-    plasma6.excludePackages = with pkgs; [
-      kdePackages.elisa
-      kdePackages.kdepim-runtime
-      kdePackages.kmahjongg
-      kdePackages.kmines
-      kdePackages.konversation
-      kdePackages.kpat
-      kdePackages.ksudoku
+      gnome.adwaita-icon-theme
+      gnomeExtensions.appindicator
     ];
     # Optional, hint electron apps to use wayland:
     sessionVariables.NIXOS_OZONE_WL = "1";
