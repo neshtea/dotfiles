@@ -119,6 +119,7 @@
       gnomeExtensions.appindicator
       gnome-tweaks
       evince  # document viewer
+      nautilus  # file manager
     ];
     # Optional, hint electron apps to use wayland:
     sessionVariables.NIXOS_OZONE_WL = "1";
