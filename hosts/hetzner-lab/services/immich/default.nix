@@ -21,6 +21,7 @@
       enable = true;
       host = "127.0.0.1";
       mediaLocation = "/mnt/photos";
+      openFirewall = true;
     };
     caddy.virtualHosts."photos.defmarco.com".extraConfig = ''
       reverse_proxy 127.0.0.1:${toString config.services.immich.port}
