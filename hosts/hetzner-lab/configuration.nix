@@ -13,6 +13,7 @@ in
     ./services/calibre-web-automated
     ./services/navidrome
     ./services/vaultwarden
+    ./services/immich
   ];
 
   _module.args = { inherit smbDevice smbCredentialsFile; };
