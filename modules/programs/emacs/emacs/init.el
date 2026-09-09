@@ -388,7 +388,7 @@ the separator."
             (todo "TODO"
                   ((org-agenda-overriding-header "Inbox/Unprocessed")
                    (org-agenda-skip-function
-                    '(org-agenda-skip-entry-if 'scheduled 'deadline))))))))
+                    '(org-agenda-skip-entry-if 'scheduled 'deadline 'todo '("WAITING")))))))))
   (setq org-plantuml-exec-mode 'plantuml
         org-plantuml-executable-path (expand-file-name "~/.nix-profile/bin/plantuml"))
   (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t))))
