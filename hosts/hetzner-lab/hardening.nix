@@ -46,7 +46,9 @@
 
   # Hardening
   services.journald.storage = "persistent";
-  services.journald.extraConfig = "SystemMaxUse=500M";
+  services.journald.settings.Journal = {
+    SystemMaxUse = "500M";
+  };
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = false;
     "net.ipv4.conf.all.accept_redirects" = false;
