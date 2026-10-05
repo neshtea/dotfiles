@@ -423,73 +423,11 @@ the separator."
   :args (list "-")
   :lighter " erlfmt")
 
-(use-package agent-shell
-  :config
-  (setq agent-shell-anthropic-authentication
-      (agent-shell-anthropic-make-authentication :login t)))
-
 (use-package gleam-ts-mode
   :mode (rx ".gleam" eos)
   :config
   (add-to-list 'eglot-server-programs
                '(gleam-ts-mode . ("gleam" "lsp"))))
-
-(use-package elfeed :defer t)
-(use-package elfeed-org :defer t
-  :after elfeed
-  :init
-  (elfeed-org)
-  :config
-  (setq rmh-elfeed-org-files (list "~/dotfiles/modules/programs/emacs/emacs/elfeed.org")))
-
-(use-package gnus
-  :config
-  (setq gnus-select-method '(nnnil ""))
-  (setq gnus-agent-synchronize-flags t)
-  (setq gnus-posting-styles '((".*"
-                               (address "Marco Schneider <marco.schneider@active-group.de")
-                               ("X-Message-SMTP-Method" "smtp mail.active-group.de 587 marco.schneider@active-group.de")
-                               (signature "Marco Schneider
-marco.schneider@active-group.de
-+49 7071 70896 81
-
-Active Group GmbH
-Hechinger Str. 12/1
-72072 Tübingen
-Registergericht: Amtsgericht Stuttgart, HRB 224404
-Geschäftsführer: Dr. Michael Sperber"))))
-  (setq gnus-secondary-select-methods
-        '((nnimap "mail.active-group.de"
-                  (nnimap-address "mail.active-group.de")
-                  (nnimap-server-port "imaps")
-                  (nnimap-stream ssl)
-                  (nnir-search-engine imap)
-                  (nnmail-expiry-target "nnimap+active-group:Trash"))))
-  (setq gnus-group-line-format "%M%S%p%P [%L] %5y: %(%g%)\n")
-  (setq gnus-summary-line-format "%U%R %D | %-20,20f | %B%s\n")
-  (setopt gnus-permanently-visible-groups ":INBOX$")
-  ;; sending via stmp
-  (setq message-send-mail-function 'smtpmail-send-it
-        smtpmail-default-smtp-server "mail.active-group.de"
-        smtpmail-smtp-server "mail.active-group.de"
-        smtpmail-smtp-service 587
-        smtpmail-local-domain "active-group.de"
-        smtpmail-stream-type 'starttls
-        smtpmail-smtp-user "marco.schneider@active-group.de"
-        smtpmail-auth-credentials "~/.authinfo"))
-
-(use-package bbdb
-  :ensure t
-  :config
-  (bbdb-initialize 'gnus 'message)
-  (bbdb-mua-auto-update-init 'gnus 'message)
-  (setq bbdb-mua-auto-update-p 'query)
-  (setq bbdb-message-all-addresses t)
-  (setq bbdb-north-american-phone-numbers-p nil)
-  (setq bbdb-complete-name-allow-cycling t)
-  (setq bbdb-offer-save 'auto)
-  (bbdb-insinuate-gnus)
-  (bbdb-insinuate-message))
 
 (provide 'init)
 ;;; init.el ends here
