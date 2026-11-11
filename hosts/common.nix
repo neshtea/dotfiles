@@ -26,10 +26,14 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     ALTERNATE_EDITOR = "vim";
+    # See https://matthewrhone.dev/nixos-npm-globally
+    NODE_PATH = "~/.npm-packages/lib/node_modules";
   };
 
   home.sessionPath = [
     "$HOME/.local/bin"
+    # See https://matthewrhone.dev/nixos-npm-globally
+    "$HOME/.npm-packages/bin"
   ];
 
   home.packages = with pkgs; [
